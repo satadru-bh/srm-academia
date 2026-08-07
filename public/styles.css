@@ -9925,24 +9925,114 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     }
 }
 
-/* FLOATING PWA INSTALL BANNER */
+/* NEUTRAL CORPORATE DARK */
+[data-theme="corporate-dark"] {
+    --theme-name: "corporate-dark";
+    --bg-base: #0f172a;
+    --bg-surface: #1e293b;
+    --bg-surface-elevated: #334155;
+    --bg-surface-solid: #1e293b;
+    --bg-surface-hover: #475569;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-inverse: #0f172a;
+
+    --border-subtle: #334155;
+    --border-card: #334155;
+    --border-strong: #475569;
+    --border-focus: #3b82f6;
+
+    --accent-primary: #3b82f6;
+    --accent-primary-hover: #60a5fa;
+    --accent-primary-glow: rgba(59, 130, 246, 0.25);
+    --accent-success: #10b981;
+    --accent-warning: #f59e0b;
+    --accent-danger: #ef4444;
+
+    --theory-bg: rgba(59, 130, 246, 0.14);
+    --theory-border: #3b82f6;
+    --theory-text: #60a5fa;
+
+    --lab-bg: rgba(14, 165, 233, 0.14);
+    --lab-border: #0ea5e9;
+    --lab-text: #38bdf8;
+
+    --cell-empty-bg: #0f172a;
+    --cell-empty-border: #334155;
+
+    --calendar-cell-bg: #1e293b;
+    --calendar-cell-border: #334155;
+    --calendar-cell-hover: #334155;
+
+    --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.4);
+    --shadow-floating: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* NEUTRAL GRAY LIGHT */
+[data-theme="neutral-gray"] {
+    --theme-name: "neutral-gray";
+    --bg-base: #f4f4f5;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #e4e4e7;
+    --bg-surface-solid: #ffffff;
+    --bg-surface-hover: #d4d4d8;
+
+    --text-primary: #18181b;
+    --text-secondary: #52525b;
+    --text-muted: #71717a;
+    --text-inverse: #ffffff;
+
+    --border-subtle: #e4e4e7;
+    --border-card: #e4e4e7;
+    --border-strong: #d4d4d8;
+    --border-focus: #18181b;
+
+    --accent-primary: #18181b;
+    --accent-primary-hover: #27272a;
+    --accent-primary-glow: rgba(24, 24, 27, 0.15);
+    --accent-success: #16a34a;
+    --accent-warning: #d97706;
+    --accent-danger: #dc2626;
+
+    --theory-bg: rgba(24, 24, 27, 0.08);
+    --theory-border: #18181b;
+    --theory-text: #18181b;
+
+    --lab-bg: rgba(37, 99, 235, 0.08);
+    --lab-border: #2563eb;
+    --lab-text: #1d4ed8;
+
+    --cell-empty-bg: #f4f4f5;
+    --cell-empty-border: #e4e4e7;
+
+    --calendar-cell-bg: #ffffff;
+    --calendar-cell-border: #e4e4e7;
+    --calendar-cell-hover: #f4f4f5;
+
+    --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.04);
+    --shadow-floating: 0 20px 40px rgba(0, 0, 0, 0.06);
+}
+
+/* SUBTLE FLOATING PWA INSTALL BANNER */
 .pwa-install-banner {
     position: fixed;
-    bottom: max(90px, calc(env(safe-area-inset-bottom, 22px) + 70px));
-    right: 20px;
+    bottom: 24px;
+    right: 24px;
     z-index: 99999;
     background: var(--bg-surface-solid);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-floating);
-    padding: 12px 16px;
+    border-radius: 9999px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+    padding: 8px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
-    max-width: 420px;
-    width: calc(100vw - 40px);
+    gap: 14px;
     box-sizing: border-box;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     animation: bannerSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -9951,9 +10041,9 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
         left: 50%;
         right: auto;
         transform: translateX(-50%);
-        bottom: max(92px, calc(env(safe-area-inset-bottom, 22px) + 72px));
-        width: calc(100% - 32px);
-        max-width: 440px;
+        bottom: max(85px, calc(env(safe-area-inset-bottom, 16px) + 70px));
+        width: auto;
+        max-width: calc(100vw - 32px);
     }
 }
 

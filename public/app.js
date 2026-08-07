@@ -23,11 +23,11 @@ window.addEventListener('beforeinstallprompt', (e) => {
     try {
         const dismissed = localStorage.getItem('srm_pwa_banner_dismissed');
         const now = Date.now();
-        if (!dismissed || (now - parseInt(dismissed, 10)) > 7 * 24 * 60 * 60 * 1000) {
-            setTimeout(showPwaBanner, 3000);
+        if (!dismissed || (now - parseInt(dismissed, 10)) > 14 * 24 * 60 * 60 * 1000) {
+            setTimeout(showPwaBanner, 25000);
         }
     } catch (_) {
-        setTimeout(showPwaBanner, 3000);
+        setTimeout(showPwaBanner, 25000);
     }
 });
 
