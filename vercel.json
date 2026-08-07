@@ -1,11 +1,6 @@
 {
   "version": 2,
   "outputDirectory": "public",
-  "functions": {
-    "api/index.js": {
-      "includeFiles": ["session/**", "parsers/**", "server.js"]
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
