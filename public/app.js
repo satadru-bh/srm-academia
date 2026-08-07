@@ -4415,9 +4415,13 @@ function renderDesktopPlannerGrid(year, month) {
         const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
         const isPlannerHoliday = plannerMatch && (plannerMatch.type === 'HOLIDAY' || plannerMatch.dayOrder === 'HOLIDAY' || plannerMatch.dayOrder === '-');
         const isHoliday = isWeekend || isPlannerHoliday;
+        const isMilestone = !isHoliday && plannerMatch && (plannerMatch.type === 'ENROLMENT' || plannerMatch.type === 'MILESTONE' || (plannerMatch.event && (plannerMatch.event.toLowerCase().includes('enrolment') || plannerMatch.event.toLowerCase().includes('milestone'))));
+        const isCommencement = !isHoliday && !isMilestone && plannerMatch && (plannerMatch.type === 'COMMENCEMENT' || (plannerMatch.event && plannerMatch.event.toLowerCase().includes('commencement')));
 
         let cellClasses = 'calendar-day-cell';
         if (isHoliday) cellClasses += ' holiday';
+        else if (isMilestone) cellClasses += ' milestone';
+        else if (isCommencement) cellClasses += ' commencement';
 
         let dayOrderBadge = '';
         let eventSnippetHtml = '';
@@ -4441,12 +4445,15 @@ function renderDesktopPlannerGrid(year, month) {
 
             if (plannerMatch.event && plannerMatch.event.trim() !== '') {
                 let badgeColor = 'var(--accent-primary)';
-                if (plannerMatch.type === 'HOLIDAY') badgeColor = '#ef4444';
+                if (isHoliday) badgeColor = 'inherit';
+                else if (isMilestone) badgeColor = 'inherit';
+                else if (isCommencement) badgeColor = 'inherit';
+                else if (plannerMatch.type === 'HOLIDAY') badgeColor = '#ef4444';
                 else if (plannerMatch.type === 'ENROLMENT') badgeColor = '#10b981';
                 else if (plannerMatch.type === 'COMMENCEMENT') badgeColor = '#a855f7';
 
                 eventSnippetHtml = `
-                    <div style="font-size: 11px; font-weight: 700; color: ${badgeColor}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; min-width: 0; width: 100%; margin-top: 6px; box-sizing: border-box;" title="${plannerMatch.event}">
+                    <div style="font-size: 11px; font-weight: 800; color: ${badgeColor}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; min-width: 0; width: 100%; margin-top: 6px; box-sizing: border-box;" title="${plannerMatch.event}">
                         • ${plannerMatch.event}
                     </div>
                 `;

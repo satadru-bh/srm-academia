@@ -1918,6 +1918,48 @@
     box-shadow: 3.5px 3.5px 0px #000000 !important;
 }
 
+/* Color Fills for Holiday (Red), Milestone (Teal/Emerald), and Commencement (Purple) */
+[data-theme="neo-brutalist"] .calendar-day-cell.holiday {
+    background-color: #ff4d4d !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-day-cell.milestone {
+    background-color: #34d399 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-day-cell.commencement {
+    background-color: #c084fc !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-day-cell.holiday .day-number,
+[data-theme="neo-brutalist"] .calendar-day-cell.milestone .day-number,
+[data-theme="neo-brutalist"] .calendar-day-cell.commencement .day-number {
+    color: #000000 !important;
+    font-weight: 900 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-day-cell.holiday div[title],
+[data-theme="neo-brutalist"] .calendar-day-cell.milestone div[title],
+[data-theme="neo-brutalist"] .calendar-day-cell.commencement div[title] {
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-day-cell.holiday .calendar-cell-day-order,
+[data-theme="neo-brutalist"] .calendar-day-cell.milestone .calendar-cell-day-order,
+[data-theme="neo-brutalist"] .calendar-day-cell.commencement .calendar-cell-day-order {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+    box-shadow: none !important;
+}
+
 /* Attendance Grid Rows & Metric Cards */
 [data-theme="neo-brutalist"] .attendance-grid-row {
     border: 2px solid #000000 !important;
