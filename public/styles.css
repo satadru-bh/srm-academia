@@ -9725,8 +9725,121 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="neo-brutalist"] #content-views,
 [data-theme="neo-brutalist"] .view-pane,
 [data-theme="neo-brutalist"] .card,
-[data-theme="neo-brutalist"] .workspace-header {
+[data-theme="neo-brutalist"] .workspace-header,
+[data-theme="neo-brutalist"] .marks-card,
+[data-theme="neo-brutalist"] .theme-dropdown-menu {
     overflow: visible !important;
+}
+
+/* Universal Non-Clipping & Styling Fixes for Internal Marks Cards & Theme Menu */
+#view-academics,
+#view-academics .marks-grid,
+.marks-card,
+.theme-dropdown-menu {
+    overflow: visible !important;
+}
+
+.theme-options-grid {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    max-height: 380px !important;
+    padding: 2px 6px 6px 2px !important;
+}
+
+/* Neo-Brutalist Internal Marks Cards Overrides */
+[data-theme="neo-brutalist"] #view-academics {
+    padding-bottom: 40px !important;
+}
+
+[data-theme="neo-brutalist"] .marks-card {
+    background-color: #ffffff !important;
+    border: 3px solid #000000 !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+    border-radius: 18px !important;
+    overflow: visible !important;
+    margin-bottom: 24px !important;
+}
+
+[data-theme="neo-brutalist"] .marks-card .card-header {
+    border-bottom: 2.5px solid #000000 !important;
+    background-color: #ffffff !important;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+
+[data-theme="neo-brutalist"] .marks-course-code-badge {
+    border: 1.5px solid #000000 !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+}
+
+[data-theme="neo-brutalist"] .marks-course-credit-badge {
+    border: 1.5px solid #000000 !important;
+    background-color: #ffee00 !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+}
+
+[data-theme="neo-brutalist"] .assessment-item {
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    border-radius: 10px !important;
+    background-color: #ffffff !important;
+}
+
+[data-theme="neo-brutalist"] div[style*="border: 1px dashed"] {
+    border: 2px dashed #000000 !important;
+    border-radius: 12px !important;
+    background-color: #fafaf5 !important;
+}
+
+/* Neo-Brutalist Theme Dropdown Menu System */
+[data-theme="neo-brutalist"] .theme-dropdown-menu {
+    background-color: #ffffff !important;
+    border: 3px solid #000000 !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+    border-radius: 18px !important;
+    padding: 16px !important;
+}
+
+[data-theme="neo-brutalist"] .theme-dropdown-header {
+    border-bottom: 2.5px solid #000000 !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 12px !important;
+}
+
+[data-theme="neo-brutalist"] .theme-option-card {
+    background-color: #ffffff !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    border-radius: 12px !important;
+    margin-bottom: 8px !important;
+    transform: none !important;
+    transition: background-color 0.15s ease !important;
+}
+
+[data-theme="neo-brutalist"] .theme-option-card:hover {
+    background-color: #ffffdd !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    transform: none !important;
+}
+
+[data-theme="neo-brutalist"] .theme-option-card.active {
+    background-color: #ffee00 !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .theme-option-card.active .theme-card-name {
+    color: #000000 !important;
+    font-weight: 900 !important;
 }
 
 #view-support .support-card {
