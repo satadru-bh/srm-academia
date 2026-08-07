@@ -1837,12 +1837,41 @@
     color: #000000 !important;
 }
 
-/* Academic Calendar Hard-Edged System & Section Borders */
+/* Academic Calendar System & Neo-Brutalist Section Borders */
+[data-theme="neo-brutalist"] #view-planner {
+    padding-bottom: 40px !important;
+}
+
+[data-theme="neo-brutalist"] #view-planner .card {
+    border: 3px solid #000000 !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+    border-radius: 18px !important;
+    background-color: #ffffff !important;
+    overflow: visible !important;
+    margin-bottom: 32px !important;
+}
+
 [data-theme="neo-brutalist"] .calendar-navigation-header {
     border-bottom: 2.5px solid #000000 !important;
     background-color: #ffffff !important;
-    border-top-left-radius: 11.5px !important;
-    border-top-right-radius: 11.5px !important;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-navigation-header button,
+[data-theme="neo-brutalist"] #calendar-today-btn {
+    border: 2px solid #000000 !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-navigation-header button:hover,
+[data-theme="neo-brutalist"] #calendar-today-btn:hover {
+    background: #ffee00 !important;
+    transform: none !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
 }
 
 [data-theme="neo-brutalist"] .calendar-weekday-grid {
@@ -1858,26 +1887,33 @@
 }
 
 [data-theme="neo-brutalist"] .calendar-dates-grid {
-    padding: 18px !important;
+    padding: 16px !important;
+    gap: 10px !important;
     background-color: #ffffff !important;
 }
 
 [data-theme="neo-brutalist"] .calendar-day-cell {
     border: 2px solid #000000 !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     box-shadow: 2.5px 2.5px 0px #000000 !important;
     background-color: #ffffff !important;
     overflow: visible !important;
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
 }
 
-[data-theme="neo-brutalist"] .calendar-day-cell:hover {
-    background-color: #ccff00 !important;
-    transform: translate(-2px, -2px) !important;
-    box-shadow: 4.5px 4.5px 0px #000000 !important;
+/* Strict Removal of Hover Movement & Jittering for Calendar Day Cells */
+[data-theme="neo-brutalist"] .calendar-day-cell:hover,
+[data-theme="neo-brutalist"] .calendar-day-cell:focus,
+[data-theme="neo-brutalist"] .calendar-day-cell:active {
+    background-color: #ffffdd !important;
+    transform: none !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+    border: 2px solid #000000 !important;
 }
 
 [data-theme="neo-brutalist"] .calendar-day-cell.today {
-    background-color: #ccff00 !important;
+    background-color: #ffee00 !important;
     border: 2.5px solid #000000 !important;
     box-shadow: 3.5px 3.5px 0px #000000 !important;
 }
@@ -1900,7 +1936,6 @@
 /* Badges, Tags, and Pills Precision */
 [data-theme="neo-brutalist"] .type-pill,
 [data-theme="neo-brutalist"] .attendance-code-tag,
-[data-theme="neo-brutalist"] .calendar-cell-day-order,
 [data-theme="neo-brutalist"] .attendance-section-count {
     border: 1.5px solid #000000 !important;
     box-shadow: 2px 2px 0px #000000 !important;
@@ -1908,6 +1943,16 @@
     color: #000000 !important;
     border-radius: 6px !important;
     background-color: #ffffff;
+}
+
+/* Clean Day Order Badges without Harsh Cluttered Inner Shadows */
+[data-theme="neo-brutalist"] .calendar-cell-day-order {
+    border: 1.5px solid #000000 !important;
+    box-shadow: none !important;
+    font-weight: 900 !important;
+    color: #000000 !important;
+    border-radius: 6px !important;
+    background-color: #ffee00 !important;
 }
 
 /* High Contrast Text & Zero Lime-on-White Contrast Fixes for Neo-Brutalist Theme */
