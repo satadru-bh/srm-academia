@@ -1273,45 +1273,82 @@ function renderSupportPane() {
     if (!pane) return;
     
     pane.innerHTML = `
-        <div class="card support-card" style="display: block !important; visibility: visible !important; opacity: 1 !important;">
-            <div class="support-header-row">
-                <div class="support-icon-badge">
+        <div class="card support-card" style="display: block !important; visibility: visible !important; opacity: 1 !important; max-width: 860px; margin: 0 auto; padding: 32px; border-radius: var(--radius-xl);">
+            <div class="support-header-row" style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 20px;">
+                <div class="support-icon-badge" style="width: 48px; height: 48px; border-radius: 14px; background: #ef4444; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                 </div>
-                <div>
-                    <h2 class="support-title">Support SRM Academia+</h2>
-                    <span class="support-subtitle">Independent Student Development</span>
+                <div class="support-title-group">
+                    <h2 class="support-title" style="font-size: 22px; font-weight: 800; margin: 0; color: var(--text-primary);">Support SRM Academia+</h2>
+                    <span class="support-subtitle" style="font-size: 12px; color: var(--text-muted); font-weight: 700;">Independent Student Development</span>
                 </div>
             </div>
 
-            <div class="support-text-block">
-                <p class="support-p lead">
-                    SRM Academia+ is built independently, by a student, for students.
-                </p>
-                <p class="support-p">
-                    The app will always have a free version. Donations simply help cover server costs, domain fees, and the time spent building new features, fixing bugs, and keeping everything running smoothly.
-                </p>
-                <p class="support-p">
-                    If the app has saved you time or made college a little less frustrating, and you'd like to support its development, I'd genuinely appreciate it. No pressure.
-                </p>
-            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; align-items: start;">
+                <!-- Left Side: Message & UPI IDs -->
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div class="support-text-block" style="background: var(--bg-surface-elevated); padding: 18px; border-radius: 14px; border: 1px solid var(--border-subtle);">
+                        <p class="support-p lead" style="font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 0 0 8px 0;">
+                            SRM Academia+ is built independently, by a student, for students.
+                        </p>
+                        <p class="support-p" style="font-size: 13px; color: var(--text-secondary); margin: 0 0 8px 0; line-height: 1.55;">
+                            The app will always have a free version. Contributions help cover server costs, domain fees, and ongoing feature development.
+                        </p>
+                        <p class="support-p" style="font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.55;">
+                            If the app has saved you time or made college life easier, any contribution is deeply appreciated! No pressure.
+                        </p>
+                    </div>
 
-            <div class="support-footer-box">
-                <div class="support-footer-label">Support via UPI / Direct Contribution</div>
-                <button class="support-donate-btn" id="btn-support-donate-upi">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    <span>Donate &amp; Support Development</span>
-                </button>
+                    <!-- Primary UPI Box -->
+                    <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Primary UPI ID</span>
+                            <span id="page-upi-id-1" style="font-family: monospace; font-size: 14px; font-weight: 800; color: var(--text-primary);">8017622902@hdfc</span>
+                        </div>
+                        <button id="copy-page-upi-btn-1" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer;">Copy UPI</button>
+                    </div>
+
+                    <!-- Secondary UPI Box -->
+                    <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Secondary UPI ID</span>
+                            <span id="page-upi-id-2" style="font-family: monospace; font-size: 12px; font-weight: 800; color: var(--text-primary); word-break: break-all;">satadrubhattacharya940-1@okhdfcbank</span>
+                        </div>
+                        <button id="copy-page-upi-btn-2" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer; flex-shrink: 0; margin-left: 8px;">Copy UPI</button>
+                    </div>
+                </div>
+
+                <!-- Right Side: QR Code -->
+                <div style="text-align: center; padding: 22px; background: var(--bg-surface-elevated); border-radius: 16px; border: 1px solid var(--border-subtle); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span style="font-size: 12px; font-weight: 800; color: var(--text-primary); display: block; margin-bottom: 12px;">Scan QR Code using GPay, PhonePe, or Paytm</span>
+                    <div style="width: 210px; height: 210px; background: #ffffff; padding: 10px; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(0,0,0,0.12);">
+                        <img src="qr.png" alt="Donate QR Code" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px;" />
+                    </div>
+                    <span style="font-size: 11px; color: var(--text-muted); font-weight: 700; margin-top: 12px;">Direct UPI Transfer</span>
+                </div>
             </div>
         </div>
     `;
 
-    const donateBtn = document.getElementById('btn-support-donate-upi');
-    if (donateBtn) {
-        donateBtn.addEventListener('click', () => {
-            createToast("Thank you for supporting SRM Academia+! Contribution options coming soon.", "success");
-        });
-    }
+    const copyUpi = (upiStr) => {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(upiStr).then(() => {
+                createToast("UPI ID Copied to Clipboard!", "success");
+            }).catch(() => {
+                createToast("Copied: " + upiStr, "info");
+            });
+        } else {
+            createToast("Copied: " + upiStr, "info");
+        }
+    };
+
+    const btn1 = document.getElementById('copy-page-upi-btn-1');
+    const el1 = document.getElementById('page-upi-id-1');
+    const btn2 = document.getElementById('copy-page-upi-btn-2');
+    const el2 = document.getElementById('page-upi-id-2');
+
+    if (btn1 && el1) btn1.addEventListener('click', () => copyUpi(el1.textContent.trim()));
+    if (btn2 && el2) btn2.addEventListener('click', () => copyUpi(el2.textContent.trim()));
 }
 
 /**
