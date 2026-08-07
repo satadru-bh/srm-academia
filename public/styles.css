@@ -8092,90 +8092,87 @@ body.sidebar-open #attendance-fab-container,
     margin-top: 2px !important;
 }
 
-/* UNIVERSAL HOLIDAY RED CARD SYSTEM (DESKTOP GRID & MOBILE LIST) */
+/* UNIVERSAL EVENT DATE COLOR FILLS FOR ALL THEMES (DESKTOP & MOBILE) */
+
+/* 1. HOLIDAY / OFF DAYS (VIBRANT RED #ff4d4d) */
 .planner-mobile-card.holiday,
 .calendar-day-cell.holiday {
-    background: rgba(239, 68, 68, 0.1) !important;
-    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    background-color: #ff4d4d !important;
+    background: #ff4d4d !important;
+    color: #000000 !important;
 }
 
 .planner-mobile-card.holiday .planner-date-num,
-.calendar-day-cell.holiday .day-number {
-    color: #ef4444 !important;
+.planner-mobile-card.holiday .planner-date-day,
+.calendar-day-cell.holiday .day-number,
+.calendar-day-cell.holiday div[title],
+.calendar-day-cell.holiday span {
+    color: #000000 !important;
+    font-weight: 800 !important;
 }
 
 .planner-mobile-card.holiday .planner-dayorder-pill,
 .calendar-day-cell.holiday .calendar-cell-day-order {
-    background: rgba(239, 68, 68, 0.22) !important;
-    color: #ef4444 !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    box-shadow: none !important;
+}
+
+/* 2. MILESTONE / ENROLMENT DAYS (VIBRANT EMERALD GREEN #34d399) */
+.planner-mobile-card.milestone,
+.calendar-day-cell.milestone {
+    background-color: #34d399 !important;
+    background: #34d399 !important;
+    color: #000000 !important;
+}
+
+.planner-mobile-card.milestone .planner-date-num,
+.planner-mobile-card.milestone .planner-date-day,
+.calendar-day-cell.milestone .day-number,
+.calendar-day-cell.milestone div[title],
+.calendar-day-cell.milestone span {
+    color: #000000 !important;
     font-weight: 800 !important;
 }
 
-/* NEO-BRUTALIST THEME OVERRIDES FOR DESKTOP & MOBILE PLANNER CARDS */
-[data-theme="neo-brutalist"] .planner-mobile-card {
-    border: 2.5px solid #000000 !important;
-    box-shadow: 3px 3px 0px #000000 !important;
-    border-radius: 12px !important;
+.planner-mobile-card.milestone .planner-dayorder-pill,
+.calendar-day-cell.milestone .calendar-cell-day-order {
+    background-color: #ffffff !important;
     background: #ffffff !important;
     color: #000000 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card .planner-mobile-date-badge {
-    border: 1.5px solid #000000 !important;
-    background: #FAF9F5 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card .planner-date-num {
-    color: #000000 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card .planner-dayorder-pill {
-    background: #ccff00 !important;
-    color: #000000 !important;
-    border: 1.5px solid #000000 !important;
     font-weight: 900 !important;
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    box-shadow: none !important;
 }
 
-[data-theme="neo-brutalist"] .planner-mobile-card.today {
-    background: #ccff00 !important;
-    color: #000000 !important;
-    border: 2.5px solid #000000 !important;
-    box-shadow: 4px 4px 0px #000000 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card.today .planner-date-num,
-[data-theme="neo-brutalist"] .planner-mobile-card.today .planner-date-day {
+/* 3. COMMENCEMENT DAYS (VIBRANT PURPLE #c084fc) */
+.planner-mobile-card.commencement,
+.calendar-day-cell.commencement {
+    background-color: #c084fc !important;
+    background: #c084fc !important;
     color: #000000 !important;
 }
 
-[data-theme="neo-brutalist"] .planner-mobile-card.today .planner-dayorder-pill {
-    background: #000000 !important;
-    color: #ccff00 !important;
-    border: 1.5px solid #000000 !important;
+.planner-mobile-card.commencement .planner-date-num,
+.planner-mobile-card.commencement .planner-date-day,
+.calendar-day-cell.commencement .day-number,
+.calendar-day-cell.commencement div[title],
+.calendar-day-cell.commencement span {
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+.planner-mobile-card.commencement .planner-dayorder-pill,
+.calendar-day-cell.commencement .calendar-cell-day-order {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #000000 !important;
     font-weight: 900 !important;
-}
-
-/* EXPLICIT DIRECTIVE: NEO-BRUTALIST UNIVERSAL HOLIDAY CARDS (VIBRANT RED FOR DESKTOP & MOBILE) */
-[data-theme="neo-brutalist"] .planner-mobile-card.holiday,
-[data-theme="neo-brutalist"] .calendar-day-cell.holiday {
-    background: #ff4d4d !important;
-    color: #000000 !important;
-    border: 2.5px solid #000000 !important;
-    box-shadow: 4px 4px 0px #000000 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card.holiday .planner-date-num,
-[data-theme="neo-brutalist"] .planner-mobile-card.holiday .planner-date-day,
-[data-theme="neo-brutalist"] .calendar-day-cell.holiday .day-number {
-    color: #000000 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card.holiday .planner-dayorder-pill,
-[data-theme="neo-brutalist"] .calendar-day-cell.holiday .calendar-cell-day-order {
-    background: #000000 !important;
-    color: #ffffff !important;
-    border: 1.5px solid #000000 !important;
-    font-weight: 900 !important;
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    box-shadow: none !important;
 }
 
 .vertical-timeline-title {
