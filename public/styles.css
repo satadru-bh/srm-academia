@@ -9627,6 +9627,43 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     margin: 0 auto !important;
     padding: 32px !important;
     box-sizing: border-box !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08) !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Strict Removal of Hover Animations for Support Page */
+#view-support,
+#view-support *,
+#view-support *:hover,
+#view-support *:focus,
+#view-support *:active,
+.support-card,
+.support-card:hover,
+.support-card:focus,
+.support-card:active {
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
+}
+
+/* Clean Drop Shadow Fixes for Support Card & Inner Containers */
+[data-theme="neo-brutalist"] #view-support .support-card {
+    background: #ffffff !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 5px 5px 0px #000000 !important;
+    border-radius: 16px !important;
+}
+
+[data-theme="neo-brutalist"] #view-support .btn-secondary {
+    background: #ffffff !important;
+    border: 1.5px solid #000000 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] #view-support .btn-secondary:hover {
+    background: #f4f4f5 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
 }
 
 #view-support .support-title,
