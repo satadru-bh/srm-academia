@@ -16,23 +16,112 @@ if ('serviceWorker' in navigator) {
 
 // Global PWA Deferred Install Prompt Container
 let deferredPwaInstallPrompt = null;
+
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPwaInstallPrompt = e;
+    try {
+        const dismissed = localStorage.getItem('srm_pwa_banner_dismissed');
+        const now = Date.now();
+        if (!dismissed || (now - parseInt(dismissed, 10)) > 7 * 24 * 60 * 60 * 1000) {
+            setTimeout(showPwaBanner, 3000);
+        }
+    } catch (_) {
+        setTimeout(showPwaBanner, 3000);
+    }
 });
 
+window.addEventListener('appinstalled', () => {
+    deferredPwaInstallPrompt = null;
+    hidePwaBanner();
+    createToast("SRM Academia+ Web App Installed Successfully!", "success");
+});
+
+function isIosDevice() {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent || '');
+}
+
+function isStandaloneApp() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+function showPwaBanner() {
+    if (isStandaloneApp()) return;
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.classList.remove('hidden');
+}
+
+function hidePwaBanner() {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.classList.add('hidden');
+}
+
 function triggerPwaInstallPrompt() {
+    if (isStandaloneApp()) {
+        createToast("SRM Academia+ is already running as an installed App!", "info");
+        return;
+    }
+
     if (deferredPwaInstallPrompt) {
         deferredPwaInstallPrompt.prompt();
         deferredPwaInstallPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
                 createToast("SRM Academia+ Web App Installed!", "success");
+                hidePwaBanner();
             }
             deferredPwaInstallPrompt = null;
         });
     } else {
-        createToast("Install App: Tap browser menu (or Share on iOS) -> 'Add to Home Screen' / 'Install App'", "info");
+        openPwaInstallModal();
     }
+}
+
+function openPwaInstallModal() {
+    const modal = document.getElementById('pwa-install-modal');
+    const body = document.getElementById('pwa-install-modal-body');
+    if (!modal || !body) return;
+
+    let contentHtml = '';
+    if (isIosDevice()) {
+        contentHtml = `
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">1</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Tap the <strong>Share</strong> button <span style="font-size: 16px;">⎋</span> in the Safari bottom toolbar.
+                </div>
+            </div>
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">2</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Scroll down and tap <strong>"Add to Home Screen"</strong> <span style="font-size: 16px;">⊕</span>.
+                </div>
+            </div>
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">3</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Tap <strong>"Add"</strong> in top right. SRM Academia+ will open as an App!
+                </div>
+            </div>
+        `;
+    } else {
+        contentHtml = `
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">1</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Click the <strong>Install Icon</strong> <span style="font-size: 15px;">⊕</span> in your browser address bar (or menu <strong>⋮</strong>).
+                </div>
+            </div>
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">2</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Select <strong>"Install App"</strong> or <strong>"Add to Home Screen"</strong>.
+                </div>
+            </div>
+        `;
+    }
+
+    body.innerHTML = contentHtml;
+    modal.classList.remove('hidden');
 }
 
 // Simulated Date & Day Order Storage
@@ -705,6 +794,38 @@ function setupEventBindings() {
     const btnPrev = document.getElementById('overview-prev-day-btn');
     const btnNext = document.getElementById('overview-next-day-btn');
     const btnToday = document.getElementById('overview-btn-today');
+
+    // Universal PWA Install Buttons & Banner Bindings
+    document.addEventListener('click', (e) => {
+        const installBtn = e.target.closest('[data-pwa-install="true"], #pwa-banner-install-btn, .pwa-install-btn');
+        if (installBtn) {
+            e.preventDefault();
+            triggerPwaInstallPrompt();
+        }
+    });
+
+    const bannerDismissBtn = document.getElementById('pwa-banner-dismiss-btn');
+    if (bannerDismissBtn) {
+        bannerDismissBtn.addEventListener('click', () => {
+            hidePwaBanner();
+            try {
+                localStorage.setItem('srm_pwa_banner_dismissed', String(Date.now()));
+            } catch (_) {}
+        });
+    }
+
+    const closePwaModalBtn = document.getElementById('close-pwa-modal-btn');
+    const pwaModal = document.getElementById('pwa-install-modal');
+    if (closePwaModalBtn && pwaModal) {
+        closePwaModalBtn.addEventListener('click', () => {
+            animateCloseElement(pwaModal);
+        });
+        pwaModal.addEventListener('click', (e) => {
+            if (e.target === pwaModal) {
+                animateCloseElement(pwaModal);
+            }
+        });
+    }
 /**
  * Setup Custom Class Modal Event Listeners
  */

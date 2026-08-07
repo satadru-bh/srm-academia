@@ -300,6 +300,10 @@
                     </svg>
                     <span>Support App</span>
                 </button>
+                <button class="nav-item nav-item-install" id="sidebar-install-pwa-btn" data-pwa-install="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <span>Install App</span>
+                </button>
             </nav>
 
             <div class="sidebar-footer">
@@ -1128,6 +1132,10 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
             <span>Support App</span>
         </button>
+        <button class="more-menu-item" id="more-menu-install-btn" data-pwa-install="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Install App</span>
+        </button>
     </div>
 
     <!-- FIRST-TIME LOGIN THEME PROMOTION MODAL -->
@@ -1188,6 +1196,47 @@
     <!-- GLOBAL MODAL & POPUP BACKDROP OVERLAY -->
     <div id="global-backdrop-overlay" class="global-backdrop-overlay hidden"></div>
 
-</body>
+    <!-- UNIVERSAL PWA INSTALL GUIDE MODAL FOR ALL PLATFORMS -->
+    <div id="pwa-install-modal" class="modal-overlay hidden" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(8px); z-index: 99999; display: flex; align-items: center; justify-content: center; transition: opacity 0.25s ease;">
+        <div class="modal-card card" style="width: 90%; max-width: 480px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); box-shadow: var(--shadow-floating); padding: 24px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-subtle); padding-bottom: 14px; margin-bottom: 18px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 38px; height: 38px; border-radius: 10px; background: var(--accent-primary); color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 17px; font-weight: 800; margin: 0; color: var(--text-primary);">Install SRM Academia+</h3>
+                        <span style="font-size: 11px; color: var(--text-muted); font-weight: 700;">Fast Standalone Web App</span>
+                    </div>
+                </div>
+                <button id="close-pwa-modal-btn" class="btn-icon" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 4px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
 
+            <div id="pwa-install-modal-body" style="display: flex; flex-direction: column; gap: 14px;">
+                <!-- Instructions dynamically injected by app.js based on device/browser -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FLOATING PWA INSTALL PROMPT BANNER -->
+    <div id="pwa-install-banner" class="pwa-install-banner hidden">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 36px; height: 36px; border-radius: 10px; background: var(--accent-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #fff;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </div>
+            <div>
+                <h4 style="margin: 0; font-size: 13px; font-weight: 800; color: var(--text-primary);">Install Web App</h4>
+                <span style="font-size: 11px; color: var(--text-muted); font-weight: 700;">Fast 1-click app for Phone &amp; PC</span>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <button id="pwa-banner-install-btn" class="btn-primary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer;">Install</button>
+            <button id="pwa-banner-dismiss-btn" class="btn-icon" style="min-width: 28px; width: 28px; height: 28px; border-radius: 50%; background: transparent; border: none; color: var(--text-muted); cursor: pointer;" title="Dismiss">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+    </div>
+</body>
 </html>
