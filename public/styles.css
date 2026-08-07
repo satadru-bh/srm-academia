@@ -9646,24 +9646,60 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
 }
 
-/* Clean Drop Shadow Fixes for Support Card & Inner Containers */
+/* Authentic Neo-Brutalist Support Page Styling */
+[data-theme="neo-brutalist"] #view-support {
+    padding-bottom: 48px !important;
+}
+
 [data-theme="neo-brutalist"] #view-support .support-card {
     background: #ffffff !important;
-    border: 2px solid #000000 !important;
-    box-shadow: 5px 5px 0px #000000 !important;
-    border-radius: 16px !important;
+    border: 3px solid #000000 !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+    border-radius: 18px !important;
+    margin-bottom: 36px !important;
 }
 
-[data-theme="neo-brutalist"] #view-support .btn-secondary {
-    background: #ffffff !important;
-    border: 1.5px solid #000000 !important;
-    box-shadow: 2px 2px 0px #000000 !important;
+[data-theme="neo-brutalist"] #view-support .support-icon-badge {
+    background: #ffee00 !important;
     color: #000000 !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
 }
 
-[data-theme="neo-brutalist"] #view-support .btn-secondary:hover {
-    background: #f4f4f5 !important;
-    box-shadow: 2px 2px 0px #000000 !important;
+[data-theme="neo-brutalist"] #view-support .support-text-block {
+    background: #fafaf5 !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 3.5px 3.5px 0px #000000 !important;
+    border-radius: 14px !important;
+}
+
+[data-theme="neo-brutalist"] #view-support div[style*="border: 1px dashed"],
+[data-theme="neo-brutalist"] #view-support div[style*="border: 1px solid"] {
+    background: #ffffff !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 3.5px 3.5px 0px #000000 !important;
+    border-radius: 14px !important;
+}
+
+[data-theme="neo-brutalist"] #view-support div[style*="box-shadow"] {
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    border-radius: 12px !important;
+}
+
+[data-theme="neo-brutalist"] #view-support .btn-secondary,
+[data-theme="neo-brutalist"] #view-support button.btn-secondary {
+    background: #ffee00 !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+}
+
+[data-theme="neo-brutalist"] #view-support .btn-secondary:hover,
+[data-theme="neo-brutalist"] #view-support button.btn-secondary:hover {
+    background: #facc15 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
 }
 
 #view-support .support-title,

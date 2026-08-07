@@ -163,54 +163,17 @@ const periodTimings = [
 // Array of 32 Handcrafted Themes with color swatches in decreasing order of prominence:
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
-    // Sculpted Claymorphism
-    { id: 'claymorphism', name: 'Claymorphism', tag: 'Sculpted Soft Ceramic & Matte Polymer', colors: ['#F7F4F0', '#FAF7F4', '#8B70F6', '#7BB8FF'] },
+    // Flagship Themes
+    { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Yellow & Thick Outlines', colors: ['#f4f4ee', '#ffffff', '#ffee00', '#000000'] },
+    { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
 
-    // Neo-Brutalist & High Contrast
-    { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & Thick Outlines', colors: ['#f4f4ee', '#ffffff', '#ccff00', '#000000'] },
-    { id: 'retro-computing', name: 'Retro Computing', tag: 'NeXTSTEP & SGI Engineering Workstation', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
+    // Generic Good Looking Light Themes
+    { id: 'clean-light', name: 'Clean Light', tag: 'Minimal Crisp White & Sapphire Blue', colors: ['#f8fafc', '#ffffff', '#2563eb', '#0284c7'] },
+    { id: 'cream-latte', name: 'Cream Latte', tag: 'Soft Warm Vanilla & Amber Accent', colors: ['#FAF6F0', '#FFFFFF', '#D97706', '#B45309'] },
 
-    // Neutral & Monochrome
-    { id: 'monochrome-dark', name: 'Monochrome Dark', tag: 'Pure Black & Silver', colors: ['#050505', '#121212', '#ffffff', '#a3a3a3'] },
-    { id: 'monochrome-light', name: 'Monochrome Light', tag: 'Pure White & Onyx', colors: ['#fafafa', '#ffffff', '#0f172a', '#475569'] },
-    { id: 'slate-neutral', name: 'Slate Neutral', tag: 'Cool Graphite Slate', colors: ['#0f172a', '#1e293b', '#6366f1', '#818cf8'] },
-    { id: 'taupe-natural', name: 'Warm Taupe', tag: 'Natural Warm Greige', colors: ['#faf8f5', '#ffffff', '#786c5f', '#9a8b79'] },
-
-    // Professional & Corporate
-    { id: 'corporate-navy', name: 'Corporate Navy', tag: 'Professional Deep Blue', colors: ['#0a1120', '#111c33', '#2563eb', '#60a5fa'] },
-    { id: 'executive-light', name: 'Executive Light', tag: 'Corporate Sapphire', colors: ['#f8fafc', '#ffffff', '#1e40af', '#0284c7'] },
-    { id: 'enterprise-dark', name: 'Enterprise Slate', tag: 'Professional Dark Cyan', colors: ['#0f172a', '#1e293b', '#0d9488', '#14b8a6'] },
-    { id: 'financial-green', name: 'Financial Emerald', tag: 'Corporate Forest Dark', colors: ['#061a14', '#0d2a20', '#059669', '#34d399'] },
-
-    // OLED & Deep Dark
-    { id: 'pitch-black', name: 'Pitch Black', tag: 'OLED Pure Black', colors: ['#000000', '#0a0a0a', '#f97316', '#38bdf8'] },
-    { id: 'midnight-navy', name: 'Midnight Navy', tag: 'Deep Slate', colors: ['#070b19', '#0f172a', '#3b82f6', '#60a5fa'] },
-    { id: 'dracula', name: 'Dracula', tag: 'Vampire Gothic', colors: ['#1e1f29', '#282a36', '#bd93f9', '#ff79c6'] },
-    { id: 'emerald-mint', name: 'Emerald Mint', tag: 'Forest Dark', colors: ['#040d0a', '#0a1c16', '#10b981', '#34d399'] },
-    { id: 'tokyo-night', name: 'Tokyo Night', tag: 'Neon Cyber City', colors: ['#1a1b26', '#24283b', '#7aa2f7', '#bb9af7'] },
-    { id: 'nord-dark', name: 'Nordic Frost', tag: 'Arctic Slate', colors: ['#2e3440', '#3b4252', '#88c0d0', '#81a1c1'] },
-    { id: 'monokai-pro', name: 'Monokai Pro', tag: 'Warm Charcoal', colors: ['#19181a', '#222125', '#ffd866', '#ff6188'] },
-    { id: 'obsidian-purple', name: 'Obsidian Royal', tag: 'Imperial Amethyst', colors: ['#090514', '#130a24', '#a855f7', '#e9d5ff'] },
-
-    // Vibrant & Creative
-    { id: 'cyberpunk', name: 'Cyberpunk Neon', tag: 'High Voltage', colors: ['#0d0221', '#190a38', '#ff007f', '#00f0ff'] },
-    { id: 'synthwave', name: 'Synthwave 80s', tag: 'Neon Sunset', colors: ['#170b28', '#24123e', '#f72585', '#4cc9f0'] },
-    { id: 'sunset-horizon', name: 'Sunset Horizon', tag: 'Twilight Glow', colors: ['#12081f', '#210e38', '#ff6b6b', '#fca5a5'] },
-    { id: 'matrix-green', name: 'Matrix Code', tag: 'Terminal Hacker', colors: ['#030a05', '#08170b', '#22c55e', '#4ade80'] },
-    { id: 'crimson-velvet', name: 'Crimson Velvet', tag: 'Deep Ruby', colors: ['#140508', '#24090f', '#ef4444', '#fca5a5'] },
-    { id: 'oceanic-deep', name: 'Oceanic Deep', tag: 'Abyss Cyan', colors: ['#05131a', '#0b202c', '#06b6d4', '#67e8f9'] },
-    { id: 'solarized-dark', name: 'Solarized Dark', tag: 'Teal Amber', colors: ['#002b36', '#073642', '#b58900', '#2aa198'] },
-    { id: 'catppuccin-mocha', name: 'Catppuccin Mocha', tag: 'Soft Lavender Dark', colors: ['#1e1e2e', '#2a2b3d', '#cba6f7', '#f5c2e7'] },
-
-    // Light & Minimalist
-    { id: 'clean-light', name: 'Clean Light', tag: 'Minimal Light', colors: ['#f8fafc', '#ffffff', '#f97316', '#0284c7'] },
-    { id: 'sakura-rose', name: 'Sakura Rose', tag: 'Soft Pastel Light', colors: ['#fff5f7', '#ffffff', '#e11d48', '#f43f5e'] },
-    { id: 'cream-latte', name: 'Cream Latte', tag: 'Warm Coffee', colors: ['#fdfbf7', '#f5efe6', '#d97706', '#b45309'] },
-    { id: 'paper-minimal', name: 'Paper Minimal', tag: 'Warm Gray Notebook', colors: ['#f6f6f4', '#ffffff', '#2563eb', '#3b82f6'] },
-    { id: 'mint-chocolat', name: 'Mint Pastel', tag: 'Soft Sage Light', colors: ['#f2faf6', '#ffffff', '#059669', '#10b981'] },
-    { id: 'nord-light', name: 'Nordic Snow', tag: 'Ice Slate Light', colors: ['#f0f4f8', '#ffffff', '#0284c7', '#38bdf8'] },
-    { id: 'solarized-light', name: 'Solarized Light', tag: 'Warm Cream Amber', colors: ['#fdf6e3', '#eee8d5', '#b58900', '#d33682'] },
-    { id: 'lavender-bliss', name: 'Lavender Bliss', tag: 'Pastel Violet', colors: ['#f8f5ff', '#ffffff', '#7c3aed', '#a855f7'] }
+    // Generic Good Looking Dark Themes
+    { id: 'monochrome-dark', name: 'Monochrome Dark', tag: 'Sleek Dark Slate & Silver Accent', colors: ['#09090b', '#18181b', '#ffffff', '#a1a1aa'] },
+    { id: 'pitch-black', name: 'OLED Pure Black', tag: 'Pure Black & Vibrant Cyan', colors: ['#000000', '#0a0a0a', '#06b6d4', '#38bdf8'] }
 ];
 
 // Document Event Handlers on DOM Ready
