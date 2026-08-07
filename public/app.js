@@ -164,7 +164,7 @@ const periodTimings = [
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
     // Flagship Themes
-    { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Yellow & Thick Outlines', colors: ['#f4f4ee', '#ffffff', '#ffee00', '#000000'] },
+    { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
     { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
 
     // Generic Good Looking Light Themes
