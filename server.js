@@ -605,7 +605,8 @@ app.post(["/api/login", "/login"], async (req, res) => {
             userMessage = "Sign-in session expired. Please attempt sign-in again.";
         }
 
-        return res.status(401).json({ success: false, error: userMessage });
+        SessionLogger.error('Server', `Login failed for ${cleanEmail}: ${msg}`);
+        return res.status(401).json({ success: false, error: userMessage, debug: msg });
     }
 });
 
