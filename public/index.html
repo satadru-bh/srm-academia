@@ -834,24 +834,30 @@
                 <button class="support-preset-chip" data-amount="500" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); color: var(--text-primary); font-weight: 800; cursor: pointer; text-align: center;">₹500</button>
             </div>
 
-            <!-- UPI ID Box -->
-            <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+            <!-- UPI ID Box 1 -->
+            <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                    <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">UPI ID Placeholder</span>
-                    <span id="support-upi-id" style="font-family: monospace; font-size: 14px; font-weight: 800; color: var(--text-primary);">srm.academia.dev@upi</span>
+                    <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Primary UPI ID</span>
+                    <span id="support-upi-id" style="font-family: monospace; font-size: 14px; font-weight: 800; color: var(--text-primary);">8017622902@hdfc</span>
                 </div>
-                <button id="copy-upi-btn" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer;">Copy UPI ID</button>
+                <button id="copy-upi-btn" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer;">Copy UPI</button>
             </div>
 
-            <!-- QR Code Placeholder -->
+            <!-- UPI ID Box 2 -->
+            <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Secondary UPI ID</span>
+                    <span id="support-upi-id-2" style="font-family: monospace; font-size: 12px; font-weight: 800; color: var(--text-primary); word-break: break-all;">satadrubhattacharya940-1@okhdfcbank</span>
+                </div>
+                <button id="copy-upi-btn-2" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer; flex-shrink: 0; margin-left: 8px;">Copy UPI</button>
+            </div>
+
+            <!-- QR Code Section -->
             <div style="text-align: center; padding: 16px; background: var(--bg-surface-elevated); border-radius: 12px; border: 1px solid var(--border-subtle);">
                 <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 10px;">Scan QR Code using GPay, PhonePe, or Paytm</span>
-                <div style="width: 160px; height: 160px; margin: 0 auto; background: #ffffff; padding: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                    <svg width="140" height="140" viewBox="0 0 100 100" fill="#000">
-                        <path d="M0 0h35v35H0zM5 5v25h25V5zm5 5h15v15H10zM65 0h35v35H65zM70 5v25h25V5zm5 5h15v15H75zM0 65h35v35H0zM5 70v25h25V70zm5 5h15v15H10zM40 5h15v15H40zM40 25h15v10H40zM25 40h15v15H25zM45 40h20v15H45zM70 40h25v10H70zM0 40h15v15H0zM80 55h15v20H80zM40 60h10v20H40zM55 65h15v15H55zM75 80h25v20H75zM40 85h25v15H40z" />
-                    </svg>
+                <div style="width: 200px; height: 200px; margin: 0 auto; background: #ffffff; padding: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <img src="qr.png" alt="Donate QR Code" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px;" />
                 </div>
-                <span style="font-size: 10px; color: var(--text-muted); margin-top: 8px; display: block;">Placeholder QR • Will be updated</span>
             </div>
         </div>
     </div>

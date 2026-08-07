@@ -595,19 +595,26 @@ function setupSupportModal() {
         });
     }
 
+    const copyBtn2 = document.getElementById('copy-upi-btn-2');
+    const upiIdEl2 = document.getElementById('support-upi-id-2');
+
+    const copyUpi = (upiStr) => {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(upiStr).then(() => {
+                createToast("UPI ID Copied to Clipboard!", "success");
+            }).catch(() => {
+                createToast("Copied: " + upiStr, "info");
+            });
+        } else {
+            createToast("Copied: " + upiStr, "info");
+        }
+    };
+
     if (copyBtn && upiIdEl) {
-        copyBtn.addEventListener('click', () => {
-            const upi = upiIdEl.textContent.trim();
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(upi).then(() => {
-                    createToast("UPI ID Copied to Clipboard!", "success");
-                }).catch(() => {
-                    createToast("Copied: " + upi, "info");
-                });
-            } else {
-                createToast("Copied: " + upi, "info");
-            }
-        });
+        copyBtn.addEventListener('click', () => copyUpi(upiIdEl.textContent.trim()));
+    }
+    if (copyBtn2 && upiIdEl2) {
+        copyBtn2.addEventListener('click', () => copyUpi(upiIdEl2.textContent.trim()));
     }
 
     const presetChips = document.querySelectorAll('.support-preset-chip');
