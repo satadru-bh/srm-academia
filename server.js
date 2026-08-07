@@ -2,7 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const axios = require("axios");
 const cheerio = require("cheerio");
-const { wrapper } = require("axios-cookiejar-support");
+
 const { CookieJar } = require("tough-cookie");
 const path = require("path");
 

@@ -4,9 +4,19 @@
  */
 
 const axios = require('axios');
-const { wrapper } = require('axios-cookiejar-support');
 
-function createSrmClient(jar) {
+// axios-cookiejar-support v7 is ESM-only, so we use dynamic import()
+let _wrapper = null;
+async function getWrapper() {
+    if (!_wrapper) {
+        const mod = await import('axios-cookiejar-support');
+        _wrapper = mod.wrapper;
+    }
+    return _wrapper;
+}
+
+async function createSrmClient(jar) {
+    const wrapper = await getWrapper();
     return wrapper(axios.create({
         jar,
         timeout: 20000, // 20-second timeout

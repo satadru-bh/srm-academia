@@ -121,7 +121,7 @@ class AuthenticationManager {
         if (existingRecord && existingRecord.jar && existingRecord.isValid !== false) {
             try {
                 SessionLogger.info(TAG, `Attempting CookieJar reuse for ${cleanEmail} (ZERO login calls to SRM)`);
-                const client = createSrmClient(existingRecord.jar);
+                const client = await createSrmClient(existingRecord.jar);
                 const payload = await scrapeFn(client);
                 
                 const validation = SessionValidator.validateScrapedPayload(payload);
@@ -139,7 +139,7 @@ class AuthenticationManager {
         // 2. ACQUIRE PER-ACCOUNT LOGIN MUTEX (Only 1 login request reaches SRM simultaneously)
         return LoginMutex.execute(cleanEmail, async () => {
             const jar = new CookieJar();
-            const client = createSrmClient(jar);
+            const client = await createSrmClient(jar);
 
             await this.performSrmSSO(cleanEmail, password, jar, client);
             const payload = await scrapeFn(client);
@@ -168,7 +168,7 @@ class AuthenticationManager {
 
         return LoginMutex.execute(cleanEmail, async () => {
             const freshJar = new CookieJar();
-            const freshClient = createSrmClient(freshJar);
+            const freshClient = await createSrmClient(freshJar);
 
             await this.performSrmSSO(cleanEmail, record.credentials.password, freshJar, freshClient);
             const payload = await scrapeFn(freshClient);

@@ -51,7 +51,7 @@ class RequestExecutor {
 
             // 2. Execute Data Scraping using shared CookieJar
             try {
-                const client = createSrmClient(record.jar);
+                const client = await createSrmClient(record.jar);
                 const payload = await scrapeFn(client);
 
                 // Validate scraped data payload
@@ -73,7 +73,7 @@ class RequestExecutor {
                 if (SessionValidator.isNetworkFailure(err)) {
                     SessionLogger.info(TAG, `Network error occurred for ${cleanEmail}. Executing 1 retry attempt...`);
                     try {
-                        const clientRetry = createSrmClient(record.jar);
+                        const clientRetry = await createSrmClient(record.jar);
                         const retryPayload = await scrapeFn(clientRetry);
                         CacheStore.set(cleanEmail, retryPayload);
                         return { success: true, isStale: false, ...retryPayload };
