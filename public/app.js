@@ -4713,7 +4713,7 @@ const ALLOWED_DEV_NETIDS = [
 ];
 
 function isUserAuthorizedForDevConsole() {
-    return true;
+    return false;
 }
 
 /**

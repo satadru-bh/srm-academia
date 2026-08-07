@@ -9920,6 +9920,17 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     }
 }
 
+/* EXPLICIT DIRECTIVE: Hide Developer Console for Everyone */
+[data-tab="developer"],
+#more-dev-console-card,
+#dropdown-dev-console-btn,
+#view-developer,
+.nav-item[data-tab="developer"] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
 #view-support .support-card {
     display: block !important;
     visibility: visible !important;
