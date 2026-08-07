@@ -1498,7 +1498,13 @@ async function handleLoginSubmission(e) {
             body: JSON.stringify({ email, password })
         });
 
-        const data = await response.json();
+        let data = {};
+        try {
+            const rawText = await response.text();
+            data = JSON.parse(rawText);
+        } catch (parseErr) {
+            data = { success: false, error: response.status >= 500 ? "Server temporarily unavailable (500). Please try again shortly." : "Sign-in error. Please check your credentials." };
+        }
 
         if (data.success) {
             const saveCheckbox = document.getElementById('save-account-checkbox');

@@ -546,7 +546,7 @@ function generateDemoData() {
 /**
  * Authentication Entry Point - Single Source of Truth Session Architecture
  */
-app.post("/api/login", async (req, res) => {
+app.post(["/api/login", "/login"], async (req, res) => {
     let { email, password } = req.body;
     if (!email || !password) {
         return res.status(400).json({ success: false, error: "NetID / Email and Password are required." });
@@ -612,7 +612,7 @@ app.post("/api/login", async (req, res) => {
 /**
  * Data Refresh Sync Endpoint - Resilient Fetching & Stale Cache Fallback
  */
-app.all(["/api/sync", "/api/attendance"], async (req, res) => {
+app.all(["/api/sync", "/sync", "/api/attendance", "/attendance"], async (req, res) => {
     try {
         if (req.session && req.session.isDemo) {
             SessionLogger.debug('Server', `Demo mode active for session ${req.session.id}. Returning mock placeholder payload.`);
@@ -664,7 +664,7 @@ app.all(["/api/sync", "/api/attendance"], async (req, res) => {
 /**
  * Logout Endpoint - Independent Device & All-Devices Logout Engine
  */
-app.post("/api/logout", (req, res) => {
+app.post(["/api/logout", "/logout"], (req, res) => {
     try {
         const sessionId = req.session ? req.session.id : null;
         const targetEmail = req.headers['x-user-email'] || (req.session ? req.session.email : null) || (sessionId ? DeviceSessionStore.getAccountEmail(sessionId) : null);
