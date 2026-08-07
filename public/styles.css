@@ -9623,7 +9623,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    max-width: 680px !important;
+    max-width: 860px !important;
     margin: 0 auto !important;
     padding: 32px !important;
     box-sizing: border-box !important;

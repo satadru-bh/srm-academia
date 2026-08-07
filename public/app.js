@@ -699,24 +699,23 @@ function setupSupportModal() {
         }
     };
 
+    const pageCopyBtn1 = document.getElementById('copy-page-upi-btn-1');
+    const pageUpiEl1 = document.getElementById('page-upi-id-1');
+    const pageCopyBtn2 = document.getElementById('copy-page-upi-btn-2');
+    const pageUpiEl2 = document.getElementById('page-upi-id-2');
+
     if (copyBtn && upiIdEl) {
         copyBtn.addEventListener('click', () => copyUpi(upiIdEl.textContent.trim()));
     }
     if (copyBtn2 && upiIdEl2) {
         copyBtn2.addEventListener('click', () => copyUpi(upiIdEl2.textContent.trim()));
     }
-
-    const presetChips = document.querySelectorAll('.support-preset-chip');
-    presetChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            presetChips.forEach(c => {
-                c.classList.remove('active');
-                c.style.border = '1px solid var(--border-subtle)';
-            });
-            chip.classList.add('active');
-            chip.style.border = '1.5px solid var(--accent-primary)';
-        });
-    });
+    if (pageCopyBtn1 && pageUpiEl1) {
+        pageCopyBtn1.addEventListener('click', () => copyUpi(pageUpiEl1.textContent.trim()));
+    }
+    if (pageCopyBtn2 && pageUpiEl2) {
+        pageCopyBtn2.addEventListener('click', () => copyUpi(pageUpiEl2.textContent.trim()));
+    }
 }
 
 const LIGHT_THEMES = new Set([
