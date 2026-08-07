@@ -3275,10 +3275,11 @@ function renderSingleDayClassesSelector(dateStr) {
     `;
 
     validClasses.forEach((slot) => {
-        const isLab = isSlotLab(slot.slot);
+        const isLab = isSlotLab(slot);
         const typeTag = isLab ? 'Practical' : 'Theory';
         const typeClass = isLab ? 'practical' : 'theory';
         const courseTitle = slot.subjectTitle || slot.course || 'Course';
+        const courseCode = slot.courseCode || slot.code || '';
         const timing = slot.timing || (periodTimings[slot.period - 1] ? `${periodTimings[slot.period - 1].start} - ${periodTimings[slot.period - 1].end}` : `Slot ${slot.period}`);
 
         html += `
@@ -3290,7 +3291,7 @@ function renderSingleDayClassesSelector(dateStr) {
                     </div>
                     <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600;">${timing} ${slot.room ? `• Room ${slot.room}` : ''}</span>
                 </div>
-                <select class="single-class-action-select" data-course="${courseTitle}" data-code="${slot.courseCode || ''}" style="padding: 8px 12px; font-size: 12px; font-weight: 800; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); background: var(--bg-surface-solid); color: var(--text-primary); cursor: pointer;">
+                <select class="single-class-action-select" data-course="${courseTitle}" data-code="${courseCode}" data-islab="${isLab ? 'true' : 'false'}" style="padding: 8px 12px; font-size: 12px; font-weight: 800; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); background: var(--bg-surface-solid); color: var(--text-primary); cursor: pointer;">
                     <option value="BUNK" selected>Bunk (Skip)</option>
                     <option value="ATTEND">Attend</option>
                 </select>
@@ -3300,6 +3301,63 @@ function renderSingleDayClassesSelector(dateStr) {
 
     html += `</div>`;
     container.innerHTML = html;
+}
+
+/**
+ * Helper to match a timetable slot/course to the exact attendance record in state.attendance,
+ * correctly distinguishing Lab/Practical components from Theory components.
+ */
+function findMatchingAttendanceCourse(courseTitle, courseCode, isLabSlot, attendanceList) {
+    if (!attendanceList || attendanceList.length === 0) return null;
+
+    const targetTitle = (courseTitle || '').toUpperCase().trim();
+    const targetCode = (courseCode || '').toUpperCase().trim();
+
+    const isAttendanceItemLab = (item) => {
+        const cat = (item.category || item.type || '').toUpperCase().trim();
+        const code = (item.code || '').toUpperCase().trim();
+        const title = (item.course || '').toUpperCase().trim();
+        return cat.includes('PRACTICAL') || cat.includes('LAB') || cat.includes('PROJECT') ||
+               code.endsWith('P') || code.endsWith('L') ||
+               title.includes('PRACTICAL') || title.includes('LAB') || title.includes('(LAB)');
+    };
+
+    // 1. Exact match on course code AND matching Lab vs Theory component
+    let match = attendanceList.find(c => {
+        const cCode = (c.code || '').toUpperCase().trim();
+        if (targetCode && cCode === targetCode) {
+            return isLabSlot ? isAttendanceItemLab(c) : !isAttendanceItemLab(c);
+        }
+        return false;
+    });
+    if (match) return match;
+
+    // 2. Match by exact code fallback if unique
+    if (targetCode) {
+        match = attendanceList.find(c => (c.code || '').toUpperCase().trim() === targetCode);
+        if (match) return match;
+    }
+
+    // 3. Match by Title while strictly prioritizing matching Lab/Theory category
+    const titleCandidates = attendanceList.filter(c => {
+        const cTitle = (c.course || '').toUpperCase().trim();
+        const cCode = (c.code || '').toUpperCase().trim();
+        if (!cTitle && !cCode) return false;
+
+        const titleMatch = targetTitle && cTitle && (targetTitle.includes(cTitle) || cTitle.includes(targetTitle));
+        const codeMatch = targetCode && cCode && (targetCode.includes(cCode) || cCode.includes(targetCode));
+
+        return titleMatch || codeMatch;
+    });
+
+    if (titleCandidates.length > 0) {
+        const categoryMatch = titleCandidates.find(c => isLabSlot ? isAttendanceItemLab(c) : !isAttendanceItemLab(c));
+        if (categoryMatch) return categoryMatch;
+
+        return titleCandidates[0];
+    }
+
+    return null;
 }
 
 /**
@@ -3326,15 +3384,11 @@ function applyAttendancePrediction() {
 
         selectEls.forEach(sel => {
             const courseTitle = sel.dataset.course;
+            const courseCode = sel.dataset.code;
+            const isLabSlot = sel.dataset.islab === 'true';
             const action = sel.value; // 'ATTEND' or 'BUNK'
 
-            const matchCourse = predicted.find(c => {
-                const cTitle = (c.course || '').toUpperCase().trim();
-                const cCode = (c.code || '').toUpperCase().trim();
-                const title = courseTitle.toUpperCase().trim();
-                return (cTitle && (title.includes(cTitle) || cTitle.includes(title))) ||
-                       (cCode && (title.includes(cCode) || cCode.includes(title)));
-            });
+            const matchCourse = findMatchingAttendanceCourse(courseTitle, courseCode, isLabSlot, predicted);
 
             if (matchCourse) {
                 matchCourse.conducted = (parseInt(matchCourse.conducted, 10) || 0) + 1;
@@ -3384,14 +3438,11 @@ function applyAttendancePrediction() {
 
                 daySlots.forEach(slot => {
                     const title = (slot.course || slot.subjectTitle || '').toUpperCase().trim();
-                    if (!title) return;
+                    const code = (slot.courseCode || slot.code || '').toUpperCase().trim();
+                    if (!title && !code) return;
 
-                    const matchCourse = predicted.find(c => {
-                        const cTitle = (c.course || '').toUpperCase().trim();
-                        const cCode = (c.code || '').toUpperCase().trim();
-                        return (cTitle && (title.includes(cTitle) || cTitle.includes(title))) ||
-                               (cCode && (title.includes(cCode) || cCode.includes(title)));
-                    });
+                    const isLabSlot = isSlotLab(slot);
+                    const matchCourse = findMatchingAttendanceCourse(title, code, isLabSlot, predicted);
 
                     if (matchCourse) {
                         matchCourse.conducted = (parseInt(matchCourse.conducted, 10) || 0) + 1;
@@ -3509,10 +3560,15 @@ function calculateBunkSimulations() {
  */
 function isSlotLab(slot) {
     if (!slot) return false;
-    const slotCode = (slot.slot || '').trim().toUpperCase();
-
-    // Strictly ONLY P slots (e.g. P1, P2, P31, P32, P1-P2, P31-P32, P15-P16) are practical/lab
-    return /^P\d/i.test(slotCode) || slotCode.startsWith('P');
+    if (typeof slot === 'object') {
+        const slotCode = (slot.slot || '').trim().toUpperCase();
+        const title = ((slot.subjectTitle || slot.course || '') + ' ' + (slot.category || '')).toUpperCase();
+        if (/^P\d/i.test(slotCode) || slotCode.startsWith('P') || slotCode.startsWith('L') || slotCode.includes('LAB')) return true;
+        if (title.includes('PRACTICAL') || title.includes('LAB') || title.includes('(LAB)')) return true;
+        return false;
+    }
+    const slotCode = String(slot).trim().toUpperCase();
+    return /^P\d/i.test(slotCode) || slotCode.startsWith('P') || slotCode.startsWith('L') || slotCode.includes('LAB');
 }
 
 /**
