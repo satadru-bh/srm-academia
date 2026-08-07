@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">SRM Academia+</string>
+    <string name="widget_low_attendance_desc">Shows low attendance courses with margin warnings</string>
+    <string name="widget_smart_timetable_desc">Shows today\'s schedule by day and switches to tomorrow after 5 PM</string>
+    <string name="widget_internal_marks_desc">Shows overall internal assessment score and course summary</string>
+</resources>
