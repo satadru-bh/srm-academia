@@ -3312,52 +3312,49 @@ function findMatchingAttendanceCourse(courseTitle, courseCode, isLabSlot, attend
 
     const targetTitle = (courseTitle || '').toUpperCase().trim();
     const targetCode = (courseCode || '').toUpperCase().trim();
+    const baseTargetCode = targetCode.replace(/[TLP]$/i, '');
 
     const isAttendanceItemLab = (item) => {
+        if (!item) return false;
         const cat = (item.category || item.type || '').toUpperCase().trim();
         const code = (item.code || '').toUpperCase().trim();
-        const title = (item.course || '').toUpperCase().trim();
+        const title = (item.course || item.subjectTitle || '').toUpperCase().trim();
+
         return cat.includes('PRACTICAL') || cat.includes('LAB') || cat.includes('PROJECT') ||
                code.endsWith('P') || code.endsWith('L') ||
                title.includes('PRACTICAL') || title.includes('LAB') || title.includes('(LAB)');
     };
 
-    // 1. Exact match on course code AND matching Lab vs Theory component
-    let match = attendanceList.find(c => {
+    // 1. Collect all potential candidate attendance records matching by exact code, base code, or title
+    const candidates = attendanceList.filter(c => {
         const cCode = (c.code || '').toUpperCase().trim();
-        if (targetCode && cCode === targetCode) {
-            return isLabSlot ? isAttendanceItemLab(c) : !isAttendanceItemLab(c);
-        }
-        return false;
-    });
-    if (match) return match;
+        const cBaseCode = cCode.replace(/[TLP]$/i, '');
+        const cTitle = (c.course || c.subjectTitle || '').toUpperCase().trim();
 
-    // 2. Match by exact code fallback if unique
-    if (targetCode) {
-        match = attendanceList.find(c => (c.code || '').toUpperCase().trim() === targetCode);
-        if (match) return match;
-    }
-
-    // 3. Match by Title while strictly prioritizing matching Lab/Theory category
-    const titleCandidates = attendanceList.filter(c => {
-        const cTitle = (c.course || '').toUpperCase().trim();
-        const cCode = (c.code || '').toUpperCase().trim();
-        if (!cTitle && !cCode) return false;
-
+        const exactCodeMatch = targetCode && cCode === targetCode;
+        const baseCodeMatch = baseTargetCode && cBaseCode === baseTargetCode;
         const titleMatch = targetTitle && cTitle && (targetTitle.includes(cTitle) || cTitle.includes(targetTitle));
-        const codeMatch = targetCode && cCode && (targetCode.includes(cCode) || cCode.includes(targetCode));
 
-        return titleMatch || codeMatch;
+        return exactCodeMatch || baseCodeMatch || titleMatch;
     });
 
-    if (titleCandidates.length > 0) {
-        const categoryMatch = titleCandidates.find(c => isLabSlot ? isAttendanceItemLab(c) : !isAttendanceItemLab(c));
-        if (categoryMatch) return categoryMatch;
-
-        return titleCandidates[0];
+    if (candidates.length === 0) {
+        // Fallback: search all attendance items if titles/codes differ slightly
+        return attendanceList.find(c => isLabSlot ? isAttendanceItemLab(c) : !isAttendanceItemLab(c)) || attendanceList[0];
     }
 
-    return null;
+    if (candidates.length === 1) {
+        return candidates[0];
+    }
+
+    // 2. Multiple candidates exist (e.g. both Theory and Practical records exist for this course)
+    // Strictly pick the candidate matching isLabSlot!
+    const exactLabMatch = candidates.find(c => isLabSlot ? isAttendanceItemLab(c) : !isAttendanceItemLab(c));
+    if (exactLabMatch) {
+        return exactLabMatch;
+    }
+
+    return candidates[0];
 }
 
 /**
@@ -3562,13 +3559,20 @@ function isSlotLab(slot) {
     if (!slot) return false;
     if (typeof slot === 'object') {
         const slotCode = (slot.slot || '').trim().toUpperCase();
-        const title = ((slot.subjectTitle || slot.course || '') + ' ' + (slot.category || '')).toUpperCase();
-        if (/^P\d/i.test(slotCode) || slotCode.startsWith('P') || slotCode.startsWith('L') || slotCode.includes('LAB')) return true;
+        const category = (slot.category || slot.type || '').trim().toUpperCase();
+        const code = (slot.courseCode || slot.code || '').trim().toUpperCase();
+        const title = ((slot.subjectTitle || slot.course || '') + ' ' + category).toUpperCase();
+
+        if (category.includes('PRACTICAL') || category.includes('LAB') || category.includes('PROJECT')) return true;
+        if (code.endsWith('P') || code.endsWith('L')) return true;
         if (title.includes('PRACTICAL') || title.includes('LAB') || title.includes('(LAB)')) return true;
+
+        if (/^[LP]\d/i.test(slotCode) || slotCode.startsWith('L') || slotCode.startsWith('P') || slotCode.includes('LAB')) return true;
+
         return false;
     }
     const slotCode = String(slot).trim().toUpperCase();
-    return /^P\d/i.test(slotCode) || slotCode.startsWith('P') || slotCode.startsWith('L') || slotCode.includes('LAB');
+    return /^[LP]\d/i.test(slotCode) || slotCode.startsWith('L') || slotCode.startsWith('P') || slotCode.includes('LAB');
 }
 
 /**
