@@ -20,7 +20,11 @@ class CookieStore {
     constructor() {
         /** @type {Map<string, { email: string, jar: CookieJar, credentials: { email: string, password: string } | null, lastUsed: number, isValid: boolean }>} */
         this.store = new Map();
-        this.loadFromDisk();
+        try {
+            this.loadFromDisk();
+        } catch (initErr) {
+            SessionLogger.warn(TAG, 'CookieStore disk initialization skipped (serverless/read-only environment).', initErr.message || '');
+        }
     }
 
     /**
