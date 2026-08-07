@@ -5,10 +5,12 @@
 // Global window properties for Debug Mode
 window.DEBUG_MODE = false;
 
-// Register Production PWA Service Worker for Web App Installation
+// Register Production PWA Service Worker for Web App Installation with Auto-Update
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(err => {
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+            if (reg) reg.update();
+        }).catch(err => {
             console.log("ServiceWorker registration note:", err);
         });
     });

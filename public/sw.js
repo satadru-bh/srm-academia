@@ -1,9 +1,9 @@
-const CACHE_NAME = 'academia-plus-v5';
+const CACHE_NAME = 'srm-academia-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './styles.css',
-  './app.js',
+  './styles.css?v=6',
+  './app.js?v=6',
   './favicon.png',
   './icon-192.png',
   './icon-512.png',
@@ -15,23 +15,22 @@ const ASSETS_TO_CACHE = [
 ];
 
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS_TO_CACHE).catch(() => {});
     })
   );
-  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
-        keys.filter(k => k !== CACHE_NAME).map((key) => caches.delete(key))
+        keys.map((key) => caches.delete(key))
       );
-    })
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
@@ -41,15 +40,41 @@ self.addEventListener('fetch', (event) => {
   // Never cache API requests
   if (url.pathname.startsWith('/api')) return;
 
+  // CORE ASSET NETWORK-FIRST STRATEGY (HTML, CSS, JS)
+  // Guarantees normal reloads always receive fresh, up-to-date layout & styles instantly!
+  const isCoreAsset = event.request.mode === 'navigate' ||
+                      url.pathname.endsWith('.html') ||
+                      url.pathname.endsWith('.css') ||
+                      url.pathname.endsWith('.js') ||
+                      url.pathname === '/' ||
+                      url.pathname === '';
+
+  if (isCoreAsset) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          return caches.match(event.request).then((cachedResponse) => {
+            if (cachedResponse) return cachedResponse;
+            if (event.request.headers.get('accept')?.includes('text/html')) {
+              return caches.match('./index.html') || caches.match('index.html');
+            }
+          });
+        })
+    );
+    return;
+  }
+
+  // Cache-First with Network fallback for static images/icons
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
-        // Stale-while-revalidate for cached assets
-        fetch(event.request).then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse));
-          }
-        }).catch(() => {});
         return cachedResponse;
       }
       return fetch(event.request).then((networkResponse) => {
@@ -58,10 +83,6 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
         }
         return networkResponse;
-      }).catch(() => {
-        if (event.request.headers.get('accept')?.includes('text/html')) {
-          return caches.match('./index.html') || caches.match('index.html');
-        }
       });
     })
   );
