@@ -9655,13 +9655,39 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     pointer-events: none !important;
 }
 
-/* Universal Support Page & Active View-Pane Visibility Guarantee */
-#view-support.active,
+/* Universal Non-Clipping Overflow System for Cards & 3D Shadows Across All Views */
+#content-views,
+.view-pane,
+.view-pane.active,
+#view-planner,
+#view-support,
+#view-overview,
+#view-timetable,
+#view-academics,
+#view-developer,
+#view-more {
+    overflow: visible !important;
+}
+
 .view-pane.active {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
     min-height: 400px !important;
+    padding: 6px 12px 48px 6px !important;
+    box-sizing: border-box !important;
+}
+
+[data-theme="neo-brutalist"] .main-viewport {
+    padding: 20px 36px 64px 24px !important;
+    overflow: visible !important;
+}
+
+[data-theme="neo-brutalist"] #content-views,
+[data-theme="neo-brutalist"] .view-pane,
+[data-theme="neo-brutalist"] .card,
+[data-theme="neo-brutalist"] .workspace-header {
+    overflow: visible !important;
 }
 
 #view-support .support-card {
