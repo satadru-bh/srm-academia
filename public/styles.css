@@ -8275,11 +8275,11 @@ body.sidebar-open #attendance-fab-container,
         stroke: #FAF9F5 !important;
     }
 
-    /* MOBILE FLOATING VERTICAL MORE POPUP MENU */
+    /* MOBILE FLOATING VERTICAL MORE POPUP MENU - ALIGNED WITH MOBILE BOTTOM NAV */
     .mobile-more-menu {
         position: fixed !important;
-        bottom: 92px !important;
-        right: 20px !important;
+        bottom: max(92px, calc(env(safe-area-inset-bottom, 22px) + 70px)) !important;
+        right: max(12px, calc(50% - 240px)) !important;
         min-width: 165px !important;
         background: var(--bg-surface-elevated) !important;
         background-color: var(--bg-surface-elevated) !important;
@@ -9561,27 +9561,39 @@ body.popup-backdrop-active .sidebar {
     justify-content: center !important;
 }
 
-.modal:not(.hidden):not(#auth-screen) .theme-welcome-card,
-.modal:not(.hidden):not(#auth-screen) .modal-card,
-.modal:not(.hidden):not(#auth-screen) .prediction-card,
-.modal:not(.hidden):not(#auth-screen) .account-switcher-card {
-    animation: overlayCardPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+.modal:not(.hidden):not(.pop-closing):not(#auth-screen) .theme-welcome-card,
+.modal:not(.hidden):not(.pop-closing):not(#auth-screen) .modal-card,
+.modal:not(.hidden):not(.pop-closing):not(#auth-screen) .prediction-card,
+.modal:not(.hidden):not(.pop-closing):not(#auth-screen) .account-switcher-card,
+.modal-overlay:not(.hidden):not(.pop-closing) .modal-card,
+.modal-backdrop:not(.hidden):not(.pop-closing) .modal-card {
+    animation: overlayCardPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
     filter: none !important;
     overscroll-behavior: contain !important;
     touch-action: pan-y !important;
 }
 
+.modal.pop-closing,
+.modal-overlay.pop-closing,
+.modal-backdrop.pop-closing {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.2s ease-out !important;
+}
+
 .modal.pop-closing .theme-welcome-card,
 .modal.pop-closing .modal-card,
 .modal.pop-closing .prediction-card,
-.modal.pop-closing .account-switcher-card {
-    animation: overlayCardPopOut 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+.modal.pop-closing .account-switcher-card,
+.modal-overlay.pop-closing .modal-card,
+.modal-backdrop.pop-closing .modal-card {
+    animation: overlayCardPopOut 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
 /* Universal Modal & Pop-up Visibility Guarantee */
-.modal-overlay:not(.hidden),
-.modal-backdrop:not(.hidden),
-.modal:not(.hidden):not(#auth-screen) {
+.modal-overlay:not(.hidden):not(.pop-closing),
+.modal-backdrop:not(.hidden):not(.pop-closing),
+.modal:not(.hidden):not(.pop-closing):not(#auth-screen) {
     display: flex !important;
     opacity: 1 !important;
     pointer-events: auto !important;
@@ -9589,13 +9601,13 @@ body.popup-backdrop-active .sidebar {
     z-index: 999999 !important;
 }
 
-.modal-overlay:not(.hidden) .modal-card,
-.modal-backdrop:not(.hidden) .modal-card,
-.modal:not(.hidden):not(#auth-screen) .modal-card {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    visibility: visible !important;
-    animation: overlayCardPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+/* Guarantee Mobile Navbar is hidden on Auth / Login Screen */
+#auth-screen:not(.hidden) ~ .mobile-bottom-nav,
+body:has(#auth-screen:not(.hidden)) .mobile-bottom-nav,
+html:not(.instant-workspace-active) .mobile-bottom-nav {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 /* Universal Support Page & Active View-Pane Visibility Guarantee */

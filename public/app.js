@@ -1364,6 +1364,21 @@ function updateHeaderTitles(tab) {
 
     const subtitle = document.getElementById('workspace-subtitle');
     if (subtitle) subtitle.textContent = "";
+
+    // Set Dynamic Page Title for Every Tab / Page
+    let pageTitleMap = {
+        'overview': 'Overview Dashboard',
+        'attendance': 'Attendance & Bunk Calculator',
+        'timetable': 'Class Timetable',
+        'academics': 'Internal Marks & Grades',
+        'marks': 'Internal Marks & Grades',
+        'planner': 'Academic Calendar & Events',
+        'developer': 'Developer Console',
+        'support': 'Support SRM Academia+',
+        'more': 'More Tools'
+    };
+    let pageTitle = pageTitleMap[normalizedTab] || (headingText ? headingText : 'Dashboard');
+    document.title = `${pageTitle} - SRM Academia+`;
 }
 
 /**
@@ -1434,6 +1449,11 @@ function showWorkspace() {
         appWorkspace.classList.remove('hidden');
         appWorkspace.style.setProperty('display', 'flex', 'important');
     }
+    const mobileNav = document.querySelector('.mobile-bottom-nav');
+    if (mobileNav) {
+        mobileNav.classList.remove('hidden');
+        mobileNav.style.removeProperty('display');
+    }
     const savedTab = localStorage.getItem('srm_active_tab') || 'overview';
     switchTab(savedTab);
 }
@@ -1453,6 +1473,16 @@ function showAuthScreen() {
         appWorkspace.classList.add('hidden');
         appWorkspace.style.setProperty('display', 'none', 'important');
     }
+    const mobileNav = document.querySelector('.mobile-bottom-nav');
+    if (mobileNav) {
+        mobileNav.classList.add('hidden');
+        mobileNav.style.setProperty('display', 'none', 'important');
+    }
+    const mobileMore = document.getElementById('mobile-more-menu');
+    if (mobileMore) {
+        mobileMore.classList.add('hidden');
+    }
+    document.title = "Sign In - SRM Academia+";
 }
 
 /**
@@ -1521,6 +1551,9 @@ async function handleLoginSubmission(e) {
             updateApplicationState(data);
             showWorkspace();
             updateStickySessionBanner(false);
+
+            // Automatically trigger live data sync right after login everytime
+            attemptAutomaticSync();
         } else {
             showAuthError(data.error || "Unable to sign in. Please check your NetID and password.");
         }
