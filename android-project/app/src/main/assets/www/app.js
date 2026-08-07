@@ -146,8 +146,6 @@ function getApiEndpoint(path) {
         if (storedUrl && storedUrl.trim()) {
             return storedUrl.trim().replace(/\/$/, '') + path;
         }
-        // Fallback for Android Emulator (10.0.2.2) and local Wi-Fi host IP (192.168.1.9)
-        return `http://192.168.1.9:3000${path}`;
     }
     return path;
 }
@@ -853,28 +851,8 @@ function setupCustomClassModal() {
         passInput.addEventListener('input', hideAuthError);
     }
 
-    // Server URL Configurator for Mobile & Remote Devices
-    function updateServerUrlDisplay() {
-        const display = document.getElementById('current-server-url-display');
-        if (display) {
-            const stored = localStorage.getItem('srm_api_base_url');
-            display.textContent = stored && stored.trim() ? stored.trim() : 'http://192.168.1.9:3000';
-        }
-    }
-
-    const changeServerBtn = document.getElementById('change-server-url-btn');
-    if (changeServerBtn) {
-        changeServerBtn.addEventListener('click', () => {
-            const current = localStorage.getItem('srm_api_base_url') || 'http://192.168.1.9:3000';
-            const newUrl = prompt("Enter Server Address (e.g. http://192.168.1.9:3000):", current);
-            if (newUrl !== null && newUrl.trim()) {
-                localStorage.setItem('srm_api_base_url', newUrl.trim().replace(/\/$/, ''));
-                updateServerUrlDisplay();
-                hideAuthError();
-            }
-        });
-    }
-    updateServerUrlDisplay();
+    // Server URL Configurator (Legacy IP binding removed for web deployment)
+    function updateServerUrlDisplay() {}
 
     // Log out Session
     const logoutBtn = document.getElementById('logout-btn');
@@ -1534,8 +1512,7 @@ async function handleLoginSubmission(e) {
             showAuthError(data.error || "Unable to sign in. Please check your NetID and password.");
         }
     } catch (err) {
-        const endpoint = getApiEndpoint('');
-        showAuthError(`Unable to connect to SRM server at ${endpoint}. Tap 'Server Address' below to update IP address.`);
+        showAuthError("Unable to connect to SRM server. Please check your network connection and try again.");
         console.error(err);
     } finally {
         if (btn) btn.disabled = false;
