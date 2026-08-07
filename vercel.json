@@ -1,10 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "npm install",
   "outputDirectory": "public",
   "functions": {
-    "api/**/*.js": {
-      "includeFiles": "session/**,parsers/**,server.js,package.json"
+    "api/index.js": {
+      "includeFiles": ["session/**", "parsers/**", "server.js"]
     }
   },
   "rewrites": [
