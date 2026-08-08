@@ -227,6 +227,26 @@ function getApiHeaders(extraHeaders = {}) {
     };
 }
 
+/**
+ * Retrieves the active account's credentials from localStorage for serverless re-auth
+ */
+function getActiveCredentials() {
+    try {
+        const activeEmail = (localStorage.getItem('srm_academia_active_email') || '').trim().toLowerCase();
+        const saved = JSON.parse(localStorage.getItem('srm_saved_accounts') || '[]');
+        if (activeEmail) {
+            const match = saved.find(a => a.email && a.email.toLowerCase() === activeEmail);
+            if (match && match.password) return { email: match.email, password: match.password };
+        }
+        // Fallback: most recent saved account with credentials
+        const fallback = saved.find(a => a.email && a.password && !/^ra\d+/i.test(a.email));
+        if (fallback) return { email: fallback.email, password: fallback.password };
+        return null;
+    } catch (e) {
+        return null;
+    }
+}
+
 // Window Focus Handler - Never logs out automatically; silently updates if session is live
 window.addEventListener('focus', async () => {
     const isActive = localStorage.getItem('srm_academia_session_active') === 'true';
@@ -239,10 +259,12 @@ window.addEventListener('focus', async () => {
         localStorage.setItem('srm_last_focus_check', now.toString());
 
         try {
+            const creds = getActiveCredentials();
             const res = await fetch(getApiEndpoint('/api/sync'), {
                 method: 'POST',
                 credentials: 'include',
-                headers: getApiHeaders()
+                headers: getApiHeaders(),
+                body: JSON.stringify(creds || {})
             });
             if (res.ok) {
                 const data = await res.json();
@@ -1538,10 +1560,12 @@ function getCurrentDateTime() {
  */
 async function attemptAutomaticSync() {
     try {
+        const creds = getActiveCredentials();
         const response = await fetch(getApiEndpoint('/api/sync'), {
             method: 'POST',
             credentials: 'include',
-            headers: getApiHeaders()
+            headers: getApiHeaders(),
+            body: JSON.stringify(creds || {})
         });
 
         if (!response.ok) {
@@ -1720,10 +1744,12 @@ async function handleSyncRequest() {
         syncButton.disabled = true;
         syncIcon.classList.add('loading');
 
+        const creds = getActiveCredentials();
         const response = await fetch(getApiEndpoint('/api/sync'), {
             method: 'POST',
             credentials: 'include',
-            headers: getApiHeaders()
+            headers: getApiHeaders(),
+            body: JSON.stringify(creds || {})
         });
 
         if (response.status === 401 || response.status === 403) {
@@ -5789,10 +5815,12 @@ function triggerBackgroundDataRefresh() {
     }
     if (text) text.textContent = 'Syncing...';
 
+    const creds = getActiveCredentials();
     fetch(getApiEndpoint('/api/sync'), {
         method: 'POST',
         credentials: 'include',
-        headers: getApiHeaders()
+        headers: getApiHeaders(),
+        body: JSON.stringify(creds || {})
     })
         .then(res => {
             if (!res.ok) {

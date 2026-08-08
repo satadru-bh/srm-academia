@@ -639,6 +639,26 @@ app.all(["/api/sync", "/sync", "/api/attendance", "/attendance"], async (req, re
             return res.status(401).json({ success: false, expired: true, error: "Session has expired." });
         }
 
+        // Serverless Cold-Start Recovery: If CookieStore has no record but client sent credentials,
+        // perform a fresh login+scrape in one shot instead of returning 401.
+        const clientPassword = req.body && req.body.password;
+        const existingRecord = CookieStore.get(targetEmail);
+        if ((!existingRecord || !existingRecord.jar || existingRecord.isValid === false) && clientPassword) {
+            SessionLogger.info('Server', `Cold-start recovery: No CookieJar for ${targetEmail}. Re-authenticating with client-provided credentials.`);
+            try {
+                const result = await AuthenticationManager.login(targetEmail, clientPassword, scrapeAllData);
+                if (sessionId) {
+                    req.session.authenticated = true;
+                    req.session.email = targetEmail;
+                    DeviceSessionStore.bindDevice(sessionId, targetEmail);
+                }
+                return res.json(result);
+            } catch (loginErr) {
+                SessionLogger.error('Server', `Cold-start re-auth failed for ${targetEmail}: ${loginErr.message}`);
+                return res.status(401).json({ success: false, expired: true, error: "Session expired. Please sign in again." });
+            }
+        }
+
         // Execute resilient data fetch via RequestExecutor
         const result = await RequestExecutor.executeSync(targetEmail, scrapeAllData);
 
