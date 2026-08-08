@@ -1731,6 +1731,8 @@
 [data-theme="neo-brutalist"] .calendar-weekday-grid {
     border-bottom: 2.5px solid #000000 !important;
     background-color: #ffffff !important;
+    border-top-left-radius: inherit !important;
+    border-top-right-radius: inherit !important;
 }
 
 /* Empty State Containers */
@@ -3684,6 +3686,8 @@ html.instant-workspace-active #app-workspace {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
 }
 
 .card-header h4 {

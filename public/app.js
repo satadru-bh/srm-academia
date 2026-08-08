@@ -855,25 +855,44 @@ function setupCustomClassModal() {
     }
 }
 
-    const btnTomorrow = document.getElementById('overview-btn-tomorrow');
-    
+    const workingDays = ['DAY 1', 'DAY 2', 'DAY 3', 'DAY 4', 'DAY 5'];
+
+    function getNextWorkingDayOrder(forward = true) {
+        let idx = workingDays.indexOf(state.selectedOverviewDay);
+        if (idx !== -1) {
+            if (forward) {
+                return workingDays[(idx + 1) % workingDays.length];
+            } else {
+                return workingDays[(idx - 1 + workingDays.length) % workingDays.length];
+            }
+        }
+
+        // If currently on FREE DAY (or unselected), search state.planner for the true next/prev working day order
+        const todayIso = getLocalIsoDate();
+        if (state.planner && state.planner.length > 0) {
+            const sortedPlanner = [...state.planner].sort((a, b) => a.date.localeCompare(b.date));
+            if (forward) {
+                const futureWorking = sortedPlanner.find(p => p.date >= todayIso && p.dayOrder && parseInt(p.dayOrder) > 0);
+                if (futureWorking) return `DAY ${futureWorking.dayOrder}`;
+            } else {
+                const pastWorking = sortedPlanner.filter(p => p.date <= todayIso && p.dayOrder && parseInt(p.dayOrder) > 0).pop();
+                if (pastWorking) return `DAY ${pastWorking.dayOrder}`;
+            }
+        }
+
+        // Fallback default
+        return forward ? 'DAY 5' : 'DAY 4';
+    }
+
     if (btnPrev) {
         btnPrev.addEventListener('click', () => {
-            const dayCycle = ['DAY 1', 'DAY 2', 'DAY 3', 'DAY 4', 'DAY 5', 'FREE DAY'];
-            let idx = dayCycle.indexOf(state.selectedOverviewDay);
-            if (idx === -1) idx = 5;
-            idx = (idx - 1 + 6) % 6;
-            state.selectedOverviewDay = dayCycle[idx];
+            state.selectedOverviewDay = getNextWorkingDayOrder(false);
             renderOverviewPane();
         });
     }
     if (btnNext) {
         btnNext.addEventListener('click', () => {
-            const dayCycle = ['DAY 1', 'DAY 2', 'DAY 3', 'DAY 4', 'DAY 5', 'FREE DAY'];
-            let idx = dayCycle.indexOf(state.selectedOverviewDay);
-            if (idx === -1) idx = 5;
-            idx = (idx + 1) % 6;
-            state.selectedOverviewDay = dayCycle[idx];
+            state.selectedOverviewDay = getNextWorkingDayOrder(true);
             renderOverviewPane();
         });
     }
@@ -2202,16 +2221,8 @@ function renderOverviewPane() {
     }
 
     const dayOrderTitle = document.getElementById('overview-today-dayorder-title');
-    const dayOrderSub = document.getElementById('overview-today-dayorder-sub');
     if (dayOrderTitle) {
         dayOrderTitle.textContent = state.selectedOverviewDay;
-    }
-    if (dayOrderSub) {
-        const now = getCurrentDateTime();
-        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const monthsOfYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const dateStr = `${daysOfWeek[now.getDay()].toUpperCase()} • ${String(now.getDate()).padStart(2, '0')} ${monthsOfYear[now.getMonth()].toUpperCase()} ${now.getFullYear()}`;
-        dayOrderSub.textContent = dateStr;
     }
 
     // 4. Render Smart Timetable Timeline
