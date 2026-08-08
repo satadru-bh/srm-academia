@@ -758,6 +758,7 @@ function setupEventBindings() {
     const btnPrev = document.getElementById('overview-prev-day-btn');
     const btnNext = document.getElementById('overview-next-day-btn');
     const btnToday = document.getElementById('overview-btn-today');
+    const btnTomorrow = document.getElementById('overview-btn-tomorrow');
 
     // Universal PWA Install Buttons & Banner Bindings
     document.addEventListener('click', (e) => {
