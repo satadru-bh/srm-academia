@@ -5909,7 +5909,7 @@ function renderSavedAccounts() {
 
     if (accounts.length === 0) {
         if (section) section.classList.add('hidden');
-    } else {
+    } else if (accounts.length === 1) {
         if (section) section.classList.remove('hidden');
         if (grid) {
             grid.innerHTML = accounts.map(acc => `
@@ -5927,6 +5927,27 @@ function renderSavedAccounts() {
                     </div>
                 </div>
             `).join('');
+        }
+    } else {
+        // More than 1 saved account -> Render "View Saved Accounts" trigger button
+        if (section) section.classList.remove('hidden');
+        if (grid) {
+            grid.innerHTML = `
+                <button type="button" class="btn-view-saved-accounts" onclick="openAccountSwitcherModal()">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="saved-account-avatar" style="width: 28px; height: 28px; font-size: 13px;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <span style="font-weight: 700; font-size: 13px;">View Saved Accounts</span>
+                    </div>
+                    <span class="saved-count-pill">${accounts.length} Saved</span>
+                </button>
+            `;
         }
     }
 

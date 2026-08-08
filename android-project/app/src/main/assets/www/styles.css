@@ -1837,12 +1837,41 @@
     color: #000000 !important;
 }
 
-/* Academic Calendar Hard-Edged System & Section Borders */
+/* Academic Calendar System & Neo-Brutalist Section Borders */
+[data-theme="neo-brutalist"] #view-planner {
+    padding-bottom: 40px !important;
+}
+
+[data-theme="neo-brutalist"] #view-planner .card {
+    border: 3px solid #000000 !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+    border-radius: 18px !important;
+    background-color: #ffffff !important;
+    overflow: visible !important;
+    margin-bottom: 32px !important;
+}
+
 [data-theme="neo-brutalist"] .calendar-navigation-header {
     border-bottom: 2.5px solid #000000 !important;
     background-color: #ffffff !important;
-    border-top-left-radius: 11.5px !important;
-    border-top-right-radius: 11.5px !important;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-navigation-header button,
+[data-theme="neo-brutalist"] #calendar-today-btn {
+    border: 2px solid #000000 !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-navigation-header button:hover,
+[data-theme="neo-brutalist"] #calendar-today-btn:hover {
+    background: #ccff00 !important;
+    transform: none !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
 }
 
 [data-theme="neo-brutalist"] .calendar-weekday-grid {
@@ -1858,28 +1887,77 @@
 }
 
 [data-theme="neo-brutalist"] .calendar-dates-grid {
-    padding: 18px !important;
+    padding: 16px !important;
+    gap: 10px !important;
     background-color: #ffffff !important;
 }
 
 [data-theme="neo-brutalist"] .calendar-day-cell {
     border: 2px solid #000000 !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     box-shadow: 2.5px 2.5px 0px #000000 !important;
     background-color: #ffffff !important;
     overflow: visible !important;
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
 }
 
-[data-theme="neo-brutalist"] .calendar-day-cell:hover {
-    background-color: #ccff00 !important;
-    transform: translate(-2px, -2px) !important;
-    box-shadow: 4.5px 4.5px 0px #000000 !important;
+/* Strict Removal of Hover Movement & Jittering for Calendar Day Cells */
+[data-theme="neo-brutalist"] .calendar-day-cell:hover,
+[data-theme="neo-brutalist"] .calendar-day-cell:focus,
+[data-theme="neo-brutalist"] .calendar-day-cell:active {
+    background-color: #f4ffb3 !important;
+    transform: none !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+    border: 2px solid #000000 !important;
 }
 
 [data-theme="neo-brutalist"] .calendar-day-cell.today {
     background-color: #ccff00 !important;
     border: 2.5px solid #000000 !important;
     box-shadow: 3.5px 3.5px 0px #000000 !important;
+}
+
+/* Color Fills for Holiday (Red), Milestone (Teal/Emerald), and Commencement (Purple) */
+[data-theme="neo-brutalist"] .calendar-day-cell.holiday {
+    background-color: #ff4d4d !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-day-cell.milestone {
+    background-color: #34d399 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-day-cell.commencement {
+    background-color: #c084fc !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2.5px 2.5px 0px #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-day-cell.holiday .day-number,
+[data-theme="neo-brutalist"] .calendar-day-cell.milestone .day-number,
+[data-theme="neo-brutalist"] .calendar-day-cell.commencement .day-number {
+    color: #000000 !important;
+    font-weight: 900 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-day-cell.holiday div[title],
+[data-theme="neo-brutalist"] .calendar-day-cell.milestone div[title],
+[data-theme="neo-brutalist"] .calendar-day-cell.commencement div[title] {
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="neo-brutalist"] .calendar-day-cell.holiday .calendar-cell-day-order,
+[data-theme="neo-brutalist"] .calendar-day-cell.milestone .calendar-cell-day-order,
+[data-theme="neo-brutalist"] .calendar-day-cell.commencement .calendar-cell-day-order {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+    box-shadow: none !important;
 }
 
 /* Attendance Grid Rows & Metric Cards */
@@ -1900,7 +1978,6 @@
 /* Badges, Tags, and Pills Precision */
 [data-theme="neo-brutalist"] .type-pill,
 [data-theme="neo-brutalist"] .attendance-code-tag,
-[data-theme="neo-brutalist"] .calendar-cell-day-order,
 [data-theme="neo-brutalist"] .attendance-section-count {
     border: 1.5px solid #000000 !important;
     box-shadow: 2px 2px 0px #000000 !important;
@@ -1908,6 +1985,16 @@
     color: #000000 !important;
     border-radius: 6px !important;
     background-color: #ffffff;
+}
+
+/* Clean Day Order Badges without Harsh Cluttered Inner Shadows */
+[data-theme="neo-brutalist"] .calendar-cell-day-order {
+    border: 1.5px solid #000000 !important;
+    box-shadow: none !important;
+    font-weight: 900 !important;
+    color: #000000 !important;
+    border-radius: 6px !important;
+    background-color: #ccff00 !important;
 }
 
 /* High Contrast Text & Zero Lime-on-White Contrast Fixes for Neo-Brutalist Theme */
@@ -6488,6 +6575,52 @@ html.instant-workspace-active #app-workspace {
     overflow-y: auto;
 }
 
+.btn-view-saved-accounts {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-sizing: border-box;
+}
+
+.btn-view-saved-accounts:hover {
+    border-color: var(--accent-primary);
+    background: var(--bg-surface-solid);
+    transform: translateY(-1px);
+}
+
+.saved-count-pill {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: var(--accent-primary-subtle, rgba(59, 130, 246, 0.15));
+    color: var(--accent-primary);
+}
+
+[data-theme="neo-brutalist"] .btn-view-saved-accounts {
+    background-color: #ffffff !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    border-radius: 10px !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="neo-brutalist"] .saved-count-pill {
+    background-color: #ccff00 !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+    box-shadow: none !important;
+}
+
 .saved-account-card {
     display: flex;
     align-items: center;
@@ -8005,90 +8138,87 @@ body.sidebar-open #attendance-fab-container,
     margin-top: 2px !important;
 }
 
-/* UNIVERSAL HOLIDAY RED CARD SYSTEM (DESKTOP GRID & MOBILE LIST) */
+/* UNIVERSAL EVENT DATE COLOR FILLS FOR ALL THEMES (DESKTOP & MOBILE) */
+
+/* 1. HOLIDAY / OFF DAYS (VIBRANT RED #ff4d4d) */
 .planner-mobile-card.holiday,
 .calendar-day-cell.holiday {
-    background: rgba(239, 68, 68, 0.1) !important;
-    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    background-color: #ff4d4d !important;
+    background: #ff4d4d !important;
+    color: #000000 !important;
 }
 
 .planner-mobile-card.holiday .planner-date-num,
-.calendar-day-cell.holiday .day-number {
-    color: #ef4444 !important;
+.planner-mobile-card.holiday .planner-date-day,
+.calendar-day-cell.holiday .day-number,
+.calendar-day-cell.holiday div[title],
+.calendar-day-cell.holiday span {
+    color: #000000 !important;
+    font-weight: 800 !important;
 }
 
 .planner-mobile-card.holiday .planner-dayorder-pill,
 .calendar-day-cell.holiday .calendar-cell-day-order {
-    background: rgba(239, 68, 68, 0.22) !important;
-    color: #ef4444 !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    box-shadow: none !important;
+}
+
+/* 2. MILESTONE / ENROLMENT DAYS (VIBRANT EMERALD GREEN #34d399) */
+.planner-mobile-card.milestone,
+.calendar-day-cell.milestone {
+    background-color: #34d399 !important;
+    background: #34d399 !important;
+    color: #000000 !important;
+}
+
+.planner-mobile-card.milestone .planner-date-num,
+.planner-mobile-card.milestone .planner-date-day,
+.calendar-day-cell.milestone .day-number,
+.calendar-day-cell.milestone div[title],
+.calendar-day-cell.milestone span {
+    color: #000000 !important;
     font-weight: 800 !important;
 }
 
-/* NEO-BRUTALIST THEME OVERRIDES FOR DESKTOP & MOBILE PLANNER CARDS */
-[data-theme="neo-brutalist"] .planner-mobile-card {
-    border: 2.5px solid #000000 !important;
-    box-shadow: 3px 3px 0px #000000 !important;
-    border-radius: 12px !important;
+.planner-mobile-card.milestone .planner-dayorder-pill,
+.calendar-day-cell.milestone .calendar-cell-day-order {
+    background-color: #ffffff !important;
     background: #ffffff !important;
     color: #000000 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card .planner-mobile-date-badge {
-    border: 1.5px solid #000000 !important;
-    background: #FAF9F5 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card .planner-date-num {
-    color: #000000 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card .planner-dayorder-pill {
-    background: #ccff00 !important;
-    color: #000000 !important;
-    border: 1.5px solid #000000 !important;
     font-weight: 900 !important;
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    box-shadow: none !important;
 }
 
-[data-theme="neo-brutalist"] .planner-mobile-card.today {
-    background: #ccff00 !important;
-    color: #000000 !important;
-    border: 2.5px solid #000000 !important;
-    box-shadow: 4px 4px 0px #000000 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card.today .planner-date-num,
-[data-theme="neo-brutalist"] .planner-mobile-card.today .planner-date-day {
+/* 3. COMMENCEMENT DAYS (VIBRANT PURPLE #c084fc) */
+.planner-mobile-card.commencement,
+.calendar-day-cell.commencement {
+    background-color: #c084fc !important;
+    background: #c084fc !important;
     color: #000000 !important;
 }
 
-[data-theme="neo-brutalist"] .planner-mobile-card.today .planner-dayorder-pill {
-    background: #000000 !important;
-    color: #ccff00 !important;
-    border: 1.5px solid #000000 !important;
+.planner-mobile-card.commencement .planner-date-num,
+.planner-mobile-card.commencement .planner-date-day,
+.calendar-day-cell.commencement .day-number,
+.calendar-day-cell.commencement div[title],
+.calendar-day-cell.commencement span {
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+.planner-mobile-card.commencement .planner-dayorder-pill,
+.calendar-day-cell.commencement .calendar-cell-day-order {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #000000 !important;
     font-weight: 900 !important;
-}
-
-/* EXPLICIT DIRECTIVE: NEO-BRUTALIST UNIVERSAL HOLIDAY CARDS (VIBRANT RED FOR DESKTOP & MOBILE) */
-[data-theme="neo-brutalist"] .planner-mobile-card.holiday,
-[data-theme="neo-brutalist"] .calendar-day-cell.holiday {
-    background: #ff4d4d !important;
-    color: #000000 !important;
-    border: 2.5px solid #000000 !important;
-    box-shadow: 4px 4px 0px #000000 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card.holiday .planner-date-num,
-[data-theme="neo-brutalist"] .planner-mobile-card.holiday .planner-date-day,
-[data-theme="neo-brutalist"] .calendar-day-cell.holiday .day-number {
-    color: #000000 !important;
-}
-
-[data-theme="neo-brutalist"] .planner-mobile-card.holiday .planner-dayorder-pill,
-[data-theme="neo-brutalist"] .calendar-day-cell.holiday .calendar-cell-day-order {
-    background: #000000 !important;
-    color: #ffffff !important;
-    border: 1.5px solid #000000 !important;
-    font-weight: 900 !important;
+    border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    box-shadow: none !important;
 }
 
 .vertical-timeline-title {
@@ -8195,7 +8325,7 @@ body.sidebar-open #attendance-fab-container,
         margin-left: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
-        padding: max(8px, env(safe-area-inset-top, 8px)) 14px calc(80px + env(safe-area-inset-bottom, 24px)) 14px !important;
+        padding: max(4px, env(safe-area-inset-top, 4px)) 6px calc(72px + env(safe-area-inset-bottom, 8px)) 6px !important;
         box-sizing: border-box !important;
     }
 
@@ -8218,7 +8348,7 @@ body.sidebar-open #attendance-fab-container,
     .mobile-bottom-nav {
         display: flex !important;
         position: fixed !important;
-        bottom: max(22px, env(safe-area-inset-bottom, 22px)) !important;
+        bottom: max(10px, env(safe-area-inset-bottom, 10px)) !important;
         left: 50% !important;
         transform: translateX(-50%) translateZ(0) !important;
         will-change: transform !important;
@@ -8275,11 +8405,11 @@ body.sidebar-open #attendance-fab-container,
         stroke: #FAF9F5 !important;
     }
 
-    /* MOBILE FLOATING VERTICAL MORE POPUP MENU */
+    /* MOBILE FLOATING VERTICAL MORE POPUP MENU - ALIGNED WITH MOBILE BOTTOM NAV */
     .mobile-more-menu {
         position: fixed !important;
-        bottom: 92px !important;
-        right: 20px !important;
+        bottom: max(92px, calc(env(safe-area-inset-bottom, 22px) + 70px)) !important;
+        right: max(12px, calc(50% - 240px)) !important;
         min-width: 165px !important;
         background: var(--bg-surface-elevated) !important;
         background-color: var(--bg-surface-elevated) !important;
@@ -8459,13 +8589,13 @@ body.sidebar-open #attendance-fab-container,
         justify-content: space-between !important;
         flex-wrap: nowrap !important;
         gap: 10px !important;
-        margin-top: max(44px, env(safe-area-inset-top, 48px)) !important;
-        padding: max(16px, env(safe-area-inset-top, 22px)) 14px 10px 14px !important;
+        margin-top: max(4px, env(safe-area-inset-top, 4px)) !important;
+        padding: 12px 14px 10px 14px !important;
         border-radius: var(--radius-lg) !important;
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
-        margin-bottom: 14px !important;
+        margin-bottom: 12px !important;
     }
 
 /* PC SIDEBAR SUPPORT BUTTON - YELLOW STYLING ACROSS ALL THEMES */
@@ -9077,7 +9207,7 @@ body.sidebar-open #attendance-fab-container,
     .mobile-bottom-nav {
         width: calc(100% - 20px) !important;
         max-width: 440px !important;
-        bottom: max(18px, env(safe-area-inset-bottom, 18px)) !important;
+        bottom: max(10px, env(safe-area-inset-bottom, 10px)) !important;
         left: 50% !important;
         transform: translateX(-50%) translateZ(0) !important;
         height: 58px !important;
@@ -9561,27 +9691,39 @@ body.popup-backdrop-active .sidebar {
     justify-content: center !important;
 }
 
-.modal:not(.hidden):not(#auth-screen) .theme-welcome-card,
-.modal:not(.hidden):not(#auth-screen) .modal-card,
-.modal:not(.hidden):not(#auth-screen) .prediction-card,
-.modal:not(.hidden):not(#auth-screen) .account-switcher-card {
-    animation: overlayCardPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+.modal:not(.hidden):not(.pop-closing):not(#auth-screen) .theme-welcome-card,
+.modal:not(.hidden):not(.pop-closing):not(#auth-screen) .modal-card,
+.modal:not(.hidden):not(.pop-closing):not(#auth-screen) .prediction-card,
+.modal:not(.hidden):not(.pop-closing):not(#auth-screen) .account-switcher-card,
+.modal-overlay:not(.hidden):not(.pop-closing) .modal-card,
+.modal-backdrop:not(.hidden):not(.pop-closing) .modal-card {
+    animation: overlayCardPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
     filter: none !important;
     overscroll-behavior: contain !important;
     touch-action: pan-y !important;
 }
 
+.modal.pop-closing,
+.modal-overlay.pop-closing,
+.modal-backdrop.pop-closing {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.2s ease-out !important;
+}
+
 .modal.pop-closing .theme-welcome-card,
 .modal.pop-closing .modal-card,
 .modal.pop-closing .prediction-card,
-.modal.pop-closing .account-switcher-card {
-    animation: overlayCardPopOut 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+.modal.pop-closing .account-switcher-card,
+.modal-overlay.pop-closing .modal-card,
+.modal-backdrop.pop-closing .modal-card {
+    animation: overlayCardPopOut 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
 /* Universal Modal & Pop-up Visibility Guarantee */
-.modal-overlay:not(.hidden),
-.modal-backdrop:not(.hidden),
-.modal:not(.hidden):not(#auth-screen) {
+.modal-overlay:not(.hidden):not(.pop-closing),
+.modal-backdrop:not(.hidden):not(.pop-closing),
+.modal:not(.hidden):not(.pop-closing):not(#auth-screen) {
     display: flex !important;
     opacity: 1 !important;
     pointer-events: auto !important;
@@ -9589,32 +9731,419 @@ body.popup-backdrop-active .sidebar {
     z-index: 999999 !important;
 }
 
-.modal-overlay:not(.hidden) .modal-card,
-.modal-backdrop:not(.hidden) .modal-card,
-.modal:not(.hidden):not(#auth-screen) .modal-card {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    visibility: visible !important;
-    animation: overlayCardPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+/* Guarantee Mobile Navbar is hidden on Auth / Login Screen */
+#auth-screen:not(.hidden) ~ .mobile-bottom-nav,
+body:has(#auth-screen:not(.hidden)) .mobile-bottom-nav,
+html:not(.instant-workspace-active) .mobile-bottom-nav {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
-/* Universal Support Page & Active View-Pane Visibility Guarantee */
-#view-support.active,
+/* Universal Non-Clipping Overflow System for Cards & 3D Shadows Across All Views */
+#content-views,
+.view-pane,
+.view-pane.active,
+#view-planner,
+#view-support,
+#view-overview,
+#view-timetable,
+#view-academics,
+#view-developer,
+#view-more {
+    overflow: visible !important;
+}
+
 .view-pane.active {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
     min-height: 400px !important;
+    padding: 6px 12px 48px 6px !important;
+    box-sizing: border-box !important;
+}
+
+@media (min-width: 992px) {
+    [data-theme="neo-brutalist"] .main-viewport {
+        padding: 20px 36px 64px 24px !important;
+        overflow: visible !important;
+    }
+}
+
+@media (max-width: 991px) {
+    html, body {
+        width: 100% !important;
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .app-workspace,
+    .main-viewport,
+    [data-theme="neo-brutalist"] .main-viewport {
+        width: 100% !important;
+        max-width: 100vw !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+        padding-top: max(4px, env(safe-area-inset-top, 4px)) !important;
+        padding-bottom: calc(72px + env(safe-area-inset-bottom, 8px)) !important;
+        box-sizing: border-box !important;
+    }
+
+    [data-theme="neo-brutalist"] .view-pane,
+    [data-theme="neo-brutalist"] .view-pane.active {
+        padding-left: 2px !important;
+        padding-right: 2px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .card,
+    .view-pane,
+    .daily-focus-hero-card,
+    .performance-trends-card,
+    .attendance-grid-row,
+    .marks-card,
+    [data-theme="neo-brutalist"] .card,
+    [data-theme="neo-brutalist"] .daily-focus-hero-card,
+    [data-theme="neo-brutalist"] .performance-trends-card,
+    [data-theme="neo-brutalist"] .workspace-header,
+    [data-theme="neo-brutalist"] .app-header {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .performance-trends-card {
+        padding: 14px 12px 18px 12px !important;
+    }
+
+    .performance-trends-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .trend-spark-box {
+        padding: 14px 14px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .theme-dropdown-menu,
+    [data-theme="neo-brutalist"] .theme-dropdown-menu {
+        position: fixed !important;
+        top: 60px !important;
+        right: 10px !important;
+        left: 10px !important;
+        width: auto !important;
+        max-width: calc(100vw - 20px) !important;
+        max-height: calc(85vh - 70px) !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+        z-index: 99999999 !important;
+    }
+}
+
+[data-theme="neo-brutalist"] #content-views,
+[data-theme="neo-brutalist"] .view-pane,
+[data-theme="neo-brutalist"] .card,
+[data-theme="neo-brutalist"] .workspace-header,
+[data-theme="neo-brutalist"] .marks-card,
+[data-theme="neo-brutalist"] .theme-dropdown-menu {
+    overflow: visible !important;
+}
+
+/* Universal Non-Clipping & Styling Fixes for Internal Marks Cards & Theme Menu */
+#view-academics,
+#view-academics .marks-grid,
+.marks-card,
+.theme-dropdown-menu {
+    overflow: visible !important;
+}
+
+.theme-options-grid {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    max-height: 380px !important;
+    padding: 2px 6px 6px 2px !important;
+}
+
+/* Neo-Brutalist Internal Marks Cards Overrides */
+[data-theme="neo-brutalist"] #view-academics {
+    padding-bottom: 40px !important;
+}
+
+[data-theme="neo-brutalist"] .marks-card {
+    background-color: #ffffff !important;
+    border: 3px solid #000000 !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+    border-radius: 18px !important;
+    overflow: visible !important;
+    margin-bottom: 24px !important;
+}
+
+[data-theme="neo-brutalist"] .marks-card .card-header {
+    border-bottom: 2.5px solid #000000 !important;
+    background-color: #ffffff !important;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+
+[data-theme="neo-brutalist"] .marks-course-code-badge {
+    border: 1.5px solid #000000 !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+}
+
+[data-theme="neo-brutalist"] .marks-course-credit-badge {
+    border: 1.5px solid #000000 !important;
+    background-color: #ccff00 !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+}
+
+[data-theme="neo-brutalist"] .assessment-item {
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    border-radius: 10px !important;
+    background-color: #ffffff !important;
+}
+
+[data-theme="neo-brutalist"] div[style*="border: 1px dashed"] {
+    border: 2px dashed #000000 !important;
+    border-radius: 12px !important;
+    background-color: #fafaf5 !important;
+}
+
+/* Neo-Brutalist Theme Dropdown Menu System */
+[data-theme="neo-brutalist"] .theme-dropdown-menu {
+    background-color: #ffffff !important;
+    border: 3px solid #000000 !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+    border-radius: 18px !important;
+    padding: 16px !important;
+}
+
+[data-theme="neo-brutalist"] .theme-dropdown-header {
+    border-bottom: 2.5px solid #000000 !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 12px !important;
+}
+
+[data-theme="neo-brutalist"] .theme-option-card {
+    background-color: #ffffff !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    border-radius: 12px !important;
+    margin-bottom: 8px !important;
+    transform: none !important;
+    transition: background-color 0.15s ease !important;
+}
+
+[data-theme="neo-brutalist"] .theme-option-card:hover {
+    background-color: #f4ffb3 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    transform: none !important;
+}
+
+[data-theme="neo-brutalist"] .theme-option-card.active {
+    background-color: #ccff00 !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .theme-option-card.active .theme-card-name {
+    color: #000000 !important;
+    font-weight: 900 !important;
+}
+
+/* SPECIAL ELECTRIC YELLOW SUPPORT APP BUTTON & SUBTLE SPARKLE ANIMATION */
+.nav-item-support {
+    position: relative !important;
+    background: #ffee00 !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.nav-item-support svg {
+    stroke: #000000 !important;
+}
+
+.nav-item-support:hover {
+    background: #fff033 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+}
+
+.nav-item-support.active {
+    background: #ffd700 !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+}
+
+.support-sparkle-container {
+    position: absolute;
+    top: -6px;
+    right: -4px;
+    pointer-events: none;
+    display: flex;
+    gap: 2px;
+}
+
+.sparkle-star {
+    display: inline-block;
+    font-size: 11px;
+    line-height: 1;
+    color: #d97706;
+    text-shadow: 0 0 4px rgba(255, 200, 0, 0.8);
+    opacity: 0;
+    transform: scale(0.4) rotate(0deg);
+}
+
+.sparkle-1 {
+    animation: subtleSparkleTwinkle 4.5s ease-in-out infinite;
+    animation-delay: 0.8s;
+}
+
+.sparkle-2 {
+    font-size: 9px;
+    color: #b45309;
+    margin-top: -3px;
+    animation: subtleSparkleTwinkle 4.5s ease-in-out infinite;
+    animation-delay: 2.2s;
+}
+
+@keyframes subtleSparkleTwinkle {
+    0%, 65%, 100% {
+        opacity: 0;
+        transform: scale(0.4) rotate(0deg);
+    }
+    75% {
+        opacity: 1;
+        transform: scale(1.35) rotate(20deg);
+    }
+    85% {
+        opacity: 0.85;
+        transform: scale(1.0) rotate(40deg);
+    }
+    92% {
+        opacity: 0;
+        transform: scale(0.5) rotate(60deg);
+    }
+}
+
+/* EXPLICIT DIRECTIVE: Hide Developer Console for Everyone */
+[data-tab="developer"],
+#more-dev-console-card,
+#dropdown-dev-console-btn,
+#view-developer,
+.nav-item[data-tab="developer"] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
 #view-support .support-card {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    max-width: 680px !important;
+    max-width: 860px !important;
     margin: 0 auto !important;
     padding: 32px !important;
     box-sizing: border-box !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08) !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Strict Removal of Hover Animations for Support Page */
+#view-support,
+#view-support *,
+#view-support *:hover,
+#view-support *:focus,
+#view-support *:active,
+.support-card,
+.support-card:hover,
+.support-card:focus,
+.support-card:active {
+    transform: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
+}
+
+/* Authentic Neo-Brutalist Support Page Styling */
+[data-theme="neo-brutalist"] #view-support {
+    padding-bottom: 48px !important;
+}
+
+[data-theme="neo-brutalist"] #view-support .support-card {
+    background: #ffffff !important;
+    border: 3px solid #000000 !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+    border-radius: 18px !important;
+    margin-bottom: 36px !important;
+}
+
+[data-theme="neo-brutalist"] #view-support .support-icon-badge {
+    background: #ffee00 !important;
+    color: #000000 !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+}
+
+[data-theme="neo-brutalist"] #view-support .support-text-block {
+    background: #fafaf5 !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 3.5px 3.5px 0px #000000 !important;
+    border-radius: 14px !important;
+}
+
+[data-theme="neo-brutalist"] #view-support div[style*="border: 1px dashed"],
+[data-theme="neo-brutalist"] #view-support div[style*="border: 1px solid"] {
+    background: #ffffff !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 3.5px 3.5px 0px #000000 !important;
+    border-radius: 14px !important;
+}
+
+[data-theme="neo-brutalist"] #view-support div[style*="box-shadow"] {
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    border-radius: 12px !important;
+}
+
+[data-theme="neo-brutalist"] #view-support .btn-secondary,
+[data-theme="neo-brutalist"] #view-support button.btn-secondary {
+    background: #ffee00 !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+}
+
+[data-theme="neo-brutalist"] #view-support .btn-secondary:hover,
+[data-theme="neo-brutalist"] #view-support button.btn-secondary:hover {
+    background: #facc15 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
 }
 
 #view-support .support-title,
@@ -9836,6 +10365,139 @@ body.popup-backdrop-active .sidebar {
     /* Immediately switch active nav items directly to their active clicked state */
     .mobile-nav-item.active,
     .nav-item.active {
-        transition: background-color 0s ease, color 0s ease, border-color 0s ease !important;
+        opacity: 1 !important;
+    }
+}
+
+/* NEUTRAL CORPORATE DARK */
+[data-theme="corporate-dark"] {
+    --theme-name: "corporate-dark";
+    --bg-base: #0f172a;
+    --bg-surface: #1e293b;
+    --bg-surface-elevated: #334155;
+    --bg-surface-solid: #1e293b;
+    --bg-surface-hover: #475569;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-inverse: #0f172a;
+
+    --border-subtle: #334155;
+    --border-card: #334155;
+    --border-strong: #475569;
+    --border-focus: #3b82f6;
+
+    --accent-primary: #3b82f6;
+    --accent-primary-hover: #60a5fa;
+    --accent-primary-glow: rgba(59, 130, 246, 0.25);
+    --accent-success: #10b981;
+    --accent-warning: #f59e0b;
+    --accent-danger: #ef4444;
+
+    --theory-bg: rgba(59, 130, 246, 0.14);
+    --theory-border: #3b82f6;
+    --theory-text: #60a5fa;
+
+    --lab-bg: rgba(14, 165, 233, 0.14);
+    --lab-border: #0ea5e9;
+    --lab-text: #38bdf8;
+
+    --cell-empty-bg: #0f172a;
+    --cell-empty-border: #334155;
+
+    --calendar-cell-bg: #1e293b;
+    --calendar-cell-border: #334155;
+    --calendar-cell-hover: #334155;
+
+    --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.4);
+    --shadow-floating: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* NEUTRAL GRAY LIGHT */
+[data-theme="neutral-gray"] {
+    --theme-name: "neutral-gray";
+    --bg-base: #f4f4f5;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #e4e4e7;
+    --bg-surface-solid: #ffffff;
+    --bg-surface-hover: #d4d4d8;
+
+    --text-primary: #18181b;
+    --text-secondary: #52525b;
+    --text-muted: #71717a;
+    --text-inverse: #ffffff;
+
+    --border-subtle: #e4e4e7;
+    --border-card: #e4e4e7;
+    --border-strong: #d4d4d8;
+    --border-focus: #18181b;
+
+    --accent-primary: #18181b;
+    --accent-primary-hover: #27272a;
+    --accent-primary-glow: rgba(24, 24, 27, 0.15);
+    --accent-success: #16a34a;
+    --accent-warning: #d97706;
+    --accent-danger: #dc2626;
+
+    --theory-bg: rgba(24, 24, 27, 0.08);
+    --theory-border: #18181b;
+    --theory-text: #18181b;
+
+    --lab-bg: rgba(37, 99, 235, 0.08);
+    --lab-border: #2563eb;
+    --lab-text: #1d4ed8;
+
+    --cell-empty-bg: #f4f4f5;
+    --cell-empty-border: #e4e4e7;
+
+    --calendar-cell-bg: #ffffff;
+    --calendar-cell-border: #e4e4e7;
+    --calendar-cell-hover: #f4f4f5;
+
+    --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.04);
+    --shadow-floating: 0 20px 40px rgba(0, 0, 0, 0.06);
+}
+
+/* SUBTLE FLOATING PWA INSTALL BANNER */
+.pwa-install-banner {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 99999;
+    background: var(--bg-surface-solid);
+    border: 1px solid var(--border-subtle);
+    border-radius: 9999px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    box-sizing: border-box;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: bannerSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (max-width: 600px) {
+    .pwa-install-banner {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        bottom: max(85px, calc(env(safe-area-inset-bottom, 16px) + 70px));
+        width: auto;
+        max-width: calc(100vw - 32px);
+    }
+}
+
+@keyframes bannerSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

@@ -5,10 +5,12 @@
 // Global window properties for Debug Mode
 window.DEBUG_MODE = false;
 
-// Register Production PWA Service Worker for Web App Installation
+// Register Production PWA Service Worker for Web App Installation with Auto-Update
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(err => {
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+            if (reg) reg.update();
+        }).catch(err => {
             console.log("ServiceWorker registration note:", err);
         });
     });
@@ -16,23 +18,112 @@ if ('serviceWorker' in navigator) {
 
 // Global PWA Deferred Install Prompt Container
 let deferredPwaInstallPrompt = null;
+
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPwaInstallPrompt = e;
+    try {
+        const dismissed = localStorage.getItem('srm_pwa_banner_dismissed');
+        const now = Date.now();
+        if (!dismissed || (now - parseInt(dismissed, 10)) > 14 * 24 * 60 * 60 * 1000) {
+            setTimeout(showPwaBanner, 25000);
+        }
+    } catch (_) {
+        setTimeout(showPwaBanner, 25000);
+    }
 });
 
+window.addEventListener('appinstalled', () => {
+    deferredPwaInstallPrompt = null;
+    hidePwaBanner();
+    createToast("SRM Academia+ Web App Installed Successfully!", "success");
+});
+
+function isIosDevice() {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent || '');
+}
+
+function isStandaloneApp() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+function showPwaBanner() {
+    if (isStandaloneApp()) return;
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.classList.remove('hidden');
+}
+
+function hidePwaBanner() {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.classList.add('hidden');
+}
+
 function triggerPwaInstallPrompt() {
+    if (isStandaloneApp()) {
+        createToast("SRM Academia+ is already running as an installed App!", "info");
+        return;
+    }
+
     if (deferredPwaInstallPrompt) {
         deferredPwaInstallPrompt.prompt();
         deferredPwaInstallPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
                 createToast("SRM Academia+ Web App Installed!", "success");
+                hidePwaBanner();
             }
             deferredPwaInstallPrompt = null;
         });
     } else {
-        createToast("Install App: Tap browser menu (or Share on iOS) -> 'Add to Home Screen' / 'Install App'", "info");
+        openPwaInstallModal();
     }
+}
+
+function openPwaInstallModal() {
+    const modal = document.getElementById('pwa-install-modal');
+    const body = document.getElementById('pwa-install-modal-body');
+    if (!modal || !body) return;
+
+    let contentHtml = '';
+    if (isIosDevice()) {
+        contentHtml = `
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">1</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Tap the <strong>Share</strong> button <span style="font-size: 16px;">⎋</span> in the Safari bottom toolbar.
+                </div>
+            </div>
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">2</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Scroll down and tap <strong>"Add to Home Screen"</strong> <span style="font-size: 16px;">⊕</span>.
+                </div>
+            </div>
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">3</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Tap <strong>"Add"</strong> in top right. SRM Academia+ will open as an App!
+                </div>
+            </div>
+        `;
+    } else {
+        contentHtml = `
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">1</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Click the <strong>Install Icon</strong> <span style="font-size: 15px;">⊕</span> in your browser address bar (or menu <strong>⋮</strong>).
+                </div>
+            </div>
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">2</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Select <strong>"Install App"</strong> or <strong>"Add to Home Screen"</strong>.
+                </div>
+            </div>
+        `;
+    }
+
+    body.innerHTML = contentHtml;
+    modal.classList.remove('hidden');
 }
 
 // Simulated Date & Day Order Storage
@@ -74,54 +165,17 @@ const periodTimings = [
 // Array of 32 Handcrafted Themes with color swatches in decreasing order of prominence:
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
-    // Sculpted Claymorphism
-    { id: 'claymorphism', name: 'Claymorphism', tag: 'Sculpted Soft Ceramic & Matte Polymer', colors: ['#F7F4F0', '#FAF7F4', '#8B70F6', '#7BB8FF'] },
+    // Flagship Themes
+    { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
+    { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
 
-    // Neo-Brutalist & High Contrast
-    { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & Thick Outlines', colors: ['#f4f4ee', '#ffffff', '#ccff00', '#000000'] },
-    { id: 'retro-computing', name: 'Retro Computing', tag: 'NeXTSTEP & SGI Engineering Workstation', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
+    // Generic Good Looking Light Themes
+    { id: 'clean-light', name: 'Clean Light', tag: 'Minimal Crisp White & Sapphire Blue', colors: ['#f8fafc', '#ffffff', '#2563eb', '#0284c7'] },
+    { id: 'cream-latte', name: 'Cream Latte', tag: 'Soft Warm Vanilla & Amber Accent', colors: ['#FAF6F0', '#FFFFFF', '#D97706', '#B45309'] },
 
-    // Neutral & Monochrome
-    { id: 'monochrome-dark', name: 'Monochrome Dark', tag: 'Pure Black & Silver', colors: ['#050505', '#121212', '#ffffff', '#a3a3a3'] },
-    { id: 'monochrome-light', name: 'Monochrome Light', tag: 'Pure White & Onyx', colors: ['#fafafa', '#ffffff', '#0f172a', '#475569'] },
-    { id: 'slate-neutral', name: 'Slate Neutral', tag: 'Cool Graphite Slate', colors: ['#0f172a', '#1e293b', '#6366f1', '#818cf8'] },
-    { id: 'taupe-natural', name: 'Warm Taupe', tag: 'Natural Warm Greige', colors: ['#faf8f5', '#ffffff', '#786c5f', '#9a8b79'] },
-
-    // Professional & Corporate
-    { id: 'corporate-navy', name: 'Corporate Navy', tag: 'Professional Deep Blue', colors: ['#0a1120', '#111c33', '#2563eb', '#60a5fa'] },
-    { id: 'executive-light', name: 'Executive Light', tag: 'Corporate Sapphire', colors: ['#f8fafc', '#ffffff', '#1e40af', '#0284c7'] },
-    { id: 'enterprise-dark', name: 'Enterprise Slate', tag: 'Professional Dark Cyan', colors: ['#0f172a', '#1e293b', '#0d9488', '#14b8a6'] },
-    { id: 'financial-green', name: 'Financial Emerald', tag: 'Corporate Forest Dark', colors: ['#061a14', '#0d2a20', '#059669', '#34d399'] },
-
-    // OLED & Deep Dark
-    { id: 'pitch-black', name: 'Pitch Black', tag: 'OLED Pure Black', colors: ['#000000', '#0a0a0a', '#f97316', '#38bdf8'] },
-    { id: 'midnight-navy', name: 'Midnight Navy', tag: 'Deep Slate', colors: ['#070b19', '#0f172a', '#3b82f6', '#60a5fa'] },
-    { id: 'dracula', name: 'Dracula', tag: 'Vampire Gothic', colors: ['#1e1f29', '#282a36', '#bd93f9', '#ff79c6'] },
-    { id: 'emerald-mint', name: 'Emerald Mint', tag: 'Forest Dark', colors: ['#040d0a', '#0a1c16', '#10b981', '#34d399'] },
-    { id: 'tokyo-night', name: 'Tokyo Night', tag: 'Neon Cyber City', colors: ['#1a1b26', '#24283b', '#7aa2f7', '#bb9af7'] },
-    { id: 'nord-dark', name: 'Nordic Frost', tag: 'Arctic Slate', colors: ['#2e3440', '#3b4252', '#88c0d0', '#81a1c1'] },
-    { id: 'monokai-pro', name: 'Monokai Pro', tag: 'Warm Charcoal', colors: ['#19181a', '#222125', '#ffd866', '#ff6188'] },
-    { id: 'obsidian-purple', name: 'Obsidian Royal', tag: 'Imperial Amethyst', colors: ['#090514', '#130a24', '#a855f7', '#e9d5ff'] },
-
-    // Vibrant & Creative
-    { id: 'cyberpunk', name: 'Cyberpunk Neon', tag: 'High Voltage', colors: ['#0d0221', '#190a38', '#ff007f', '#00f0ff'] },
-    { id: 'synthwave', name: 'Synthwave 80s', tag: 'Neon Sunset', colors: ['#170b28', '#24123e', '#f72585', '#4cc9f0'] },
-    { id: 'sunset-horizon', name: 'Sunset Horizon', tag: 'Twilight Glow', colors: ['#12081f', '#210e38', '#ff6b6b', '#fca5a5'] },
-    { id: 'matrix-green', name: 'Matrix Code', tag: 'Terminal Hacker', colors: ['#030a05', '#08170b', '#22c55e', '#4ade80'] },
-    { id: 'crimson-velvet', name: 'Crimson Velvet', tag: 'Deep Ruby', colors: ['#140508', '#24090f', '#ef4444', '#fca5a5'] },
-    { id: 'oceanic-deep', name: 'Oceanic Deep', tag: 'Abyss Cyan', colors: ['#05131a', '#0b202c', '#06b6d4', '#67e8f9'] },
-    { id: 'solarized-dark', name: 'Solarized Dark', tag: 'Teal Amber', colors: ['#002b36', '#073642', '#b58900', '#2aa198'] },
-    { id: 'catppuccin-mocha', name: 'Catppuccin Mocha', tag: 'Soft Lavender Dark', colors: ['#1e1e2e', '#2a2b3d', '#cba6f7', '#f5c2e7'] },
-
-    // Light & Minimalist
-    { id: 'clean-light', name: 'Clean Light', tag: 'Minimal Light', colors: ['#f8fafc', '#ffffff', '#f97316', '#0284c7'] },
-    { id: 'sakura-rose', name: 'Sakura Rose', tag: 'Soft Pastel Light', colors: ['#fff5f7', '#ffffff', '#e11d48', '#f43f5e'] },
-    { id: 'cream-latte', name: 'Cream Latte', tag: 'Warm Coffee', colors: ['#fdfbf7', '#f5efe6', '#d97706', '#b45309'] },
-    { id: 'paper-minimal', name: 'Paper Minimal', tag: 'Warm Gray Notebook', colors: ['#f6f6f4', '#ffffff', '#2563eb', '#3b82f6'] },
-    { id: 'mint-chocolat', name: 'Mint Pastel', tag: 'Soft Sage Light', colors: ['#f2faf6', '#ffffff', '#059669', '#10b981'] },
-    { id: 'nord-light', name: 'Nordic Snow', tag: 'Ice Slate Light', colors: ['#f0f4f8', '#ffffff', '#0284c7', '#38bdf8'] },
-    { id: 'solarized-light', name: 'Solarized Light', tag: 'Warm Cream Amber', colors: ['#fdf6e3', '#eee8d5', '#b58900', '#d33682'] },
-    { id: 'lavender-bliss', name: 'Lavender Bliss', tag: 'Pastel Violet', colors: ['#f8f5ff', '#ffffff', '#7c3aed', '#a855f7'] }
+    // Generic Good Looking Dark Themes
+    { id: 'monochrome-dark', name: 'Monochrome Dark', tag: 'Sleek Dark Slate & Silver Accent', colors: ['#09090b', '#18181b', '#ffffff', '#a1a1aa'] },
+    { id: 'pitch-black', name: 'OLED Pure Black', tag: 'Pure Black & Vibrant Cyan', colors: ['#000000', '#0a0a0a', '#06b6d4', '#38bdf8'] }
 ];
 
 // Document Event Handlers on DOM Ready
@@ -595,32 +649,38 @@ function setupSupportModal() {
         });
     }
 
-    if (copyBtn && upiIdEl) {
-        copyBtn.addEventListener('click', () => {
-            const upi = upiIdEl.textContent.trim();
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(upi).then(() => {
-                    createToast("UPI ID Copied to Clipboard!", "success");
-                }).catch(() => {
-                    createToast("Copied: " + upi, "info");
-                });
-            } else {
-                createToast("Copied: " + upi, "info");
-            }
-        });
-    }
+    const copyBtn2 = document.getElementById('copy-upi-btn-2');
+    const upiIdEl2 = document.getElementById('support-upi-id-2');
 
-    const presetChips = document.querySelectorAll('.support-preset-chip');
-    presetChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            presetChips.forEach(c => {
-                c.classList.remove('active');
-                c.style.border = '1px solid var(--border-subtle)';
+    const copyUpi = (upiStr) => {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(upiStr).then(() => {
+                createToast("UPI ID Copied to Clipboard!", "success");
+            }).catch(() => {
+                createToast("Copied: " + upiStr, "info");
             });
-            chip.classList.add('active');
-            chip.style.border = '1.5px solid var(--accent-primary)';
-        });
-    });
+        } else {
+            createToast("Copied: " + upiStr, "info");
+        }
+    };
+
+    const pageCopyBtn1 = document.getElementById('copy-page-upi-btn-1');
+    const pageUpiEl1 = document.getElementById('page-upi-id-1');
+    const pageCopyBtn2 = document.getElementById('copy-page-upi-btn-2');
+    const pageUpiEl2 = document.getElementById('page-upi-id-2');
+
+    if (copyBtn && upiIdEl) {
+        copyBtn.addEventListener('click', () => copyUpi(upiIdEl.textContent.trim()));
+    }
+    if (copyBtn2 && upiIdEl2) {
+        copyBtn2.addEventListener('click', () => copyUpi(upiIdEl2.textContent.trim()));
+    }
+    if (pageCopyBtn1 && pageUpiEl1) {
+        pageCopyBtn1.addEventListener('click', () => copyUpi(pageUpiEl1.textContent.trim()));
+    }
+    if (pageCopyBtn2 && pageUpiEl2) {
+        pageCopyBtn2.addEventListener('click', () => copyUpi(pageUpiEl2.textContent.trim()));
+    }
 }
 
 const LIGHT_THEMES = new Set([
@@ -698,6 +758,38 @@ function setupEventBindings() {
     const btnPrev = document.getElementById('overview-prev-day-btn');
     const btnNext = document.getElementById('overview-next-day-btn');
     const btnToday = document.getElementById('overview-btn-today');
+
+    // Universal PWA Install Buttons & Banner Bindings
+    document.addEventListener('click', (e) => {
+        const installBtn = e.target.closest('[data-pwa-install="true"], #pwa-banner-install-btn, .pwa-install-btn');
+        if (installBtn) {
+            e.preventDefault();
+            triggerPwaInstallPrompt();
+        }
+    });
+
+    const bannerDismissBtn = document.getElementById('pwa-banner-dismiss-btn');
+    if (bannerDismissBtn) {
+        bannerDismissBtn.addEventListener('click', () => {
+            hidePwaBanner();
+            try {
+                localStorage.setItem('srm_pwa_banner_dismissed', String(Date.now()));
+            } catch (_) {}
+        });
+    }
+
+    const closePwaModalBtn = document.getElementById('close-pwa-modal-btn');
+    const pwaModal = document.getElementById('pwa-install-modal');
+    if (closePwaModalBtn && pwaModal) {
+        closePwaModalBtn.addEventListener('click', () => {
+            animateCloseElement(pwaModal);
+        });
+        pwaModal.addEventListener('click', (e) => {
+            if (e.target === pwaModal) {
+                animateCloseElement(pwaModal);
+            }
+        });
+    }
 /**
  * Setup Custom Class Modal Event Listeners
  */
@@ -1146,45 +1238,82 @@ function renderSupportPane() {
     if (!pane) return;
     
     pane.innerHTML = `
-        <div class="card support-card" style="display: block !important; visibility: visible !important; opacity: 1 !important;">
-            <div class="support-header-row">
-                <div class="support-icon-badge">
+        <div class="support-card" style="display: block !important; visibility: visible !important; opacity: 1 !important; max-width: 860px; margin: 0 auto; padding: 32px; border-radius: var(--radius-xl);">
+            <div class="support-header-row" style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 20px;">
+                <div class="support-icon-badge" style="width: 48px; height: 48px; border-radius: 14px; background: #ef4444; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                 </div>
-                <div>
-                    <h2 class="support-title">Support SRM Academia+</h2>
-                    <span class="support-subtitle">Independent Student Development</span>
+                <div class="support-title-group">
+                    <h2 class="support-title" style="font-size: 22px; font-weight: 800; margin: 0; color: var(--text-primary);">Support SRM Academia+</h2>
+                    <span class="support-subtitle" style="font-size: 12px; color: var(--text-muted); font-weight: 700;">Independent Student Development</span>
                 </div>
             </div>
 
-            <div class="support-text-block">
-                <p class="support-p lead">
-                    SRM Academia+ is built independently, by a student, for students.
-                </p>
-                <p class="support-p">
-                    The app will always have a free version. Donations simply help cover server costs, domain fees, and the time spent building new features, fixing bugs, and keeping everything running smoothly.
-                </p>
-                <p class="support-p">
-                    If the app has saved you time or made college a little less frustrating, and you'd like to support its development, I'd genuinely appreciate it. No pressure.
-                </p>
-            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; align-items: start;">
+                <!-- Left Side: Message & UPI IDs -->
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div class="support-text-block" style="background: var(--bg-surface-elevated); padding: 18px; border-radius: 14px; border: 1px solid var(--border-subtle);">
+                        <p class="support-p lead" style="font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 0 0 8px 0;">
+                            SRM Academia+ is built independently, by a student, for students.
+                        </p>
+                        <p class="support-p" style="font-size: 13px; color: var(--text-secondary); margin: 0 0 8px 0; line-height: 1.55;">
+                            The app will always have a free version. Contributions help cover server costs, domain fees, and ongoing feature development.
+                        </p>
+                        <p class="support-p" style="font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.55;">
+                            If the app has saved you time or made college life easier, any contribution is deeply appreciated! No pressure.
+                        </p>
+                    </div>
 
-            <div class="support-footer-box">
-                <div class="support-footer-label">Support via UPI / Direct Contribution</div>
-                <button class="support-donate-btn" id="btn-support-donate-upi">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    <span>Donate &amp; Support Development</span>
-                </button>
+                    <!-- Primary UPI Box -->
+                    <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Primary UPI ID</span>
+                            <span id="page-upi-id-1" style="font-family: monospace; font-size: 14px; font-weight: 800; color: var(--text-primary);">8017622902@hdfc</span>
+                        </div>
+                        <button id="copy-page-upi-btn-1" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer;">Copy UPI</button>
+                    </div>
+
+                    <!-- Secondary UPI Box -->
+                    <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Secondary UPI ID</span>
+                            <span id="page-upi-id-2" style="font-family: monospace; font-size: 12px; font-weight: 800; color: var(--text-primary); word-break: break-all;">satadrubhattacharya940-1@okhdfcbank</span>
+                        </div>
+                        <button id="copy-page-upi-btn-2" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer; flex-shrink: 0; margin-left: 8px;">Copy UPI</button>
+                    </div>
+                </div>
+
+                <!-- Right Side: QR Code -->
+                <div style="text-align: center; padding: 22px; background: var(--bg-surface-elevated); border-radius: 16px; border: 1px solid var(--border-subtle); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span style="font-size: 12px; font-weight: 800; color: var(--text-primary); display: block; margin-bottom: 12px;">Scan QR Code using GPay, PhonePe, or Paytm</span>
+                    <div style="width: 210px; height: 210px; background: #ffffff; padding: 10px; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(0,0,0,0.12);">
+                        <img src="qr.png" alt="Donate QR Code" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px;" />
+                    </div>
+                    <span style="font-size: 11px; color: var(--text-muted); font-weight: 700; margin-top: 12px;">Direct UPI Transfer</span>
+                </div>
             </div>
         </div>
     `;
 
-    const donateBtn = document.getElementById('btn-support-donate-upi');
-    if (donateBtn) {
-        donateBtn.addEventListener('click', () => {
-            createToast("Thank you for supporting SRM Academia+! Contribution options coming soon.", "success");
-        });
-    }
+    const copyUpi = (upiStr) => {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(upiStr).then(() => {
+                createToast("UPI ID Copied to Clipboard!", "success");
+            }).catch(() => {
+                createToast("Copied: " + upiStr, "info");
+            });
+        } else {
+            createToast("Copied: " + upiStr, "info");
+        }
+    };
+
+    const btn1 = document.getElementById('copy-page-upi-btn-1');
+    const el1 = document.getElementById('page-upi-id-1');
+    const btn2 = document.getElementById('copy-page-upi-btn-2');
+    const el2 = document.getElementById('page-upi-id-2');
+
+    if (btn1 && el1) btn1.addEventListener('click', () => copyUpi(el1.textContent.trim()));
+    if (btn2 && el2) btn2.addEventListener('click', () => copyUpi(el2.textContent.trim()));
 }
 
 /**
@@ -1357,6 +1486,21 @@ function updateHeaderTitles(tab) {
 
     const subtitle = document.getElementById('workspace-subtitle');
     if (subtitle) subtitle.textContent = "";
+
+    // Set Dynamic Page Title for Every Tab / Page
+    let pageTitleMap = {
+        'overview': 'Overview Dashboard',
+        'attendance': 'Attendance & Bunk Calculator',
+        'timetable': 'Class Timetable',
+        'academics': 'Internal Marks & Grades',
+        'marks': 'Internal Marks & Grades',
+        'planner': 'Academic Calendar & Events',
+        'developer': 'Developer Console',
+        'support': 'Support SRM Academia+',
+        'more': 'More Tools'
+    };
+    let pageTitle = pageTitleMap[normalizedTab] || (headingText ? headingText : 'Dashboard');
+    document.title = `${pageTitle} - SRM Academia+`;
 }
 
 /**
@@ -1427,6 +1571,11 @@ function showWorkspace() {
         appWorkspace.classList.remove('hidden');
         appWorkspace.style.setProperty('display', 'flex', 'important');
     }
+    const mobileNav = document.querySelector('.mobile-bottom-nav');
+    if (mobileNav) {
+        mobileNav.classList.remove('hidden');
+        mobileNav.style.removeProperty('display');
+    }
     const savedTab = localStorage.getItem('srm_active_tab') || 'overview';
     switchTab(savedTab);
 }
@@ -1446,6 +1595,16 @@ function showAuthScreen() {
         appWorkspace.classList.add('hidden');
         appWorkspace.style.setProperty('display', 'none', 'important');
     }
+    const mobileNav = document.querySelector('.mobile-bottom-nav');
+    if (mobileNav) {
+        mobileNav.classList.add('hidden');
+        mobileNav.style.setProperty('display', 'none', 'important');
+    }
+    const mobileMore = document.getElementById('mobile-more-menu');
+    if (mobileMore) {
+        mobileMore.classList.add('hidden');
+    }
+    document.title = "Sign In - SRM Academia+";
 }
 
 /**
@@ -1514,6 +1673,9 @@ async function handleLoginSubmission(e) {
             updateApplicationState(data);
             showWorkspace();
             updateStickySessionBanner(false);
+
+            // Automatically trigger live data sync right after login everytime
+            attemptAutomaticSync();
         } else {
             showAuthError(data.error || "Unable to sign in. Please check your NetID and password.");
         }
@@ -3115,10 +3277,11 @@ function renderSingleDayClassesSelector(dateStr) {
     `;
 
     validClasses.forEach((slot) => {
-        const isLab = isSlotLab(slot.slot);
+        const isLab = isSlotLab(slot);
         const typeTag = isLab ? 'Practical' : 'Theory';
         const typeClass = isLab ? 'practical' : 'theory';
         const courseTitle = slot.subjectTitle || slot.course || 'Course';
+        const courseCode = slot.courseCode || slot.code || '';
         const timing = slot.timing || (periodTimings[slot.period - 1] ? `${periodTimings[slot.period - 1].start} - ${periodTimings[slot.period - 1].end}` : `Slot ${slot.period}`);
 
         html += `
@@ -3130,7 +3293,7 @@ function renderSingleDayClassesSelector(dateStr) {
                     </div>
                     <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600;">${timing} ${slot.room ? `• Room ${slot.room}` : ''}</span>
                 </div>
-                <select class="single-class-action-select" data-course="${courseTitle}" data-code="${slot.courseCode || ''}" style="padding: 8px 12px; font-size: 12px; font-weight: 800; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); background: var(--bg-surface-solid); color: var(--text-primary); cursor: pointer;">
+                <select class="single-class-action-select" data-course="${courseTitle}" data-code="${courseCode}" data-islab="${isLab ? 'true' : 'false'}" style="padding: 8px 12px; font-size: 12px; font-weight: 800; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); background: var(--bg-surface-solid); color: var(--text-primary); cursor: pointer;">
                     <option value="BUNK" selected>Bunk (Skip)</option>
                     <option value="ATTEND">Attend</option>
                 </select>
@@ -3140,6 +3303,60 @@ function renderSingleDayClassesSelector(dateStr) {
 
     html += `</div>`;
     container.innerHTML = html;
+}
+
+/**
+ * Helper to match a timetable slot/course to the exact attendance record in state.attendance,
+ * correctly distinguishing Lab/Practical components from Theory components.
+ */
+function findMatchingAttendanceCourse(courseTitle, courseCode, isLabSlot, attendanceList) {
+    if (!attendanceList || attendanceList.length === 0) return null;
+
+    const targetTitle = (courseTitle || '').toUpperCase().trim();
+    const targetCode = (courseCode || '').toUpperCase().trim();
+    const baseTargetCode = targetCode.replace(/[TLP]$/i, '');
+
+    const isAttendanceItemLab = (item) => {
+        if (!item) return false;
+        const cat = (item.category || item.type || '').toUpperCase().trim();
+        const code = (item.code || '').toUpperCase().trim();
+        const title = (item.course || item.subjectTitle || '').toUpperCase().trim();
+
+        return cat.includes('PRACTICAL') || cat.includes('LAB') || cat.includes('PROJECT') ||
+               code.endsWith('P') || code.endsWith('L') ||
+               title.includes('PRACTICAL') || title.includes('LAB') || title.includes('(LAB)');
+    };
+
+    // 1. Collect all potential candidate attendance records matching by exact code, base code, or title
+    const candidates = attendanceList.filter(c => {
+        const cCode = (c.code || '').toUpperCase().trim();
+        const cBaseCode = cCode.replace(/[TLP]$/i, '');
+        const cTitle = (c.course || c.subjectTitle || '').toUpperCase().trim();
+
+        const exactCodeMatch = targetCode && cCode === targetCode;
+        const baseCodeMatch = baseTargetCode && cBaseCode === baseTargetCode;
+        const titleMatch = targetTitle && cTitle && (targetTitle.includes(cTitle) || cTitle.includes(targetTitle));
+
+        return exactCodeMatch || baseCodeMatch || titleMatch;
+    });
+
+    if (candidates.length === 0) {
+        // Fallback: search all attendance items if titles/codes differ slightly
+        return attendanceList.find(c => isLabSlot ? isAttendanceItemLab(c) : !isAttendanceItemLab(c)) || attendanceList[0];
+    }
+
+    if (candidates.length === 1) {
+        return candidates[0];
+    }
+
+    // 2. Multiple candidates exist (e.g. both Theory and Practical records exist for this course)
+    // Strictly pick the candidate matching isLabSlot!
+    const exactLabMatch = candidates.find(c => isLabSlot ? isAttendanceItemLab(c) : !isAttendanceItemLab(c));
+    if (exactLabMatch) {
+        return exactLabMatch;
+    }
+
+    return candidates[0];
 }
 
 /**
@@ -3166,15 +3383,11 @@ function applyAttendancePrediction() {
 
         selectEls.forEach(sel => {
             const courseTitle = sel.dataset.course;
+            const courseCode = sel.dataset.code;
+            const isLabSlot = sel.dataset.islab === 'true';
             const action = sel.value; // 'ATTEND' or 'BUNK'
 
-            const matchCourse = predicted.find(c => {
-                const cTitle = (c.course || '').toUpperCase().trim();
-                const cCode = (c.code || '').toUpperCase().trim();
-                const title = courseTitle.toUpperCase().trim();
-                return (cTitle && (title.includes(cTitle) || cTitle.includes(title))) ||
-                       (cCode && (title.includes(cCode) || cCode.includes(title)));
-            });
+            const matchCourse = findMatchingAttendanceCourse(courseTitle, courseCode, isLabSlot, predicted);
 
             if (matchCourse) {
                 matchCourse.conducted = (parseInt(matchCourse.conducted, 10) || 0) + 1;
@@ -3224,14 +3437,11 @@ function applyAttendancePrediction() {
 
                 daySlots.forEach(slot => {
                     const title = (slot.course || slot.subjectTitle || '').toUpperCase().trim();
-                    if (!title) return;
+                    const code = (slot.courseCode || slot.code || '').toUpperCase().trim();
+                    if (!title && !code) return;
 
-                    const matchCourse = predicted.find(c => {
-                        const cTitle = (c.course || '').toUpperCase().trim();
-                        const cCode = (c.code || '').toUpperCase().trim();
-                        return (cTitle && (title.includes(cTitle) || cTitle.includes(title))) ||
-                               (cCode && (title.includes(cCode) || cCode.includes(title)));
-                    });
+                    const isLabSlot = isSlotLab(slot);
+                    const matchCourse = findMatchingAttendanceCourse(title, code, isLabSlot, predicted);
 
                     if (matchCourse) {
                         matchCourse.conducted = (parseInt(matchCourse.conducted, 10) || 0) + 1;
@@ -3349,10 +3559,22 @@ function calculateBunkSimulations() {
  */
 function isSlotLab(slot) {
     if (!slot) return false;
-    const slotCode = (slot.slot || '').trim().toUpperCase();
+    if (typeof slot === 'object') {
+        const slotCode = (slot.slot || '').trim().toUpperCase();
+        const category = (slot.category || slot.type || '').trim().toUpperCase();
+        const code = (slot.courseCode || slot.code || '').trim().toUpperCase();
+        const title = ((slot.subjectTitle || slot.course || '') + ' ' + category).toUpperCase();
 
-    // Strictly ONLY P slots (e.g. P1, P2, P31, P32, P1-P2, P31-P32, P15-P16) are practical/lab
-    return /^P\d/i.test(slotCode) || slotCode.startsWith('P');
+        if (category.includes('PRACTICAL') || category.includes('LAB') || category.includes('PROJECT')) return true;
+        if (code.endsWith('P') || code.endsWith('L')) return true;
+        if (title.includes('PRACTICAL') || title.includes('LAB') || title.includes('(LAB)')) return true;
+
+        if (/^[LP]\d/i.test(slotCode) || slotCode.startsWith('L') || slotCode.startsWith('P') || slotCode.includes('LAB')) return true;
+
+        return false;
+    }
+    const slotCode = String(slot).trim().toUpperCase();
+    return /^[LP]\d/i.test(slotCode) || slotCode.startsWith('L') || slotCode.startsWith('P') || slotCode.includes('LAB');
 }
 
 /**
@@ -4255,9 +4477,13 @@ function renderDesktopPlannerGrid(year, month) {
         const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
         const isPlannerHoliday = plannerMatch && (plannerMatch.type === 'HOLIDAY' || plannerMatch.dayOrder === 'HOLIDAY' || plannerMatch.dayOrder === '-');
         const isHoliday = isWeekend || isPlannerHoliday;
+        const isMilestone = !isHoliday && plannerMatch && (plannerMatch.type === 'ENROLMENT' || plannerMatch.type === 'MILESTONE' || (plannerMatch.event && (plannerMatch.event.toLowerCase().includes('enrolment') || plannerMatch.event.toLowerCase().includes('milestone'))));
+        const isCommencement = !isHoliday && !isMilestone && plannerMatch && (plannerMatch.type === 'COMMENCEMENT' || (plannerMatch.event && plannerMatch.event.toLowerCase().includes('commencement')));
 
         let cellClasses = 'calendar-day-cell';
         if (isHoliday) cellClasses += ' holiday';
+        else if (isMilestone) cellClasses += ' milestone';
+        else if (isCommencement) cellClasses += ' commencement';
 
         let dayOrderBadge = '';
         let eventSnippetHtml = '';
@@ -4281,12 +4507,15 @@ function renderDesktopPlannerGrid(year, month) {
 
             if (plannerMatch.event && plannerMatch.event.trim() !== '') {
                 let badgeColor = 'var(--accent-primary)';
-                if (plannerMatch.type === 'HOLIDAY') badgeColor = '#ef4444';
+                if (isHoliday) badgeColor = 'inherit';
+                else if (isMilestone) badgeColor = 'inherit';
+                else if (isCommencement) badgeColor = 'inherit';
+                else if (plannerMatch.type === 'HOLIDAY') badgeColor = '#ef4444';
                 else if (plannerMatch.type === 'ENROLMENT') badgeColor = '#10b981';
                 else if (plannerMatch.type === 'COMMENCEMENT') badgeColor = '#a855f7';
 
                 eventSnippetHtml = `
-                    <div style="font-size: 11px; font-weight: 700; color: ${badgeColor}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; min-width: 0; width: 100%; margin-top: 6px; box-sizing: border-box;" title="${plannerMatch.event}">
+                    <div style="font-size: 11px; font-weight: 800; color: ${badgeColor}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; min-width: 0; width: 100%; margin-top: 6px; box-sizing: border-box;" title="${plannerMatch.event}">
                         • ${plannerMatch.event}
                     </div>
                 `;
@@ -4484,7 +4713,7 @@ const ALLOWED_DEV_NETIDS = [
 ];
 
 function isUserAuthorizedForDevConsole() {
-    return true;
+    return false;
 }
 
 /**
@@ -5680,7 +5909,7 @@ function renderSavedAccounts() {
 
     if (accounts.length === 0) {
         if (section) section.classList.add('hidden');
-    } else {
+    } else if (accounts.length === 1) {
         if (section) section.classList.remove('hidden');
         if (grid) {
             grid.innerHTML = accounts.map(acc => `
@@ -5698,6 +5927,27 @@ function renderSavedAccounts() {
                     </div>
                 </div>
             `).join('');
+        }
+    } else {
+        // More than 1 saved account -> Render "View Saved Accounts" trigger button
+        if (section) section.classList.remove('hidden');
+        if (grid) {
+            grid.innerHTML = `
+                <button type="button" class="btn-view-saved-accounts" onclick="openAccountSwitcherModal()">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="saved-account-avatar" style="width: 28px; height: 28px; font-size: 13px;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <span style="font-weight: 700; font-size: 13px;">View Saved Accounts</span>
+                    </div>
+                    <span class="saved-count-pill">${accounts.length} Saved</span>
+                </button>
+            `;
         }
     }
 
