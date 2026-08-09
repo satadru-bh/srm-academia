@@ -165,17 +165,8 @@ const periodTimings = [
 // Array of 32 Handcrafted Themes with color swatches in decreasing order of prominence:
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
-    // Flagship Themes
     { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
-    { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
-
-    // Generic Good Looking Light Themes
-    { id: 'clean-light', name: 'Clean Light', tag: 'Minimal Crisp White & Sapphire Blue', colors: ['#f8fafc', '#ffffff', '#2563eb', '#0284c7'] },
-    { id: 'cream-latte', name: 'Cream Latte', tag: 'Soft Warm Vanilla & Amber Accent', colors: ['#FAF6F0', '#FFFFFF', '#D97706', '#B45309'] },
-
-    // Generic Good Looking Dark Themes
-    { id: 'monochrome-dark', name: 'Monochrome Dark', tag: 'Sleek Dark Slate & Silver Accent', colors: ['#09090b', '#18181b', '#ffffff', '#a1a1aa'] },
-    { id: 'pitch-black', name: 'OLED Pure Black', tag: 'Pure Black & Vibrant Cyan', colors: ['#000000', '#0a0a0a', '#06b6d4', '#38bdf8'] }
+    { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] }
 ];
 
 // Document Event Handlers on DOM Ready
@@ -732,7 +723,7 @@ function isThemeLight(themeId) {
  * Dynamically switches brand logos: logo_dark.png in light themes and logo_light.png in dark themes.
  */
 function updateLogoForTheme(themeId) {
-    const activeTheme = themeId || document.documentElement.getAttribute('data-theme') || 'pitch-black';
+    const activeTheme = themeId || document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
     const isLight = isThemeLight(activeTheme);
     const targetLogoSrc = isLight ? 'logo_dark.png' : 'logo_light.png';
     const fallbackLogoSrc = isLight ? 'logo_light.png' : 'logo_dark.png';
@@ -2850,7 +2841,7 @@ function renderPerformanceTrends() {
 
     const computedStyle = getComputedStyle(document.body);
     const rawAccent = computedStyle.getPropertyValue('--accent-primary').trim() || '#6366f1';
-    const activeTheme = document.documentElement.getAttribute('data-theme') || 'pitch-black';
+    const activeTheme = document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
     const isLight = isThemeLight(activeTheme);
     const sparklineColor = isLight ? (activeTheme === 'neo-brutalist' ? '#15803d' : rawAccent) : rawAccent;
 
@@ -4088,7 +4079,7 @@ async function downloadTimetableImage() {
 
         // Faint watermark in corner with theme responsive logo PNG
         const studentInfoStr = state.studentInfo.name || state.studentInfo.registrationNumber || 'SRM Student';
-        const activeTheme = document.documentElement.getAttribute('data-theme') || 'pitch-black';
+        const activeTheme = document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
         const isLight = isThemeLight(activeTheme);
         const watermarkLogoSrc = isLight ? 'logo_dark.png' : 'logo_light.png';
 
