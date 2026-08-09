@@ -489,6 +489,23 @@
     line-height: 1.15;
 }
 
+/* Explicit Font Enforcement for Neo Brutalist */
+[data-theme="neo-brutalist"],
+[data-theme="neo-brutalist"] *,
+[data-theme="neo-brutalist"] h1,
+[data-theme="neo-brutalist"] h2,
+[data-theme="neo-brutalist"] h3,
+[data-theme="neo-brutalist"] h4,
+[data-theme="neo-brutalist"] h5,
+[data-theme="neo-brutalist"] h6,
+[data-theme="neo-brutalist"] span,
+[data-theme="neo-brutalist"] div,
+[data-theme="neo-brutalist"] p,
+[data-theme="neo-brutalist"] button,
+[data-theme="neo-brutalist"] input {
+    font-family: "Space Grotesk", "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
 /* Strict Architectural Container & Main Card System */
 [data-theme="neo-brutalist"] .card,
 [data-theme="neo-brutalist"] .sidebar,
@@ -496,11 +513,13 @@
 [data-theme="neo-brutalist"] .dev-drawer,
 [data-theme="neo-brutalist"] .daily-focus-hero-card,
 [data-theme="neo-brutalist"] .performance-trends-card,
+[data-theme="neo-brutalist"] .calendar-rebuilt-card,
 [data-theme="neo-brutalist"] .workspace-header {
     border: 2.5px solid #000000 !important;
-    box-shadow: 5px 5px 0px #000000 !important;
-    border-radius: 14px !important;
+    box-shadow: 6px 6px 0px #000000 !important;
+    border-radius: 18px !important;
     background-color: #ffffff !important;
+    overflow: hidden !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
@@ -1363,30 +1382,66 @@
 }
 
 [data-theme="retro-computing"] .calendar-day-cell.holiday {
-    background-color: #FCE8E6 !important;
-    border: 1px solid #7A3D4A !important;
-    border-top: 1.5px solid #FAF9F5 !important;
-    border-left: 1.5px solid #FAF9F5 !important;
-    border-bottom: 1.5px solid #7A3D4A !important;
-    border-right: 1.5px solid #7A3D4A !important;
+    background-color: #AA4A44 !important;
+    border-top: 2px solid #D66D67 !important;
+    border-left: 2px solid #D66D67 !important;
+    border-right: 2px solid #5C2723 !important;
+    border-bottom: 2px solid #5C2723 !important;
     border-radius: 2px !important;
 }
 
-[data-theme="retro-computing"] .calendar-day-cell.holiday .calendar-cell-day-num {
+[data-theme="retro-computing"] .calendar-day-cell.holiday .day-number,
+[data-theme="retro-computing"] .calendar-day-cell.holiday .calendar-cell-day-num,
+[data-theme="retro-computing"] .calendar-day-cell.holiday div[title],
+[data-theme="retro-computing"] .calendar-day-cell.holiday span {
+    color: #FFFFFF !important;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.6) !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="retro-computing"] .calendar-day-cell.holiday .calendar-cell-day-order {
+    background-color: #ECE9E1 !important;
     color: #7A3D4A !important;
-    font-family: "IBM Plex Mono", "JetBrains Mono", monospace !important;
+    border-top: 1px solid #FFFFFF !important;
+    border-left: 1px solid #FFFFFF !important;
+    border-right: 1px solid #8E887B !important;
+    border-bottom: 1px solid #8E887B !important;
+    box-shadow: none !important;
     font-weight: 900 !important;
 }
 
-[data-theme="retro-computing"] .calendar-day-cell.holiday .holiday-tag,
-[data-theme="retro-computing"] .calendar-day-cell.holiday .off-tag,
-[data-theme="retro-computing"] .calendar-day-cell.holiday span[class*="tag"] {
-    background-color: #7A3D4A !important;
-    color: #FAF9F5 !important;
-    border: 1px solid #1E1E1E !important;
-    border-radius: 2px !important;
-    font-family: "IBM Plex Mono", "JetBrains Mono", monospace !important;
-    font-weight: 800 !important;
+/* Authentic Retro Pixel & Workstation Typography for Big Headings & Sections */
+[data-theme="retro-computing"] h1,
+[data-theme="retro-computing"] h2,
+[data-theme="retro-computing"] h3,
+[data-theme="retro-computing"] h4,
+[data-theme="retro-computing"] .workspace-title,
+[data-theme="retro-computing"] .hero-title,
+[data-theme="retro-computing"] .card-title,
+[data-theme="retro-computing"] .section-header,
+[data-theme="retro-computing"] .calendar-month-title,
+[data-theme="retro-computing"] #calendar-month-year-title,
+[data-theme="retro-computing"] .auth-title,
+[data-theme="retro-computing"] .app-brand-title {
+    font-family: "VT323", "Share Tech Mono", "IBM Plex Mono", monospace !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+}
+
+[data-theme="retro-computing"] .hero-col-badge,
+[data-theme="retro-computing"] #hero-internals-badge,
+[data-theme="retro-computing"] #hero-next-countdown,
+[data-theme="retro-computing"] #hero-gpa-badge,
+[data-theme="retro-computing"] .daily-focus-tag-badge,
+[data-theme="retro-computing"] .standing-pill,
+[data-theme="retro-computing"] .status-badge,
+[data-theme="retro-computing"] .metric-badge,
+[data-theme="retro-computing"] .nav-item,
+[data-theme="retro-computing"] .day-tab,
+[data-theme="retro-computing"] button,
+[data-theme="retro-computing"] .btn-primary,
+[data-theme="retro-computing"] .btn-secondary {
+    font-family: "Share Tech Mono", "IBM Plex Mono", monospace !important;
 }
 
 /* Zero Blur / Glass Overrides */
@@ -1396,67 +1451,67 @@
 }
 
 /* ==========================================================================
-   CLEAN LIGHT DESIGN SYSTEM (Modern, Refined, Crisp Slate & Sapphire Blue)
+   CLEAN LIGHT DESIGN SYSTEM (Pure Black & White Minimal Monochrome)
    ========================================================================== */
 [data-theme="clean-light"] {
     --theme-name: "clean-light";
-    --bg-base: #F8FAFC;
+    --bg-base: #FFFFFF;
     --bg-surface: #FFFFFF;
-    --bg-surface-elevated: #F1F5F9;
+    --bg-surface-elevated: #FAFAFA;
     --bg-surface-solid: #FFFFFF;
-    --bg-surface-hover: #E2E8F0;
+    --bg-surface-hover: #F4F4F5;
 
-    --text-primary: #0F172A;
-    --text-secondary: #475569;
-    --text-muted: #64748B;
+    --text-primary: #000000;
+    --text-secondary: #3F3F46;
+    --text-muted: #71717A;
     --text-inverse: #FFFFFF;
 
-    --border-subtle: #E2E8F0;
-    --border-card: #CBD5E1;
-    --border-strong: #94A3B8;
-    --border-focus: #2563EB;
+    --border-subtle: #E4E4E7;
+    --border-card: #000000;
+    --border-strong: #000000;
+    --border-focus: #000000;
 
-    --accent-primary: #2563EB;
-    --accent-primary-hover: #1D4ED8;
-    --accent-primary-subtle: rgba(37, 99, 235, 0.08);
-    --accent-primary-glow: rgba(37, 99, 235, 0.15);
+    --accent-primary: #000000;
+    --accent-primary-hover: #18181B;
+    --accent-primary-subtle: rgba(0, 0, 0, 0.05);
+    --accent-primary-glow: rgba(0, 0, 0, 0.1);
 
-    --accent-secondary: #0EA5E9;
-    --accent-success: #10B981;
-    --accent-warning: #F59E0B;
-    --accent-danger: #EF4444;
+    --accent-secondary: #27272A;
+    --accent-success: #000000;
+    --accent-warning: #000000;
+    --accent-danger: #000000;
 
-    --theory-bg: rgba(37, 99, 235, 0.06);
-    --theory-border: #2563EB;
-    --theory-text: #1E40AF;
+    --theory-bg: #F4F4F5;
+    --theory-border: #000000;
+    --theory-text: #000000;
 
-    --lab-bg: rgba(16, 185, 129, 0.06);
-    --lab-border: #10B981;
-    --lab-text: #065F46;
+    --lab-bg: #E4E4E7;
+    --lab-border: #000000;
+    --lab-text: #000000;
 
-    --cell-empty-bg: #F8FAFC;
-    --cell-empty-border: #E2E8F0;
+    --cell-empty-bg: #FFFFFF;
+    --cell-empty-border: #E4E4E7;
 
     --calendar-cell-bg: #FFFFFF;
-    --calendar-cell-border: #E2E8F0;
-    --calendar-cell-hover: #F1F5F9;
+    --calendar-cell-border: #000000;
+    --calendar-cell-hover: #F4F4F5;
 
     --font-stack: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-mono: "JetBrains Mono", "Fira Code", monospace;
 
-    --transition-smooth: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-smooth: all 0.15s ease;
 
-    --radius-xl: 16px;
-    --radius-lg: 12px;
-    --radius-md: 8px;
-    --radius-sm: 6px;
+    --radius-xl: 12px;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
 
-    --shadow-premium: 0 4px 12px rgba(15, 23, 42, 0.05);
-    --shadow-floating: 0 10px 30px rgba(15, 23, 42, 0.1);
-    --shadow-glow: 0 0 16px rgba(37, 99, 235, 0.2);
+    --shadow-premium: none;
+    --shadow-floating: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-glow: none;
 }
 
-/* Component Overrides - Clean Light */
+/* Component Overrides - Clean Light B&W */
 [data-theme="clean-light"] .card,
 [data-theme="clean-light"] .overview-card,
 [data-theme="clean-light"] .nav-sidebar,
@@ -1464,18 +1519,18 @@
 [data-theme="clean-light"] .timetable-grid-container,
 [data-theme="clean-light"] .calendar-rebuilt-card {
     background-color: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04) !important;
-    border-radius: 16px !important;
+    border: 1.5px solid #000000 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    border-radius: 12px !important;
 }
 
 [data-theme="clean-light"] .quick-stat-box,
 [data-theme="clean-light"] .calc-simulation-result,
 [data-theme="clean-light"] .timetable-slot-column,
 [data-theme="clean-light"] .calendar-day-cell {
-    background-color: #F8FAFC !important;
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 12px !important;
+    background-color: #FFFFFF !important;
+    border: 1px solid #000000 !important;
+    border-radius: 8px !important;
 }
 
 [data-theme="clean-light"] button,
@@ -1484,13 +1539,12 @@
 [data-theme="clean-light"] #btn-modal-reset-prediction,
 [data-theme="clean-light"] #overview-btn-today,
 [data-theme="clean-light"] #overview-btn-tomorrow {
-    background: #F1F5F9 !important;
-    color: #0F172A !important;
-    border: 1px solid #E2E8F0 !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
-    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+    border-radius: 8px !important;
     font-family: "Inter", -apple-system, sans-serif !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
 }
 
 [data-theme="clean-light"] button:hover,
@@ -1499,9 +1553,9 @@
 [data-theme="clean-light"] #btn-modal-reset-prediction:hover,
 [data-theme="clean-light"] #overview-btn-today:hover,
 [data-theme="clean-light"] #overview-btn-tomorrow:hover {
-    background: #E2E8F0 !important;
-    color: #2563EB !important;
-    border-color: #CBD5E1 !important;
+    background: #000000 !important;
+    color: #FFFFFF !important;
+    border-color: #000000 !important;
 }
 
 [data-theme="clean-light"] .btn-primary,
@@ -1509,12 +1563,11 @@
 [data-theme="clean-light"] #btn-modal-apply-prediction,
 [data-theme="clean-light"] .auth-submit-btn,
 [data-theme="clean-light"] #dev-btn-apply-date {
-    background-color: #2563EB !important;
+    background-color: #000000 !important;
     color: #FFFFFF !important;
-    border: 1px solid #1D4ED8 !important;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
-    border-radius: 10px !important;
-    font-weight: 600 !important;
+    border: 1.5px solid #000000 !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
 }
 
 [data-theme="clean-light"] .btn-primary *,
@@ -1530,31 +1583,29 @@
 [data-theme="clean-light"] #btn-modal-apply-prediction:hover,
 [data-theme="clean-light"] .auth-submit-btn:hover,
 [data-theme="clean-light"] #dev-btn-apply-date:hover {
-    background-color: #1D4ED8 !important;
+    background-color: #27272A !important;
     color: #FFFFFF !important;
-    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35) !important;
 }
 
 [data-theme="clean-light"] .logout-btn {
-    background-color: #FEF2F2 !important;
-    color: #DC2626 !important;
-    border: 1px solid #FCA5A5 !important;
-    border-radius: 10px !important;
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+    border-radius: 8px !important;
 }
 
 [data-theme="clean-light"] .logout-btn span {
-    color: #DC2626 !important;
+    color: #000000 !important;
 }
 
 [data-theme="clean-light"] .logout-btn svg,
 [data-theme="clean-light"] .logout-btn svg * {
-    stroke: #DC2626 !important;
+    stroke: #000000 !important;
 }
 
 [data-theme="clean-light"] .logout-btn:hover {
-    background-color: #EF4444 !important;
+    background-color: #000000 !important;
     color: #FFFFFF !important;
-    border-color: #DC2626 !important;
 }
 
 [data-theme="clean-light"] .logout-btn:hover span {
@@ -1567,31 +1618,30 @@
 }
 
 [data-theme="clean-light"] .nav-item.active {
-    background-color: #2563EB !important;
+    background-color: #000000 !important;
     color: #FFFFFF !important;
-    border: 1px solid #1D4ED8 !important;
-    border-radius: 10px !important;
-    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2) !important;
+    border: 1px solid #000000 !important;
+    border-radius: 8px !important;
 }
 
 [data-theme="clean-light"] .day-tab.active {
-    background-color: #2563EB !important;
+    background-color: #000000 !important;
     color: #FFFFFF !important;
-    border: 1px solid #1D4ED8 !important;
-    border-radius: 8px !important;
+    border: 1px solid #000000 !important;
+    border-radius: 6px !important;
 }
 
 [data-theme="clean-light"] #hero-academic-day-badge {
-    background-color: #2563EB !important;
+    background-color: #000000 !important;
     color: #FFFFFF !important;
-    border: 1px solid #1D4ED8 !important;
-    border-radius: 8px !important;
+    border: 1px solid #000000 !important;
+    border-radius: 6px !important;
     font-weight: 800 !important;
 }
 
 [data-theme="clean-light"] #hero-academic-weekday-label {
     font-weight: 700 !important;
-    color: #2563EB !important;
+    color: #000000 !important;
 }
 
 [data-theme="clean-light"] .hero-col-badge,
@@ -1602,18 +1652,18 @@
 [data-theme="clean-light"] .standing-pill,
 [data-theme="clean-light"] .status-badge,
 [data-theme="clean-light"] .metric-badge {
-    background-color: #EFF6FF !important;
-    color: #1E40AF !important;
-    border: 1px solid #BFDBFE !important;
-    border-radius: 8px !important;
+    background-color: #F4F4F5 !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+    border-radius: 6px !important;
     font-weight: 700 !important;
     padding: 3px 8px !important;
 }
 
 [data-theme="clean-light"] .calendar-day-cell.today {
-    background-color: #2563EB !important;
+    background-color: #000000 !important;
     color: #FFFFFF !important;
-    border: 1px solid #1D4ED8 !important;
+    border: 1px solid #000000 !important;
 }
 
 [data-theme="clean-light"] .calendar-day-cell.today * {
@@ -1621,58 +1671,56 @@
 }
 
 [data-theme="clean-light"] .calendar-day-cell.holiday {
-    background-color: #FEF2F2 !important;
-    border: 1px solid #FCA5A5 !important;
+    background-color: #FAFAFA !important;
+    border: 1.5px solid #000000 !important;
 }
 
 [data-theme="clean-light"] .calendar-day-cell.holiday .day-number,
 [data-theme="clean-light"] .calendar-day-cell.holiday .calendar-cell-day-num {
-    color: #991B1B !important;
+    color: #000000 !important;
     font-weight: 800 !important;
 }
 
 [data-theme="clean-light"] .calendar-day-cell.milestone {
-    background-color: #ECFDF5 !important;
-    border: 1px solid #6EE7B7 !important;
+    background-color: #F4F4F5 !important;
+    border: 1.5px solid #000000 !important;
 }
 
 [data-theme="clean-light"] .calendar-day-cell.commencement {
-    background-color: #F5F3FF !important;
-    border: 1px solid #DDD6FE !important;
+    background-color: #E4E4E7 !important;
+    border: 1.5px solid #000000 !important;
 }
 
 [data-theme="clean-light"] .attendance-grid-row {
     background-color: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 12px !important;
-    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03) !important;
+    border: 1px solid #000000 !important;
+    border-radius: 8px !important;
 }
 
 [data-theme="clean-light"] .mobile-bottom-nav {
-    background-color: rgba(255, 255, 255, 0.95) !important;
-    border: 1px solid #E2E8F0 !important;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
-    border-radius: 20px !important;
+    background-color: #FFFFFF !important;
+    border: 1.5px solid #000000 !important;
+    border-radius: 16px !important;
     padding: 4px 6px !important;
 }
 
 [data-theme="clean-light"] .mobile-nav-item,
 [data-theme="clean-light"] button.mobile-nav-item {
-    border-radius: 12px !important;
+    border-radius: 10px !important;
     background: transparent !important;
-    color: #64748B !important;
+    color: #000000 !important;
     font-weight: 600 !important;
 }
 
 [data-theme="clean-light"] .mobile-nav-item svg {
-    stroke: #64748B !important;
+    stroke: #000000 !important;
 }
 
 [data-theme="clean-light"] .mobile-nav-item.active,
 [data-theme="clean-light"] button.mobile-nav-item.active {
-    background-color: #2563EB !important;
+    background-color: #000000 !important;
     color: #FFFFFF !important;
-    border-radius: 14px !important;
+    border-radius: 10px !important;
     font-weight: 700 !important;
 }
 
@@ -1685,93 +1733,98 @@
 
 [data-theme="clean-light"] .mobile-planner-card {
     background-color: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 14px !important;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+    border: 1px solid #000000 !important;
+    border-radius: 10px !important;
 }
 
 
 /* ==========================================================================
-   CLEAN DARK DESIGN SYSTEM (Modern, Refined, Deep Slate & Indigo)
+   CLEAN DARK DESIGN SYSTEM (Pure Black & White OLED Dark Mode - No Gradients)
    ========================================================================== */
 [data-theme="clean-dark"] {
     --theme-name: "clean-dark";
-    --bg-base: #0F172A;
-    --bg-surface: #1E293B;
-    --bg-surface-elevated: #334155;
-    --bg-surface-solid: #1E293B;
-    --bg-surface-hover: #334155;
+    --bg-base: #000000;
+    --bg-surface: #09090B;
+    --bg-surface-elevated: #18181B;
+    --bg-surface-solid: #09090B;
+    --bg-surface-hover: #27272A;
 
-    --text-primary: #F8FAFC;
-    --text-secondary: #94A3B8;
-    --text-muted: #64748B;
-    --text-inverse: #0F172A;
+    --text-primary: #FFFFFF;
+    --text-secondary: #A1A1AA;
+    --text-muted: #71717A;
+    --text-inverse: #000000;
 
-    --border-subtle: #334155;
-    --border-card: #475569;
-    --border-strong: #64748B;
-    --border-focus: #6366F1;
+    --border-subtle: #27272A;
+    --border-card: #3F3F46;
+    --border-strong: #52525B;
+    --border-focus: #FFFFFF;
 
-    --accent-primary: #6366F1;
-    --accent-primary-hover: #4F46E5;
-    --accent-primary-subtle: rgba(99, 102, 241, 0.15);
-    --accent-primary-glow: rgba(99, 102, 241, 0.25);
+    --accent-primary: #FFFFFF;
+    --accent-primary-hover: #E4E4E7;
+    --accent-primary-subtle: rgba(255, 255, 255, 0.08);
+    --accent-primary-glow: rgba(255, 255, 255, 0.15);
 
-    --accent-secondary: #38BDF8;
-    --accent-success: #34D399;
-    --accent-warning: #FBBF24;
-    --accent-danger: #F87171;
+    --accent-secondary: #D4D4D8;
+    --accent-success: #FFFFFF;
+    --accent-warning: #FFFFFF;
+    --accent-danger: #FFFFFF;
 
-    --theory-bg: rgba(99, 102, 241, 0.15);
-    --theory-border: #6366F1;
-    --theory-text: #A5B4FC;
+    --theory-bg: #18181B;
+    --theory-border: #FFFFFF;
+    --theory-text: #FFFFFF;
 
-    --lab-bg: rgba(52, 211, 153, 0.15);
-    --lab-border: #34D399;
-    --lab-text: #6EE7B7;
+    --lab-bg: #27272A;
+    --lab-border: #FFFFFF;
+    --lab-text: #FFFFFF;
 
-    --cell-empty-bg: #0F172A;
-    --cell-empty-border: #334155;
+    --cell-empty-bg: #000000;
+    --cell-empty-border: #27272A;
 
-    --calendar-cell-bg: #1E293B;
-    --calendar-cell-border: #334155;
-    --calendar-cell-hover: #334155;
+    --calendar-cell-bg: #09090B;
+    --calendar-cell-border: #27272A;
+    --calendar-cell-hover: #18181B;
 
     --font-stack: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-mono: "JetBrains Mono", "Fira Code", monospace;
 
-    --transition-smooth: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-smooth: all 0.15s ease;
 
-    --radius-xl: 16px;
-    --radius-lg: 12px;
-    --radius-md: 8px;
-    --radius-sm: 6px;
+    --radius-xl: 12px;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
 
-    --shadow-premium: 0 4px 16px rgba(0, 0, 0, 0.4);
-    --shadow-floating: 0 12px 32px rgba(0, 0, 0, 0.6);
-    --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
+    --shadow-premium: none;
+    --shadow-floating: 0 4px 20px rgba(0, 0, 0, 0.8);
+    --shadow-glow: none;
 }
 
-/* Component Overrides - Clean Dark */
+/* Component Overrides - Clean Dark B&W (No Gradients) */
 [data-theme="clean-dark"] .card,
 [data-theme="clean-dark"] .overview-card,
 [data-theme="clean-dark"] .nav-sidebar,
 [data-theme="clean-dark"] .header-container,
 [data-theme="clean-dark"] .timetable-grid-container,
 [data-theme="clean-dark"] .calendar-rebuilt-card {
-    background-color: #1E293B !important;
-    border: 1px solid #334155 !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
-    border-radius: 16px !important;
+    background-color: #09090B !important;
+    background: #09090B !important;
+    border: 1px solid #3F3F46 !important;
+    box-shadow: none !important;
+    border-radius: 12px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 [data-theme="clean-dark"] .quick-stat-box,
 [data-theme="clean-dark"] .calc-simulation-result,
 [data-theme="clean-dark"] .timetable-slot-column,
 [data-theme="clean-dark"] .calendar-day-cell {
-    background-color: #0F172A !important;
-    border: 1px solid #334155 !important;
-    border-radius: 12px !important;
+    background-color: #000000 !important;
+    background: #000000 !important;
+    border: 1px solid #27272A !important;
+    border-radius: 8px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 [data-theme="clean-dark"] button,
@@ -1780,13 +1833,14 @@
 [data-theme="clean-dark"] #btn-modal-reset-prediction,
 [data-theme="clean-dark"] #overview-btn-today,
 [data-theme="clean-dark"] #overview-btn-tomorrow {
-    background: #334155 !important;
-    color: #F8FAFC !important;
-    border: 1px solid #475569 !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
-    border-radius: 10px !important;
+    background: #18181B !important;
+    color: #FFFFFF !important;
+    border: 1px solid #3F3F46 !important;
+    border-radius: 8px !important;
     font-family: "Inter", -apple-system, sans-serif !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 [data-theme="clean-dark"] button:hover,
@@ -1795,9 +1849,9 @@
 [data-theme="clean-dark"] #btn-modal-reset-prediction:hover,
 [data-theme="clean-dark"] #overview-btn-today:hover,
 [data-theme="clean-dark"] #overview-btn-tomorrow:hover {
-    background: #475569 !important;
-    color: #818CF8 !important;
-    border-color: #6366F1 !important;
+    background: #27272A !important;
+    color: #FFFFFF !important;
+    border-color: #FFFFFF !important;
 }
 
 [data-theme="clean-dark"] .btn-primary,
@@ -1805,20 +1859,21 @@
 [data-theme="clean-dark"] #btn-modal-apply-prediction,
 [data-theme="clean-dark"] .auth-submit-btn,
 [data-theme="clean-dark"] #dev-btn-apply-date {
-    background-color: #6366F1 !important;
-    color: #FFFFFF !important;
-    border: 1px solid #4F46E5 !important;
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35) !important;
-    border-radius: 10px !important;
-    font-weight: 600 !important;
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
 }
 
 [data-theme="clean-dark"] .btn-primary *,
 [data-theme="clean-dark"] #open-prediction-modal-btn *,
 [data-theme="clean-dark"] #btn-modal-apply-prediction *,
 [data-theme="clean-dark"] .auth-submit-btn * {
-    color: #FFFFFF !important;
-    stroke: #FFFFFF !important;
+    color: #000000 !important;
+    stroke: #000000 !important;
 }
 
 [data-theme="clean-dark"] .btn-primary:hover,
@@ -1826,68 +1881,56 @@
 [data-theme="clean-dark"] #btn-modal-apply-prediction:hover,
 [data-theme="clean-dark"] .auth-submit-btn:hover,
 [data-theme="clean-dark"] #dev-btn-apply-date:hover {
-    background-color: #4F46E5 !important;
-    color: #FFFFFF !important;
-    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.45) !important;
+    background-color: #E4E4E7 !important;
+    color: #000000 !important;
 }
 
 [data-theme="clean-dark"] .logout-btn {
-    background-color: rgba(239, 68, 68, 0.15) !important;
-    color: #F87171 !important;
-    border: 1px solid rgba(239, 68, 68, 0.3) !important;
-    border-radius: 10px !important;
+    background-color: #09090B !important;
+    color: #FFFFFF !important;
+    border: 1px solid #3F3F46 !important;
+    border-radius: 8px !important;
 }
 
 [data-theme="clean-dark"] .logout-btn span {
-    color: #F87171 !important;
+    color: #FFFFFF !important;
 }
 
 [data-theme="clean-dark"] .logout-btn svg,
 [data-theme="clean-dark"] .logout-btn svg * {
-    stroke: #F87171 !important;
-}
-
-[data-theme="clean-dark"] .logout-btn:hover {
-    background-color: #EF4444 !important;
-    color: #FFFFFF !important;
-    border-color: #DC2626 !important;
-}
-
-[data-theme="clean-dark"] .logout-btn:hover span {
-    color: #FFFFFF !important;
-}
-
-[data-theme="clean-dark"] .logout-btn:hover svg,
-[data-theme="clean-dark"] .logout-btn:hover svg * {
     stroke: #FFFFFF !important;
 }
 
-[data-theme="clean-dark"] .nav-item.active {
-    background-color: #6366F1 !important;
+[data-theme="clean-dark"] .logout-btn:hover {
+    background-color: #27272A !important;
     color: #FFFFFF !important;
-    border: 1px solid #4F46E5 !important;
-    border-radius: 10px !important;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+}
+
+[data-theme="clean-dark"] .nav-item.active {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    border-radius: 8px !important;
 }
 
 [data-theme="clean-dark"] .day-tab.active {
-    background-color: #6366F1 !important;
-    color: #FFFFFF !important;
-    border: 1px solid #4F46E5 !important;
-    border-radius: 8px !important;
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    border-radius: 6px !important;
 }
 
 [data-theme="clean-dark"] #hero-academic-day-badge {
-    background-color: #6366F1 !important;
-    color: #FFFFFF !important;
-    border: 1px solid #4F46E5 !important;
-    border-radius: 8px !important;
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    border-radius: 6px !important;
     font-weight: 800 !important;
 }
 
 [data-theme="clean-dark"] #hero-academic-weekday-label {
     font-weight: 700 !important;
-    color: #818CF8 !important;
+    color: #FFFFFF !important;
 }
 
 [data-theme="clean-dark"] .hero-col-badge,
@@ -1898,92 +1941,91 @@
 [data-theme="clean-dark"] .standing-pill,
 [data-theme="clean-dark"] .status-badge,
 [data-theme="clean-dark"] .metric-badge {
-    background-color: rgba(99, 102, 241, 0.15) !important;
-    color: #A5B4FC !important;
-    border: 1px solid rgba(99, 102, 241, 0.3) !important;
-    border-radius: 8px !important;
+    background-color: #18181B !important;
+    color: #FFFFFF !important;
+    border: 1px solid #3F3F46 !important;
+    border-radius: 6px !important;
     font-weight: 700 !important;
     padding: 3px 8px !important;
 }
 
 [data-theme="clean-dark"] .calendar-day-cell.today {
-    background-color: #6366F1 !important;
-    color: #FFFFFF !important;
-    border: 1px solid #4F46E5 !important;
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
 }
 
 [data-theme="clean-dark"] .calendar-day-cell.today * {
-    color: #FFFFFF !important;
+    color: #000000 !important;
 }
 
 [data-theme="clean-dark"] .calendar-day-cell.holiday {
-    background-color: rgba(239, 68, 68, 0.18) !important;
-    border: 1px solid rgba(239, 68, 68, 0.35) !important;
+    background-color: #18181B !important;
+    border: 1px solid #3F3F46 !important;
 }
 
 [data-theme="clean-dark"] .calendar-day-cell.holiday .day-number,
 [data-theme="clean-dark"] .calendar-day-cell.holiday .calendar-cell-day-num {
-    color: #FCA5A5 !important;
+    color: #FFFFFF !important;
     font-weight: 800 !important;
 }
 
 [data-theme="clean-dark"] .calendar-day-cell.milestone {
-    background-color: rgba(16, 185, 129, 0.18) !important;
-    border: 1px solid rgba(16, 185, 129, 0.35) !important;
+    background-color: #27272A !important;
+    border: 1px solid #52525B !important;
 }
 
 [data-theme="clean-dark"] .calendar-day-cell.commencement {
-    background-color: rgba(168, 85, 247, 0.18) !important;
-    border: 1px solid rgba(168, 85, 247, 0.35) !important;
+    background-color: #3F3F46 !important;
+    border: 1px solid #71717A !important;
 }
 
 [data-theme="clean-dark"] .attendance-grid-row {
-    background-color: #1E293B !important;
-    border: 1px solid #334155 !important;
-    border-radius: 12px !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    background-color: #09090B !important;
+    border: 1px solid #27272A !important;
+    border-radius: 8px !important;
 }
 
 [data-theme="clean-dark"] .mobile-bottom-nav {
-    background-color: rgba(30, 41, 59, 0.95) !important;
-    border: 1px solid #334155 !important;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5) !important;
-    border-radius: 20px !important;
+    background-color: #000000 !important;
+    border: 1.5px solid #27272A !important;
+    border-radius: 16px !important;
     padding: 4px 6px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 [data-theme="clean-dark"] .mobile-nav-item,
 [data-theme="clean-dark"] button.mobile-nav-item {
-    border-radius: 12px !important;
+    border-radius: 10px !important;
     background: transparent !important;
-    color: #94A3B8 !important;
+    color: #A1A1AA !important;
     font-weight: 600 !important;
 }
 
 [data-theme="clean-dark"] .mobile-nav-item svg {
-    stroke: #94A3B8 !important;
+    stroke: #A1A1AA !important;
 }
 
 [data-theme="clean-dark"] .mobile-nav-item.active,
 [data-theme="clean-dark"] button.mobile-nav-item.active {
-    background-color: #6366F1 !important;
-    color: #FFFFFF !important;
-    border-radius: 14px !important;
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border-radius: 10px !important;
     font-weight: 700 !important;
 }
 
 [data-theme="clean-dark"] .mobile-nav-item.active *,
 [data-theme="clean-dark"] .mobile-nav-item.active span,
 [data-theme="clean-dark"] .mobile-nav-item.active svg {
-    color: #FFFFFF !important;
-    stroke: #FFFFFF !important;
+    color: #000000 !important;
+    stroke: #000000 !important;
 }
 
 [data-theme="clean-dark"] .mobile-planner-card {
-    background-color: #1E293B !important;
-    border: 1px solid #334155 !important;
-    border-radius: 14px !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+    background-color: #09090B !important;
+    border: 1px solid #27272A !important;
+    border-radius: 10px !important;
 }
 
 /* THEME SELECTOR BUTTON & POPPER COMPONENT */
