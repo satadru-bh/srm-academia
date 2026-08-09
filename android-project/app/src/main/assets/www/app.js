@@ -280,6 +280,10 @@ window.addEventListener('focus', async () => {
  * Initializes the application lifecycle
  */
 async function initApp() {
+    initThemeSystem();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const forceLogout = urlParams.get('logout') === 'true';
     setupThemeSelector();
     setupNavigation();
     setupSwipeGestures();
@@ -5918,7 +5922,13 @@ function removeSavedAccount(id, event) {
     }
 }
 
-function loginWithSavedAccount(id) {
+async function loginWithSavedAccount(id) {
+    const success = await verifyBiometrics();
+    if (!success) {
+        createToast("Biometric authentication failed or canceled.", "error");
+        return;
+    }
+
     const accounts = getSavedAccounts();
     const acc = accounts.find(a => a.id === id);
     if (!acc) return;
@@ -6298,3 +6308,108 @@ function evaluateAndSendSmartNotifications() {
         }
     }
 }
+
+// ==========================================
+// BIOMETRIC LOCK SYSTEM
+// ==========================================
+
+async function registerWebAuthnKey() {
+    try {
+        const challenge = crypto.getRandomValues(new Uint8Array(32));
+        const userId = crypto.getRandomValues(new Uint8Array(16));
+        
+        const credential = await navigator.credentials.create({
+            publicKey: {
+                challenge,
+                rp: { name: 'SRM Academia+', id: window.location.hostname },
+                user: { id: userId, name: "biometric_lock", displayName: "App Lock" },
+                pubKeyCredParams: [
+                    { type: 'public-key', alg: -7 },
+                    { type: 'public-key', alg: -257 }
+                ],
+                authenticatorSelection: { 
+                    authenticatorAttachment: 'platform', 
+                    userVerification: 'required' 
+                },
+                timeout: 60000
+            }
+        });
+        
+        const credentialId = btoa(String.fromCharCode.apply(null, new Uint8Array(credential.rawId)));
+        localStorage.setItem('srm_biometric_key_id', credentialId);
+        return true;
+    } catch (e) {
+        console.warn('WebAuthn Registration Failed:', e);
+        return false;
+    }
+}
+
+async function verifyWebAuthnKey() {
+    const savedId = localStorage.getItem('srm_biometric_key_id');
+    if (!savedId) return false;
+    try {
+        const binaryString = atob(savedId);
+        const credentialId = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+            credentialId[i] = binaryString.charCodeAt(i);
+        }
+        const challenge = crypto.getRandomValues(new Uint8Array(32));
+        await navigator.credentials.get({
+            publicKey: {
+                challenge,
+                allowCredentials: [{ type: 'public-key', id: credentialId }],
+                userVerification: 'required',
+                timeout: 60000
+            }
+        });
+        return true;
+    } catch (e) {
+        console.warn('WebAuthn Verification Failed:', e);
+        return false;
+    }
+}
+
+function verifyAndroidBiometrics() {
+    return new Promise((resolve, reject) => {
+        const reqId = Date.now().toString();
+        window._biometricResolvers = window._biometricResolvers || {};
+        window._biometricResolvers[reqId] = { resolve, reject };
+        window.AndroidBiometricBridge.promptBiometric(reqId, "SRM Academia+ Login");
+    });
+}
+
+window.onBiometricSuccess = function(reqId) {
+    if (window._biometricResolvers && window._biometricResolvers[reqId]) {
+        window._biometricResolvers[reqId].resolve(true);
+        delete window._biometricResolvers[reqId];
+    }
+};
+
+window.onBiometricError = function(reqId, error) {
+    if (window._biometricResolvers && window._biometricResolvers[reqId]) {
+        window._biometricResolvers[reqId].resolve(false);
+        delete window._biometricResolvers[reqId];
+    }
+};
+
+async function verifyBiometrics() {
+    if (window.AndroidBiometricBridge && window.AndroidBiometricBridge.isBiometricAvailable()) {
+        return await verifyAndroidBiometrics();
+    } else {
+        if (window.PublicKeyCredential) {
+            const savedId = localStorage.getItem('srm_biometric_key_id');
+            if (!savedId) {
+                // First time using biometrics on Web, setup required
+                createToast("Setting up Biometric Security...", "info");
+                const registered = await registerWebAuthnKey();
+                if (!registered) return false;
+            }
+            return await verifyWebAuthnKey();
+        } else {
+            // If biometrics literally aren't supported on this ancient device, allow pass through
+            // so they aren't permanently locked out of saved accounts.
+            console.warn("Biometrics not supported, falling back to insecure login.");
+            return true;
+        }
+    }
+}

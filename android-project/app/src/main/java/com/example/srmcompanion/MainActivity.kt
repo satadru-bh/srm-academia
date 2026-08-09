@@ -28,8 +28,11 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.FragmentActivity
+import androidx.biometric.BiometricPrompt
+import androidx.biometric.BiometricManager
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
     private lateinit var webView: WebView
     private val CHANNEL_ID = "srm_companion_notifications"
 
@@ -77,6 +80,22 @@ class MainActivity : ComponentActivity() {
             return activity.isNotificationPermissionGranted()
         }
     }
+
+    class AndroidBiometricBridge(private val activity: MainActivity) {
+        @JavascriptInterface
+        fun isBiometricAvailable(): Boolean {
+            val biometricManager = BiometricManager.from(activity)
+            return biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL) == BiometricManager.BIOMETRIC_SUCCESS
+        }
+
+        @JavascriptInterface
+        fun promptBiometric(requestId: String, title: String) {
+            activity.runOnUiThread {
+                activity.showBiometricPrompt(requestId, title)
+            }
+        }
+    }
+
 
     @SuppressLint("SetJavaScriptEnabled", "JavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -133,6 +152,7 @@ class MainActivity : ComponentActivity() {
 
         webView.addJavascriptInterface(AndroidNotificationBridge(this), "AndroidNotificationBridge")
         webView.addJavascriptInterface(AndroidWidgetBridge(this), "AndroidWidgetBridge")
+        webView.addJavascriptInterface(AndroidBiometricBridge(this), "AndroidBiometricBridge")
 
         webView.webViewClient = WebViewClient()
         webView.webChromeClient = object : WebChromeClient() {
@@ -200,34 +220,60 @@ class MainActivity : ComponentActivity() {
             requestNotificationPermission()
         }
 
-        val intent = Intent(this, MainActivity::class.java).apply {
-            action = Intent.ACTION_MAIN
-            addCategory(Intent.CATEGORY_LAUNCHER)
-        }
-        val pendingIntent = PendingIntent.getActivity(
-            this,
-            0,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(title)
             .setContentText(message)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
 
-        val notificationId = tag.hashCode().let { if (it == 0) System.currentTimeMillis().toInt() else it }
-        with(NotificationManagerCompat.from(this)) {
-            try {
-                notify(notificationId, builder.build())
-            } catch (e: SecurityException) {
-                e.printStackTrace()
-            }
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+        val pendingIntent = PendingIntent.getActivity(
+            this, 
+            0, 
+            intent, 
+            PendingIntent.FLAG_IMMUTABLE
+        )
+        builder.setContentIntent(pendingIntent)
+
+        try {
+            with(NotificationManagerCompat.from(this)) {
+                notify(tag.hashCode(), builder.build())
+            }
+        } catch (e: SecurityException) {
+            e.printStackTrace()
+        }
+    }
+
+    fun showBiometricPrompt(requestId: String, title: String) {
+        val executor = ContextCompat.getMainExecutor(this)
+        val biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    webView.evaluateJavascript("window.onBiometricError('$requestId', '${errString}')", null)
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    webView.evaluateJavascript("window.onBiometricSuccess('$requestId')", null)
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    // Prompt handles failure UI automatically. 
+                    // Do not reject immediately so user can try again.
+                }
+            })
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(title)
+            .setSubtitle("Confirm your identity to log in")
+            .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
+            .build()
+
+        biometricPrompt.authenticate(promptInfo)
     }
 }
