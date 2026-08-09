@@ -9296,20 +9296,36 @@ body.sidebar-open #attendance-fab-container,
     }
 
     /* Theme Morphic Variations for Yellow Support Button on Desktop Sidebar */
-    [data-theme="retro-computing"] .sidebar .nav-item-support {
-        background: #E9C46A !important;
+    [data-theme="retro-computing"] .nav-item-support,
+    [data-theme="retro-computing"] .nav-item-support.active,
+    [data-theme="retro-computing"] .sidebar .nav-item-support,
+    [data-theme="retro-computing"] .sidebar .nav-item-support.active {
+        background-color: #FFC107 !important;
+        background: #FFC107 !important;
         color: #1E1E1E !important;
-        border-top: 1.5px solid #FFFFFF !important;
-        border-left: 1.5px solid #FFFFFF !important;
-        border-right: 1.5px solid #B8903B !important;
-        border-bottom: 1.5px solid #9E7A2C !important;
-        box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.18) !important;
+        border: 1px solid #1E1E1E !important;
+        border-top: 1.5px solid #FFE082 !important;
+        border-left: 1.5px solid #FFE082 !important;
+        border-right: 1.5px solid #C67B18 !important;
+        border-bottom: 1.5px solid #C67B18 !important;
+        box-shadow: inset 1px 1px 0px #FFE082, inset -1px -1px 0px #C67B18, 1px 2px 4px rgba(0, 0, 0, 0.18) !important;
         font-family: "IBM Plex Mono", "JetBrains Mono", monospace !important;
+        font-weight: 800 !important;
     }
 
-    [data-theme="retro-computing"] .sidebar .nav-item-support svg {
+    [data-theme="retro-computing"] .nav-item-support svg,
+    [data-theme="retro-computing"] .nav-item-support.active svg,
+    [data-theme="retro-computing"] .sidebar .nav-item-support svg,
+    [data-theme="retro-computing"] .sidebar .nav-item-support.active svg {
         stroke: #1E1E1E !important;
         fill: #1E1E1E !important;
+    }
+
+    [data-theme="retro-computing"] .nav-item-support:hover,
+    [data-theme="retro-computing"] .sidebar .nav-item-support:hover {
+        background-color: #FFCA28 !important;
+        background: #FFCA28 !important;
+        color: #1E1E1E !important;
     }
 
     [data-theme="neo-brutalist"] .sidebar .nav-item-support {
@@ -10544,24 +10560,42 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="neo-brutalist"] .view-pane,
 [data-theme="neo-brutalist"] .card,
 [data-theme="neo-brutalist"] .workspace-header,
-[data-theme="neo-brutalist"] .marks-card,
-[data-theme="neo-brutalist"] .theme-dropdown-menu {
+[data-theme="neo-brutalist"] .marks-card {
     overflow: visible !important;
 }
 
-/* Universal Non-Clipping & Styling Fixes for Internal Marks Cards & Theme Menu */
+/* Universal Non-Clipping & Styling Fixes for Internal Marks Cards */
 #view-academics,
 #view-academics .marks-grid,
-.marks-card,
-.theme-dropdown-menu {
+.marks-card {
     overflow: visible !important;
+}
+
+/* Theme Dropdown Menu Strict Inner Container - Prevents Theme Option Leaking */
+.theme-dropdown-menu {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    max-height: min(70vh, 480px) !important;
+    padding: 14px !important;
+}
+
+.theme-dropdown-header {
+    flex: 0 0 auto !important;
+    margin-bottom: 10px !important;
+    padding-bottom: 8px !important;
 }
 
 .theme-options-grid {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    max-height: min(65vh, 540px) !important;
-    padding: 2px 6px 6px 2px !important;
+    padding: 2px 4px 4px 2px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
 }
 
 /* Neo-Brutalist Internal Marks Cards Overrides */
@@ -10623,6 +10657,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     box-shadow: 6px 6px 0px #000000 !important;
     border-radius: 18px !important;
     padding: 16px !important;
+    overflow: hidden !important;
 }
 
 [data-theme="neo-brutalist"] .theme-dropdown-header {
@@ -10660,7 +10695,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     font-weight: 900 !important;
 }
 
-/* SPECIAL ELECTRIC YELLOW SUPPORT APP BUTTON & SUBTLE SPARKLE ANIMATION */
+/* SPECIAL ELECTRIC YELLOW SUPPORT APP BUTTON WITH CONSTANT LIGHT BEAM & SPARKLE ANIMATION */
 .nav-item-support {
     position: relative !important;
     background: #ffee00 !important;
@@ -10669,10 +10704,41 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     border: 2px solid #000000 !important;
     box-shadow: 3px 3px 0px #000000 !important;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    overflow: hidden !important;
+}
+
+.nav-item-support::after {
+    content: '' !important;
+    position: absolute !important;
+    top: -50% !important;
+    left: -50% !important;
+    width: 200% !important;
+    height: 200% !important;
+    background: linear-gradient(
+        60deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.55) 50%,
+        transparent 70%
+    ) !important;
+    transform: rotate(25deg) translateX(-150%) !important;
+    animation: constantShimmerBeam 2.2s infinite linear !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+}
+
+@keyframes constantShimmerBeam {
+    0% {
+        transform: rotate(25deg) translateX(-150%);
+    }
+    100% {
+        transform: rotate(25deg) translateX(150%);
+    }
 }
 
 .nav-item-support svg {
     stroke: #000000 !important;
+    position: relative !important;
+    z-index: 3 !important;
 }
 
 .nav-item-support:hover {
@@ -10688,59 +10754,62 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 }
 
 .support-sparkle-container {
-    position: absolute;
-    top: -6px;
-    right: -4px;
-    pointer-events: none;
-    display: flex;
-    gap: 2px;
+    position: absolute !important;
+    top: -3px !important;
+    right: -1px !important;
+    pointer-events: none !important;
+    display: flex !important;
+    gap: 2px !important;
+    z-index: 4 !important;
 }
 
 .sparkle-star {
-    display: inline-block;
-    font-size: 11px;
-    line-height: 1;
-    color: #d97706;
-    text-shadow: 0 0 4px rgba(255, 200, 0, 0.8);
-    opacity: 0;
-    transform: scale(0.4) rotate(0deg);
+    display: inline-block !important;
+    font-size: 12px !important;
+    line-height: 1 !important;
+    color: #FFD700 !important;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.9), 0 0 10px rgba(255, 180, 0, 0.8) !important;
 }
 
 .sparkle-1 {
-    animation: subtleSparkleTwinkle 4.5s ease-in-out infinite;
-    animation-delay: 0.8s;
+    animation: constantSparkleTwinkle1 1.5s ease-in-out infinite alternate !important;
 }
 
 .sparkle-2 {
-    font-size: 9px;
-    color: #b45309;
-    margin-top: -3px;
-    animation: subtleSparkleTwinkle 4.5s ease-in-out infinite;
-    animation-delay: 2.2s;
+    font-size: 10px !important;
+    color: #FFD700 !important;
+    margin-top: -2px !important;
+    animation: constantSparkleTwinkle2 1.5s ease-in-out infinite alternate !important;
+    animation-delay: 0.75s !important;
 }
 
-@keyframes subtleSparkleTwinkle {
-
-    0%,
-    65%,
-    100% {
-        opacity: 0;
-        transform: scale(0.4) rotate(0deg);
+@keyframes constantSparkleTwinkle1 {
+    0% {
+        opacity: 0.6;
+        transform: scale(0.75) rotate(0deg);
     }
-
-    75% {
+    50% {
         opacity: 1;
-        transform: scale(1.35) rotate(20deg);
+        transform: scale(1.35) rotate(90deg);
     }
-
-    85% {
-        opacity: 0.85;
-        transform: scale(1.0) rotate(40deg);
+    100% {
+        opacity: 0.8;
+        transform: scale(0.9) rotate(180deg);
     }
+}
 
-    92% {
-        opacity: 0;
-        transform: scale(0.5) rotate(60deg);
+@keyframes constantSparkleTwinkle2 {
+    0% {
+        opacity: 0.5;
+        transform: scale(0.65) rotate(180deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.4) rotate(270deg);
+    }
+    100% {
+        opacity: 0.75;
+        transform: scale(0.85) rotate(360deg);
     }
 }
 
