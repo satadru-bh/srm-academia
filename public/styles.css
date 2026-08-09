@@ -975,8 +975,8 @@
     --calendar-cell-border: #8A8A84;
     --calendar-cell-hover: #ECE9E1;
 
-    --font-stack: "IBM Plex Sans", "Inter", "Helvetica Neue", system-ui, sans-serif;
-    --font-mono: "IBM Plex Mono", "JetBrains Mono", monospace;
+    --font-stack: "Share Tech Mono", "IBM Plex Mono", monospace;
+    --font-mono: "Share Tech Mono", "IBM Plex Mono", monospace;
     --transition-smooth: all 0.08s ease;
 
     --radius-xl: 3px;
@@ -1410,24 +1410,51 @@
     font-weight: 900 !important;
 }
 
-/* Authentic Retro Pixel & Workstation Typography for Big Headings & Sections */
+/* Authentic Retro Workstation Typography System (Consistent Monospace & Enhanced Letter-Spacing) */
+[data-theme="retro-computing"],
+[data-theme="retro-computing"] * {
+    font-family: "Share Tech Mono", "IBM Plex Mono", monospace !important;
+    letter-spacing: 0.08em !important;
+}
+
 [data-theme="retro-computing"] h1,
 [data-theme="retro-computing"] h2,
 [data-theme="retro-computing"] h3,
 [data-theme="retro-computing"] h4,
+[data-theme="retro-computing"] h5,
 [data-theme="retro-computing"] .workspace-title,
 [data-theme="retro-computing"] .hero-title,
 [data-theme="retro-computing"] .card-title,
+[data-theme="retro-computing"] .section-title,
 [data-theme="retro-computing"] .section-header,
+[data-theme="retro-computing"] .attendance-course-name,
 [data-theme="retro-computing"] .calendar-month-title,
 [data-theme="retro-computing"] #calendar-month-year-title,
 [data-theme="retro-computing"] .auth-title,
-[data-theme="retro-computing"] .app-brand-title {
-    font-family: "VT323", "Share Tech Mono", "IBM Plex Mono", monospace !important;
-    letter-spacing: 0.06em !important;
+[data-theme="retro-computing"] .app-brand-title,
+[data-theme="retro-computing"] .modal-title {
+    font-family: "Share Tech Mono", "VT323", monospace !important;
+    letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
+    font-weight: 700 !important;
 }
 
+[data-theme="retro-computing"] .attendance-pct,
+[data-theme="retro-computing"] .attendance-pct-val,
+[data-theme="retro-computing"] .attendance-pct-symbol,
+[data-theme="retro-computing"] .attendance-required-val,
+[data-theme="retro-computing"] .stat-value,
+[data-theme="retro-computing"] .hero-value,
+[data-theme="retro-computing"] .quick-stat-val {
+    font-family: "Share Tech Mono", "VT323", monospace !important;
+    letter-spacing: 0.16em !important;
+    font-weight: 700 !important;
+}
+
+[data-theme="retro-computing"] .attendance-stat-lbl,
+[data-theme="retro-computing"] .attendance-hours-detail,
+[data-theme="retro-computing"] .attendance-course-code,
+[data-theme="retro-computing"] .attendance-faculty-name,
 [data-theme="retro-computing"] .hero-col-badge,
 [data-theme="retro-computing"] #hero-internals-badge,
 [data-theme="retro-computing"] #hero-next-countdown,
@@ -1439,9 +1466,12 @@
 [data-theme="retro-computing"] .nav-item,
 [data-theme="retro-computing"] .day-tab,
 [data-theme="retro-computing"] button,
-[data-theme="retro-computing"] .btn-primary,
-[data-theme="retro-computing"] .btn-secondary {
-    font-family: "Share Tech Mono", "IBM Plex Mono", monospace !important;
+[data-theme="retro-computing"] input,
+[data-theme="retro-computing"] select,
+[data-theme="retro-computing"] label {
+    font-family: "Share Tech Mono", monospace !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
 }
 
 /* Zero Blur / Glass Overrides */
