@@ -255,13 +255,37 @@ function getActiveCredentials() {
     try {
         const activeEmail = (localStorage.getItem('srm_academia_active_email') || '').trim().toLowerCase();
         const saved = JSON.parse(localStorage.getItem('srm_saved_accounts') || '[]');
+
         if (activeEmail) {
-            const match = saved.find(a => a.email && a.email.toLowerCase() === activeEmail);
-            if (match && match.password) return { email: match.email, password: match.password };
+            // 1. Direct email match
+            let match = saved.find(a => a.email && a.email.toLowerCase() === activeEmail);
+            // 2. Fuzzy match across email, netId, regNumber
+            if (!match) {
+                match = saved.find(a => 
+                    (a.email && a.email.toLowerCase().includes(activeEmail)) ||
+                    (a.regNumber && a.regNumber.toLowerCase() === activeEmail) ||
+                    (a.netId && a.netId.toLowerCase() === activeEmail)
+                );
+            }
+            if (match && match.password) return { email: match.email || activeEmail, password: match.password };
         }
-        // Fallback: most recent saved account with credentials
-        const fallback = saved.find(a => a.email && a.password && !/^ra\d+/i.test(a.email));
+
+        // 3. Fallback: Check state.studentInfo NetID/email if available
+        if (typeof state !== 'undefined' && state && state.studentInfo) {
+            const infoEmail = (state.studentInfo.netId || state.studentInfo.email || '').toLowerCase().trim();
+            if (infoEmail) {
+                const infoMatch = saved.find(a => 
+                    (a.email && a.email.toLowerCase() === infoEmail) ||
+                    (a.regNumber && a.regNumber.toLowerCase() === infoEmail)
+                );
+                if (infoMatch && infoMatch.password) return { email: infoMatch.email, password: infoMatch.password };
+            }
+        }
+
+        // 4. Fallback: Any saved account with password
+        const fallback = saved.find(a => a.email && a.password);
         if (fallback) return { email: fallback.email, password: fallback.password };
+
         return null;
     } catch (e) {
         return null;
@@ -1757,33 +1781,93 @@ async function handleLoginSubmission(e) {
 }
 
 /**
- * Handle Live Synchronization Event Trigger
+ * Handle Live Synchronization Event
  */
 async function handleSyncRequest() {
     const syncButton = document.getElementById('sync-button');
-    const syncIcon = syncButton.querySelector('.sync-icon');
+    const syncIcon = syncButton ? syncButton.querySelector('.sync-icon') : null;
 
     try {
-        syncButton.disabled = true;
-        syncIcon.classList.add('loading');
+        if (syncButton) syncButton.disabled = true;
+        if (syncIcon) syncIcon.classList.add('loading');
 
         const creds = getActiveCredentials();
-        const response = await fetch(getApiEndpoint('/api/sync'), {
+        let response = await fetch(getApiEndpoint('/api/sync'), {
             method: 'POST',
             credentials: 'include',
             headers: getApiHeaders(),
             body: JSON.stringify(creds || {})
         });
 
+        // 401 Recovery Attempt: If sync failed with 401, attempt transparent re-auth via /api/login if credentials exist
         if (response.status === 401 || response.status === 403) {
-            createToast("SRM portal session paused. Showing cached data.", "warning");
+            if (creds && creds.email && creds.password) {
+                const loginRes = await fetch(getApiEndpoint('/api/login'), {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: getApiHeaders(),
+                    body: JSON.stringify(creds)
+                });
+                if (loginRes.ok) {
+                    const loginData = await loginRes.json();
+                    if (loginData.success) {
+                        localStorage.setItem('srm_last_synced_time', Date.now().toString());
+                        updateApplicationState(loginData);
+                        updateLastSyncedDisplay();
+                        updateStickySessionBanner(false);
+                        createToast("Session re-authenticated & data synced!", "success");
+                        
+                        const activeTab = state.activeTab;
+                        if (activeTab === 'overview') renderOverviewPane();
+                        if (activeTab === 'attendance') renderAttendancePane();
+                        if (activeTab === 'timetable') renderTimetablePane();
+                        if (activeTab === 'academics') renderAcademicsPane();
+                        if (activeTab === 'planner') renderPlannerPane();
+                        if (activeTab === 'developer') renderDeveloperPane();
+                        return;
+                    }
+                }
+            }
+
+            createToast("SRM session expired. Please sign in again.", "warning");
+            updateStickySessionBanner(true);
+            showAuthModal();
             return;
         }
 
         const data = await response.json();
 
         if (data.expired || (data.error && (data.error.includes('expired') || data.error.includes('Session')))) {
-            createToast("SRM portal session paused. Showing cached data.", "warning");
+            if (creds && creds.email && creds.password) {
+                const loginRes = await fetch(getApiEndpoint('/api/login'), {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: getApiHeaders(),
+                    body: JSON.stringify(creds)
+                });
+                if (loginRes.ok) {
+                    const loginData = await loginRes.json();
+                    if (loginData.success) {
+                        localStorage.setItem('srm_last_synced_time', Date.now().toString());
+                        updateApplicationState(loginData);
+                        updateLastSyncedDisplay();
+                        updateStickySessionBanner(false);
+                        createToast("Session re-authenticated & data synced!", "success");
+                        
+                        const activeTab = state.activeTab;
+                        if (activeTab === 'overview') renderOverviewPane();
+                        if (activeTab === 'attendance') renderAttendancePane();
+                        if (activeTab === 'timetable') renderTimetablePane();
+                        if (activeTab === 'academics') renderAcademicsPane();
+                        if (activeTab === 'planner') renderPlannerPane();
+                        if (activeTab === 'developer') renderDeveloperPane();
+                        return;
+                    }
+                }
+            }
+            createToast("SRM session expired. Please sign in again.", "warning");
+            updateStickySessionBanner(true);
+            showAuthModal();
             return;
         }
 
@@ -1792,6 +1876,7 @@ async function handleSyncRequest() {
             updateApplicationState(data);
             updateLastSyncedDisplay();
             updateStickySessionBanner(false);
+            createToast("Data synced successfully!", "success");
 
             // Reload active tab renders
             const activeTab = state.activeTab;
@@ -1808,8 +1893,8 @@ async function handleSyncRequest() {
         createToast("Sync operations failed network validation checks.", "danger");
         console.error(err);
     } finally {
-        syncButton.disabled = false;
-        syncIcon.classList.remove('loading');
+        if (syncButton) syncButton.disabled = false;
+        if (syncIcon) syncIcon.classList.remove('loading');
     }
 }
 

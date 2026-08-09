@@ -635,19 +635,22 @@ app.all(["/api/sync", "/sync", "/api/attendance", "/attendance"], async (req, re
         // Resolve registration numbers (e.g. ra2511033010043) to primary NetID email (e.g. sb7956@srmist.edu.in)
         targetEmail = CookieStore.resolveEmail(targetEmail);
 
+        const clientPassword = req.body && req.body.password;
         if (!targetEmail) {
-            return res.status(401).json({ success: false, expired: true, error: "Session has expired." });
+            if (req.body && req.body.email && clientPassword) {
+                targetEmail = CookieStore.normalizeEmail(req.body.email);
+            } else {
+                return res.status(401).json({ success: false, expired: true, error: "Session has expired." });
+            }
         }
 
-        // Serverless Cold-Start Recovery: If CookieStore has no record but client sent credentials,
-        // perform a fresh login+scrape in one shot instead of returning 401.
-        const clientPassword = req.body && req.body.password;
+        // Serverless / Cold-Start Recovery: If CookieStore has no record or invalid record, AND client provided credentials:
         const existingRecord = CookieStore.get(targetEmail);
-        if ((!existingRecord || !existingRecord.jar || existingRecord.isValid === false) && clientPassword) {
-            SessionLogger.info('Server', `Cold-start recovery: No CookieJar for ${targetEmail}. Re-authenticating with client-provided credentials.`);
+        if ((!existingRecord || !existingRecord.jar || existingRecord.isValid === false || !existingRecord.credentials?.password) && clientPassword) {
+            SessionLogger.info('Server', `Cold-start/Re-auth recovery: Re-authenticating ${targetEmail} with client-provided credentials.`);
             try {
                 const result = await AuthenticationManager.login(targetEmail, clientPassword, scrapeAllData);
-                if (sessionId) {
+                if (sessionId && result.success) {
                     req.session.authenticated = true;
                     req.session.email = targetEmail;
                     DeviceSessionStore.bindDevice(sessionId, targetEmail);
@@ -660,10 +663,24 @@ app.all(["/api/sync", "/sync", "/api/attendance", "/attendance"], async (req, re
         }
 
         // Execute resilient data fetch via RequestExecutor
-        const result = await RequestExecutor.executeSync(targetEmail, scrapeAllData);
+        let result = await RequestExecutor.executeSync(targetEmail, scrapeAllData, clientPassword);
+
+        // If executeSync returns expired AND client provided password, attempt instant re-auth recovery
+        if (result && result.expired && clientPassword) {
+            SessionLogger.info('Server', `Sync expired for ${targetEmail}. Attempting automatic re-login with client credentials...`);
+            try {
+                result = await AuthenticationManager.login(targetEmail, clientPassword, scrapeAllData);
+                if (sessionId && result.success) {
+                    req.session.authenticated = true;
+                    req.session.email = targetEmail;
+                    DeviceSessionStore.bindDevice(sessionId, targetEmail);
+                }
+            } catch (loginErr) {
+                SessionLogger.error('Server', `Auto re-login recovery failed for ${targetEmail}: ${loginErr.message}`);
+            }
+        }
 
         if (result && result.expired) {
-            // Unbind invalid/expired device session binding so device doesn't get trapped with stale binding
             if (sessionId) {
                 DeviceSessionStore.logoutDevice(sessionId);
             }

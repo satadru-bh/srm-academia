@@ -23,7 +23,7 @@ class RequestExecutor {
      * @param {string} email 
      * @param {(client: any) => Promise<any>} scrapeFn 
      */
-    async executeSync(email, scrapeFn) {
+    async executeSync(email, scrapeFn, fallbackPassword = null) {
         try {
             const cleanEmail = CookieStore.normalizeEmail(email);
             if (!cleanEmail) {
@@ -36,7 +36,7 @@ class RequestExecutor {
             if (!record || !record.jar || record.isValid === false) {
                 SessionLogger.info(TAG, `No active CookieJar for ${cleanEmail}. Attempting background re-authentication...`);
                 try {
-                    const reAuthRes = await AuthenticationManager.reauthenticate(cleanEmail, scrapeFn);
+                    const reAuthRes = await AuthenticationManager.reauthenticate(cleanEmail, scrapeFn, fallbackPassword);
                     return { success: true, ...reAuthRes.payload };
                 } catch (reAuthErr) {
                     SessionLogger.warn(TAG, `Background re-authentication failed for ${cleanEmail}: ${reAuthErr.message}`);
@@ -94,7 +94,7 @@ class RequestExecutor {
                 if (SessionValidator.isAuthFailure(err) || String(err.message).includes('validation failed')) {
                     SessionLogger.warn(TAG, `Genuine auth failure for ${cleanEmail}. Attempting ONE background re-authentication...`);
                     try {
-                        const reAuthRes = await AuthenticationManager.reauthenticate(cleanEmail, scrapeFn);
+                        const reAuthRes = await AuthenticationManager.reauthenticate(cleanEmail, scrapeFn, fallbackPassword);
                         return { success: true, isStale: false, ...reAuthRes.payload };
                     } catch (reAuthErr) {
                         SessionLogger.error(TAG, `Background re-authentication failed after auth error for ${cleanEmail}`, reAuthErr);

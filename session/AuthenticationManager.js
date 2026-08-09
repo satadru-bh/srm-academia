@@ -157,10 +157,12 @@ class AuthenticationManager {
      * @param {string} email 
      * @param {(client: any) => Promise<any>} scrapeFn 
      */
-    async reauthenticate(email, scrapeFn) {
+    async reauthenticate(email, scrapeFn, fallbackPassword = null) {
         const cleanEmail = CookieStore.normalizeEmail(email);
         const record = CookieStore.get(cleanEmail);
-        if (!record || !record.credentials || !record.credentials.password) {
+        const password = (record && record.credentials && record.credentials.password) || fallbackPassword;
+
+        if (!password) {
             throw new Error(`No saved credentials available for background re-authentication of ${cleanEmail}`);
         }
 
@@ -170,10 +172,10 @@ class AuthenticationManager {
             const freshJar = new CookieJar();
             const freshClient = await createSrmClient(freshJar);
 
-            await this.performSrmSSO(cleanEmail, record.credentials.password, freshJar, freshClient);
+            await this.performSrmSSO(cleanEmail, password, freshJar, freshClient);
             const payload = await scrapeFn(freshClient);
 
-            CookieStore.set(cleanEmail, freshJar, record.credentials);
+            CookieStore.set(cleanEmail, freshJar, { email: cleanEmail, password });
             CacheStore.set(cleanEmail, payload);
 
             SessionLogger.info(TAG, `Background re-authentication successful for ${cleanEmail}`);
