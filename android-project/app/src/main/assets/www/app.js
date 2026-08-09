@@ -166,7 +166,13 @@ const periodTimings = [
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
     { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
-    { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] }
+    { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
+    
+    // Clean Generic Themes
+    { id: 'clean-light', name: 'Clean Light', tag: 'Minimal Crisp White & Sapphire Blue', colors: ['#f8fafc', '#ffffff', '#2563eb', '#0284c7'] },
+    { id: 'cream-latte', name: 'Cream Latte', tag: 'Soft Warm Vanilla & Amber Accent', colors: ['#FAF6F0', '#FFFFFF', '#D97706', '#B45309'] },
+    { id: 'monochrome-dark', name: 'Monochrome Dark', tag: 'Sleek Dark Slate & Silver Accent', colors: ['#09090b', '#18181b', '#ffffff', '#a1a1aa'] },
+    { id: 'pitch-black', name: 'OLED Pure Black', tag: 'Pure Black & Vibrant Cyan', colors: ['#000000', '#0a0a0a', '#06b6d4', '#38bdf8'] }
 ];
 
 // Document Event Handlers on DOM Ready
