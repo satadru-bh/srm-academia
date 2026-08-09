@@ -9,110 +9,194 @@
    MODULAR CREATIVE THEMES SYSTEM (12 HANDCRAFTED PALETTES)
    ========================================================================== */
 
-/* ==========================================================================
-/* 1. CLEAN LIGHT (DEFAULT LIGHT) */
-:root,
-[data-theme="clean-light"],
-[data-theme="light"] {
-    --theme-name: "clean-light";
-    --bg-base: #f8fafc;
-    --bg-surface: #ffffff;
-    --bg-surface-elevated: #f1f5f9;
-    --bg-surface-solid: #ffffff;
-    --bg-surface-hover: #e2e8f0;
-
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #64748b;
-    --text-inverse: #ffffff;
-
-    --border-subtle: #e2e8f0;
-    --border-card: rgba(249, 115, 22, 0.08);
-    --border-strong: #cbd5e1;
-    --border-focus: #f97316;
-
-    --accent-primary: #f97316;
-    --accent-primary-hover: #ea580c;
-    --accent-primary-glow: rgba(249, 115, 22, 0.15);
-    --accent-success: #10b981;
-    --accent-warning: #f59e0b;
-    --accent-danger: #f43f5e;
-
-    --theory-bg: rgba(249, 115, 22, 0.08);
-    --theory-border: #f97316;
-    --theory-text: #c2410c;
-
-    --lab-bg: rgba(2, 132, 199, 0.08);
-    --lab-border: #0284c7;
-    --lab-text: #0369a1;
-
-    --cell-empty-bg: #f8fafc;
-    --cell-empty-border: #e2e8f0;
-
-    --calendar-cell-bg: #ffffff;
-    --calendar-cell-border: #e2e8f0;
-    --calendar-cell-hover: #f1f5f9;
-
-    --font-stack: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-    --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-
-    --radius-xl: 24px;
-    --radius-lg: 16px;
-    --radius-md: 12px;
-    --radius-sm: 8px;
-
-    --shadow-premium: 0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 1px 3px 0 rgba(0, 0, 0, 0.01);
-    --shadow-floating: 0 30px 60px -12px rgba(249, 115, 22, 0.08), 0 18px 36px -18px rgba(0, 0, 0, 0.06);
-    --shadow-glow: 0 0 20px rgba(249, 115, 22, 0.1);
-}
-
-/* 2. PITCH BLACK (DEFAULT OLED DARK) */
-[data-theme="pitch-black"],
-[data-theme="dark"] {
-    --theme-name: "pitch-black";
-    --bg-base: #000000;
-    --bg-surface: #0a0a0a;
-    --bg-surface-elevated: #141414;
-    --bg-surface-solid: #0d0d0d;
-    --bg-surface-hover: #1f1f1f;
-
-    --text-primary: #ffffff;
-    --text-secondary: #a3a3a3;
-    --text-muted: #737373;
-    --text-inverse: #000000;
-
-    --border-subtle: #262626;
-    --border-card: #262626;
-    --border-strong: #404040;
-    --border-focus: #f97316;
-
-    --accent-primary: #f97316;
-    --accent-primary-hover: #fb923c;
-    --accent-primary-glow: rgba(249, 115, 22, 0.25);
-    --accent-success: #34d399;
-    --accent-warning: #fbbf24;
-    --accent-danger: #f87171;
-
-    --theory-bg: rgba(249, 115, 22, 0.14);
-    --theory-border: #f97316;
-    --theory-text: #fb923c;
-
-    --lab-bg: rgba(56, 189, 248, 0.14);
-    --lab-border: #38bdf8;
-    --lab-text: #38bdf8;
-
-    --cell-empty-bg: #050505;
-    --cell-empty-border: #1a1a1a;
-
-    --calendar-cell-bg: #0f0f0f;
-    --calendar-cell-border: #262626;
-    --calendar-cell-hover: #1f1f1f;
-
-    --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.8);
     --shadow-floating: 0 20px 40px rgba(0, 0, 0, 0.9);
 }
 
+/* ==========================================================================
+   FRESH GENERIC THEMES
+   ========================================================================== */
 
+/* 1. MODERN LIGHT (Crisp Apple-style Light) */
+[data-theme="modern-light"] {
+    --theme-name: "modern-light";
+    --bg-base: #F5F5F7;
+    --bg-surface: #FFFFFF;
+    --bg-surface-elevated: #FFFFFF;
+    --bg-surface-solid: #FFFFFF;
+    --bg-surface-hover: #EBEBEB;
+
+    --text-primary: #1D1D1F;
+    --text-secondary: #515154;
+    --text-muted: #86868B;
+    --text-inverse: #FFFFFF;
+
+    --border-subtle: #D2D2D7;
+    --border-card: #E5E5EA;
+    --border-strong: #C7C7CC;
+    --border-focus: #007AFF;
+
+    --accent-primary: #007AFF;
+    --accent-primary-hover: #0051A8;
+    --accent-primary-glow: rgba(0, 122, 255, 0.15);
+    --accent-success: #34C759;
+    --accent-warning: #FF9500;
+    --accent-danger: #FF3B30;
+
+    --theory-bg: rgba(0, 122, 255, 0.08);
+    --theory-border: #007AFF;
+    --theory-text: #0051A8;
+
+    --lab-bg: rgba(52, 199, 89, 0.08);
+    --lab-border: #34C759;
+    --lab-text: #248A3D;
+
+    --cell-empty-bg: #F5F5F7;
+    --cell-empty-border: #E5E5EA;
+
+    --calendar-cell-bg: #FFFFFF;
+    --calendar-cell-border: #D2D2D7;
+    --calendar-cell-hover: #F2F2F7;
+
+    --shadow-premium: 0 4px 14px 0 rgba(0, 0, 0, 0.05);
+    --shadow-floating: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* 2. MODERN DARK (Material Dark) */
+[data-theme="modern-dark"] {
+    --theme-name: "modern-dark";
+    --bg-base: #121212;
+    --bg-surface: #1E1E1E;
+    --bg-surface-elevated: #2C2C2C;
+    --bg-surface-solid: #242424;
+    --bg-surface-hover: #333333;
+
+    --text-primary: #E0E0E0;
+    --text-secondary: #AAAAAA;
+    --text-muted: #757575;
+    --text-inverse: #121212;
+
+    --border-subtle: #333333;
+    --border-card: #2A2A2A;
+    --border-strong: #424242;
+    --border-focus: #BB86FC;
+
+    --accent-primary: #BB86FC;
+    --accent-primary-hover: #D0A9FE;
+    --accent-primary-glow: rgba(187, 134, 252, 0.15);
+    --accent-success: #03DAC6;
+    --accent-warning: #FFB300;
+    --accent-danger: #CF6679;
+
+    --theory-bg: rgba(187, 134, 252, 0.1);
+    --theory-border: #BB86FC;
+    --theory-text: #D0A9FE;
+
+    --lab-bg: rgba(3, 218, 198, 0.1);
+    --lab-border: #03DAC6;
+    --lab-text: #70EFE5;
+
+    --cell-empty-bg: #121212;
+    --cell-empty-border: #2A2A2A;
+
+    --calendar-cell-bg: #1E1E1E;
+    --calendar-cell-border: #333333;
+    --calendar-cell-hover: #2C2C2C;
+
+    --shadow-premium: 0 4px 14px rgba(0, 0, 0, 0.5);
+    --shadow-floating: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* 3. SOFT OCEAN (Calming Light) */
+[data-theme="soft-ocean"] {
+    --theme-name: "soft-ocean";
+    --bg-base: #F0F4F8;
+    --bg-surface: #FFFFFF;
+    --bg-surface-elevated: #F8FAFC;
+    --bg-surface-solid: #FFFFFF;
+    --bg-surface-hover: #E2E8F0;
+
+    --text-primary: #1E293B;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --text-inverse: #FFFFFF;
+
+    --border-subtle: #E2E8F0;
+    --border-card: #E2E8F0;
+    --border-strong: #CBD5E1;
+    --border-focus: #0EA5E9;
+
+    --accent-primary: #0EA5E9;
+    --accent-primary-hover: #0284C7;
+    --accent-primary-glow: rgba(14, 165, 233, 0.15);
+    --accent-success: #10B981;
+    --accent-warning: #F59E0B;
+    --accent-danger: #EF4444;
+
+    --theory-bg: rgba(14, 165, 233, 0.08);
+    --theory-border: #0EA5E9;
+    --theory-text: #0369A1;
+
+    --lab-bg: rgba(16, 185, 129, 0.08);
+    --lab-border: #10B981;
+    --lab-text: #047857;
+
+    --cell-empty-bg: #F0F4F8;
+    --cell-empty-border: #E2E8F0;
+
+    --calendar-cell-bg: #FFFFFF;
+    --calendar-cell-border: #E2E8F0;
+    --calendar-cell-hover: #F8FAFC;
+
+    --shadow-premium: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --shadow-floating: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* 4. CRIMSON NIGHT (Warm Dark) */
+[data-theme="crimson-night"] {
+    --theme-name: "crimson-night";
+    --bg-base: #110D12;
+    --bg-surface: #1B151C;
+    --bg-surface-elevated: #251D26;
+    --bg-surface-solid: #1E181F;
+    --bg-surface-hover: #2D232F;
+
+    --text-primary: #F3E8F4;
+    --text-secondary: #B9A5BB;
+    --text-muted: #8F7D91;
+    --text-inverse: #110D12;
+
+    --border-subtle: #362B37;
+    --border-card: #2D232F;
+    --border-strong: #4A3A4C;
+    --border-focus: #E11D48;
+
+    --accent-primary: #E11D48;
+    --accent-primary-hover: #BE123C;
+    --accent-primary-glow: rgba(225, 29, 72, 0.15);
+    --accent-success: #10B981;
+    --accent-warning: #F59E0B;
+    --accent-danger: #EF4444;
+
+    --theory-bg: rgba(225, 29, 72, 0.15);
+    --theory-border: #E11D48;
+    --theory-text: #FDA4AF;
+
+    --lab-bg: rgba(245, 158, 11, 0.15);
+    --lab-border: #F59E0B;
+    --lab-text: #FCD34D;
+
+    --cell-empty-bg: #110D12;
+    --cell-empty-border: #2D232F;
+
+    --calendar-cell-bg: #1B151C;
+    --calendar-cell-border: #362B37;
+    --calendar-cell-hover: #251D26;
+
+    --shadow-premium: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --shadow-floating: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
    33. PREMIUM INDUSTRIAL NEO-BRUTALIST DESIGN SYSTEM
    ========================================================================== */
 :root,
