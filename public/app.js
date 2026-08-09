@@ -166,7 +166,9 @@ const periodTimings = [
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
     { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
-    { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] }
+    { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
+    { id: 'clean-light', name: 'Clean Light', tag: 'Crisp Sapphire & Slate Light', colors: ['#F8FAFC', '#FFFFFF', '#2563EB', '#0F172A'] },
+    { id: 'clean-dark', name: 'Clean Dark', tag: 'Sleek Indigo & Deep Slate Dark', colors: ['#0F172A', '#1E293B', '#6366F1', '#F8FAFC'] }
 ];
 
 // Document Event Handlers on DOM Ready
