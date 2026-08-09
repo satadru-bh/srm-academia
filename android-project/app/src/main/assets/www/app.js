@@ -166,13 +166,7 @@ const periodTimings = [
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
     { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
-    { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
-    
-    // Fresh Generic Themes
-    { id: 'modern-light', name: 'Modern Light', tag: 'Crisp Apple-style Light', colors: ['#F5F5F7', '#FFFFFF', '#007AFF', '#34C759'] },
-    { id: 'modern-dark', name: 'Modern Dark', tag: 'Clean Material Dark', colors: ['#121212', '#1E1E1E', '#BB86FC', '#03DAC6'] },
-    { id: 'soft-ocean', name: 'Soft Ocean', tag: 'Calming Blue Light', colors: ['#F0F4F8', '#FFFFFF', '#0EA5E9', '#10B981'] },
-    { id: 'crimson-night', name: 'Crimson Night', tag: 'Warm Magenta Dark', colors: ['#110D12', '#1B151C', '#E11D48', '#F59E0B'] }
+    { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] }
 ];
 
 // Document Event Handlers on DOM Ready
