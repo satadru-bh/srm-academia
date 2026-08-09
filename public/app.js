@@ -6392,6 +6392,10 @@ async function verifyBiometrics() {
                 createToast("Setting up Biometric Security...", "info");
                 const registered = await registerWebAuthnKey();
                 if (!registered) return false;
+                
+                // Registration itself already verified the user via biometrics,
+                // so we can skip the immediate re-verification to prevent double prompting.
+                return true;
             }
             return await verifyWebAuthnKey();
         } else {
