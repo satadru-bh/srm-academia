@@ -8788,43 +8788,27 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     }
 
     .app-workspace,
-    .main-viewport,
-    [data-theme="neo-brutalist"] .main-viewport {
+    .main-viewport {
         width: 100% !important;
         max-width: 100vw !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
-        padding-left: 6px !important;
-        padding-right: 6px !important;
-        padding-top: max(4px, env(safe-area-inset-top, 4px)) !important;
-        padding-bottom: calc(72px + env(safe-area-inset-bottom, 8px)) !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        padding-top: max(8px, env(safe-area-inset-top, 8px)) !important;
+        padding-bottom: calc(84px + env(safe-area-inset-bottom, 24px)) !important;
         box-sizing: border-box !important;
     }
 
-    [data-theme="neo-brutalist"] .view-pane,
-    [data-theme="neo-brutalist"] .view-pane.active {
-        padding-left: 2px !important;
-        padding-right: 2px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-    }
 
     .card,
     .view-pane,
     .daily-focus-hero-card,
     .performance-trends-card,
     .attendance-grid-row,
-    .marks-card,
-    [data-theme="neo-brutalist"] .card,
-    [data-theme="neo-brutalist"] .daily-focus-hero-card,
-    [data-theme="neo-brutalist"] .performance-trends-card,
-    [data-theme="neo-brutalist"] .workspace-header,
-    [data-theme="neo-brutalist"] .app-header {
+    .marks-card {
         width: 100% !important;
         max-width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
         box-sizing: border-box !important;
     }
 
