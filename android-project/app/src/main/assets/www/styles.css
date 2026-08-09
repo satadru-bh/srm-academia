@@ -1410,11 +1410,12 @@
     font-weight: 900 !important;
 }
 
-/* Authentic Retro Workstation Typography System (Consistent Monospace & Enhanced Letter-Spacing) */
+/* Authentic Retro Workstation Typography System (Natural Casing & Balanced Spacing) */
 [data-theme="retro-computing"],
 [data-theme="retro-computing"] * {
     font-family: "Share Tech Mono", "IBM Plex Mono", monospace !important;
-    letter-spacing: 0.08em !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none;
 }
 
 [data-theme="retro-computing"] h1,
@@ -1433,9 +1434,8 @@
 [data-theme="retro-computing"] .auth-title,
 [data-theme="retro-computing"] .app-brand-title,
 [data-theme="retro-computing"] .modal-title {
-    font-family: "Share Tech Mono", "VT323", monospace !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
+    font-family: "Share Tech Mono", monospace !important;
+    letter-spacing: 0.04em !important;
     font-weight: 700 !important;
 }
 
@@ -1446,8 +1446,8 @@
 [data-theme="retro-computing"] .stat-value,
 [data-theme="retro-computing"] .hero-value,
 [data-theme="retro-computing"] .quick-stat-val {
-    font-family: "Share Tech Mono", "VT323", monospace !important;
-    letter-spacing: 0.16em !important;
+    font-family: "Share Tech Mono", monospace !important;
+    letter-spacing: 0.05em !important;
     font-weight: 700 !important;
 }
 
@@ -1470,8 +1470,7 @@
 [data-theme="retro-computing"] select,
 [data-theme="retro-computing"] label {
     font-family: "Share Tech Mono", monospace !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
 }
 
 /* Zero Blur / Glass Overrides */
