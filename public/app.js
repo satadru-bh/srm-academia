@@ -280,8 +280,6 @@ window.addEventListener('focus', async () => {
  * Initializes the application lifecycle
  */
 async function initApp() {
-    initThemeSystem();
-
     const urlParams = new URLSearchParams(window.location.search);
     const forceLogout = urlParams.get('logout') === 'true';
     setupThemeSelector();
