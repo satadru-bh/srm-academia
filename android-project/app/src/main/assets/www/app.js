@@ -167,8 +167,36 @@ const periodTimings = [
 const AVAILABLE_THEMES = [
     { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
     { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
-    { id: 'clean-light', name: 'Clean Light', tag: 'Pure Black & White Minimal', colors: ['#FFFFFF', '#FFFFFF', '#000000', '#52525B'] },
-    { id: 'clean-dark', name: 'Clean Dark', tag: 'Pure Black & White Dark', colors: ['#000000', '#09090B', '#FFFFFF', '#A1A1AA'] }
+    { id: 'clean-light', name: 'Clean Light', tag: 'Polished Minimal Slate', colors: ['#F8FAFC', '#FFFFFF', '#0F172A', '#2563EB'] },
+    { id: 'clean-dark', name: 'Clean Dark (OLED)', tag: 'Pure Black OLED & Indigo', colors: ['#000000', '#000000', '#FFFFFF', '#6366F1'] },
+    { id: 'cyberpunk-neon', name: 'Cyberpunk Neon', tag: 'Neon Cyan & Electric Magenta', colors: ['#0D0D15', '#161622', '#00F0FF', '#FF0055'] },
+    { id: 'synthwave-80s', name: 'Synthwave Sunset', tag: 'Hot Magenta & Sunset Gold', colors: ['#1A0B2E', '#261245', '#FF2A85', '#00D2FF'] },
+    { id: 'nordic-frost', name: 'Nordic Frost', tag: 'Arctic Cyan & Ice White', colors: ['#2E3440', '#3B4252', '#88C0D0', '#8FBCBB'] },
+    { id: 'catppuccin-mocha', name: 'Catppuccin Mocha', tag: 'Soothing Lavender & Peach', colors: ['#1E1E2E', '#25253A', '#B4BEFE', '#FAB387'] },
+    { id: 'dracula-vampire', name: 'Dracula Dark', tag: 'Orchid Purple & Crimson Pink', colors: ['#282A36', '#343746', '#BD93F9', '#FF79C6'] },
+    { id: 'midnight-violet', name: 'Midnight Violet', tag: 'Deep Plum & Violet Glow', colors: ['#0F0C1B', '#1A152E', '#8B5CF6', '#F43F5E'] },
+    { id: 'emerald-forest', name: 'Emerald Forest', tag: 'Deep Spruce & Mint Emerald', colors: ['#062C22', '#0E3E32', '#10B981', '#34D399'] },
+    { id: 'sunset-amber', name: 'Amber Sunset', tag: 'Dark Espresso & Sunset Amber', colors: ['#1B120E', '#2A1C16', '#F59E0B', '#E11D48'] },
+    { id: 'cherry-blossom', name: 'Cherry Blossom', tag: 'Sakura Pink & Soft Coral', colors: ['#FFF5F7', '#FFFFFF', '#EC4899', '#BE185D'] },
+    { id: 'ocean-abyss', name: 'Ocean Abyss', tag: 'Turquoise & Sky Sapphire', colors: ['#031326', '#09213D', '#06B6D4', '#0EA5E9'] },
+    { id: 'rose-gold', name: 'Rose Gold Luxury', tag: 'Warm Metallic Gold & Rose', colors: ['#1C1917', '#292524', '#FB7185', '#F59E0B'] },
+    { id: 'aurora-borealis', name: 'Aurora Borealis', tag: 'Northern Lights Green & Cyan', colors: ['#0A1128', '#121F45', '#00FF9D', '#00E5FF'] },
+    { id: 'monokai-pro', name: 'Monokai Pro', tag: 'Vibrant Magenta & Bright Yellow', colors: ['#2D2A2E', '#363337', '#FF6188', '#FFD866'] },
+    { id: 'lavender-mist', name: 'Lavender Mist', tag: 'Pastel Violet & Deep Plum', colors: ['#F5F3FF', '#FFFFFF', '#7C3AED', '#A78BFA'] },
+    { id: 'pastel-candy', name: 'Pastel Candy', tag: 'Sweet Bubblegum & Pastel Blue', colors: ['#FAF5FF', '#FFFFFF', '#F472B6', '#38BDF8'] },
+    { id: 'obsidian-gold', name: 'Obsidian Gold', tag: 'Imperial Gold & Obsidian Black', colors: ['#0A0A0A', '#171717', '#EAB308', '#F59E0B'] },
+    { id: 'forest-moss', name: 'Forest Moss', tag: 'Deep Canopy & Sage Green', colors: ['#14231A', '#1E3326', '#84CC16', '#EAB308'] },
+    { id: 'crimson-blood', name: 'Crimson Blood', tag: 'Blood Obsidian & Scarlet Red', colors: ['#140507', '#240A0E', '#DC2626', '#EF4444'] },
+    { id: 'horizon-dusk', name: 'Horizon Dusk', tag: 'Sunset Orange & Twilight Magenta', colors: ['#181124', '#261C38', '#FF6B35', '#F72585'] },
+    { id: 'cyber-yellow', name: 'Cyber Yellow', tag: 'High-Vis Industrial Yellow', colors: ['#121212', '#1C1C1C', '#FFD700', '#00E5FF'] },
+    { id: 'mint-chocolate', name: 'Mint Chocolate', tag: 'Rich Cacao & Fresh Mint', colors: ['#1F1610', '#2E2219', '#10B981', '#34D399'] },
+    { id: 'steel-monochrome', name: 'Steel Monochrome', tag: 'Industrial Slate & Cool Ice Blue', colors: ['#1E293B', '#334155', '#94A3B8', '#38BDF8'] },
+    { id: 'espresso-roast', name: 'Espresso Roast', tag: 'Cinnamon Copper & Caramel', colors: ['#1A120B', '#2B1E13', '#D97706', '#F59E0B'] },
+    { id: 'sandstone-desert', name: 'Sandstone Desert', tag: 'Terracotta & Warm Ochre', colors: ['#FDF6E3', '#FFFDF5', '#D97706', '#B45309'] },
+    { id: 'oxford-navy', name: 'Oxford Navy', tag: 'Oxford Blue & Royal Sapphire', colors: ['#F8FAFC', '#FFFFFF', '#1E3A8A', '#2563EB'] },
+    { id: 'electric-lime', name: 'Electric Lime', tag: 'Void Black & Cyber Lime', colors: ['#0B0F19', '#161F33', '#A3E635', '#10B981'] },
+    { id: 'toxic-venom', name: 'Toxic Venom', tag: 'Acid Purple & Toxic Green', colors: ['#0D1117', '#161B22', '#39FF14', '#9D00FF'] },
+    { id: 'solarized-dark', name: 'Solarized Dark', tag: 'Solarized Cyan & Golden Yellow', colors: ['#002B36', '#073642', '#2AA198', '#B58900'] }
 ];
 
 // Document Event Handlers on DOM Ready
