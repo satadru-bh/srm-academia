@@ -1262,11 +1262,13 @@ function updateMobileNavActive(activeTarget) {
     });
 }
 
-function switchTab(targetTab) {
+function switchTab(targetTab, forceRender = false) {
     if (!targetTab) return;
 
     const currentTab = state.activeTab || 'overview';
-    if (currentTab === targetTab && document.getElementById(`view-${targetTab}`)?.classList.contains('active')) {
+    const targetView = document.getElementById(`view-${targetTab}`);
+
+    if (!forceRender && currentTab === targetTab && targetView && targetView.classList.contains('active')) {
         return;
     }
 
@@ -1286,7 +1288,6 @@ function switchTab(targetTab) {
         view.classList.remove('active');
     });
 
-    const targetView = document.getElementById(`view-${targetTab}`);
     if (targetView) {
         targetView.classList.add('active');
     }
@@ -1668,7 +1669,7 @@ function showWorkspace() {
         mobileNav.style.removeProperty('display');
     }
     const savedTab = localStorage.getItem('srm_active_tab') || 'overview';
-    switchTab(savedTab);
+    switchTab(savedTab, true);
 }
 
 /**
@@ -1988,18 +1989,53 @@ function clientMergeTimetables(personal, unifiedBatch) {
 }
 
 /**
+ * Force re-renders whichever view pane is currently active
+ */
+function renderActiveTabPane() {
+    const tab = state.activeTab || 'overview';
+    if (tab === 'overview') renderOverviewPane();
+    else if (tab === 'attendance') renderAttendancePane();
+    else if (tab === 'timetable') renderTimetablePane();
+    else if (tab === 'academics') renderAcademicsPane();
+    else if (tab === 'planner') renderPlannerPane();
+    else if (tab === 'developer') renderDeveloperPane();
+    else if (tab === 'support') renderSupportPane();
+}
+
+/**
  * Central state storage mutation
  */
 function updateApplicationState(payload) {
-    state.studentInfo = payload.studentInfo || {};
-    state.attendance = payload.attendance || [];
-    state.marks = payload.marks || [];
-    state.personalTimetable = payload.personalTimetable || [];
-    state.unifiedTimetable = payload.unifiedTimetable || {};
+    if (!payload || typeof payload !== 'object') return;
+
+    // Robustly unwrap nested .payload if present
+    const d = (payload.payload && typeof payload.payload === 'object' && (payload.payload.studentInfo || payload.payload.attendance || payload.payload.marks || payload.payload.personalTimetable || payload.payload.unifiedTimetable))
+        ? payload.payload
+        : payload;
+
+    if (d.studentInfo && typeof d.studentInfo === 'object' && Object.keys(d.studentInfo).length > 0) {
+        state.studentInfo = d.studentInfo;
+    } else if (payload.studentInfo && typeof payload.studentInfo === 'object') {
+        state.studentInfo = payload.studentInfo;
+    }
+
+    if (Array.isArray(d.attendance) && d.attendance.length > 0) state.attendance = d.attendance;
+    else if (Array.isArray(payload.attendance) && payload.attendance.length > 0) state.attendance = payload.attendance;
+
+    if (Array.isArray(d.marks) && d.marks.length > 0) state.marks = d.marks;
+    else if (Array.isArray(payload.marks) && payload.marks.length > 0) state.marks = payload.marks;
+
+    if (Array.isArray(d.personalTimetable) && d.personalTimetable.length > 0) state.personalTimetable = d.personalTimetable;
+    else if (Array.isArray(payload.personalTimetable) && payload.personalTimetable.length > 0) state.personalTimetable = payload.personalTimetable;
+
+    if (d.unifiedTimetable && typeof d.unifiedTimetable === 'object' && Object.keys(d.unifiedTimetable).length > 0) state.unifiedTimetable = d.unifiedTimetable;
+    else if (payload.unifiedTimetable && typeof payload.unifiedTimetable === 'object') state.unifiedTimetable = payload.unifiedTimetable;
+
+    if (Array.isArray(d.planner) && d.planner.length > 0) state.planner = d.planner;
+    else if (Array.isArray(payload.planner) && payload.planner.length > 0) state.planner = payload.planner;
 
     const reMerged = clientMergeTimetables(state.personalTimetable, state.unifiedTimetable);
-    state.mergedTimetable = (reMerged && Object.keys(reMerged).length > 0) ? reMerged : (payload.mergedTimetable || {});
-    state.planner = payload.planner || [];
+    state.mergedTimetable = (reMerged && Object.keys(reMerged).length > 0) ? reMerged : (d.mergedTimetable || payload.mergedTimetable || state.mergedTimetable || {});
 
     // Cache state to localStorage for instant 0ms app boot
     try {
@@ -2025,6 +2061,9 @@ function updateApplicationState(payload) {
     updateUserProfileData(state.studentInfo);
     updateDevNavVisibility();
     syncDataToAndroidWidgets();
+
+    // Instantly re-render active view pane so UI updates live
+    renderActiveTabPane();
 }
 
 /**
