@@ -975,47 +975,108 @@
 }
 
 /* Glass Floating Calendar Module */
-[data-theme="glassmorphism"] .calendar-day-cell {
-    background: rgba(255, 255, 255, 0.045) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: var(--radius-md) !important;
+[data-theme="glassmorphism"] .calendar-rebuilt-header,
+[data-theme="glassmorphism"] .calendar-header-row,
+[data-theme="glassmorphism"] .calendar-header-day {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 10px !important;
     color: #FFFFFF !important;
+    font-weight: 800 !important;
+    padding: 10px 6px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+[data-theme="glassmorphism"] .calendar-day-cell {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 10px !important;
+    color: #FFFFFF !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+    transition: var(--transition-smooth) !important;
 }
 
 [data-theme="glassmorphism"] .calendar-day-cell:hover {
-    background: rgba(255, 255, 255, 0.09) !important;
-    border-color: rgba(255, 255, 255, 0.18) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.05) 100%) !important;
+    border-color: rgba(255, 255, 255, 0.24) !important;
     transform: translateY(-2px) !important;
 }
 
 [data-theme="glassmorphism"] .calendar-day-cell.today {
-    background: linear-gradient(135deg, rgba(143, 168, 255, 0.28), rgba(143, 168, 255, 0.12)) !important;
-    border: 1px solid rgba(175, 195, 255, 0.35) !important;
-    box-shadow: 0 0 20px rgba(143, 168, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
+    background: linear-gradient(135deg, rgba(143, 168, 255, 0.35) 0%, rgba(143, 168, 255, 0.16) 100%) !important;
+    border: 1.5px solid rgba(190, 210, 255, 0.50) !important;
+    box-shadow: 0 0 24px rgba(143, 168, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
     color: #FFFFFF !important;
 }
 
 [data-theme="glassmorphism"] .calendar-day-cell.holiday,
 [data-theme="glassmorphism"] .planner-mobile-card.holiday {
-    background: rgba(255, 107, 129, 0.22) !important;
-    border: 1px solid rgba(255, 150, 168, 0.30) !important;
-    color: #FFEAEF !important;
+    background: linear-gradient(135deg, rgba(255, 90, 115, 0.26) 0%, rgba(255, 90, 115, 0.12) 100%) !important;
+    background-color: rgba(255, 90, 115, 0.22) !important;
+    border: 1.5px solid rgba(255, 120, 145, 0.40) !important;
+    color: #FFEBF0 !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+}
+
+[data-theme="glassmorphism"] .calendar-day-cell.holiday .day-number,
+[data-theme="glassmorphism"] .calendar-day-cell.holiday div[title],
+[data-theme="glassmorphism"] .calendar-day-cell.holiday span {
+    color: #FFEBF0 !important;
+    font-weight: 800 !important;
 }
 
 [data-theme="glassmorphism"] .calendar-day-cell.milestone,
 [data-theme="glassmorphism"] .planner-mobile-card.milestone {
-    background: rgba(99, 230, 190, 0.20) !important;
-    border: 1px solid rgba(135, 240, 208, 0.28) !important;
+    background: linear-gradient(135deg, rgba(99, 230, 190, 0.26) 0%, rgba(99, 230, 190, 0.12) 100%) !important;
+    background-color: rgba(99, 230, 190, 0.22) !important;
+    border: 1.5px solid rgba(135, 240, 208, 0.40) !important;
     color: #E6FFF7 !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+}
+
+[data-theme="glassmorphism"] .calendar-day-cell.milestone .day-number,
+[data-theme="glassmorphism"] .calendar-day-cell.milestone div[title],
+[data-theme="glassmorphism"] .calendar-day-cell.milestone span {
+    color: #E6FFF7 !important;
+    font-weight: 800 !important;
 }
 
 [data-theme="glassmorphism"] .calendar-day-cell.commencement,
 [data-theme="glassmorphism"] .planner-mobile-card.commencement {
-    background: rgba(192, 132, 252, 0.20) !important;
-    border: 1px solid rgba(215, 168, 255, 0.28) !important;
+    background: linear-gradient(135deg, rgba(192, 132, 252, 0.26) 0%, rgba(192, 132, 252, 0.12) 100%) !important;
+    background-color: rgba(192, 132, 252, 0.22) !important;
+    border: 1.5px solid rgba(215, 168, 255, 0.40) !important;
     color: #F8F0FF !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+}
+
+[data-theme="glassmorphism"] .calendar-day-cell.commencement .day-number,
+[data-theme="glassmorphism"] .calendar-day-cell.commencement div[title],
+[data-theme="glassmorphism"] .calendar-day-cell.commencement span {
+    color: #F8F0FF !important;
+    font-weight: 800 !important;
+}
+
+/* Glass Day Order & OFF Badges */
+[data-theme="glassmorphism"] .calendar-cell-day-order,
+[data-theme="glassmorphism"] .calendar-day-cell.holiday .calendar-cell-day-order,
+[data-theme="glassmorphism"] .calendar-day-cell.milestone .calendar-cell-day-order,
+[data-theme="glassmorphism"] .calendar-day-cell.commencement .calendar-cell-day-order,
+[data-theme="glassmorphism"] .planner-mobile-card.holiday .planner-dayorder-pill,
+[data-theme="glassmorphism"] .planner-mobile-card.milestone .planner-dayorder-pill,
+[data-theme="glassmorphism"] .planner-mobile-card.commencement .planner-dayorder-pill {
+    background: rgba(255, 255, 255, 0.16) !important;
+    background-color: rgba(255, 255, 255, 0.16) !important;
+    color: #FFFFFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    border-radius: 8px !important;
+    font-weight: 800 !important;
+    padding: 2px 7px !important;
+    font-size: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
 }
 
 /* Glass Mobile Bottom Dock Navigation */
