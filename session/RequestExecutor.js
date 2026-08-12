@@ -57,7 +57,8 @@ class RequestExecutor {
                 // Validate scraped data payload
                 const validation = SessionValidator.validateScrapedPayload(payload);
                 if (!validation.valid) {
-                    throw new Error(`Scraped payload validation failed: ${validation.reason}`);
+                    const authStr = validation.isAuthRelated === false ? '[NonAuth]' : '[Auth]';
+                    throw new Error(`Scraped payload validation failed ${authStr}: ${validation.reason}`);
                 }
 
                 // Success! Update server-side cache
@@ -91,7 +92,7 @@ class RequestExecutor {
                 }
 
                 // 4. HANDLE GENUINE AUTHENTICATION FAILURES (302 Redirect, 401/403, Signin HTML)
-                if (SessionValidator.isAuthFailure(err) || String(err.message).includes('validation failed')) {
+                if (SessionValidator.isAuthFailure(err) || String(err.message).includes('[Auth]')) {
                     SessionLogger.warn(TAG, `Genuine auth failure for ${cleanEmail}. Attempting ONE background re-authentication...`);
                     try {
                         const reAuthRes = await AuthenticationManager.reauthenticate(cleanEmail, scrapeFn, fallbackPassword);

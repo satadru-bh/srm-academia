@@ -298,7 +298,7 @@ window.addEventListener('focus', async () => {
     if (isActive) {
         const lastCheck = parseInt(localStorage.getItem('srm_last_focus_check') || '0', 10);
         const now = Date.now();
-        if (now - lastCheck < 10 * 60 * 1000) {
+        if (now - lastCheck < 30 * 60 * 1000) {
             return;
         }
         localStorage.setItem('srm_last_focus_check', now.toString());
@@ -2520,9 +2520,9 @@ function renderDailyFocusHero() {
             internalsBadge.textContent = `${overallPct}% AVG`;
         }
     } else {
-        if (internalsTitle) internalsTitle.textContent = '-- / --';
-        if (internalsSub) internalsSub.textContent = 'No internal evaluation records recorded';
-        if (internalsBadge) internalsBadge.textContent = 'NO DATA';
+        if (internalsTitle) internalsTitle.textContent = '0 / 0';
+        if (internalsSub) internalsSub.textContent = '0% avg across 0 courses (0 tests)';
+        if (internalsBadge) internalsBadge.textContent = '0% AVG';
     }
 
     // Col 2: Next Class (Redesigned per Image 3: Date, Time, Room, Attendance %, Margin/Required)
@@ -2578,14 +2578,14 @@ function renderDailyFocusHero() {
             }
             nextAttnMargin.innerHTML = `Current: <span style="color: ${statusColor}; font-weight: 800;">${pct.toFixed(2).replace(/\.00$/, '')}%</span> &nbsp;|&nbsp; <span style="color: ${statusColor}; font-weight: 800;">${marginStr || 'Margin: 0'}</span>`;
         } else if (nextAttnMargin) {
-            nextAttnMargin.innerHTML = 'Current: --% &nbsp;|&nbsp; Required: --';
+            nextAttnMargin.innerHTML = 'Current: 0% &nbsp;|&nbsp; Margin: 0';
         }
     } else {
-        if (nextCountdown) nextCountdown.textContent = 'NONE';
+        if (nextCountdown) nextCountdown.textContent = '0';
         if (nextTitle) nextTitle.textContent = 'No Upcoming Classes';
-        if (timingTextEl) timingTextEl.textContent = '--:--';
-        if (roomTextEl) roomTextEl.textContent = 'Campus';
-        if (nextAttnMargin) nextAttnMargin.innerHTML = 'Current: --% &nbsp;|&nbsp; Margin: Clear';
+        if (timingTextEl) timingTextEl.textContent = '00:00';
+        if (roomTextEl) roomTextEl.textContent = '0';
+        if (nextAttnMargin) nextAttnMargin.innerHTML = 'Current: 0% &nbsp;|&nbsp; Margin: 0';
     }
 
     // Col 3: Estimated GPA (SRM 10-Point System based on Internals & Credits)
@@ -2662,10 +2662,10 @@ function renderDailyFocusHero() {
             gpaGaugeArc.setAttribute('stroke-dasharray', `${pctOfTen.toFixed(1)} 100`);
         }
     } else {
-        if (gpaVal) gpaVal.textContent = '--';
-        if (gpaSub) gpaSub.textContent = 'Sync internal marks to calculate GPA';
-        if (gpaBadge) gpaBadge.textContent = 'ESTIMATED';
-        if (gpaGaugeText) gpaGaugeText.textContent = '--';
+        if (gpaVal) gpaVal.textContent = '0.00';
+        if (gpaSub) gpaSub.textContent = '0 evaluated courses, 0 credits';
+        if (gpaBadge) gpaBadge.textContent = '0.0 GRADE';
+        if (gpaGaugeText) gpaGaugeText.textContent = '0';
         if (gpaGaugeArc) gpaGaugeArc.setAttribute('stroke-dasharray', '0 100');
     }
 }
@@ -3046,8 +3046,8 @@ function renderPerformanceTrends() {
     } else {
         if (canvasWrapper) canvasWrapper.style.display = 'none';
         if (emptyMsgEl) emptyMsgEl.classList.remove('hidden');
-        if (marksVal) marksVal.textContent = 'Pending';
-        if (marksSub) marksSub.textContent = 'Academic Assessment';
+        if (marksVal) marksVal.textContent = '0';
+        if (marksSub) marksSub.textContent = '0 Evaluated Courses';
     }
 }
 
@@ -3288,19 +3288,19 @@ function renderAttendancePane(customDataset) {
             }
         } else {
             marginRequiredLabel = 'Margin';
-            marginRequiredVal = '--';
+            marginRequiredVal = '0';
             calloutClass = 'neutral';
         }
 
         let displayPercent = `${percent}%`;
         if (conducted === 0 || conducted === null) {
-            displayPercent = '--';
+            displayPercent = '0%';
             statusColor = 'var(--text-muted)';
         }
 
         // Remove "Room" text before actual room name
         const cleanRoom = item.room ? item.room.replace(/^Room\s+/i, '').trim() : '';
-        const attendedText = `Attended: ${present !== null ? present : '--'} / ${conducted !== null ? conducted : '--'} hrs`;
+        const attendedText = `Attended: ${present !== null ? present : 0} / ${conducted !== null ? conducted : 0} hrs`;
 
         return `
             <div class="attendance-grid-row">
@@ -4289,37 +4289,37 @@ async function downloadTimetableImage() {
                     clonedCard.style.boxShadow = csCard.boxShadow || 'none';
                     clonedCard.style.borderRadius = csCard.borderRadius || '16px';
 
-                    const origCells = origCard.querySelectorAll('.matrix-td-cell, .matrix-th-slot, .matrix-th-time, .matrix-td-day, .grid-header-cell');
-                    const clonedCells = clonedCard.querySelectorAll('.matrix-td-cell, .matrix-th-slot, .matrix-th-time, .matrix-td-day, .grid-header-cell');
+                    const origElements = origCard.querySelectorAll('*');
+                    const clonedElements = clonedCard.querySelectorAll('*');
 
-                    origCells.forEach((origCell, i) => {
-                        const clonedCell = clonedCells[i];
-                        if (clonedCell) {
-                            const cs = window.getComputedStyle(origCell);
-                            clonedCell.style.backgroundColor = cs.backgroundColor;
-                            clonedCell.style.borderColor = cs.borderColor;
-                            clonedCell.style.borderStyle = cs.borderStyle;
-                            clonedCell.style.borderWidth = cs.borderWidth;
-                            clonedCell.style.color = cs.color;
-                            clonedCell.style.boxShadow = cs.boxShadow;
-                            clonedCell.style.borderRadius = cs.borderRadius;
-                            clonedCell.style.borderTopColor = cs.borderTopColor;
-                            clonedCell.style.borderTopWidth = cs.borderTopWidth;
-                            clonedCell.style.borderTopStyle = cs.borderTopStyle;
-
-                            origCell.querySelectorAll('*').forEach((origChild, j) => {
-                                const clonedChild = clonedCell.querySelectorAll('*')[j];
-                                if (clonedChild) {
-                                    const cChild = window.getComputedStyle(origChild);
-                                    clonedChild.style.color = cChild.color;
-                                    clonedChild.style.backgroundColor = cChild.backgroundColor;
-                                    clonedChild.style.borderColor = cChild.borderColor;
-                                    clonedChild.style.borderStyle = cChild.borderStyle;
-                                    clonedChild.style.borderWidth = cChild.borderWidth;
-                                    clonedChild.style.fontWeight = cChild.fontWeight;
-                                    clonedChild.style.fontFamily = cChild.fontFamily;
-                                }
-                            });
+                    origElements.forEach((origEl, i) => {
+                        const clonedEl = clonedElements[i];
+                        if (clonedEl) {
+                            const cs = window.getComputedStyle(origEl);
+                            clonedEl.style.backgroundColor = cs.backgroundColor;
+                            clonedEl.style.color = cs.color;
+                            clonedEl.style.borderColor = cs.borderColor;
+                            clonedEl.style.borderStyle = cs.borderStyle;
+                            clonedEl.style.borderWidth = cs.borderWidth;
+                            clonedEl.style.borderTopColor = cs.borderTopColor;
+                            clonedEl.style.borderTopWidth = cs.borderTopWidth;
+                            clonedEl.style.borderTopStyle = cs.borderTopStyle;
+                            clonedEl.style.borderRightColor = cs.borderRightColor;
+                            clonedEl.style.borderRightWidth = cs.borderRightWidth;
+                            clonedEl.style.borderRightStyle = cs.borderRightStyle;
+                            clonedEl.style.borderBottomColor = cs.borderBottomColor;
+                            clonedEl.style.borderBottomWidth = cs.borderBottomWidth;
+                            clonedEl.style.borderBottomStyle = cs.borderBottomStyle;
+                            clonedEl.style.borderLeftColor = cs.borderLeftColor;
+                            clonedEl.style.borderLeftWidth = cs.borderLeftWidth;
+                            clonedEl.style.borderLeftStyle = cs.borderLeftStyle;
+                            clonedEl.style.boxShadow = cs.boxShadow;
+                            clonedEl.style.borderRadius = cs.borderRadius;
+                            clonedEl.style.fontWeight = cs.fontWeight;
+                            clonedEl.style.fontSize = cs.fontSize;
+                            clonedEl.style.fontFamily = cs.fontFamily;
+                            clonedEl.style.textTransform = cs.textTransform;
+                            clonedEl.style.letterSpacing = cs.letterSpacing;
                         }
                     });
                 }
@@ -4486,7 +4486,7 @@ function renderAcademicsPane() {
                         <span class="assessment-name" style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">${test.assessment}</span>
                         <div class="assessment-scores">
                             <span class="assessment-obtained" style="font-size: 14px; font-weight: 800; color: ${test.status === "ABSENT" ? 'var(--accent-danger)' : 'var(--text-primary)'}">${obtainedText}</span>
-                            <span class="assessment-total" style="font-size: 11px; color: var(--text-muted);">/ ${test.maxMarks || '--'}</span>
+                            <span class="assessment-total" style="font-size: 11px; color: var(--text-muted);">/ ${test.maxMarks || 0}</span>
                         </div>
                     </div>
                 `;
@@ -6000,8 +6000,8 @@ function triggerBackgroundDataRefresh() {
 // 1. Live minute clock & schedule ticker (Every 1 Minute / 60,000ms)
 setInterval(updateLiveClockAndSchedule, 60000);
 
-// 2. Automatic data refresh (Every 3 Minutes / 180,000ms)
-setInterval(triggerBackgroundDataRefresh, 180000);
+// 2. Automatic data refresh (Every 60 Minutes / 3600000ms)
+setInterval(triggerBackgroundDataRefresh, 3600000);
 
 // Initialize display
 updateLastSyncedDisplay();

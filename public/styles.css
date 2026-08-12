@@ -7855,11 +7855,19 @@ button.mobile-nav-item.active {
 }
 
 /* THEME OVERRIDES FOR ACTIVE BUTTON HIGH-VISIBILITY ACCENT PILL (NO BORDERS) */
-[data-theme="neo-brutalist"] .mobile-nav-item {
+[data-theme="neo-brutalist"] .mobile-nav-item,
+[data-theme="neo-brutalist"] button.mobile-nav-item {
     border: none !important;
     box-shadow: none !important;
     background: transparent !important;
     color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .mobile-nav-item svg,
+[data-theme="neo-brutalist"] button.mobile-nav-item svg {
+    stroke: #000000 !important;
+    color: #000000 !important;
+    opacity: 0.75 !important;
 }
 
 [data-theme="neo-brutalist"] .mobile-nav-item:hover,
@@ -7881,12 +7889,16 @@ button.mobile-nav-item.active {
 }
 
 [data-theme="neo-brutalist"] .mobile-nav-item.active svg,
-[data-theme="neo-brutalist"] .mobile-nav-item.active svg * {
+[data-theme="neo-brutalist"] .mobile-nav-item.active svg *,
+[data-theme="neo-brutalist"] button.mobile-nav-item.active svg,
+[data-theme="neo-brutalist"] button.mobile-nav-item.active svg * {
     stroke: #000000 !important;
     color: #000000 !important;
+    opacity: 1 !important;
 }
 
-[data-theme="neo-brutalist"] .mobile-nav-item.active span {
+[data-theme="neo-brutalist"] .mobile-nav-item.active span,
+[data-theme="neo-brutalist"] button.mobile-nav-item.active span {
     display: block !important;
     color: #000000 !important;
     font-weight: 900 !important;
@@ -10701,8 +10713,6 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     background: #ffee00 !important;
     color: #000000 !important;
     font-weight: 800 !important;
-    border: 2px solid #000000 !important;
-    box-shadow: 3px 3px 0px #000000 !important;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
     overflow: hidden !important;
 }
@@ -10743,14 +10753,10 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 
 .nav-item-support:hover {
     background: #fff033 !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 4px 4px 0px #000000 !important;
 }
 
 .nav-item-support.active {
     background: #ffd700 !important;
-    border: 2.5px solid #000000 !important;
-    box-shadow: 4px 4px 0px #000000 !important;
 }
 
 .support-sparkle-container {
@@ -10769,6 +10775,26 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     line-height: 1 !important;
     color: #FFD700 !important;
     text-shadow: 0 0 6px rgba(255, 215, 0, 0.9), 0 0 10px rgba(255, 180, 0, 0.8) !important;
+}
+
+/* Ensure Sparkles remain visible and twinkling when Sidebar is Collapsed */
+.sidebar.collapsed .nav-item-support {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.sidebar.collapsed .nav-item-support .support-sparkle-container,
+.sidebar.collapsed .nav-item-support .sparkle-star {
+    display: inline-block !important;
+    visibility: visible !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+.sidebar.collapsed .nav-item-support .support-sparkle-container {
+    display: flex !important;
+    top: 2px !important;
+    right: 4px !important;
 }
 
 .sparkle-1 {

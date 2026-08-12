@@ -202,6 +202,7 @@ async function fetchPage(client, pageName) {
         });
         return response.data;
     } catch (err) {
+        console.error(`[fetchPage] ERROR fetching ${pageName}:`, err.message);
         return null;
     }
 }
@@ -210,11 +211,14 @@ async function fetchPage(client, pageName) {
  * Scraper Execution Block
  */
 async function scrapeAllData(client) {
+    console.log("[scrapeAllData] Starting data fetch from SRM pages...");
     const [attendanceRaw, personalTTRaw, plannerRaw] = await Promise.all([
         fetchPage(client, "My_Attendance"),
         fetchPage(client, "My_Time_Table_2023_24"),
         fetchPage(client, "Academic_Planner_2026_27_ODD")
     ]);
+
+    console.log(`[scrapeAllData] Raw Response Sizes - Attendance: ${attendanceRaw ? attendanceRaw.length : 'NULL'}, TT: ${personalTTRaw ? personalTTRaw.length : 'NULL'}, Planner: ${plannerRaw ? plannerRaw.length : 'NULL'}`);
 
     const attendanceDecoded = decodeZohoHtml(attendanceRaw, "My_Attendance");
     const personalTTDecoded = decodeZohoHtml(personalTTRaw, "My_Time_Table");
@@ -231,6 +235,7 @@ async function scrapeAllData(client) {
         : "Unified_Time_Table_2025_batch_2";
 
     const unifiedTTRaw = await fetchPage(client, activeBatchPage);
+    console.log(`[scrapeAllData] Raw Response Size - Unified TT (${activeBatchPage}): ${unifiedTTRaw ? unifiedTTRaw.length : 'NULL'}`);
     const unifiedTTDecoded = decodeZohoHtml(unifiedTTRaw, activeBatchPage);
 
     const attendance = parseAttendance(attendanceDecoded);
@@ -733,6 +738,33 @@ app.post(["/api/logout", "/logout"], (req, res) => {
     } catch (err) {
         SessionLogger.error('Server', 'Unhandled exception in /api/logout', err);
         return res.status(500).json({ success: false, error: "Logout Error: " + (err.message || err) });
+    }
+});
+
+/**
+ * Debug Endpoint to fetch raw HTML of specific pages for diagnostics
+ */
+app.post("/api/debug", async (req, res) => {
+    try {
+        const { email, password, pageName } = req.body;
+        if (!email || !password || !pageName) return res.status(400).json({ error: "Missing email, password, or pageName" });
+        
+        let client;
+        const cleanEmail = CookieStore.normalizeEmail(email);
+        const record = CookieStore.get(cleanEmail);
+        
+        if (record && record.jar && record.isValid !== false) {
+            client = await createSrmClient(record.jar);
+        } else {
+            return res.status(401).json({ error: "No active valid session for debug. Please login normally first." });
+        }
+        
+        const rawHtml = await fetchPage(client, pageName);
+        if (!rawHtml) return res.status(404).json({ error: `Page ${pageName} returned null (likely invalid name)` });
+        
+        return res.send(rawHtml);
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
     }
 });
 

@@ -75,14 +75,19 @@ class SessionValidator {
      */
     static validateScrapedPayload(payload) {
         if (!payload || typeof payload !== 'object') {
-            return { valid: false, reason: 'Empty payload returned' };
+            return { valid: false, reason: 'Empty payload returned', isAuthRelated: false };
         }
 
-        // Check if studentInfo contains at least basic identifier
         const studentInfo = payload.studentInfo || {};
-        if (!studentInfo.registrationNumber && !studentInfo.name && !studentInfo.netId) {
-            // Check if HTML contains login form indicators
-            return { valid: false, reason: 'Missing student profile structure' };
+        const hasStudentInfo = !!(studentInfo.registrationNumber || studentInfo.name || studentInfo.netId);
+        
+        // If we have literally no data anywhere, it might be a silent HTML extraction failure
+        const hasAttendance = Array.isArray(payload.attendance) && payload.attendance.length > 0;
+        const hasTimetable = Array.isArray(payload.personalTimetable) && payload.personalTimetable.length > 0;
+
+        if (!hasStudentInfo && !hasAttendance && !hasTimetable) {
+            // Missing everything - this could be a page layout change or wrong page name
+            return { valid: false, reason: 'Missing student profile and all data arrays (likely invalid page name or structure change)', isAuthRelated: false };
         }
 
         return { valid: true };
