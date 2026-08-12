@@ -4296,7 +4296,8 @@ async function downloadTimetableImage() {
             });
         }
 
-        const bgColor = getComputedStyle(document.body).backgroundColor || '#ffffff';
+        const isGlassmorphism = activeTheme === 'glassmorphism';
+        const bgColor = isGlassmorphism ? '#0b0f19' : (getComputedStyle(document.body).backgroundColor || '#ffffff');
 
         const canvas = await html2canvas(card, {
             backgroundColor: bgColor,
@@ -4314,25 +4315,82 @@ async function downloadTimetableImage() {
                 const clonedCard = clonedDoc.querySelector('#timetable-matrix-card') || clonedDoc.querySelector('.timetable-matrix-card');
                 
                 if (origCard && clonedCard) {
-                    const csCard = window.getComputedStyle(origCard);
-                    clonedCard.style.backgroundColor = csCard.backgroundColor || '#ffffff';
-                    clonedCard.style.color = csCard.color || '#000000';
-                    clonedCard.style.borderRadius = csCard.borderRadius || '16px';
+                    if (isGlassmorphism) {
+                        clonedCard.style.backgroundColor = '#0b0f19';
+                        clonedCard.style.color = '#ffffff';
+                        clonedCard.style.borderRadius = '16px';
+                        clonedCard.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+                        clonedCard.style.backgroundImage = 'linear-gradient(135deg, #0e1424 0%, #070a12 100%)';
 
-                    const origCells = origCard.querySelectorAll('.matrix-td-cell, .matrix-th-slot, .matrix-th-time, .matrix-td-day, .grid-header-cell');
-                    const clonedCells = clonedCard.querySelectorAll('.matrix-td-cell, .matrix-th-slot, .matrix-th-time, .matrix-td-day, .grid-header-cell');
-
-                    origCells.forEach((origCell, i) => {
-                        const clonedCell = clonedCells[i];
-                        if (clonedCell) {
-                            const cs = window.getComputedStyle(origCell);
-                            clonedCell.style.backgroundColor = cs.backgroundColor;
-                            clonedCell.style.color = cs.color;
-                            clonedCell.style.borderTopColor = cs.borderTopColor;
-                            clonedCell.style.borderTopWidth = cs.borderTopWidth;
-                            clonedCell.style.borderTopStyle = cs.borderTopStyle;
+                        const clonedWatermark = clonedCard.querySelector('div[style*="font-size: 11px"]');
+                        if (clonedWatermark) {
+                            clonedWatermark.style.backgroundColor = '#0b0f19';
+                            clonedWatermark.style.color = '#ffffff';
+                            clonedWatermark.style.borderTop = '1px dashed rgba(255, 255, 255, 0.2)';
+                            const wmSpan = clonedWatermark.querySelector('span');
+                            if (wmSpan) wmSpan.style.color = '#ffffff';
                         }
-                    });
+
+                        clonedCard.querySelectorAll('.matrix-th-slot, .matrix-th-time, .matrix-td-day, .grid-header-cell').forEach(cell => {
+                            cell.style.backgroundColor = '#141b2d';
+                            cell.style.color = '#ffffff';
+                            cell.style.border = '1px solid rgba(255, 255, 255, 0.14)';
+                            cell.style.fontWeight = '700';
+                        });
+
+                        clonedCard.querySelectorAll('.matrix-td-cell.filled.theory, .grid-class-cell.filled.theory').forEach(cell => {
+                            cell.style.backgroundColor = '#241b44';
+                            cell.style.color = '#e9e1ff';
+                            cell.style.border = '1.5px solid #6b46c1';
+                            cell.querySelectorAll('*').forEach(child => child.style.color = '#e9e1ff');
+                        });
+
+                        clonedCard.querySelectorAll('.matrix-td-cell.filled.lab, .grid-class-cell.filled.lab').forEach(cell => {
+                            cell.style.backgroundColor = '#0b2e46';
+                            cell.style.color = '#ddf6ff';
+                            cell.style.border = '1.5px solid #0284c7';
+                            cell.querySelectorAll('*').forEach(child => child.style.color = '#ddf6ff');
+                        });
+
+                        clonedCard.querySelectorAll('.matrix-td-cell.filled.custom-theory, .grid-class-cell.filled.custom-theory').forEach(cell => {
+                            cell.style.backgroundColor = '#3d1624';
+                            cell.style.color = '#ffe0e6';
+                            cell.style.border = '1.5px solid #e11d48';
+                            cell.querySelectorAll('*').forEach(child => child.style.color = '#ffe0e6');
+                        });
+
+                        clonedCard.querySelectorAll('.matrix-td-cell.filled.custom-lab, .grid-class-cell.filled.custom-lab').forEach(cell => {
+                            cell.style.backgroundColor = '#0b322a';
+                            cell.style.color = '#e0fff6';
+                            cell.style.border = '1.5px solid #0d9488';
+                            cell.querySelectorAll('*').forEach(child => child.style.color = '#e0fff6');
+                        });
+
+                        clonedCard.querySelectorAll('.matrix-td-cell.empty, .grid-class-cell.free').forEach(cell => {
+                            cell.style.backgroundColor = '#0e1320';
+                            cell.style.border = '1px solid rgba(255, 255, 255, 0.08)';
+                        });
+                    } else {
+                        const csCard = window.getComputedStyle(origCard);
+                        clonedCard.style.backgroundColor = csCard.backgroundColor || '#ffffff';
+                        clonedCard.style.color = csCard.color || '#000000';
+                        clonedCard.style.borderRadius = csCard.borderRadius || '16px';
+
+                        const origCells = origCard.querySelectorAll('.matrix-td-cell, .matrix-th-slot, .matrix-th-time, .matrix-td-day, .grid-header-cell');
+                        const clonedCells = clonedCard.querySelectorAll('.matrix-td-cell, .matrix-th-slot, .matrix-th-time, .matrix-td-day, .grid-header-cell');
+
+                        origCells.forEach((origCell, i) => {
+                            const clonedCell = clonedCells[i];
+                            if (clonedCell) {
+                                const cs = window.getComputedStyle(origCell);
+                                clonedCell.style.backgroundColor = cs.backgroundColor;
+                                clonedCell.style.color = cs.color;
+                                clonedCell.style.borderTopColor = cs.borderTopColor;
+                                clonedCell.style.borderTopWidth = cs.borderTopWidth;
+                                clonedCell.style.borderTopStyle = cs.borderTopStyle;
+                            }
+                        });
+                    }
                 }
             }
         });
