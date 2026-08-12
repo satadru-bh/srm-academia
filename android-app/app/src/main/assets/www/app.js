@@ -5,10 +5,12 @@
 // Global window properties for Debug Mode
 window.DEBUG_MODE = false;
 
-// Register Production PWA Service Worker for Web App Installation
+// Register Production PWA Service Worker for Web App Installation with Auto-Update
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(err => {
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+            if (reg) reg.update();
+        }).catch(err => {
             console.log("ServiceWorker registration note:", err);
         });
     });
@@ -16,23 +18,112 @@ if ('serviceWorker' in navigator) {
 
 // Global PWA Deferred Install Prompt Container
 let deferredPwaInstallPrompt = null;
+
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPwaInstallPrompt = e;
+    try {
+        const dismissed = localStorage.getItem('srm_pwa_banner_dismissed');
+        const now = Date.now();
+        if (!dismissed || (now - parseInt(dismissed, 10)) > 14 * 24 * 60 * 60 * 1000) {
+            setTimeout(showPwaBanner, 25000);
+        }
+    } catch (_) {
+        setTimeout(showPwaBanner, 25000);
+    }
 });
 
+window.addEventListener('appinstalled', () => {
+    deferredPwaInstallPrompt = null;
+    hidePwaBanner();
+    createToast("SRM Academia+ Web App Installed Successfully!", "success");
+});
+
+function isIosDevice() {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent || '');
+}
+
+function isStandaloneApp() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+function showPwaBanner() {
+    if (isStandaloneApp()) return;
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.classList.remove('hidden');
+}
+
+function hidePwaBanner() {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.classList.add('hidden');
+}
+
 function triggerPwaInstallPrompt() {
+    if (isStandaloneApp()) {
+        createToast("SRM Academia+ is already running as an installed App!", "info");
+        return;
+    }
+
     if (deferredPwaInstallPrompt) {
         deferredPwaInstallPrompt.prompt();
         deferredPwaInstallPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
                 createToast("SRM Academia+ Web App Installed!", "success");
+                hidePwaBanner();
             }
             deferredPwaInstallPrompt = null;
         });
     } else {
-        createToast("Install App: Tap browser menu (or Share on iOS) -> 'Add to Home Screen' / 'Install App'", "info");
+        openPwaInstallModal();
     }
+}
+
+function openPwaInstallModal() {
+    const modal = document.getElementById('pwa-install-modal');
+    const body = document.getElementById('pwa-install-modal-body');
+    if (!modal || !body) return;
+
+    let contentHtml = '';
+    if (isIosDevice()) {
+        contentHtml = `
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">1</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Tap the <strong>Share</strong> button <span style="font-size: 16px;">⎋</span> in the Safari bottom toolbar.
+                </div>
+            </div>
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">2</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Scroll down and tap <strong>"Add to Home Screen"</strong> <span style="font-size: 16px;">⊕</span>.
+                </div>
+            </div>
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">3</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Tap <strong>"Add"</strong> in top right. SRM Academia+ will open as an App!
+                </div>
+            </div>
+        `;
+    } else {
+        contentHtml = `
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">1</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Click the <strong>Install Icon</strong> <span style="font-size: 15px;">⊕</span> in your browser address bar (or menu <strong>⋮</strong>).
+                </div>
+            </div>
+            <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; border: 1px solid var(--border-subtle); display: flex; align-items: flex-start; gap: 12px;">
+                <span style="background: var(--accent-primary-subtle); color: var(--accent-primary); font-weight: 900; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;">2</span>
+                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+                    Select <strong>"Install App"</strong> or <strong>"Add to Home Screen"</strong>.
+                </div>
+            </div>
+        `;
+    }
+
+    body.innerHTML = contentHtml;
+    modal.classList.remove('hidden');
 }
 
 // Simulated Date & Day Order Storage
@@ -55,6 +146,17 @@ const state = {
     selectedOverviewDay: null // Cycles day order on Overview focus grid
 };
 
+/**
+ * Helper to safely extract a flat array from an Array or an Object (like unifiedTimetable)
+ * or return [] if null/undefined.
+ */
+function getSafeArray(val) {
+    if (!val) return [];
+    if (Array.isArray(val)) return val;
+    if (typeof val === 'object') return Object.values(val).flat().filter(Boolean);
+    return [];
+}
+
 // Period timings index mapper (24-hour format for calculation, formatted for display)
 const periodTimings = [
     { start: "08:00", end: "08:50", display: "08:00 - 08:50" }, // 1
@@ -74,54 +176,39 @@ const periodTimings = [
 // Array of 32 Handcrafted Themes with color swatches in decreasing order of prominence:
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
-    // Sculpted Claymorphism
-    { id: 'claymorphism', name: 'Claymorphism', tag: 'Sculpted Soft Ceramic & Matte Polymer', colors: ['#F7F4F0', '#FAF7F4', '#8B70F6', '#7BB8FF'] },
-
-    // Neo-Brutalist & High Contrast
-    { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & Thick Outlines', colors: ['#f4f4ee', '#ffffff', '#ccff00', '#000000'] },
-    { id: 'retro-computing', name: 'Retro Computing', tag: 'NeXTSTEP & SGI Engineering Workstation', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
-
-    // Neutral & Monochrome
-    { id: 'monochrome-dark', name: 'Monochrome Dark', tag: 'Pure Black & Silver', colors: ['#050505', '#121212', '#ffffff', '#a3a3a3'] },
-    { id: 'monochrome-light', name: 'Monochrome Light', tag: 'Pure White & Onyx', colors: ['#fafafa', '#ffffff', '#0f172a', '#475569'] },
-    { id: 'slate-neutral', name: 'Slate Neutral', tag: 'Cool Graphite Slate', colors: ['#0f172a', '#1e293b', '#6366f1', '#818cf8'] },
-    { id: 'taupe-natural', name: 'Warm Taupe', tag: 'Natural Warm Greige', colors: ['#faf8f5', '#ffffff', '#786c5f', '#9a8b79'] },
-
-    // Professional & Corporate
-    { id: 'corporate-navy', name: 'Corporate Navy', tag: 'Professional Deep Blue', colors: ['#0a1120', '#111c33', '#2563eb', '#60a5fa'] },
-    { id: 'executive-light', name: 'Executive Light', tag: 'Corporate Sapphire', colors: ['#f8fafc', '#ffffff', '#1e40af', '#0284c7'] },
-    { id: 'enterprise-dark', name: 'Enterprise Slate', tag: 'Professional Dark Cyan', colors: ['#0f172a', '#1e293b', '#0d9488', '#14b8a6'] },
-    { id: 'financial-green', name: 'Financial Emerald', tag: 'Corporate Forest Dark', colors: ['#061a14', '#0d2a20', '#059669', '#34d399'] },
-
-    // OLED & Deep Dark
-    { id: 'pitch-black', name: 'Pitch Black', tag: 'OLED Pure Black', colors: ['#000000', '#0a0a0a', '#f97316', '#38bdf8'] },
-    { id: 'midnight-navy', name: 'Midnight Navy', tag: 'Deep Slate', colors: ['#070b19', '#0f172a', '#3b82f6', '#60a5fa'] },
-    { id: 'dracula', name: 'Dracula', tag: 'Vampire Gothic', colors: ['#1e1f29', '#282a36', '#bd93f9', '#ff79c6'] },
-    { id: 'emerald-mint', name: 'Emerald Mint', tag: 'Forest Dark', colors: ['#040d0a', '#0a1c16', '#10b981', '#34d399'] },
-    { id: 'tokyo-night', name: 'Tokyo Night', tag: 'Neon Cyber City', colors: ['#1a1b26', '#24283b', '#7aa2f7', '#bb9af7'] },
-    { id: 'nord-dark', name: 'Nordic Frost', tag: 'Arctic Slate', colors: ['#2e3440', '#3b4252', '#88c0d0', '#81a1c1'] },
-    { id: 'monokai-pro', name: 'Monokai Pro', tag: 'Warm Charcoal', colors: ['#19181a', '#222125', '#ffd866', '#ff6188'] },
-    { id: 'obsidian-purple', name: 'Obsidian Royal', tag: 'Imperial Amethyst', colors: ['#090514', '#130a24', '#a855f7', '#e9d5ff'] },
-
-    // Vibrant & Creative
-    { id: 'cyberpunk', name: 'Cyberpunk Neon', tag: 'High Voltage', colors: ['#0d0221', '#190a38', '#ff007f', '#00f0ff'] },
-    { id: 'synthwave', name: 'Synthwave 80s', tag: 'Neon Sunset', colors: ['#170b28', '#24123e', '#f72585', '#4cc9f0'] },
-    { id: 'sunset-horizon', name: 'Sunset Horizon', tag: 'Twilight Glow', colors: ['#12081f', '#210e38', '#ff6b6b', '#fca5a5'] },
-    { id: 'matrix-green', name: 'Matrix Code', tag: 'Terminal Hacker', colors: ['#030a05', '#08170b', '#22c55e', '#4ade80'] },
-    { id: 'crimson-velvet', name: 'Crimson Velvet', tag: 'Deep Ruby', colors: ['#140508', '#24090f', '#ef4444', '#fca5a5'] },
-    { id: 'oceanic-deep', name: 'Oceanic Deep', tag: 'Abyss Cyan', colors: ['#05131a', '#0b202c', '#06b6d4', '#67e8f9'] },
-    { id: 'solarized-dark', name: 'Solarized Dark', tag: 'Teal Amber', colors: ['#002b36', '#073642', '#b58900', '#2aa198'] },
-    { id: 'catppuccin-mocha', name: 'Catppuccin Mocha', tag: 'Soft Lavender Dark', colors: ['#1e1e2e', '#2a2b3d', '#cba6f7', '#f5c2e7'] },
-
-    // Light & Minimalist
-    { id: 'clean-light', name: 'Clean Light', tag: 'Minimal Light', colors: ['#f8fafc', '#ffffff', '#f97316', '#0284c7'] },
-    { id: 'sakura-rose', name: 'Sakura Rose', tag: 'Soft Pastel Light', colors: ['#fff5f7', '#ffffff', '#e11d48', '#f43f5e'] },
-    { id: 'cream-latte', name: 'Cream Latte', tag: 'Warm Coffee', colors: ['#fdfbf7', '#f5efe6', '#d97706', '#b45309'] },
-    { id: 'paper-minimal', name: 'Paper Minimal', tag: 'Warm Gray Notebook', colors: ['#f6f6f4', '#ffffff', '#2563eb', '#3b82f6'] },
-    { id: 'mint-chocolat', name: 'Mint Pastel', tag: 'Soft Sage Light', colors: ['#f2faf6', '#ffffff', '#059669', '#10b981'] },
-    { id: 'nord-light', name: 'Nordic Snow', tag: 'Ice Slate Light', colors: ['#f0f4f8', '#ffffff', '#0284c7', '#38bdf8'] },
-    { id: 'solarized-light', name: 'Solarized Light', tag: 'Warm Cream Amber', colors: ['#fdf6e3', '#eee8d5', '#b58900', '#d33682'] },
-    { id: 'lavender-bliss', name: 'Lavender Bliss', tag: 'Pastel Violet', colors: ['#f8f5ff', '#ffffff', '#7c3aed', '#a855f7'] }
+    { id: 'glassmorphism', name: 'Refractive Glassmorphism', tag: 'Translucent Glass & Ambient Depth', colors: ['#05070B', 'rgba(255,255,255,0.075)', '#8FA8FF', '#7DE3FF'] },
+    { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
+    { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
+    { id: 'clean-light', name: 'Clean Light', tag: 'Polished Minimal Slate', colors: ['#F8FAFC', '#FFFFFF', '#0F172A', '#2563EB'] },
+    { id: 'clean-dark', name: 'Clean Dark (OLED)', tag: 'Pure Black OLED & Indigo', colors: ['#000000', '#000000', '#FFFFFF', '#6366F1'] },
+    { id: 'cyberpunk-neon', name: 'Cyberpunk Neon', tag: 'Neon Cyan & Electric Magenta', colors: ['#0D0D15', '#161622', '#00F0FF', '#FF0055'] },
+    { id: 'synthwave-80s', name: 'Synthwave Sunset', tag: 'Hot Magenta & Sunset Gold', colors: ['#1A0B2E', '#261245', '#FF2A85', '#00D2FF'] },
+    { id: 'nordic-frost', name: 'Nordic Frost', tag: 'Arctic Cyan & Ice White', colors: ['#2E3440', '#3B4252', '#88C0D0', '#8FBCBB'] },
+    { id: 'catppuccin-mocha', name: 'Catppuccin Mocha', tag: 'Soothing Lavender & Peach', colors: ['#1E1E2E', '#25253A', '#B4BEFE', '#FAB387'] },
+    { id: 'dracula-vampire', name: 'Dracula Dark', tag: 'Orchid Purple & Crimson Pink', colors: ['#282A36', '#343746', '#BD93F9', '#FF79C6'] },
+    { id: 'midnight-violet', name: 'Midnight Violet', tag: 'Deep Plum & Violet Glow', colors: ['#0F0C1B', '#1A152E', '#8B5CF6', '#F43F5E'] },
+    { id: 'emerald-forest', name: 'Emerald Forest', tag: 'Deep Spruce & Mint Emerald', colors: ['#062C22', '#0E3E32', '#10B981', '#34D399'] },
+    { id: 'sunset-amber', name: 'Amber Sunset', tag: 'Dark Espresso & Sunset Amber', colors: ['#1B120E', '#2A1C16', '#F59E0B', '#E11D48'] },
+    { id: 'cherry-blossom', name: 'Cherry Blossom', tag: 'Sakura Pink & Soft Coral', colors: ['#FFF5F7', '#FFFFFF', '#EC4899', '#BE185D'] },
+    { id: 'ocean-abyss', name: 'Ocean Abyss', tag: 'Turquoise & Sky Sapphire', colors: ['#031326', '#09213D', '#06B6D4', '#0EA5E9'] },
+    { id: 'rose-gold', name: 'Rose Gold Luxury', tag: 'Warm Metallic Gold & Rose', colors: ['#1C1917', '#292524', '#FB7185', '#F59E0B'] },
+    { id: 'aurora-borealis', name: 'Aurora Borealis', tag: 'Northern Lights Green & Cyan', colors: ['#0A1128', '#121F45', '#00FF9D', '#00E5FF'] },
+    { id: 'monokai-pro', name: 'Monokai Pro', tag: 'Vibrant Magenta & Bright Yellow', colors: ['#2D2A2E', '#363337', '#FF6188', '#FFD866'] },
+    { id: 'lavender-mist', name: 'Lavender Mist', tag: 'Pastel Violet & Deep Plum', colors: ['#F5F3FF', '#FFFFFF', '#7C3AED', '#A78BFA'] },
+    { id: 'pastel-candy', name: 'Pastel Candy', tag: 'Sweet Bubblegum & Pastel Blue', colors: ['#FAF5FF', '#FFFFFF', '#F472B6', '#38BDF8'] },
+    { id: 'obsidian-gold', name: 'Obsidian Gold', tag: 'Imperial Gold & Obsidian Black', colors: ['#0A0A0A', '#171717', '#EAB308', '#F59E0B'] },
+    { id: 'forest-moss', name: 'Forest Moss', tag: 'Deep Canopy & Sage Green', colors: ['#14231A', '#1E3326', '#84CC16', '#EAB308'] },
+    { id: 'crimson-blood', name: 'Crimson Blood', tag: 'Blood Obsidian & Scarlet Red', colors: ['#140507', '#240A0E', '#DC2626', '#EF4444'] },
+    { id: 'horizon-dusk', name: 'Horizon Dusk', tag: 'Sunset Orange & Twilight Magenta', colors: ['#181124', '#261C38', '#FF6B35', '#F72585'] },
+    { id: 'cyber-yellow', name: 'Cyber Yellow', tag: 'High-Vis Industrial Yellow', colors: ['#121212', '#1C1C1C', '#FFD700', '#00E5FF'] },
+    { id: 'mint-chocolate', name: 'Mint Chocolate', tag: 'Rich Cacao & Fresh Mint', colors: ['#1F1610', '#2E2219', '#10B981', '#34D399'] },
+    { id: 'steel-monochrome', name: 'Steel Monochrome', tag: 'Industrial Slate & Cool Ice Blue', colors: ['#1E293B', '#334155', '#94A3B8', '#38BDF8'] },
+    { id: 'espresso-roast', name: 'Espresso Roast', tag: 'Cinnamon Copper & Caramel', colors: ['#1A120B', '#2B1E13', '#D97706', '#F59E0B'] },
+    { id: 'sandstone-desert', name: 'Sandstone Desert', tag: 'Terracotta & Warm Ochre', colors: ['#FDF6E3', '#FFFDF5', '#D97706', '#B45309'] },
+    { id: 'oxford-navy', name: 'Oxford Navy', tag: 'Oxford Blue & Royal Sapphire', colors: ['#F8FAFC', '#FFFFFF', '#1E3A8A', '#2563EB'] },
+    { id: 'electric-lime', name: 'Electric Lime', tag: 'Void Black & Cyber Lime', colors: ['#0B0F19', '#161F33', '#A3E635', '#10B981'] },
+    { id: 'toxic-venom', name: 'Toxic Venom', tag: 'Acid Purple & Toxic Green', colors: ['#0D1117', '#161B22', '#39FF14', '#9D00FF'] },
+    { id: 'solarized-dark', name: 'Solarized Dark', tag: 'Solarized Cyan & Golden Yellow', colors: ['#002B36', '#073642', '#2AA198', '#B58900'] }
 ];
 
 // Document Event Handlers on DOM Ready
@@ -173,22 +260,68 @@ function getApiHeaders(extraHeaders = {}) {
     };
 }
 
+/**
+ * Retrieves the active account's credentials from localStorage for serverless re-auth
+ */
+function getActiveCredentials() {
+    try {
+        const activeEmail = (localStorage.getItem('srm_academia_active_email') || '').trim().toLowerCase();
+        const saved = JSON.parse(localStorage.getItem('srm_saved_accounts') || '[]');
+
+        if (activeEmail) {
+            // 1. Direct email match
+            let match = saved.find(a => a.email && a.email.toLowerCase() === activeEmail);
+            // 2. Fuzzy match across email, netId, regNumber
+            if (!match) {
+                match = saved.find(a => 
+                    (a.email && a.email.toLowerCase().includes(activeEmail)) ||
+                    (a.regNumber && a.regNumber.toLowerCase() === activeEmail) ||
+                    (a.netId && a.netId.toLowerCase() === activeEmail)
+                );
+            }
+            if (match && match.password) return { email: match.email || activeEmail, password: match.password };
+        }
+
+        // 3. Fallback: Check state.studentInfo NetID/email if available
+        if (typeof state !== 'undefined' && state && state.studentInfo) {
+            const infoEmail = (state.studentInfo.netId || state.studentInfo.email || '').toLowerCase().trim();
+            if (infoEmail) {
+                const infoMatch = saved.find(a => 
+                    (a.email && a.email.toLowerCase() === infoEmail) ||
+                    (a.regNumber && a.regNumber.toLowerCase() === infoEmail)
+                );
+                if (infoMatch && infoMatch.password) return { email: infoMatch.email, password: infoMatch.password };
+            }
+        }
+
+        // 4. Fallback: Any saved account with password
+        const fallback = saved.find(a => a.email && a.password);
+        if (fallback) return { email: fallback.email, password: fallback.password };
+
+        return null;
+    } catch (e) {
+        return null;
+    }
+}
+
 // Window Focus Handler - Never logs out automatically; silently updates if session is live
 window.addEventListener('focus', async () => {
     const isActive = localStorage.getItem('srm_academia_session_active') === 'true';
     if (isActive) {
         const lastCheck = parseInt(localStorage.getItem('srm_last_focus_check') || '0', 10);
         const now = Date.now();
-        if (now - lastCheck < 10 * 60 * 1000) {
+        if (now - lastCheck < 30 * 60 * 1000) {
             return;
         }
         localStorage.setItem('srm_last_focus_check', now.toString());
 
         try {
+            const creds = getActiveCredentials();
             const res = await fetch(getApiEndpoint('/api/sync'), {
                 method: 'POST',
                 credentials: 'include',
-                headers: getApiHeaders()
+                headers: getApiHeaders(),
+                body: JSON.stringify(creds || {})
             });
             if (res.ok) {
                 const data = await res.json();
@@ -204,6 +337,8 @@ window.addEventListener('focus', async () => {
  * Initializes the application lifecycle
  */
 async function initApp() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const forceLogout = urlParams.get('logout') === 'true';
     setupThemeSelector();
     setupNavigation();
     setupSwipeGestures();
@@ -595,32 +730,38 @@ function setupSupportModal() {
         });
     }
 
-    if (copyBtn && upiIdEl) {
-        copyBtn.addEventListener('click', () => {
-            const upi = upiIdEl.textContent.trim();
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(upi).then(() => {
-                    createToast("UPI ID Copied to Clipboard!", "success");
-                }).catch(() => {
-                    createToast("Copied: " + upi, "info");
-                });
-            } else {
-                createToast("Copied: " + upi, "info");
-            }
-        });
-    }
+    const copyBtn2 = document.getElementById('copy-upi-btn-2');
+    const upiIdEl2 = document.getElementById('support-upi-id-2');
 
-    const presetChips = document.querySelectorAll('.support-preset-chip');
-    presetChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            presetChips.forEach(c => {
-                c.classList.remove('active');
-                c.style.border = '1px solid var(--border-subtle)';
+    const copyUpi = (upiStr) => {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(upiStr).then(() => {
+                createToast("UPI ID Copied to Clipboard!", "success");
+            }).catch(() => {
+                createToast("Copied: " + upiStr, "info");
             });
-            chip.classList.add('active');
-            chip.style.border = '1.5px solid var(--accent-primary)';
-        });
-    });
+        } else {
+            createToast("Copied: " + upiStr, "info");
+        }
+    };
+
+    const pageCopyBtn1 = document.getElementById('copy-page-upi-btn-1');
+    const pageUpiEl1 = document.getElementById('page-upi-id-1');
+    const pageCopyBtn2 = document.getElementById('copy-page-upi-btn-2');
+    const pageUpiEl2 = document.getElementById('page-upi-id-2');
+
+    if (copyBtn && upiIdEl) {
+        copyBtn.addEventListener('click', () => copyUpi(upiIdEl.textContent.trim()));
+    }
+    if (copyBtn2 && upiIdEl2) {
+        copyBtn2.addEventListener('click', () => copyUpi(upiIdEl2.textContent.trim()));
+    }
+    if (pageCopyBtn1 && pageUpiEl1) {
+        pageCopyBtn1.addEventListener('click', () => copyUpi(pageUpiEl1.textContent.trim()));
+    }
+    if (pageCopyBtn2 && pageUpiEl2) {
+        pageCopyBtn2.addEventListener('click', () => copyUpi(pageUpiEl2.textContent.trim()));
+    }
 }
 
 const LIGHT_THEMES = new Set([
@@ -648,7 +789,7 @@ function isThemeLight(themeId) {
  * Dynamically switches brand logos: logo_dark.png in light themes and logo_light.png in dark themes.
  */
 function updateLogoForTheme(themeId) {
-    const activeTheme = themeId || document.documentElement.getAttribute('data-theme') || 'pitch-black';
+    const activeTheme = themeId || document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
     const isLight = isThemeLight(activeTheme);
     const targetLogoSrc = isLight ? 'logo_dark.png' : 'logo_light.png';
     const fallbackLogoSrc = isLight ? 'logo_light.png' : 'logo_dark.png';
@@ -698,6 +839,39 @@ function setupEventBindings() {
     const btnPrev = document.getElementById('overview-prev-day-btn');
     const btnNext = document.getElementById('overview-next-day-btn');
     const btnToday = document.getElementById('overview-btn-today');
+    const btnTomorrow = document.getElementById('overview-btn-tomorrow');
+
+    // Universal PWA Install Buttons & Banner Bindings
+    document.addEventListener('click', (e) => {
+        const installBtn = e.target.closest('[data-pwa-install="true"], #pwa-banner-install-btn, .pwa-install-btn');
+        if (installBtn) {
+            e.preventDefault();
+            triggerPwaInstallPrompt();
+        }
+    });
+
+    const bannerDismissBtn = document.getElementById('pwa-banner-dismiss-btn');
+    if (bannerDismissBtn) {
+        bannerDismissBtn.addEventListener('click', () => {
+            hidePwaBanner();
+            try {
+                localStorage.setItem('srm_pwa_banner_dismissed', String(Date.now()));
+            } catch (_) {}
+        });
+    }
+
+    const closePwaModalBtn = document.getElementById('close-pwa-modal-btn');
+    const pwaModal = document.getElementById('pwa-install-modal');
+    if (closePwaModalBtn && pwaModal) {
+        closePwaModalBtn.addEventListener('click', () => {
+            animateCloseElement(pwaModal);
+        });
+        pwaModal.addEventListener('click', (e) => {
+            if (e.target === pwaModal) {
+                animateCloseElement(pwaModal);
+            }
+        });
+    }
 /**
  * Setup Custom Class Modal Event Listeners
  */
@@ -763,25 +937,44 @@ function setupCustomClassModal() {
     }
 }
 
-    const btnTomorrow = document.getElementById('overview-btn-tomorrow');
-    
+    const workingDays = ['DAY 1', 'DAY 2', 'DAY 3', 'DAY 4', 'DAY 5'];
+
+    function getNextWorkingDayOrder(forward = true) {
+        let idx = workingDays.indexOf(state.selectedOverviewDay);
+        if (idx !== -1) {
+            if (forward) {
+                return workingDays[(idx + 1) % workingDays.length];
+            } else {
+                return workingDays[(idx - 1 + workingDays.length) % workingDays.length];
+            }
+        }
+
+        // If currently on FREE DAY (or unselected), search state.planner for the true next/prev working day order
+        const todayIso = getLocalIsoDate();
+        if (state.planner && state.planner.length > 0) {
+            const sortedPlanner = [...state.planner].sort((a, b) => a.date.localeCompare(b.date));
+            if (forward) {
+                const futureWorking = sortedPlanner.find(p => p.date >= todayIso && p.dayOrder && parseInt(p.dayOrder) > 0);
+                if (futureWorking) return `DAY ${futureWorking.dayOrder}`;
+            } else {
+                const pastWorking = sortedPlanner.filter(p => p.date <= todayIso && p.dayOrder && parseInt(p.dayOrder) > 0).pop();
+                if (pastWorking) return `DAY ${pastWorking.dayOrder}`;
+            }
+        }
+
+        // Fallback default
+        return forward ? 'DAY 5' : 'DAY 4';
+    }
+
     if (btnPrev) {
         btnPrev.addEventListener('click', () => {
-            const dayCycle = ['DAY 1', 'DAY 2', 'DAY 3', 'DAY 4', 'DAY 5', 'FREE DAY'];
-            let idx = dayCycle.indexOf(state.selectedOverviewDay);
-            if (idx === -1) idx = 5;
-            idx = (idx - 1 + 6) % 6;
-            state.selectedOverviewDay = dayCycle[idx];
+            state.selectedOverviewDay = getNextWorkingDayOrder(false);
             renderOverviewPane();
         });
     }
     if (btnNext) {
         btnNext.addEventListener('click', () => {
-            const dayCycle = ['DAY 1', 'DAY 2', 'DAY 3', 'DAY 4', 'DAY 5', 'FREE DAY'];
-            let idx = dayCycle.indexOf(state.selectedOverviewDay);
-            if (idx === -1) idx = 5;
-            idx = (idx + 1) % 6;
-            state.selectedOverviewDay = dayCycle[idx];
+            state.selectedOverviewDay = getNextWorkingDayOrder(true);
             renderOverviewPane();
         });
     }
@@ -1081,11 +1274,13 @@ function updateMobileNavActive(activeTarget) {
     });
 }
 
-function switchTab(targetTab) {
+function switchTab(targetTab, forceRender = false) {
     if (!targetTab) return;
 
     const currentTab = state.activeTab || 'overview';
-    if (currentTab === targetTab && document.getElementById(`view-${targetTab}`)?.classList.contains('active')) {
+    const targetView = document.getElementById(`view-${targetTab}`);
+
+    if (!forceRender && currentTab === targetTab && targetView && targetView.classList.contains('active')) {
         return;
     }
 
@@ -1095,7 +1290,7 @@ function switchTab(targetTab) {
         else nav.classList.remove('active');
     });
 
-    if (targetTab === 'planner' || targetTab === 'developer' || targetTab === 'support') {
+    if (targetTab === 'planner' || targetTab === 'developer' || targetTab === 'support' || targetTab === 'courses') {
         updateMobileNavActive('more');
     } else {
         updateMobileNavActive(targetTab);
@@ -1105,7 +1300,6 @@ function switchTab(targetTab) {
         view.classList.remove('active');
     });
 
-    const targetView = document.getElementById(`view-${targetTab}`);
     if (targetView) {
         targetView.classList.add('active');
     }
@@ -1131,6 +1325,7 @@ function switchTab(targetTab) {
     if (targetTab === 'attendance') renderAttendancePane();
     if (targetTab === 'timetable') renderTimetablePane();
     if (targetTab === 'academics') renderAcademicsPane();
+    if (targetTab === 'courses') renderCoursesPane();
     if (targetTab === 'planner') renderPlannerPane();
     if (targetTab === 'developer') renderDeveloperPane();
     if (targetTab === 'support') renderSupportPane();
@@ -1146,45 +1341,82 @@ function renderSupportPane() {
     if (!pane) return;
     
     pane.innerHTML = `
-        <div class="card support-card" style="display: block !important; visibility: visible !important; opacity: 1 !important;">
-            <div class="support-header-row">
-                <div class="support-icon-badge">
+        <div class="support-card" style="display: block !important; visibility: visible !important; opacity: 1 !important; max-width: 860px; margin: 0 auto; padding: 32px; border-radius: var(--radius-xl);">
+            <div class="support-header-row" style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 20px;">
+                <div class="support-icon-badge" style="width: 48px; height: 48px; border-radius: 14px; background: #ef4444; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                 </div>
-                <div>
-                    <h2 class="support-title">Support SRM Academia+</h2>
-                    <span class="support-subtitle">Independent Student Development</span>
+                <div class="support-title-group">
+                    <h2 class="support-title" style="font-size: 22px; font-weight: 800; margin: 0; color: var(--text-primary);">Support SRM Academia+</h2>
+                    <span class="support-subtitle" style="font-size: 12px; color: var(--text-muted); font-weight: 700;">Independent Student Development</span>
                 </div>
             </div>
 
-            <div class="support-text-block">
-                <p class="support-p lead">
-                    SRM Academia+ is built independently, by a student, for students.
-                </p>
-                <p class="support-p">
-                    The app will always have a free version. Donations simply help cover server costs, domain fees, and the time spent building new features, fixing bugs, and keeping everything running smoothly.
-                </p>
-                <p class="support-p">
-                    If the app has saved you time or made college a little less frustrating, and you'd like to support its development, I'd genuinely appreciate it. No pressure.
-                </p>
-            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; align-items: start;">
+                <!-- Left Side: Message & UPI IDs -->
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div class="support-text-block" style="background: var(--bg-surface-elevated); padding: 18px; border-radius: 14px; border: 1px solid var(--border-subtle);">
+                        <p class="support-p lead" style="font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 0 0 8px 0;">
+                            SRM Academia+ is built independently, by a student, for students.
+                        </p>
+                        <p class="support-p" style="font-size: 13px; color: var(--text-secondary); margin: 0 0 8px 0; line-height: 1.55;">
+                            The app will always have a free version. Contributions help cover server costs, domain fees, and ongoing feature development.
+                        </p>
+                        <p class="support-p" style="font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.55;">
+                            If the app has saved you time or made college life easier, any contribution is deeply appreciated! No pressure.
+                        </p>
+                    </div>
 
-            <div class="support-footer-box">
-                <div class="support-footer-label">Support via UPI / Direct Contribution</div>
-                <button class="support-donate-btn" id="btn-support-donate-upi">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    <span>Donate &amp; Support Development</span>
-                </button>
+                    <!-- Primary UPI Box -->
+                    <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Primary UPI ID</span>
+                            <span id="page-upi-id-1" style="font-family: monospace; font-size: 14px; font-weight: 800; color: var(--text-primary);">8017622902@hdfc</span>
+                        </div>
+                        <button id="copy-page-upi-btn-1" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer;">Copy UPI</button>
+                    </div>
+
+                    <!-- Secondary UPI Box -->
+                    <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Secondary UPI ID</span>
+                            <span id="page-upi-id-2" style="font-family: monospace; font-size: 12px; font-weight: 800; color: var(--text-primary); word-break: break-all;">satadrubhattacharya940-1@okhdfcbank</span>
+                        </div>
+                        <button id="copy-page-upi-btn-2" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer; flex-shrink: 0; margin-left: 8px;">Copy UPI</button>
+                    </div>
+                </div>
+
+                <!-- Right Side: QR Code -->
+                <div style="text-align: center; padding: 22px; background: var(--bg-surface-elevated); border-radius: 16px; border: 1px solid var(--border-subtle); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span style="font-size: 12px; font-weight: 800; color: var(--text-primary); display: block; margin-bottom: 12px;">Scan QR Code using GPay, PhonePe, or Paytm</span>
+                    <div style="width: 210px; height: 210px; background: #ffffff; padding: 10px; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(0,0,0,0.12);">
+                        <img src="qr.png" alt="Donate QR Code" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px;" />
+                    </div>
+                    <span style="font-size: 11px; color: var(--text-muted); font-weight: 700; margin-top: 12px;">Direct UPI Transfer</span>
+                </div>
             </div>
         </div>
     `;
 
-    const donateBtn = document.getElementById('btn-support-donate-upi');
-    if (donateBtn) {
-        donateBtn.addEventListener('click', () => {
-            createToast("Thank you for supporting SRM Academia+! Contribution options coming soon.", "success");
-        });
-    }
+    const copyUpi = (upiStr) => {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(upiStr).then(() => {
+                createToast("UPI ID Copied to Clipboard!", "success");
+            }).catch(() => {
+                createToast("Copied: " + upiStr, "info");
+            });
+        } else {
+            createToast("Copied: " + upiStr, "info");
+        }
+    };
+
+    const btn1 = document.getElementById('copy-page-upi-btn-1');
+    const el1 = document.getElementById('page-upi-id-1');
+    const btn2 = document.getElementById('copy-page-upi-btn-2');
+    const el2 = document.getElementById('page-upi-id-2');
+
+    if (btn1 && el1) btn1.addEventListener('click', () => copyUpi(el1.textContent.trim()));
+    if (btn2 && el2) btn2.addEventListener('click', () => copyUpi(el2.textContent.trim()));
 }
 
 /**
@@ -1238,12 +1470,8 @@ function setupMoreMenuEvents() {
             e.stopPropagation();
             const action = btn.dataset.moreAction;
             hideMobileMoreMenu();
-            if (action === 'planner') {
-                switchTab('planner');
-            } else if (action === 'developer') {
-                switchTab('developer');
-            } else if (action === 'support') {
-                switchTab('support');
+            if (action) {
+                switchTab(action);
             }
         });
     });
@@ -1334,6 +1562,9 @@ function updateHeaderTitles(tab) {
         case 'marks':
             headingText = "Internal Marks";
             break;
+        case 'courses':
+            headingText = "Enrolled Courses";
+            break;
         case 'planner':
             headingText = "Academic Calendar";
             break;
@@ -1357,6 +1588,21 @@ function updateHeaderTitles(tab) {
 
     const subtitle = document.getElementById('workspace-subtitle');
     if (subtitle) subtitle.textContent = "";
+
+    // Set Dynamic Page Title for Every Tab / Page
+    let pageTitleMap = {
+        'overview': 'Overview Dashboard',
+        'attendance': 'Attendance & Bunk Calculator',
+        'timetable': 'Class Timetable',
+        'academics': 'Internal Marks & Grades',
+        'marks': 'Internal Marks & Grades',
+        'planner': 'Academic Calendar & Events',
+        'developer': 'Developer Console',
+        'support': 'Support SRM Academia+',
+        'more': 'More Tools'
+    };
+    let pageTitle = pageTitleMap[normalizedTab] || (headingText ? headingText : 'Dashboard');
+    document.title = `${pageTitle} - SRM Academia+`;
 }
 
 /**
@@ -1374,10 +1620,12 @@ function getCurrentDateTime() {
  */
 async function attemptAutomaticSync() {
     try {
+        const creds = getActiveCredentials();
         const response = await fetch(getApiEndpoint('/api/sync'), {
             method: 'POST',
             credentials: 'include',
-            headers: getApiHeaders()
+            headers: getApiHeaders(),
+            body: JSON.stringify(creds || {})
         });
 
         if (!response.ok) {
@@ -1427,8 +1675,13 @@ function showWorkspace() {
         appWorkspace.classList.remove('hidden');
         appWorkspace.style.setProperty('display', 'flex', 'important');
     }
+    const mobileNav = document.querySelector('.mobile-bottom-nav');
+    if (mobileNav) {
+        mobileNav.classList.remove('hidden');
+        mobileNav.style.removeProperty('display');
+    }
     const savedTab = localStorage.getItem('srm_active_tab') || 'overview';
-    switchTab(savedTab);
+    switchTab(savedTab, true);
 }
 
 /**
@@ -1446,6 +1699,16 @@ function showAuthScreen() {
         appWorkspace.classList.add('hidden');
         appWorkspace.style.setProperty('display', 'none', 'important');
     }
+    const mobileNav = document.querySelector('.mobile-bottom-nav');
+    if (mobileNav) {
+        mobileNav.classList.add('hidden');
+        mobileNav.style.setProperty('display', 'none', 'important');
+    }
+    const mobileMore = document.getElementById('mobile-more-menu');
+    if (mobileMore) {
+        mobileMore.classList.add('hidden');
+    }
+    document.title = "Sign In - SRM Academia+";
 }
 
 /**
@@ -1514,6 +1777,9 @@ async function handleLoginSubmission(e) {
             updateApplicationState(data);
             showWorkspace();
             updateStickySessionBanner(false);
+
+            // Automatically trigger live data sync right after login everytime
+            attemptAutomaticSync();
         } else {
             showAuthError(data.error || "Unable to sign in. Please check your NetID and password.");
         }
@@ -1528,31 +1794,93 @@ async function handleLoginSubmission(e) {
 }
 
 /**
- * Handle Live Synchronization Event Trigger
+ * Handle Live Synchronization Event
  */
 async function handleSyncRequest() {
     const syncButton = document.getElementById('sync-button');
-    const syncIcon = syncButton.querySelector('.sync-icon');
+    const syncIcon = syncButton ? syncButton.querySelector('.sync-icon') : null;
 
     try {
-        syncButton.disabled = true;
-        syncIcon.classList.add('loading');
+        if (syncButton) syncButton.disabled = true;
+        if (syncIcon) syncIcon.classList.add('loading');
 
-        const response = await fetch(getApiEndpoint('/api/sync'), {
+        const creds = getActiveCredentials();
+        let response = await fetch(getApiEndpoint('/api/sync'), {
             method: 'POST',
             credentials: 'include',
-            headers: getApiHeaders()
+            headers: getApiHeaders(),
+            body: JSON.stringify(creds || {})
         });
 
+        // 401 Recovery Attempt: If sync failed with 401, attempt transparent re-auth via /api/login if credentials exist
         if (response.status === 401 || response.status === 403) {
-            createToast("SRM portal session paused. Showing cached data.", "warning");
+            if (creds && creds.email && creds.password) {
+                const loginRes = await fetch(getApiEndpoint('/api/login'), {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: getApiHeaders(),
+                    body: JSON.stringify(creds)
+                });
+                if (loginRes.ok) {
+                    const loginData = await loginRes.json();
+                    if (loginData.success) {
+                        localStorage.setItem('srm_last_synced_time', Date.now().toString());
+                        updateApplicationState(loginData);
+                        updateLastSyncedDisplay();
+                        updateStickySessionBanner(false);
+                        createToast("Session re-authenticated & data synced!", "success");
+                        
+                        const activeTab = state.activeTab;
+                        if (activeTab === 'overview') renderOverviewPane();
+                        if (activeTab === 'attendance') renderAttendancePane();
+                        if (activeTab === 'timetable') renderTimetablePane();
+                        if (activeTab === 'academics') renderAcademicsPane();
+                        if (activeTab === 'planner') renderPlannerPane();
+                        if (activeTab === 'developer') renderDeveloperPane();
+                        return;
+                    }
+                }
+            }
+
+            createToast("SRM session expired. Please sign in again.", "warning");
+            updateStickySessionBanner(true);
+            showAuthModal();
             return;
         }
 
         const data = await response.json();
 
         if (data.expired || (data.error && (data.error.includes('expired') || data.error.includes('Session')))) {
-            createToast("SRM portal session paused. Showing cached data.", "warning");
+            if (creds && creds.email && creds.password) {
+                const loginRes = await fetch(getApiEndpoint('/api/login'), {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: getApiHeaders(),
+                    body: JSON.stringify(creds)
+                });
+                if (loginRes.ok) {
+                    const loginData = await loginRes.json();
+                    if (loginData.success) {
+                        localStorage.setItem('srm_last_synced_time', Date.now().toString());
+                        updateApplicationState(loginData);
+                        updateLastSyncedDisplay();
+                        updateStickySessionBanner(false);
+                        createToast("Session re-authenticated & data synced!", "success");
+                        
+                        const activeTab = state.activeTab;
+                        if (activeTab === 'overview') renderOverviewPane();
+                        if (activeTab === 'attendance') renderAttendancePane();
+                        if (activeTab === 'timetable') renderTimetablePane();
+                        if (activeTab === 'academics') renderAcademicsPane();
+                        if (activeTab === 'planner') renderPlannerPane();
+                        if (activeTab === 'developer') renderDeveloperPane();
+                        return;
+                    }
+                }
+            }
+            createToast("SRM session expired. Please sign in again.", "warning");
+            updateStickySessionBanner(true);
+            showAuthModal();
             return;
         }
 
@@ -1561,6 +1889,7 @@ async function handleSyncRequest() {
             updateApplicationState(data);
             updateLastSyncedDisplay();
             updateStickySessionBanner(false);
+            createToast("Data synced successfully!", "success");
 
             // Reload active tab renders
             const activeTab = state.activeTab;
@@ -1577,8 +1906,8 @@ async function handleSyncRequest() {
         createToast("Sync operations failed network validation checks.", "danger");
         console.error(err);
     } finally {
-        syncButton.disabled = false;
-        syncIcon.classList.remove('loading');
+        if (syncButton) syncButton.disabled = false;
+        if (syncIcon) syncIcon.classList.remove('loading');
     }
 }
 
@@ -1672,18 +2001,53 @@ function clientMergeTimetables(personal, unifiedBatch) {
 }
 
 /**
+ * Force re-renders whichever view pane is currently active
+ */
+function renderActiveTabPane() {
+    const tab = state.activeTab || 'overview';
+    if (tab === 'overview') renderOverviewPane();
+    else if (tab === 'attendance') renderAttendancePane();
+    else if (tab === 'timetable') renderTimetablePane();
+    else if (tab === 'academics') renderAcademicsPane();
+    else if (tab === 'planner') renderPlannerPane();
+    else if (tab === 'developer') renderDeveloperPane();
+    else if (tab === 'support') renderSupportPane();
+}
+
+/**
  * Central state storage mutation
  */
 function updateApplicationState(payload) {
-    state.studentInfo = payload.studentInfo || {};
-    state.attendance = payload.attendance || [];
-    state.marks = payload.marks || [];
-    state.personalTimetable = payload.personalTimetable || [];
-    state.unifiedTimetable = payload.unifiedTimetable || {};
+    if (!payload || typeof payload !== 'object') return;
+
+    // Robustly unwrap nested .payload if present
+    const d = (payload.payload && typeof payload.payload === 'object' && (payload.payload.studentInfo || payload.payload.attendance || payload.payload.marks || payload.payload.personalTimetable || payload.payload.unifiedTimetable))
+        ? payload.payload
+        : payload;
+
+    if (d.studentInfo && typeof d.studentInfo === 'object' && Object.keys(d.studentInfo).length > 0) {
+        state.studentInfo = d.studentInfo;
+    } else if (payload.studentInfo && typeof payload.studentInfo === 'object') {
+        state.studentInfo = payload.studentInfo;
+    }
+
+    if (Array.isArray(d.attendance) && d.attendance.length > 0) state.attendance = d.attendance;
+    else if (Array.isArray(payload.attendance) && payload.attendance.length > 0) state.attendance = payload.attendance;
+
+    if (Array.isArray(d.marks) && d.marks.length > 0) state.marks = d.marks;
+    else if (Array.isArray(payload.marks) && payload.marks.length > 0) state.marks = payload.marks;
+
+    if (Array.isArray(d.personalTimetable) && d.personalTimetable.length > 0) state.personalTimetable = d.personalTimetable;
+    else if (Array.isArray(payload.personalTimetable) && payload.personalTimetable.length > 0) state.personalTimetable = payload.personalTimetable;
+
+    if (d.unifiedTimetable && typeof d.unifiedTimetable === 'object' && Object.keys(d.unifiedTimetable).length > 0) state.unifiedTimetable = d.unifiedTimetable;
+    else if (payload.unifiedTimetable && typeof payload.unifiedTimetable === 'object') state.unifiedTimetable = payload.unifiedTimetable;
+
+    if (Array.isArray(d.planner) && d.planner.length > 0) state.planner = d.planner;
+    else if (Array.isArray(payload.planner) && payload.planner.length > 0) state.planner = payload.planner;
 
     const reMerged = clientMergeTimetables(state.personalTimetable, state.unifiedTimetable);
-    state.mergedTimetable = (reMerged && Object.keys(reMerged).length > 0) ? reMerged : (payload.mergedTimetable || {});
-    state.planner = payload.planner || [];
+    state.mergedTimetable = (reMerged && Object.keys(reMerged).length > 0) ? reMerged : (d.mergedTimetable || payload.mergedTimetable || state.mergedTimetable || {});
 
     // Cache state to localStorage for instant 0ms app boot
     try {
@@ -1709,6 +2073,9 @@ function updateApplicationState(payload) {
     updateUserProfileData(state.studentInfo);
     updateDevNavVisibility();
     syncDataToAndroidWidgets();
+
+    // Instantly re-render active view pane so UI updates live
+    renderActiveTabPane();
 }
 
 /**
@@ -2040,16 +2407,8 @@ function renderOverviewPane() {
     }
 
     const dayOrderTitle = document.getElementById('overview-today-dayorder-title');
-    const dayOrderSub = document.getElementById('overview-today-dayorder-sub');
     if (dayOrderTitle) {
         dayOrderTitle.textContent = state.selectedOverviewDay;
-    }
-    if (dayOrderSub) {
-        const now = getCurrentDateTime();
-        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const monthsOfYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const dateStr = `${daysOfWeek[now.getDay()].toUpperCase()} • ${String(now.getDate()).padStart(2, '0')} ${monthsOfYear[now.getMonth()].toUpperCase()} ${now.getFullYear()}`;
-        dayOrderSub.textContent = dateStr;
     }
 
     // 4. Render Smart Timetable Timeline
@@ -2173,9 +2532,9 @@ function renderDailyFocusHero() {
             internalsBadge.textContent = `${overallPct}% AVG`;
         }
     } else {
-        if (internalsTitle) internalsTitle.textContent = '-- / --';
-        if (internalsSub) internalsSub.textContent = 'No internal evaluation records recorded';
-        if (internalsBadge) internalsBadge.textContent = 'NO DATA';
+        if (internalsTitle) internalsTitle.textContent = '0 / 0';
+        if (internalsSub) internalsSub.textContent = '0% avg across 0 courses (0 tests)';
+        if (internalsBadge) internalsBadge.textContent = '0% AVG';
     }
 
     // Col 2: Next Class (Redesigned per Image 3: Date, Time, Room, Attendance %, Margin/Required)
@@ -2231,14 +2590,14 @@ function renderDailyFocusHero() {
             }
             nextAttnMargin.innerHTML = `Current: <span style="color: ${statusColor}; font-weight: 800;">${pct.toFixed(2).replace(/\.00$/, '')}%</span> &nbsp;|&nbsp; <span style="color: ${statusColor}; font-weight: 800;">${marginStr || 'Margin: 0'}</span>`;
         } else if (nextAttnMargin) {
-            nextAttnMargin.innerHTML = 'Current: --% &nbsp;|&nbsp; Required: --';
+            nextAttnMargin.innerHTML = 'Current: 0% &nbsp;|&nbsp; Margin: 0';
         }
     } else {
-        if (nextCountdown) nextCountdown.textContent = 'NONE';
+        if (nextCountdown) nextCountdown.textContent = '0';
         if (nextTitle) nextTitle.textContent = 'No Upcoming Classes';
-        if (timingTextEl) timingTextEl.textContent = '--:--';
-        if (roomTextEl) roomTextEl.textContent = 'Campus';
-        if (nextAttnMargin) nextAttnMargin.innerHTML = 'Current: --% &nbsp;|&nbsp; Margin: Clear';
+        if (timingTextEl) timingTextEl.textContent = '00:00';
+        if (roomTextEl) roomTextEl.textContent = '0';
+        if (nextAttnMargin) nextAttnMargin.innerHTML = 'Current: 0% &nbsp;|&nbsp; Margin: 0';
     }
 
     // Col 3: Estimated GPA (SRM 10-Point System based on Internals & Credits)
@@ -2315,10 +2674,10 @@ function renderDailyFocusHero() {
             gpaGaugeArc.setAttribute('stroke-dasharray', `${pctOfTen.toFixed(1)} 100`);
         }
     } else {
-        if (gpaVal) gpaVal.textContent = '--';
-        if (gpaSub) gpaSub.textContent = 'Sync internal marks to calculate GPA';
-        if (gpaBadge) gpaBadge.textContent = 'ESTIMATED';
-        if (gpaGaugeText) gpaGaugeText.textContent = '--';
+        if (gpaVal) gpaVal.textContent = '0.00';
+        if (gpaSub) gpaSub.textContent = '0 evaluated courses, 0 credits';
+        if (gpaBadge) gpaBadge.textContent = '0.0 GRADE';
+        if (gpaGaugeText) gpaGaugeText.textContent = '0';
         if (gpaGaugeArc) gpaGaugeArc.setAttribute('stroke-dasharray', '0 100');
     }
 }
@@ -2648,7 +3007,7 @@ function renderPerformanceTrends() {
 
     const computedStyle = getComputedStyle(document.body);
     const rawAccent = computedStyle.getPropertyValue('--accent-primary').trim() || '#6366f1';
-    const activeTheme = document.documentElement.getAttribute('data-theme') || 'pitch-black';
+    const activeTheme = document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
     const isLight = isThemeLight(activeTheme);
     const sparklineColor = isLight ? (activeTheme === 'neo-brutalist' ? '#15803d' : rawAccent) : rawAccent;
 
@@ -2699,8 +3058,8 @@ function renderPerformanceTrends() {
     } else {
         if (canvasWrapper) canvasWrapper.style.display = 'none';
         if (emptyMsgEl) emptyMsgEl.classList.remove('hidden');
-        if (marksVal) marksVal.textContent = 'Pending';
-        if (marksSub) marksSub.textContent = 'Academic Assessment';
+        if (marksVal) marksVal.textContent = '0';
+        if (marksSub) marksSub.textContent = '0 Evaluated Courses';
     }
 }
 
@@ -2826,11 +3185,31 @@ function renderAttendancePane(customDataset) {
         fabContainer.classList.remove('hidden');
     }
 
-    const dataset = customDataset || (state.predictionActive && state.predictedAttendance.length > 0 ? state.predictedAttendance : state.attendance);
+    let dataset = customDataset || (state.predictionActive && state.predictedAttendance.length > 0 ? state.predictedAttendance : state.attendance);
 
     if (!dataset || dataset.length === 0) {
-        listContainer.innerHTML = `<div class="text-center py-24 text-muted">No attendance metrics detected.</div>`;
-        return;
+        const timetableCourses = new Set();
+        [...getSafeArray(state.personalTimetable), ...getSafeArray(state.unifiedTimetable)].forEach(item => {
+            const title = item.subjectTitle || item.course;
+            const code = item.courseCode || item.code;
+            if (title || code) timetableCourses.add(JSON.stringify({ course: title || code, code: code || title, category: 'Theory', faculty: '0' }));
+        });
+
+        let mockCourses = Array.from(timetableCourses).map(s => JSON.parse(s));
+        if (mockCourses.length === 0) {
+            mockCourses = [
+                { course: 'Course 1', code: 'SUB001', category: 'Theory', faculty: '0' },
+                { course: 'Course 2', code: 'SUB002', category: 'Practical', faculty: '0' },
+                { course: 'Course 3', code: 'SUB003', category: 'Theory', faculty: '0' }
+            ];
+        }
+
+        dataset = mockCourses.map(c => ({
+            ...c,
+            conducted: 0,
+            present: 0,
+            attendance: 0
+        }));
     }
 
     // 1. Update Top Total Summary Counter Metrics
@@ -2941,19 +3320,19 @@ function renderAttendancePane(customDataset) {
             }
         } else {
             marginRequiredLabel = 'Margin';
-            marginRequiredVal = '--';
+            marginRequiredVal = '0';
             calloutClass = 'neutral';
         }
 
         let displayPercent = `${percent}%`;
         if (conducted === 0 || conducted === null) {
-            displayPercent = '--';
+            displayPercent = '0%';
             statusColor = 'var(--text-muted)';
         }
 
         // Remove "Room" text before actual room name
         const cleanRoom = item.room ? item.room.replace(/^Room\s+/i, '').trim() : '';
-        const attendedText = `Attended: ${present !== null ? present : '--'} / ${conducted !== null ? conducted : '--'} hrs`;
+        const attendedText = `Attended: ${present !== null ? present : 0} / ${conducted !== null ? conducted : 0} hrs`;
 
         return `
             <div class="attendance-grid-row">
@@ -3115,10 +3494,11 @@ function renderSingleDayClassesSelector(dateStr) {
     `;
 
     validClasses.forEach((slot) => {
-        const isLab = isSlotLab(slot.slot);
+        const isLab = isSlotLab(slot);
         const typeTag = isLab ? 'Practical' : 'Theory';
         const typeClass = isLab ? 'practical' : 'theory';
         const courseTitle = slot.subjectTitle || slot.course || 'Course';
+        const courseCode = slot.courseCode || slot.code || '';
         const timing = slot.timing || (periodTimings[slot.period - 1] ? `${periodTimings[slot.period - 1].start} - ${periodTimings[slot.period - 1].end}` : `Slot ${slot.period}`);
 
         html += `
@@ -3130,7 +3510,7 @@ function renderSingleDayClassesSelector(dateStr) {
                     </div>
                     <span style="font-size: 11px; color: var(--text-secondary); font-weight: 600;">${timing} ${slot.room ? `• Room ${slot.room}` : ''}</span>
                 </div>
-                <select class="single-class-action-select" data-course="${courseTitle}" data-code="${slot.courseCode || ''}" style="padding: 8px 12px; font-size: 12px; font-weight: 800; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); background: var(--bg-surface-solid); color: var(--text-primary); cursor: pointer;">
+                <select class="single-class-action-select" data-course="${courseTitle}" data-code="${courseCode}" data-islab="${isLab ? 'true' : 'false'}" style="padding: 8px 12px; font-size: 12px; font-weight: 800; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); background: var(--bg-surface-solid); color: var(--text-primary); cursor: pointer;">
                     <option value="BUNK" selected>Bunk (Skip)</option>
                     <option value="ATTEND">Attend</option>
                 </select>
@@ -3140,6 +3520,60 @@ function renderSingleDayClassesSelector(dateStr) {
 
     html += `</div>`;
     container.innerHTML = html;
+}
+
+/**
+ * Helper to match a timetable slot/course to the exact attendance record in state.attendance,
+ * correctly distinguishing Lab/Practical components from Theory components.
+ */
+function findMatchingAttendanceCourse(courseTitle, courseCode, isLabSlot, attendanceList) {
+    if (!attendanceList || attendanceList.length === 0) return null;
+
+    const targetTitle = (courseTitle || '').toUpperCase().trim();
+    const targetCode = (courseCode || '').toUpperCase().trim();
+    const baseTargetCode = targetCode.replace(/[TLP]$/i, '');
+
+    const isAttendanceItemLab = (item) => {
+        if (!item) return false;
+        const cat = (item.category || item.type || '').toUpperCase().trim();
+        const code = (item.code || '').toUpperCase().trim();
+        const title = (item.course || item.subjectTitle || '').toUpperCase().trim();
+
+        return cat.includes('PRACTICAL') || cat.includes('LAB') || cat.includes('PROJECT') ||
+               code.endsWith('P') || code.endsWith('L') ||
+               title.includes('PRACTICAL') || title.includes('LAB') || title.includes('(LAB)');
+    };
+
+    // 1. Collect all potential candidate attendance records matching by exact code, base code, or title
+    const candidates = attendanceList.filter(c => {
+        const cCode = (c.code || '').toUpperCase().trim();
+        const cBaseCode = cCode.replace(/[TLP]$/i, '');
+        const cTitle = (c.course || c.subjectTitle || '').toUpperCase().trim();
+
+        const exactCodeMatch = targetCode && cCode === targetCode;
+        const baseCodeMatch = baseTargetCode && cBaseCode === baseTargetCode;
+        const titleMatch = targetTitle && cTitle && (targetTitle.includes(cTitle) || cTitle.includes(targetTitle));
+
+        return exactCodeMatch || baseCodeMatch || titleMatch;
+    });
+
+    if (candidates.length === 0) {
+        // Fallback: search all attendance items if titles/codes differ slightly
+        return attendanceList.find(c => isLabSlot ? isAttendanceItemLab(c) : !isAttendanceItemLab(c)) || attendanceList[0];
+    }
+
+    if (candidates.length === 1) {
+        return candidates[0];
+    }
+
+    // 2. Multiple candidates exist (e.g. both Theory and Practical records exist for this course)
+    // Strictly pick the candidate matching isLabSlot!
+    const exactLabMatch = candidates.find(c => isLabSlot ? isAttendanceItemLab(c) : !isAttendanceItemLab(c));
+    if (exactLabMatch) {
+        return exactLabMatch;
+    }
+
+    return candidates[0];
 }
 
 /**
@@ -3166,15 +3600,11 @@ function applyAttendancePrediction() {
 
         selectEls.forEach(sel => {
             const courseTitle = sel.dataset.course;
+            const courseCode = sel.dataset.code;
+            const isLabSlot = sel.dataset.islab === 'true';
             const action = sel.value; // 'ATTEND' or 'BUNK'
 
-            const matchCourse = predicted.find(c => {
-                const cTitle = (c.course || '').toUpperCase().trim();
-                const cCode = (c.code || '').toUpperCase().trim();
-                const title = courseTitle.toUpperCase().trim();
-                return (cTitle && (title.includes(cTitle) || cTitle.includes(title))) ||
-                       (cCode && (title.includes(cCode) || cCode.includes(title)));
-            });
+            const matchCourse = findMatchingAttendanceCourse(courseTitle, courseCode, isLabSlot, predicted);
 
             if (matchCourse) {
                 matchCourse.conducted = (parseInt(matchCourse.conducted, 10) || 0) + 1;
@@ -3224,14 +3654,11 @@ function applyAttendancePrediction() {
 
                 daySlots.forEach(slot => {
                     const title = (slot.course || slot.subjectTitle || '').toUpperCase().trim();
-                    if (!title) return;
+                    const code = (slot.courseCode || slot.code || '').toUpperCase().trim();
+                    if (!title && !code) return;
 
-                    const matchCourse = predicted.find(c => {
-                        const cTitle = (c.course || '').toUpperCase().trim();
-                        const cCode = (c.code || '').toUpperCase().trim();
-                        return (cTitle && (title.includes(cTitle) || cTitle.includes(title))) ||
-                               (cCode && (title.includes(cCode) || cCode.includes(title)));
-                    });
+                    const isLabSlot = isSlotLab(slot);
+                    const matchCourse = findMatchingAttendanceCourse(title, code, isLabSlot, predicted);
 
                     if (matchCourse) {
                         matchCourse.conducted = (parseInt(matchCourse.conducted, 10) || 0) + 1;
@@ -3349,10 +3776,22 @@ function calculateBunkSimulations() {
  */
 function isSlotLab(slot) {
     if (!slot) return false;
-    const slotCode = (slot.slot || '').trim().toUpperCase();
+    if (typeof slot === 'object') {
+        const slotCode = (slot.slot || '').trim().toUpperCase();
+        const category = (slot.category || slot.type || '').trim().toUpperCase();
+        const code = (slot.courseCode || slot.code || '').trim().toUpperCase();
+        const title = ((slot.subjectTitle || slot.course || '') + ' ' + category).toUpperCase();
 
-    // Strictly ONLY P slots (e.g. P1, P2, P31, P32, P1-P2, P31-P32, P15-P16) are practical/lab
-    return /^P\d/i.test(slotCode) || slotCode.startsWith('P');
+        if (category.includes('PRACTICAL') || category.includes('LAB') || category.includes('PROJECT')) return true;
+        if (code.endsWith('P') || code.endsWith('L')) return true;
+        if (title.includes('PRACTICAL') || title.includes('LAB') || title.includes('(LAB)')) return true;
+
+        if (/^[LP]\d/i.test(slotCode) || slotCode.startsWith('L') || slotCode.startsWith('P') || slotCode.includes('LAB')) return true;
+
+        return false;
+    }
+    const slotCode = String(slot).trim().toUpperCase();
+    return /^[LP]\d/i.test(slotCode) || slotCode.startsWith('L') || slotCode.startsWith('P') || slotCode.includes('LAB');
 }
 
 /**
@@ -3826,7 +4265,7 @@ async function downloadTimetableImage() {
 
         // Faint watermark in corner with theme responsive logo PNG
         const studentInfoStr = state.studentInfo.name || state.studentInfo.registrationNumber || 'SRM Student';
-        const activeTheme = document.documentElement.getAttribute('data-theme') || 'pitch-black';
+        const activeTheme = document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
         const isLight = isThemeLight(activeTheme);
         const watermarkLogoSrc = isLight ? 'logo_dark.png' : 'logo_light.png';
 
@@ -3878,8 +4317,6 @@ async function downloadTimetableImage() {
                     const csCard = window.getComputedStyle(origCard);
                     clonedCard.style.backgroundColor = csCard.backgroundColor || '#ffffff';
                     clonedCard.style.color = csCard.color || '#000000';
-                    clonedCard.style.border = csCard.border || '2px solid #000000';
-                    clonedCard.style.boxShadow = csCard.boxShadow || 'none';
                     clonedCard.style.borderRadius = csCard.borderRadius || '16px';
 
                     const origCells = origCard.querySelectorAll('.matrix-td-cell, .matrix-th-slot, .matrix-th-time, .matrix-td-day, .grid-header-cell');
@@ -3890,29 +4327,10 @@ async function downloadTimetableImage() {
                         if (clonedCell) {
                             const cs = window.getComputedStyle(origCell);
                             clonedCell.style.backgroundColor = cs.backgroundColor;
-                            clonedCell.style.borderColor = cs.borderColor;
-                            clonedCell.style.borderStyle = cs.borderStyle;
-                            clonedCell.style.borderWidth = cs.borderWidth;
                             clonedCell.style.color = cs.color;
-                            clonedCell.style.boxShadow = cs.boxShadow;
-                            clonedCell.style.borderRadius = cs.borderRadius;
                             clonedCell.style.borderTopColor = cs.borderTopColor;
                             clonedCell.style.borderTopWidth = cs.borderTopWidth;
                             clonedCell.style.borderTopStyle = cs.borderTopStyle;
-
-                            origCell.querySelectorAll('*').forEach((origChild, j) => {
-                                const clonedChild = clonedCell.querySelectorAll('*')[j];
-                                if (clonedChild) {
-                                    const cChild = window.getComputedStyle(origChild);
-                                    clonedChild.style.color = cChild.color;
-                                    clonedChild.style.backgroundColor = cChild.backgroundColor;
-                                    clonedChild.style.borderColor = cChild.borderColor;
-                                    clonedChild.style.borderStyle = cChild.borderStyle;
-                                    clonedChild.style.borderWidth = cChild.borderWidth;
-                                    clonedChild.style.fontWeight = cChild.fontWeight;
-                                    clonedChild.style.fontFamily = cChild.fontFamily;
-                                }
-                            });
                         }
                     });
                 }
@@ -4043,31 +4461,39 @@ function renderAcademicsPane() {
     const container = document.getElementById('marks-subject-container');
     if (!container) return;
 
-    if (!state.marks || state.marks.length === 0) {
-        container.innerHTML = `
-            <div class="text-center py-48" style="grid-column: 1 / -1;">
-                <div style="color: var(--text-muted); margin-bottom: 12px; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background-color: var(--bg-surface-elevated);">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                        <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
-                    </svg>
-                </div>
-                <h4 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">No Internal Marks Data</h4>
-                <p style="font-size: 13px; color: var(--text-secondary);">No assessment records published yet.</p>
-            </div>
-        `;
-        return;
+    let marksDataset = state.marks || [];
+    if (!marksDataset || marksDataset.length === 0) {
+        const timetableCourses = new Set();
+        [...getSafeArray(state.attendance), ...getSafeArray(state.personalTimetable), ...getSafeArray(state.unifiedTimetable)].forEach(item => {
+            const code = item.courseCode || item.code;
+            const title = item.course || item.subjectTitle;
+            if (code || title) timetableCourses.add(code || title);
+        });
+
+        let courseCodes = Array.from(timetableCourses);
+        if (courseCodes.length === 0) courseCodes = ['SUB001', 'SUB002', 'SUB003'];
+
+        marksDataset = courseCodes.map(code => ({
+            courseCode: code,
+            assessments: {
+                "Regular Assessment": { assessment: "Regular Assessment", obtainedMarks: 0, maxMarks: 0, status: "PASS" }
+            }
+        }));
     }
 
     let html = '';
-    state.marks.forEach(item => {
+    marksDataset.forEach(item => {
         let assessmentsHtml = '';
         const keys = Object.keys(item.assessments || {});
 
         if (keys.length === 0) {
             assessmentsHtml = `
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; text-align: center; background-color: var(--bg-surface-elevated); border-radius: var(--radius-md); border: 1px dashed var(--border-subtle);">
-                    <span style="font-size: 12px; font-weight: 600; color: var(--text-muted);">No evaluation components recorded yet</span>
+                <div class="assessment-item" style="display: flex; align-items: center; justify-content: space-between; background-color: var(--bg-surface-elevated); border-radius: var(--radius-md); padding: 12px 16px; border: 1px solid var(--border-subtle);">
+                    <span class="assessment-name" style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">Regular Assessment</span>
+                    <div class="assessment-scores">
+                        <span class="assessment-obtained" style="font-size: 14px; font-weight: 800; color: var(--text-primary);">0</span>
+                        <span class="assessment-total" style="font-size: 11px; color: var(--text-muted);">/ 0</span>
+                    </div>
                 </div>
             `;
         } else {
@@ -4079,7 +4505,7 @@ function renderAcademicsPane() {
                         <span class="assessment-name" style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">${test.assessment}</span>
                         <div class="assessment-scores">
                             <span class="assessment-obtained" style="font-size: 14px; font-weight: 800; color: ${test.status === "ABSENT" ? 'var(--accent-danger)' : 'var(--text-primary)'}">${obtainedText}</span>
-                            <span class="assessment-total" style="font-size: 11px; color: var(--text-muted);">/ ${test.maxMarks || '--'}</span>
+                            <span class="assessment-total" style="font-size: 11px; color: var(--text-muted);">/ ${test.maxMarks || 0}</span>
                         </div>
                     </div>
                 `;
@@ -4102,6 +4528,231 @@ function renderAcademicsPane() {
                 <div class="card-body" style="padding: 20px;">
                     <div class="marks-list" style="display: flex; flex-direction: column; gap: 10px;">
                         ${assessmentsHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+/**
+ * Renders Enrolled Courses View Pane
+ */
+function renderCoursesPane() {
+    const container = document.getElementById('courses-list-container');
+    if (!container) return;
+
+    const courseMap = new Map();
+
+    const getOrInitCourse = (rawCode, rawTitle, category, faculty) => {
+        const code = (rawCode || '').trim().toUpperCase();
+        const title = (rawTitle || rawCode || 'Course').trim();
+        const key = code || title.toUpperCase();
+        if (!key) return null;
+
+        if (!courseMap.has(key)) {
+            courseMap.set(key, {
+                code: code || key,
+                title: title,
+                category: category || '',
+                faculty: faculty || '',
+                credits: 0,
+                conducted: 0,
+                present: 0,
+                attendance: null,
+                assessments: [],
+                slots: new Set(),
+                rooms: new Set()
+            });
+        }
+        const obj = courseMap.get(key);
+        if (title && (!obj.title || obj.title === obj.code)) obj.title = title;
+        if (category && !obj.category) obj.category = category;
+        if (faculty && !obj.faculty) obj.faculty = faculty;
+        return obj;
+    };
+
+    // 1. From state.attendance
+    (state.attendance || []).forEach(item => {
+        const obj = getOrInitCourse(item.code, item.course, item.category, item.faculty);
+        if (obj) {
+            obj.conducted = parseInt(item.conducted, 10) || 0;
+            obj.present = parseInt(item.present, 10) || 0;
+            obj.attendance = item.attendance !== null && item.attendance !== undefined ? parseFloat(item.attendance) : (obj.conducted > 0 ? ((obj.present / obj.conducted) * 100) : 0);
+            obj.credits = getCourseCredit(obj.title, obj.code);
+        }
+    });
+
+    // 2. From state.marks
+    (state.marks || []).forEach(item => {
+        const obj = getOrInitCourse(item.courseCode, item.courseCode, '', '');
+        if (obj) {
+            if (item.assessments && typeof item.assessments === 'object') {
+                Object.keys(item.assessments).forEach(k => {
+                    const test = item.assessments[k];
+                    obj.assessments.push(test);
+                });
+            }
+            if (!obj.credits) obj.credits = getCourseCredit(obj.title, obj.code);
+        }
+    });
+
+    // 3. From Timetables
+    const allTTItems = [...getSafeArray(state.personalTimetable), ...getSafeArray(state.unifiedTimetable)];
+    allTTItems.forEach(item => {
+        const code = item.courseCode || item.code || '';
+        const title = item.subjectTitle || item.course || '';
+        const obj = getOrInitCourse(code, title, '', '');
+        if (obj) {
+            if (item.slot) obj.slots.add(item.slot);
+            if (item.room) obj.rooms.add(item.room.replace(/^Room\s+/i, ''));
+            if (!obj.credits) obj.credits = getCourseCredit(obj.title, obj.code);
+        }
+    });
+
+    const coursesList = Array.from(courseMap.values());
+
+    const countEl = document.getElementById('courses-sum-count');
+    const creditsEl = document.getElementById('courses-sum-credits');
+    const splitEl = document.getElementById('courses-sum-split');
+    const attnEl = document.getElementById('courses-sum-attn');
+
+    const totalCourses = coursesList.length;
+    let totalCredits = 0;
+    let theoryCount = 0;
+    let labCount = 0;
+    let sumAttn = 0;
+    let attnCoursesCount = 0;
+
+    coursesList.forEach(c => {
+        totalCredits += c.credits || 0;
+        const catUpper = (c.category || '').toUpperCase();
+        if (catUpper.includes('PRACTICAL') || catUpper.includes('LAB') || c.code.endsWith('P')) {
+            labCount++;
+        } else {
+            theoryCount++;
+        }
+
+        if (c.attendance !== null && c.attendance !== undefined) {
+            sumAttn += c.attendance;
+            attnCoursesCount++;
+        }
+    });
+
+    const overallAvgAttn = attnCoursesCount > 0 ? (sumAttn / attnCoursesCount).toFixed(1) : '0';
+
+    if (countEl) countEl.textContent = `${totalCourses}`;
+    if (creditsEl) creditsEl.textContent = `${totalCredits}`;
+    if (splitEl) splitEl.textContent = `${theoryCount} Th / ${labCount} Lab`;
+    if (attnEl) attnEl.textContent = `${overallAvgAttn}%`;
+
+    if (coursesList.length === 0) {
+        container.innerHTML = `
+            <div class="card course-detail-card p-20" style="background: var(--bg-surface-elevated); border-radius: var(--radius-xl); border: 1px solid var(--border-subtle); grid-column: 1 / -1;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: var(--text-primary);">Course 0</h3>
+                    <span style="font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-secondary);">Theory</span>
+                </div>
+                <div style="margin-top: 12px; display: flex; gap: 12px; font-size: 12px; color: var(--text-secondary);">
+                    <span>Credits: 0</span>
+                    <span>•</span>
+                    <span>Faculty: 0</span>
+                </div>
+                <div style="border-top: 1px dashed var(--border-subtle); margin: 12px 0;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 800;">
+                    <span>Attendance: 0%</span>
+                    <span>Attended: 0 / 0 hrs</span>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    coursesList.forEach(item => {
+        const credits = item.credits || getCourseCredit(item.title, item.code);
+        const catUpper = (item.category || '').toUpperCase();
+        let catBadge = 'Theory';
+        if (catUpper.includes('PRACTICAL') || catUpper.includes('LAB')) catBadge = 'Practical';
+        else if (catUpper.includes('INTEGRATED')) catBadge = 'Integrated';
+
+        const slotStr = Array.from(item.slots).join(', ') || 'Slot 0';
+        const roomStr = Array.from(item.rooms).join(', ') || 'Room 0';
+
+        const conducted = item.conducted || 0;
+        const present = item.present || 0;
+        const pct = item.attendance !== null && item.attendance !== undefined ? item.attendance : (conducted > 0 ? (present / conducted * 100) : 0);
+
+        let statusColor = 'var(--accent-success)';
+        if (pct < 75) statusColor = 'var(--accent-danger)';
+        else if (pct < 80) statusColor = 'var(--accent-warning)';
+
+        let assessmentsHtml = '';
+        if (item.assessments.length > 0) {
+            item.assessments.forEach(t => {
+                assessmentsHtml += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 6px 10px; background: var(--bg-surface-solid); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                        <span style="font-weight: 700; color: var(--text-secondary);">${t.assessment}</span>
+                        <span style="font-weight: 800; color: var(--text-primary);">${t.status === 'ABSENT' ? 'ABSENT' : t.obtainedMarks} / ${t.maxMarks || 0}</span>
+                    </div>
+                `;
+            });
+        } else {
+            assessmentsHtml = `
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 6px 10px; background: var(--bg-surface-solid); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                    <span style="font-weight: 700; color: var(--text-secondary);">Regular Assessment</span>
+                    <span style="font-weight: 800; color: var(--text-primary);">0 / 0</span>
+                </div>
+            `;
+        }
+
+        html += `
+            <div class="card course-detail-card p-20" style="background: var(--bg-surface-elevated); border-radius: var(--radius-xl); border: 1px solid var(--border-subtle); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px;">
+                        <h3 style="margin: 0; font-size: 15px; font-weight: 800; color: var(--text-primary); line-height: 1.35;" title="${item.title}">${item.title}</h3>
+                        <span style="font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 12px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-secondary); flex-shrink: 0;">${catBadge}</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <span style="font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 10px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-secondary); font-family: var(--font-mono, monospace);">${item.code}</span>
+                        <span style="font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 10px; background: var(--accent-primary-subtle); border: 1px solid var(--border-subtle); color: var(--accent-primary); font-family: var(--font-mono, monospace);">${credits} Credit${credits === 1 ? '' : 's'}</span>
+                    </div>
+
+                    <div style="font-size: 12px; color: var(--text-secondary); font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>${item.faculty || 'Faculty Assigned'}</span>
+                    </div>
+
+                    <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 10px;">
+                        <span>Slot: ${slotStr}</span>
+                        <span>•</span>
+                        <span>Room: ${roomStr}</span>
+                    </div>
+
+                    <!-- Attendance Section -->
+                    <div style="border-top: 1px dashed var(--border-subtle); padding-top: 12px; margin-top: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Attendance</span>
+                            <span style="font-size: 14px; font-weight: 900; color: ${statusColor};">${pct.toFixed(1)}%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-secondary); font-weight: 700; margin-bottom: 8px;">
+                            <span>Conducted: ${conducted} hrs</span>
+                            <span>Attended: ${present} hrs</span>
+                        </div>
+                        <div class="attendance-progress-track-wrapper" style="height: 6px;">
+                            <div class="attendance-progress-fill" style="width: ${Math.min(100, Math.max(0, pct))}%; background-color: ${statusColor};"></div>
+                        </div>
+                    </div>
+
+                    <!-- Internal Marks Section -->
+                    <div style="border-top: 1px dashed var(--border-subtle); padding-top: 12px; margin-top: 12px;">
+                        <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 8px;">Internal Marks</span>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            ${assessmentsHtml}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -4255,9 +4906,13 @@ function renderDesktopPlannerGrid(year, month) {
         const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
         const isPlannerHoliday = plannerMatch && (plannerMatch.type === 'HOLIDAY' || plannerMatch.dayOrder === 'HOLIDAY' || plannerMatch.dayOrder === '-');
         const isHoliday = isWeekend || isPlannerHoliday;
+        const isMilestone = !isHoliday && plannerMatch && (plannerMatch.type === 'ENROLMENT' || plannerMatch.type === 'MILESTONE' || (plannerMatch.event && (plannerMatch.event.toLowerCase().includes('enrolment') || plannerMatch.event.toLowerCase().includes('milestone'))));
+        const isCommencement = !isHoliday && !isMilestone && plannerMatch && (plannerMatch.type === 'COMMENCEMENT' || (plannerMatch.event && plannerMatch.event.toLowerCase().includes('commencement')));
 
         let cellClasses = 'calendar-day-cell';
         if (isHoliday) cellClasses += ' holiday';
+        else if (isMilestone) cellClasses += ' milestone';
+        else if (isCommencement) cellClasses += ' commencement';
 
         let dayOrderBadge = '';
         let eventSnippetHtml = '';
@@ -4281,12 +4936,15 @@ function renderDesktopPlannerGrid(year, month) {
 
             if (plannerMatch.event && plannerMatch.event.trim() !== '') {
                 let badgeColor = 'var(--accent-primary)';
-                if (plannerMatch.type === 'HOLIDAY') badgeColor = '#ef4444';
+                if (isHoliday) badgeColor = 'inherit';
+                else if (isMilestone) badgeColor = 'inherit';
+                else if (isCommencement) badgeColor = 'inherit';
+                else if (plannerMatch.type === 'HOLIDAY') badgeColor = '#ef4444';
                 else if (plannerMatch.type === 'ENROLMENT') badgeColor = '#10b981';
                 else if (plannerMatch.type === 'COMMENCEMENT') badgeColor = '#a855f7';
 
                 eventSnippetHtml = `
-                    <div style="font-size: 11px; font-weight: 700; color: ${badgeColor}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; min-width: 0; width: 100%; margin-top: 6px; box-sizing: border-box;" title="${plannerMatch.event}">
+                    <div style="font-size: 11px; font-weight: 800; color: ${badgeColor}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; min-width: 0; width: 100%; margin-top: 6px; box-sizing: border-box;" title="${plannerMatch.event}">
                         • ${plannerMatch.event}
                     </div>
                 `;
@@ -4484,7 +5142,7 @@ const ALLOWED_DEV_NETIDS = [
 ];
 
 function isUserAuthorizedForDevConsole() {
-    return true;
+    return false;
 }
 
 /**
@@ -5548,10 +6206,12 @@ function triggerBackgroundDataRefresh() {
     }
     if (text) text.textContent = 'Syncing...';
 
+    const creds = getActiveCredentials();
     fetch(getApiEndpoint('/api/sync'), {
         method: 'POST',
         credentials: 'include',
-        headers: getApiHeaders()
+        headers: getApiHeaders(),
+        body: JSON.stringify(creds || {})
     })
         .then(res => {
             if (!res.ok) {
@@ -5584,8 +6244,8 @@ function triggerBackgroundDataRefresh() {
 // 1. Live minute clock & schedule ticker (Every 1 Minute / 60,000ms)
 setInterval(updateLiveClockAndSchedule, 60000);
 
-// 2. Automatic data refresh (Every 3 Minutes / 180,000ms)
-setInterval(triggerBackgroundDataRefresh, 180000);
+// 2. Automatic data refresh (Every 60 Minutes / 3600000ms)
+setInterval(triggerBackgroundDataRefresh, 3600000);
 
 // Initialize display
 updateLastSyncedDisplay();
@@ -5649,7 +6309,13 @@ function removeSavedAccount(id, event) {
     }
 }
 
-function loginWithSavedAccount(id) {
+async function loginWithSavedAccount(id) {
+    const success = await verifyBiometrics();
+    if (!success) {
+        createToast("Biometric authentication failed or canceled.", "error");
+        return;
+    }
+
     const accounts = getSavedAccounts();
     const acc = accounts.find(a => a.id === id);
     if (!acc) return;
@@ -5680,7 +6346,7 @@ function renderSavedAccounts() {
 
     if (accounts.length === 0) {
         if (section) section.classList.add('hidden');
-    } else {
+    } else if (accounts.length === 1) {
         if (section) section.classList.remove('hidden');
         if (grid) {
             grid.innerHTML = accounts.map(acc => `
@@ -5698,6 +6364,27 @@ function renderSavedAccounts() {
                     </div>
                 </div>
             `).join('');
+        }
+    } else {
+        // More than 1 saved account -> Render "View Saved Accounts" trigger button
+        if (section) section.classList.remove('hidden');
+        if (grid) {
+            grid.innerHTML = `
+                <button type="button" class="btn-view-saved-accounts" onclick="openAccountSwitcherModal()">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="saved-account-avatar" style="width: 28px; height: 28px; font-size: 13px;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <span style="font-weight: 700; font-size: 13px;">View Saved Accounts</span>
+                    </div>
+                    <span class="saved-count-pill">${accounts.length} Saved</span>
+                </button>
+            `;
         }
     }
 
@@ -6008,3 +6695,112 @@ function evaluateAndSendSmartNotifications() {
         }
     }
 }
+
+// ==========================================
+// BIOMETRIC LOCK SYSTEM
+// ==========================================
+
+async function registerWebAuthnKey() {
+    try {
+        const challenge = crypto.getRandomValues(new Uint8Array(32));
+        const userId = crypto.getRandomValues(new Uint8Array(16));
+        
+        const credential = await navigator.credentials.create({
+            publicKey: {
+                challenge,
+                rp: { name: 'SRM Academia+', id: window.location.hostname },
+                user: { id: userId, name: "biometric_lock", displayName: "App Lock" },
+                pubKeyCredParams: [
+                    { type: 'public-key', alg: -7 },
+                    { type: 'public-key', alg: -257 }
+                ],
+                authenticatorSelection: { 
+                    authenticatorAttachment: 'platform', 
+                    userVerification: 'required' 
+                },
+                timeout: 60000
+            }
+        });
+        
+        const credentialId = btoa(String.fromCharCode.apply(null, new Uint8Array(credential.rawId)));
+        localStorage.setItem('srm_biometric_key_id', credentialId);
+        return true;
+    } catch (e) {
+        console.warn('WebAuthn Registration Failed:', e);
+        return false;
+    }
+}
+
+async function verifyWebAuthnKey() {
+    const savedId = localStorage.getItem('srm_biometric_key_id');
+    if (!savedId) return false;
+    try {
+        const binaryString = atob(savedId);
+        const credentialId = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+            credentialId[i] = binaryString.charCodeAt(i);
+        }
+        const challenge = crypto.getRandomValues(new Uint8Array(32));
+        await navigator.credentials.get({
+            publicKey: {
+                challenge,
+                allowCredentials: [{ type: 'public-key', id: credentialId }],
+                userVerification: 'required',
+                timeout: 60000
+            }
+        });
+        return true;
+    } catch (e) {
+        console.warn('WebAuthn Verification Failed:', e);
+        return false;
+    }
+}
+
+function verifyAndroidBiometrics() {
+    return new Promise((resolve, reject) => {
+        const reqId = Date.now().toString();
+        window._biometricResolvers = window._biometricResolvers || {};
+        window._biometricResolvers[reqId] = { resolve, reject };
+        window.AndroidBiometricBridge.promptBiometric(reqId, "SRM Academia+ Login");
+    });
+}
+
+window.onBiometricSuccess = function(reqId) {
+    if (window._biometricResolvers && window._biometricResolvers[reqId]) {
+        window._biometricResolvers[reqId].resolve(true);
+        delete window._biometricResolvers[reqId];
+    }
+};
+
+window.onBiometricError = function(reqId, error) {
+    if (window._biometricResolvers && window._biometricResolvers[reqId]) {
+        window._biometricResolvers[reqId].resolve(false);
+        delete window._biometricResolvers[reqId];
+    }
+};
+
+async function verifyBiometrics() {
+    if (window.AndroidBiometricBridge && window.AndroidBiometricBridge.isBiometricAvailable()) {
+        return await verifyAndroidBiometrics();
+    } else {
+        if (window.PublicKeyCredential) {
+            const savedId = localStorage.getItem('srm_biometric_key_id');
+            if (!savedId) {
+                // First time using biometrics on Web, setup required
+                createToast("Setting up Biometric Security...", "info");
+                const registered = await registerWebAuthnKey();
+                if (!registered) return false;
+                
+                // Registration itself already verified the user via biometrics,
+                // so we can skip the immediate re-verification to prevent double prompting.
+                return true;
+            }
+            return await verifyWebAuthnKey();
+        } else {
+            // If biometrics literally aren't supported on this ancient device, allow pass through
+            // so they aren't permanently locked out of saved accounts.
+            console.warn("Biometrics not supported, falling back to insecure login.");
+            return true;
+        }
+    }
+}

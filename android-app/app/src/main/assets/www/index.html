@@ -7,7 +7,7 @@
     <!-- Preconnect & Preload Web Fonts for Zero-Reflow Hard Reloads -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Press+Start+2P&family=Share+Tech+Mono&family=Space+Grotesk:wght@500;600;700;800&family=VT323&display=swap">
 
     <!-- Instant Pre-Paint Theme Hydration & Zero-Flash Session Preloader -->
     <script>
@@ -44,14 +44,14 @@
     <link rel="preload" href="logo_light.png" as="image">
     <link rel="preload" href="logo_dark.png" as="image">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=6">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="app.js" defer></script>
+    <script src="app.js?v=6" defer></script>
 </head>
 
 <body class="light-theme">
@@ -120,6 +120,7 @@
                     <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Instant 1-Click Login</span>
                     <span id="saved-accounts-count-badge" style="font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 10px; background: var(--accent-primary-subtle); color: var(--accent-primary);">0/5 Saved</span>
                 </div>
+
                 <div id="saved-accounts-grid" class="saved-accounts-grid">
                     <!-- Rendered dynamically by app.js -->
                 </div>
@@ -277,6 +278,13 @@
                     </svg>
                     <span>Internal Marks</span>
                 </button>
+                <button class="nav-item" data-tab="courses">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    <span>Courses</span>
+                </button>
                 <button class="nav-item" data-tab="planner">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -286,7 +294,7 @@
                     </svg>
                     <span>Academic Calendar</span>
                 </button>
-                <button class="nav-item" data-tab="developer">
+                <button class="nav-item hidden" data-tab="developer" style="display: none !important;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path
                             d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z">
@@ -299,6 +307,10 @@
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                     </svg>
                     <span>Support App</span>
+                    <span class="support-sparkle-container">
+                        <span class="sparkle-star sparkle-1">✨</span>
+                        <span class="sparkle-star sparkle-2">✦</span>
+                    </span>
                 </button>
             </nav>
 
@@ -427,34 +439,34 @@
                             <div class="daily-focus-col" id="hero-internals-col">
                                 <div class="daily-focus-col-label">
                                     <span>TOTAL INTERNAL MARKS</span>
-                                    <span id="hero-internals-badge" class="hero-col-badge">NO DATA</span>
+                                    <span id="hero-internals-badge" class="hero-col-badge">0% AVG</span>
                                 </div>
-                                <h3 id="hero-internals-title" class="daily-focus-col-val" style="font-size: 20px; font-weight: 900; color: var(--text-primary); margin: 6px 0 8px 0;">-- / --</h3>
+                                <h3 id="hero-internals-title" class="daily-focus-col-val" style="font-size: 20px; font-weight: 900; color: var(--text-primary); margin: 6px 0 8px 0;">0 / 0</h3>
                                 <div style="border-top: 1px dashed var(--border-subtle); margin: 8px 0;"></div>
-                                <span id="hero-internals-sub" class="daily-focus-col-sub" style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">No internal evaluation records recorded</span>
+                                <span id="hero-internals-sub" class="daily-focus-col-sub" style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">0% avg across 0 courses (0 tests)</span>
                             </div>
 
                             <!-- Col 2: Next Upcoming Class -->
                             <div class="daily-focus-col" id="hero-next-class-col">
                                 <div class="daily-focus-col-label">
                                     <span>NEXT CLASS SCHEDULE</span>
-                                    <span id="hero-next-countdown" class="hero-col-badge">--</span>
+                                    <span id="hero-next-countdown" class="hero-col-badge">0</span>
                                 </div>
-                                <h3 id="hero-next-title" class="daily-focus-col-val" style="font-size: 16px; font-weight: 800; color: var(--text-primary); margin: 6px 0 8px 0; line-height: 1.3;">--</h3>
+                                <h3 id="hero-next-title" class="daily-focus-col-val" style="font-size: 16px; font-weight: 800; color: var(--text-primary); margin: 6px 0 8px 0; line-height: 1.3;">0</h3>
                                 <div id="hero-next-time-room-row" style="display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">
                                     <span style="display: inline-flex; align-items: center; gap: 5px;">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                        <span id="hero-next-timing-text">--:--</span>
+                                        <span id="hero-next-timing-text">00:00</span>
                                     </span>
                                     <span>•</span>
                                     <span style="display: inline-flex; align-items: center; gap: 5px;">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                        <span id="hero-next-room-text">--</span>
+                                        <span id="hero-next-room-text">0</span>
                                     </span>
                                 </div>
                                 <div style="border-top: 1px dashed var(--border-subtle); margin: 8px 0;"></div>
                                 <div id="hero-next-attn-margin" style="font-size: 12px; font-weight: 800; color: var(--text-primary); margin-top: 6px;">
-                                    Current: --% &nbsp;|&nbsp; Required: --
+                                    Current: 0% &nbsp;|&nbsp; Margin: 0
                                 </div>
                             </div>
 
@@ -462,21 +474,21 @@
                             <div class="daily-focus-col" id="hero-gpa-col" style="position: relative;">
                                 <div class="daily-focus-col-label">
                                     <span>ESTIMATED GPA</span>
-                                    <span id="hero-gpa-badge" class="hero-col-badge">ESTIMATED</span>
+                                    <span id="hero-gpa-badge" class="hero-col-badge">0.0 GRADE</span>
                                 </div>
                                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 4px 0 6px 0;">
-                                    <h3 id="hero-gpa-val" class="daily-focus-col-val" style="font-size: 22px; font-weight: 900; color: var(--text-primary); margin: 0;">--</h3>
+                                    <h3 id="hero-gpa-val" class="daily-focus-col-val" style="font-size: 22px; font-weight: 900; color: var(--text-primary); margin: 0;">0.00</h3>
                                     <!-- High-fidelity Mini Graphic Gauge SVG -->
                                     <div class="gpa-graphic-wrapper" style="width: 44px; height: 44px; position: relative; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
                                         <svg class="gpa-gauge-svg" width="44" height="44" viewBox="0 0 42 42" style="transform: rotate(-90deg); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
                                             <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="var(--border-subtle)" stroke-width="4"></circle>
                                             <circle id="gpa-gauge-arc" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="var(--accent-primary)" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 100" stroke-dashoffset="0" style="transition: stroke-dasharray 0.8s ease;"></circle>
                                         </svg>
-                                        <span id="gpa-gauge-text" style="position: absolute; font-size: 10px; font-weight: 800; color: var(--text-primary); text-align: center;">--</span>
+                                        <span id="gpa-gauge-text" style="position: absolute; font-size: 10px; font-weight: 800; color: var(--text-primary); text-align: center;">0</span>
                                     </div>
                                 </div>
                                 <div style="border-top: 1px dashed var(--border-subtle); margin: 8px 0;"></div>
-                                <span id="hero-gpa-sub" class="daily-focus-col-sub" style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">Sync internal marks to calculate GPA</span>
+                                <span id="hero-gpa-sub" class="daily-focus-col-sub" style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">0 evaluated courses, 0 credits</span>
                             </div>
                         </div>
                     </div>
@@ -490,8 +502,7 @@
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
                                     </button>
                                     <div style="display: flex; flex-direction: column; align-items: center;">
-                                        <h2 id="overview-today-dayorder-title" class="timetable-dayorder-heading" style="margin: 0; min-width: 120px; text-align: center; font-size: 22px; font-weight: 800; color: var(--accent-primary);">--</h2>
-                                        <span id="overview-today-dayorder-sub" style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px;">--</span>
+                                        <h2 id="overview-today-dayorder-title" class="timetable-dayorder-heading" style="margin: 0; min-width: 120px; text-align: center; font-size: 22px; font-weight: 800; color: var(--accent-primary);">DAY 1</h2>
                                     </div>
                                     <button id="overview-next-day-btn" class="btn-icon" style="border: 1px solid var(--border-subtle); border-radius: 50%; background: var(--bg-surface-solid); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); transition: var(--transition-smooth);" title="Next Day">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -525,7 +536,7 @@
                             <div class="trend-spark-box">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Attendance Trend</span>
-                                    <span id="trend-val-overall-pct" style="font-size: 14px; font-weight: 900; color: var(--accent-primary);">--%</span>
+                                    <span id="trend-val-overall-pct" style="font-size: 14px; font-weight: 900; color: var(--accent-primary);">0%</span>
                                 </div>
                                 <div class="sparkline-canvas-wrapper">
                                     <canvas id="sparkline-overall-attn"></canvas>
@@ -537,7 +548,7 @@
                             <div class="trend-spark-box" id="trend-box-internal-marks">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Internal Marks Trend</span>
-                                    <span id="trend-val-internal-marks" style="font-size: 14px; font-weight: 900; color: var(--accent-primary);">--</span>
+                                    <span id="trend-val-internal-marks" style="font-size: 14px; font-weight: 900; color: var(--accent-primary);">0</span>
                                 </div>
                                 <div class="sparkline-canvas-wrapper" id="sparkline-marks-wrapper">
                                     <canvas id="sparkline-internal-marks"></canvas>
@@ -561,7 +572,7 @@
                                 <span style="width: 6px; height: 6px; border-radius: 50%; background: #ffffff; display: inline-block;"></span>
                                 PREDICTION MODE ACTIVE
                             </span>
-                            <span id="prediction-summary-text" style="font-size: 13px; color: var(--text-primary); font-weight: 700;">--</span>
+                            <span id="prediction-summary-text" style="font-size: 13px; color: var(--text-primary); font-weight: 700;">0</span>
                         </div>
                         <button id="btn-clear-prediction" style="padding: 8px 18px; font-size: 12px; font-weight: 800; border-radius: 20px; border: 1px solid var(--border-subtle); background: var(--bg-surface-solid); color: var(--text-primary); cursor: pointer; transition: var(--transition-smooth); box-shadow: var(--shadow-premium);">
                             Reset / Turn Off
@@ -630,6 +641,44 @@
                               <!-- VIEW 4: INTERNAL MARKS -->
                 <section id="view-academics" class="view-pane">
                     <div class="marks-grid" id="marks-subject-container">
+                        <div class="skeleton-block placeholder-card-height"></div>
+                    </div>
+                </section>
+
+                <!-- VIEW 4.5: ENROLLED COURSES -->
+                <section id="view-courses" class="view-pane">
+                    <div class="courses-header-card card p-20 mb-20" style="background: var(--bg-surface-elevated); border-radius: var(--radius-xl); border: 1px solid var(--border-subtle);">
+                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+                            <div>
+                                <h2 style="margin: 0 0 4px 0; font-size: 20px; font-weight: 800; color: var(--text-primary);">Enrolled Courses</h2>
+                                <p style="margin: 0; font-size: 13px; color: var(--text-secondary);">Comprehensive details of all academic courses, faculty, credits, and current standing</p>
+                            </div>
+                            <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--accent-primary-subtle); display: flex; align-items: center; justify-content: center; color: var(--accent-primary); flex-shrink: 0;">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                            </div>
+                        </div>
+
+                        <div class="courses-summary-grid mt-16" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; border-top: 1px dashed var(--border-subtle); padding-top: 16px;">
+                            <div class="courses-sum-box" style="padding: 12px; background: var(--bg-surface-solid); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                                <span style="font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Total Courses</span>
+                                <div id="courses-sum-count" style="font-size: 20px; font-weight: 900; color: var(--text-primary); margin-top: 2px;">0</div>
+                            </div>
+                            <div class="courses-sum-box" style="padding: 12px; background: var(--bg-surface-solid); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                                <span style="font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Total Credits</span>
+                                <div id="courses-sum-credits" style="font-size: 20px; font-weight: 900; color: var(--accent-primary); margin-top: 2px;">0</div>
+                            </div>
+                            <div class="courses-sum-box" style="padding: 12px; background: var(--bg-surface-solid); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                                <span style="font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Theory / Lab</span>
+                                <div id="courses-sum-split" style="font-size: 16px; font-weight: 900; color: var(--text-primary); margin-top: 4px;">0 / 0</div>
+                            </div>
+                            <div class="courses-sum-box" style="padding: 12px; background: var(--bg-surface-solid); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                                <span style="font-size: 10px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Overall Attendance</span>
+                                <div id="courses-sum-attn" style="font-size: 20px; font-weight: 900; color: var(--accent-primary); margin-top: 2px;">0%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="courses-list-container" class="courses-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px;">
                         <div class="skeleton-block placeholder-card-height"></div>
                     </div>
                 </section>
@@ -715,8 +764,8 @@
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--text-muted);"><polyline points="9 18 15 12 9 6"></polyline></svg>
                             </div>
 
-                            <!-- Developer Console Option -->
-                            <div class="more-action-card card clickable-card" id="more-dev-console-card" data-more-action="developer" style="cursor: pointer; padding: 16px 18px; display: flex; align-items: center; gap: 14px; border-radius: var(--radius-lg); transition: all 0.2s ease;">
+                            <!-- Developer Console Option (Hidden) -->
+                            <div class="more-action-card card clickable-card hidden" id="more-dev-console-card" data-more-action="developer" style="display: none !important; cursor: pointer; padding: 16px 18px; align-items: center; gap: 14px; border-radius: var(--radius-lg); transition: all 0.2s ease;">
                                 <div style="width: 40px; height: 40px; border-radius: 12px; background: rgba(168, 85, 247, 0.12); color: #a855f7; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                                 </div>
@@ -771,35 +820,59 @@
 
                 <!-- VIEW 7: SUPPORT DEVELOPMENT PAGE -->
                 <section id="view-support" class="view-pane">
-                    <div class="card support-card">
-                        <div class="support-header-row">
-                            <div class="support-icon-badge">
+                    <div class="support-card" style="max-width: 860px; margin: 0 auto; padding: 32px; border-radius: var(--radius-xl);">
+                        <div class="support-header-row" style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 20px;">
+                            <div class="support-icon-badge" style="width: 48px; height: 48px; border-radius: 14px; background: #ef4444; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                                 <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                             </div>
                             <div class="support-title-group">
-                                <h2 class="support-title">Support SRM Academia+</h2>
-                                <span class="support-subtitle">Independent Student Development</span>
+                                <h2 class="support-title" style="font-size: 22px; font-weight: 800; margin: 0; color: var(--text-primary);">Support SRM Academia+</h2>
+                                <span class="support-subtitle" style="font-size: 12px; color: var(--text-muted); font-weight: 700;">Independent Student Development</span>
                             </div>
                         </div>
 
-                        <div class="support-text-block">
-                            <p class="support-p lead">
-                                SRM Academia+ is built independently, by a student, for students.
-                            </p>
-                            <p class="support-p">
-                                The app will always have a free version. Donations simply help cover server costs, domain fees, and the time spent building new features, fixing bugs, and keeping everything running smoothly.
-                            </p>
-                            <p class="support-p">
-                                If the app has saved you time or made college a little less frustrating, and you'd like to support its development, I'd genuinely appreciate it. No pressure.
-                            </p>
-                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; align-items: start;">
+                            <!-- Left Side: Message & UPI IDs -->
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                <div class="support-text-block" style="background: var(--bg-surface-elevated); padding: 18px; border-radius: 14px; border: 1px solid var(--border-subtle);">
+                                    <p class="support-p lead" style="font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 0 0 8px 0;">
+                                        SRM Academia+ is built independently, by a student, for students.
+                                    </p>
+                                    <p class="support-p" style="font-size: 13px; color: var(--text-secondary); margin: 0 0 8px 0; line-height: 1.55;">
+                                        The app will always have a free version. Contributions help cover server costs, domain fees, and ongoing feature development.
+                                    </p>
+                                    <p class="support-p" style="font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.55;">
+                                        If the app has saved you time or made college life easier, any contribution is deeply appreciated! No pressure.
+                                    </p>
+                                </div>
 
-                        <div class="support-footer-box">
-                            <div class="support-footer-label">Support via UPI / Direct Contribution</div>
-                            <button class="support-donate-btn" id="btn-support-donate-upi">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                                <span>Donate &amp; Support Development</span>
-                            </button>
+                                <!-- Primary UPI Box -->
+                                <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+                                    <div>
+                                        <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Primary UPI ID</span>
+                                        <span id="page-upi-id-1" style="font-family: monospace; font-size: 14px; font-weight: 800; color: var(--text-primary);">8017622902@hdfc</span>
+                                    </div>
+                                    <button id="copy-page-upi-btn-1" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer;">Copy UPI</button>
+                                </div>
+
+                                <!-- Secondary UPI Box -->
+                                <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+                                    <div>
+                                        <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Secondary UPI ID</span>
+                                        <span id="page-upi-id-2" style="font-family: monospace; font-size: 12px; font-weight: 800; color: var(--text-primary); word-break: break-all;">satadrubhattacharya940-1@okhdfcbank</span>
+                                    </div>
+                                    <button id="copy-page-upi-btn-2" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer; flex-shrink: 0; margin-left: 8px;">Copy UPI</button>
+                                </div>
+                            </div>
+
+                            <!-- Right Side: QR Code -->
+                            <div style="text-align: center; padding: 22px; background: var(--bg-surface-elevated); border-radius: 16px; border: 1px solid var(--border-subtle); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                <span style="font-size: 12px; font-weight: 800; color: var(--text-primary); display: block; margin-bottom: 12px;">Scan QR Code using GPay, PhonePe, or Paytm</span>
+                                <div style="width: 210px; height: 210px; background: #ffffff; padding: 10px; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(0,0,0,0.12);">
+                                    <img src="qr.png" alt="Donate QR Code" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px;" />
+                                </div>
+                                <span style="font-size: 11px; color: var(--text-muted); font-weight: 700; margin-top: 12px;">Direct UPI Transfer</span>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -826,32 +899,30 @@
                 </button>
             </div>
 
-            <!-- Presets -->
-            <div style="display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap;">
-                <button class="support-preset-chip active" data-amount="50" style="flex: 1; padding: 8px; border-radius: 8px; border: 1.5px solid var(--accent-primary); background: var(--bg-surface-elevated); color: var(--text-primary); font-weight: 800; cursor: pointer; text-align: center;">₹50</button>
-                <button class="support-preset-chip" data-amount="100" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); color: var(--text-primary); font-weight: 800; cursor: pointer; text-align: center;">₹100</button>
-                <button class="support-preset-chip" data-amount="250" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); color: var(--text-primary); font-weight: 800; cursor: pointer; text-align: center;">₹250</button>
-                <button class="support-preset-chip" data-amount="500" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface-elevated); color: var(--text-primary); font-weight: 800; cursor: pointer; text-align: center;">₹500</button>
+            <!-- Primary UPI ID Box 1 -->
+            <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Primary UPI ID</span>
+                    <span id="support-upi-id" style="font-family: monospace; font-size: 14px; font-weight: 800; color: var(--text-primary);">8017622902@hdfc</span>
+                </div>
+                <button id="copy-upi-btn" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer;">Copy UPI</button>
             </div>
 
-            <!-- UPI ID Box -->
+            <!-- Secondary UPI ID Box 2 -->
             <div style="background: var(--bg-surface-elevated); border: 1px dashed var(--border-subtle); border-radius: 12px; padding: 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                    <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">UPI ID Placeholder</span>
-                    <span id="support-upi-id" style="font-family: monospace; font-size: 14px; font-weight: 800; color: var(--text-primary);">srm.academia.dev@upi</span>
+                    <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 2px;">Secondary UPI ID</span>
+                    <span id="support-upi-id-2" style="font-family: monospace; font-size: 12px; font-weight: 800; color: var(--text-primary); word-break: break-all;">satadrubhattacharya940-1@okhdfcbank</span>
                 </div>
-                <button id="copy-upi-btn" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer;">Copy UPI ID</button>
+                <button id="copy-upi-btn-2" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer; flex-shrink: 0; margin-left: 8px;">Copy UPI</button>
             </div>
 
-            <!-- QR Code Placeholder -->
+            <!-- QR Code Section -->
             <div style="text-align: center; padding: 16px; background: var(--bg-surface-elevated); border-radius: 12px; border: 1px solid var(--border-subtle);">
                 <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 10px;">Scan QR Code using GPay, PhonePe, or Paytm</span>
-                <div style="width: 160px; height: 160px; margin: 0 auto; background: #ffffff; padding: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                    <svg width="140" height="140" viewBox="0 0 100 100" fill="#000">
-                        <path d="M0 0h35v35H0zM5 5v25h25V5zm5 5h15v15H10zM65 0h35v35H65zM70 5v25h25V5zm5 5h15v15H75zM0 65h35v35H0zM5 70v25h25V70zm5 5h15v15H10zM40 5h15v15H40zM40 25h15v10H40zM25 40h15v15H25zM45 40h20v15H45zM70 40h25v10H70zM0 40h15v15H0zM80 55h15v20H80zM40 60h10v20H40zM55 65h15v15H55zM75 80h25v20H75zM40 85h25v15H40z" />
-                    </svg>
+                <div style="width: 200px; height: 200px; margin: 0 auto; background: #ffffff; padding: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <img src="qr.png" alt="Donate QR Code" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px;" />
                 </div>
-                <span style="font-size: 10px; color: var(--text-muted); margin-top: 8px; display: block;">Placeholder QR • Will be updated</span>
             </div>
         </div>
     </div>
@@ -1110,6 +1181,10 @@
 
     <!-- MOBILE FLOATING VERTICAL MORE MENU -->
     <div id="mobile-more-menu" class="mobile-more-menu hidden pop-closing" aria-hidden="true">
+        <button class="more-menu-item" data-more-action="courses">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span>Courses</span>
+        </button>
         <button class="more-menu-item" data-more-action="planner">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path></svg>
             <span>Planner</span>
@@ -1134,8 +1209,8 @@
 
             <div style="text-align: center; margin-bottom: 20px;">
                 <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-primary); background: var(--accent-primary-subtle); padding: 4px 12px; border-radius: 20px; display: inline-block;">Welcome to SRM Academia+ Themes</span>
-                <h2 style="font-size: 22px; font-weight: 900; margin: 10px 0 6px 0; color: var(--text-primary);">Discover Our Flagship Themes</h2>
-                <p style="font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.5;">Personalize your SRM Academia+ experience with 31 handcrafted theme experiences. Check out our two signature flagship designs below:</p>
+                <h2 style="font-size: 22px; font-weight: 900; margin: 10px 0 6px 0; color: var(--text-primary);">Discover Our Themes</h2>
+                <p style="font-size: 13px; color: var(--text-secondary); margin: 0; line-height: 1.5;">Personalize your SRM Academia+ experience with neutral corporate &amp; flagship designs. Switch anytime from the top bar.</p>
             </div>
 
             <div class="theme-welcome-grid">
@@ -1146,7 +1221,7 @@
                             <span class="promo-flagship-tag">FLAGSHIP #1</span>
                         </div>
                         <h3 class="promo-title">Neo-Brutalist</h3>
-                        <p class="promo-desc">Bold neon yellow accents, high-contrast black borders, pop-art retro modern vibe.</p>
+                        <p class="promo-desc">Bold neon yellow accents, high-contrast black borders, pop-art modern vibe.</p>
                     </div>
                     <button id="promo-select-neobrutal" class="promo-btn">
                         Apply Neo-Brutalist
@@ -1160,7 +1235,7 @@
                             <span class="promo-flagship-tag">FLAGSHIP #2</span>
                         </div>
                         <h3 class="promo-title">Retro Compute</h3>
-                        <p class="promo-desc">90s NeXTSTEP & SGI workstation aesthetic, CRT green highlights, classic 3D bevels.</p>
+                        <p class="promo-desc">90s NeXTSTEP &amp; SGI workstation aesthetic, classic 3D bevels.</p>
                     </div>
                     <button id="promo-select-retro" class="promo-btn">
                         Apply Retro Compute
@@ -1168,12 +1243,7 @@
                 </div>
             </div>
 
-            <div style="background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 12px 16px; margin-bottom: 16px; text-align: left;">
-                <span style="font-size: 11px; font-weight: 800; color: var(--text-primary); display: block; margin-bottom: 3px;">Plus 29 More Handcrafted Themes:</span>
-                <span style="font-size: 11px; color: var(--text-muted); line-height: 1.5;">Tokyo Night, Cyberpunk Neon, Synthwave 80s, Dracula, Pitch Black, Monokai Pro, Catppuccin Mocha, Nordic Frost, Financial Emerald, Obsidian Royal, Sunset Horizon, Matrix Code, Crimson Velvet, Clean Light & more. Switch anytime from the top bar.</span>
-            </div>
-
-            <button id="promo-keep-default-btn" style="width: 100%; padding: 12px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-primary); font-weight: 800; border-radius: var(--radius-md); cursor: pointer; font-size: 13px;">
+            <button id="promo-keep-default-btn" style="width: 100%; padding: 12px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-primary); font-weight: 800; border-radius: var(--radius-md); cursor: pointer; font-size: 13px; margin-top: 16px;">
                 Continue to Dashboard
             </button>
         </div>
@@ -1182,6 +1252,22 @@
     <!-- GLOBAL MODAL & POPUP BACKDROP OVERLAY -->
     <div id="global-backdrop-overlay" class="global-backdrop-overlay hidden"></div>
 
+    <!-- SUBTLE FLOATING PWA INSTALL PILL BANNER -->
+    <div id="pwa-install-banner" class="pwa-install-banner hidden">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 28px; height: 28px; border-radius: 8px; background: var(--accent-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #fff;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </div>
+            <span style="font-size: 12px; font-weight: 700; color: var(--text-primary);">Install Web App</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <button id="pwa-banner-install-btn" class="btn-primary" style="padding: 5px 12px; font-size: 11px; font-weight: 800; border-radius: 6px; cursor: pointer;">Install</button>
+            <button id="pwa-banner-dismiss-btn" class="btn-icon" style="min-width: 24px; width: 24px; height: 24px; border-radius: 50%; background: transparent; border: none; color: var(--text-muted); cursor: pointer;" title="Dismiss">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+    </div>
 </body>
-
+</html>
+</body>
 </html>

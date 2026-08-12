@@ -146,6 +146,17 @@ const state = {
     selectedOverviewDay: null // Cycles day order on Overview focus grid
 };
 
+/**
+ * Helper to safely extract a flat array from an Array or an Object (like unifiedTimetable)
+ * or return [] if null/undefined.
+ */
+function getSafeArray(val) {
+    if (!val) return [];
+    if (Array.isArray(val)) return val;
+    if (typeof val === 'object') return Object.values(val).flat().filter(Boolean);
+    return [];
+}
+
 // Period timings index mapper (24-hour format for calculation, formatted for display)
 const periodTimings = [
     { start: "08:00", end: "08:50", display: "08:00 - 08:50" }, // 1
@@ -165,6 +176,7 @@ const periodTimings = [
 // Array of 32 Handcrafted Themes with color swatches in decreasing order of prominence:
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
+    { id: 'glassmorphism', name: 'Refractive Glassmorphism', tag: 'Translucent Glass & Ambient Depth', colors: ['#05070B', 'rgba(255,255,255,0.075)', '#8FA8FF', '#7DE3FF'] },
     { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
     { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
     { id: 'clean-light', name: 'Clean Light', tag: 'Polished Minimal Slate', colors: ['#F8FAFC', '#FFFFFF', '#0F172A', '#2563EB'] },
@@ -3177,7 +3189,7 @@ function renderAttendancePane(customDataset) {
 
     if (!dataset || dataset.length === 0) {
         const timetableCourses = new Set();
-        [...(state.personalTimetable || []), ...(state.unifiedTimetable || [])].forEach(item => {
+        [...getSafeArray(state.personalTimetable), ...getSafeArray(state.unifiedTimetable)].forEach(item => {
             const title = item.subjectTitle || item.course;
             const code = item.courseCode || item.code;
             if (title || code) timetableCourses.add(JSON.stringify({ course: title || code, code: code || title, category: 'Theory', faculty: '0' }));
@@ -4452,7 +4464,7 @@ function renderAcademicsPane() {
     let marksDataset = state.marks || [];
     if (!marksDataset || marksDataset.length === 0) {
         const timetableCourses = new Set();
-        [...(state.attendance || []), ...(state.personalTimetable || []), ...(state.unifiedTimetable || [])].forEach(item => {
+        [...getSafeArray(state.attendance), ...getSafeArray(state.personalTimetable), ...getSafeArray(state.unifiedTimetable)].forEach(item => {
             const code = item.courseCode || item.code;
             const title = item.course || item.subjectTitle;
             if (code || title) timetableCourses.add(code || title);
@@ -4588,7 +4600,7 @@ function renderCoursesPane() {
     });
 
     // 3. From Timetables
-    const allTTItems = [...(state.personalTimetable || []), ...(state.unifiedTimetable || [])];
+    const allTTItems = [...getSafeArray(state.personalTimetable), ...getSafeArray(state.unifiedTimetable)];
     allTTItems.forEach(item => {
         const code = item.courseCode || item.code || '';
         const title = item.subjectTitle || item.course || '';
