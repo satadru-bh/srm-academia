@@ -507,6 +507,18 @@ function closeActivePopupOrModal() {
 }
 
 /**
+ * Helper to close all open dropdown menus (Theme, User Profile, Mobile More)
+ */
+function closeAllDropdowns(exceptMenu = null) {
+    const dropdowns = document.querySelectorAll('.theme-dropdown-menu, .user-dropdown-menu, #header-user-dropdown-menu, .mobile-more-menu, #mobile-more-menu, .dropdown-menu');
+    dropdowns.forEach(menu => {
+        if (menu && menu !== exceptMenu && (menu.classList.contains('menu-active') || !menu.classList.contains('hidden'))) {
+            closeSmoothMenu(menu);
+        }
+    });
+}
+
+/**
  * Interactive Theme Selector Handler with 12 Creative Themes & Prominence Previews
  */
 function setupThemeSelector() {
@@ -519,12 +531,18 @@ function setupThemeSelector() {
     const backdrop = document.getElementById('global-backdrop-overlay');
     if (backdrop && !backdrop.dataset.bound) {
         backdrop.dataset.bound = 'true';
-        backdrop.addEventListener('click', closeActivePopupOrModal);
+        backdrop.addEventListener('click', () => {
+            closeActivePopupOrModal();
+            closeAllDropdowns();
+        });
     }
 
     // ESC key closes any open popup/modal
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeActivePopupOrModal();
+        if (e.key === 'Escape') {
+            closeActivePopupOrModal();
+            closeAllDropdowns();
+        }
     });
 
     const savedThemeId = localStorage.getItem('srm_theme') || 'pitch-black';
@@ -535,11 +553,8 @@ function setupThemeSelector() {
         if (triggerBtn && dropdownMenu) {
             triggerBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                dropdownMenus.forEach(m => {
-                    if (m !== dropdownMenu) closeSmoothMenu(m);
-                });
-                
                 if (dropdownMenu.classList.contains('hidden') || !dropdownMenu.classList.contains('menu-active')) {
+                    closeAllDropdowns(dropdownMenu);
                     openSmoothMenu(dropdownMenu);
                 } else {
                     closeSmoothMenu(dropdownMenu);
@@ -549,14 +564,7 @@ function setupThemeSelector() {
     });
 
     document.addEventListener('click', (e) => {
-        dropdownMenus.forEach(dropdownMenu => {
-            if (dropdownMenu.classList.contains('menu-active')) {
-                const container = dropdownMenu.closest('.theme-selector-container');
-                if (container && !container.contains(e.target)) {
-                    closeSmoothMenu(dropdownMenu);
-                }
-            }
-        });
+        closeAllDropdowns();
     });
 
     renderThemeOptions();
@@ -1063,18 +1071,10 @@ function setupCustomClassModal() {
         avatarBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             if (dropdownMenu.classList.contains('hidden') || !dropdownMenu.classList.contains('menu-active')) {
+                closeAllDropdowns(dropdownMenu);
                 openSmoothMenu(dropdownMenu);
             } else {
                 closeSmoothMenu(dropdownMenu);
-            }
-        });
-
-        document.addEventListener('click', (e) => {
-            if (dropdownMenu.classList.contains('menu-active')) {
-                const container = dropdownMenu.closest('.header-user-menu-container');
-                if (container && !container.contains(e.target)) {
-                    closeSmoothMenu(dropdownMenu);
-                }
             }
         });
     }
