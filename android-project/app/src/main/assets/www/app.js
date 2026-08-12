@@ -4316,46 +4316,56 @@ async function downloadTimetableImage() {
                 
                 if (origCard && clonedCard) {
                     if (isGlassmorphism) {
-                        clonedCard.style.backgroundColor = '#0b0f19';
+                        clonedCard.style.backgroundColor = '#0d1222';
                         clonedCard.style.color = '#ffffff';
-                        clonedCard.style.borderRadius = '16px';
-                        clonedCard.style.border = '1px solid rgba(255, 255, 255, 0.15)';
-                        clonedCard.style.backgroundImage = 'linear-gradient(135deg, #0e1424 0%, #070a12 100%)';
+                        clonedCard.style.borderRadius = '20px';
+                        clonedCard.style.border = '1px solid rgba(255, 255, 255, 0.18)';
+                        clonedCard.style.backgroundImage = 'linear-gradient(135deg, #0d1222 0%, #060912 100%)';
+                        clonedCard.style.boxShadow = '0 25px 60px rgba(0, 0, 0, 0.80)';
 
                         const clonedWatermark = clonedCard.querySelector('div[style*="font-size: 11px"]');
                         if (clonedWatermark) {
-                            clonedWatermark.style.backgroundColor = '#0b0f19';
+                            clonedWatermark.style.backgroundColor = 'transparent';
                             clonedWatermark.style.color = '#ffffff';
-                            clonedWatermark.style.borderTop = '1px dashed rgba(255, 255, 255, 0.2)';
-                            const wmSpan = clonedWatermark.querySelector('span');
-                            if (wmSpan) wmSpan.style.color = '#ffffff';
+                            clonedWatermark.style.borderTop = '1px dashed rgba(255, 255, 255, 0.20)';
+                            clonedWatermark.querySelectorAll('*').forEach(child => child.style.color = '#ffffff');
+                            const logoSpan = clonedWatermark.querySelector('span[style*="color"]');
+                            if (logoSpan) logoSpan.style.color = '#8FA8FF';
                         }
 
                         clonedCard.querySelectorAll('.matrix-th-slot, .matrix-th-time, .matrix-td-day, .grid-header-cell').forEach(cell => {
-                            cell.style.backgroundColor = '#141b2d';
+                            cell.style.backgroundColor = '#151b2e';
+                            cell.style.backgroundImage = 'linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 100%)';
                             cell.style.color = '#ffffff';
-                            cell.style.border = '1px solid rgba(255, 255, 255, 0.14)';
-                            cell.style.fontWeight = '700';
+                            cell.style.border = '1px solid rgba(255, 255, 255, 0.16)';
+                            cell.style.borderRadius = '10px';
+                            cell.style.fontWeight = '800';
+                            cell.querySelectorAll('*').forEach(child => child.style.color = '#ffffff');
                         });
 
                         clonedCard.querySelectorAll('.matrix-td-cell.filled.theory, .grid-class-cell.filled.theory').forEach(cell => {
-                            cell.style.backgroundColor = '#241b44';
-                            cell.style.color = '#e9e1ff';
-                            cell.style.border = '1.5px solid #6b46c1';
-                            cell.querySelectorAll('*').forEach(child => child.style.color = '#e9e1ff');
+                            cell.style.backgroundColor = '#241c46';
+                            cell.style.backgroundImage = 'linear-gradient(135deg, rgba(164, 140, 255, 0.30), rgba(164, 140, 255, 0.15))';
+                            cell.style.color = '#f3eeff';
+                            cell.style.border = '1.5px solid rgba(200, 185, 255, 0.40)';
+                            cell.style.borderRadius = '10px';
+                            cell.querySelectorAll('*').forEach(child => child.style.color = '#f3eeff');
                         });
 
                         clonedCard.querySelectorAll('.matrix-td-cell.filled.lab, .grid-class-cell.filled.lab').forEach(cell => {
-                            cell.style.backgroundColor = '#0b2e46';
-                            cell.style.color = '#ddf6ff';
-                            cell.style.border = '1.5px solid #0284c7';
-                            cell.querySelectorAll('*').forEach(child => child.style.color = '#ddf6ff');
+                            cell.style.backgroundColor = '#0c2b42';
+                            cell.style.backgroundImage = 'linear-gradient(135deg, rgba(74, 190, 255, 0.30), rgba(74, 190, 255, 0.15))';
+                            cell.style.color = '#e6f7ff';
+                            cell.style.border = '1.5px solid rgba(135, 220, 255, 0.40)';
+                            cell.style.borderRadius = '10px';
+                            cell.querySelectorAll('*').forEach(child => child.style.color = '#e6f7ff');
                         });
 
                         clonedCard.querySelectorAll('.matrix-td-cell.filled.custom-theory, .grid-class-cell.filled.custom-theory').forEach(cell => {
                             cell.style.backgroundColor = '#3d1624';
                             cell.style.color = '#ffe0e6';
                             cell.style.border = '1.5px solid #e11d48';
+                            cell.style.borderRadius = '10px';
                             cell.querySelectorAll('*').forEach(child => child.style.color = '#ffe0e6');
                         });
 
@@ -4363,12 +4373,14 @@ async function downloadTimetableImage() {
                             cell.style.backgroundColor = '#0b322a';
                             cell.style.color = '#e0fff6';
                             cell.style.border = '1.5px solid #0d9488';
+                            cell.style.borderRadius = '10px';
                             cell.querySelectorAll('*').forEach(child => child.style.color = '#e0fff6');
                         });
 
                         clonedCard.querySelectorAll('.matrix-td-cell.empty, .grid-class-cell.free').forEach(cell => {
-                            cell.style.backgroundColor = '#0e1320';
-                            cell.style.border = '1px solid rgba(255, 255, 255, 0.08)';
+                            cell.style.backgroundColor = '#080c18';
+                            cell.style.border = '1px solid rgba(255, 255, 255, 0.07)';
+                            cell.style.borderRadius = '10px';
                         });
                     } else {
                         const csCard = window.getComputedStyle(origCard);
