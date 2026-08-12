@@ -547,7 +547,7 @@
     --glass-glow: 0 0 28px rgba(143, 168, 255, 0.24);
 
     /* Environment Tokens */
-    --glass-background-image: radial-gradient(circle at 20% 20%, rgba(30, 41, 89, 0.85) 0%, rgba(8, 12, 24, 0.96) 65%), radial-gradient(circle at 80% 80%, rgba(143, 168, 255, 0.18) 0%, transparent 50%);
+    --glass-background-image: url("glass-bg.png"), radial-gradient(circle at 20% 20%, rgba(30, 41, 89, 0.85) 0%, rgba(8, 12, 24, 0.96) 65%), radial-gradient(circle at 80% 80%, rgba(143, 168, 255, 0.18) 0%, transparent 50%);
     --glass-atmosphere-bg: rgba(4, 7, 14, 0.42);
     --glass-atmosphere-blur: 14px;
     --glass-atmosphere-saturation: 0.85;
@@ -555,8 +555,13 @@
 }
 
 /* Layer 0 & 1 — Image Environment & Atmospheric Frost Layer */
+[data-theme="glassmorphism"] html {
+    background-color: #05070B !important;
+}
+
 [data-theme="glassmorphism"] body {
-    background-color: var(--bg-base) !important;
+    background-color: transparent !important;
+    background: transparent !important;
     color: var(--text-primary) !important;
     font-family: var(--font-stack) !important;
     position: relative;
@@ -566,10 +571,15 @@
 [data-theme="glassmorphism"] body::before {
     content: "";
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -3;
-    background-image: var(--glass-background-image);
-    background-position: center;
+    background-image: url("glass-bg.png"), var(--glass-background-image);
+    background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
     transform: translateZ(0) scale(1.02);
@@ -579,7 +589,12 @@
 [data-theme="glassmorphism"] body::after {
     content: "";
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -2;
     background:
         linear-gradient(180deg, rgba(3, 5, 10, 0.34), rgba(3, 5, 10, 0.56)),

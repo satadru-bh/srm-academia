@@ -1,22 +1,5 @@
-/* 
- * SRM Academia+ - Premium Float Light Theme Styling
- * Design System, Glassmorphism, Rounded Corners, and Interactive Animations
- */
-
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap');
 
-/* ==========================================================================
-   MODULAR CREATIVE THEMES SYSTEM (12 HANDCRAFTED PALETTES)
-   ========================================================================== */
-
-    --shadow-floating: 0 20px 40px rgba(0, 0, 0, 0.9);
-}
-
-
-
-/* ==========================================================================
-   33. PREMIUM INDUSTRIAL NEO-BRUTALIST DESIGN SYSTEM
-   ========================================================================== */
 [data-theme="neo-brutalist"] {
     --theme-name: "neo-brutalist";
     --bg-base: #f4f4ee;
@@ -547,7 +530,7 @@
     --glass-glow: 0 0 28px rgba(143, 168, 255, 0.24);
 
     /* Environment Tokens */
-    --glass-background-image: radial-gradient(circle at 20% 20%, rgba(30, 41, 89, 0.85) 0%, rgba(8, 12, 24, 0.96) 65%), radial-gradient(circle at 80% 80%, rgba(143, 168, 255, 0.18) 0%, transparent 50%);
+    --glass-background-image: url("glass-bg.png"), radial-gradient(circle at 20% 20%, rgba(30, 41, 89, 0.85) 0%, rgba(8, 12, 24, 0.96) 65%), radial-gradient(circle at 80% 80%, rgba(143, 168, 255, 0.18) 0%, transparent 50%);
     --glass-atmosphere-bg: rgba(4, 7, 14, 0.42);
     --glass-atmosphere-blur: 14px;
     --glass-atmosphere-saturation: 0.85;
@@ -555,8 +538,13 @@
 }
 
 /* Layer 0 & 1 — Image Environment & Atmospheric Frost Layer */
+[data-theme="glassmorphism"] html {
+    background-color: #05070B !important;
+}
+
 [data-theme="glassmorphism"] body {
-    background-color: var(--bg-base) !important;
+    background-color: transparent !important;
+    background: transparent !important;
     color: var(--text-primary) !important;
     font-family: var(--font-stack) !important;
     position: relative;
@@ -566,10 +554,15 @@
 [data-theme="glassmorphism"] body::before {
     content: "";
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -3;
-    background-image: var(--glass-background-image);
-    background-position: center;
+    background-image: url("glass-bg.png"), var(--glass-background-image);
+    background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
     transform: translateZ(0) scale(1.02);
@@ -579,7 +572,12 @@
 [data-theme="glassmorphism"] body::after {
     content: "";
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -2;
     background:
         linear-gradient(180deg, rgba(3, 5, 10, 0.34), rgba(3, 5, 10, 0.56)),
@@ -1710,7 +1708,7 @@
 [data-theme="retro-computing"] .calendar-day-cell.milestone div[title],
 [data-theme="retro-computing"] .calendar-day-cell.commencement div[title] {
     color: #FFFFFF !important;
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.5) !important;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5) !important;
 }
 
 [data-theme="retro-computing"] .calendar-day-cell.holiday .calendar-cell-day-order,
@@ -1888,7 +1886,7 @@
 [data-theme="retro-computing"] .calendar-day-cell.holiday div[title],
 [data-theme="retro-computing"] .calendar-day-cell.holiday span {
     color: #FFFFFF !important;
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.6) !important;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.6) !important;
     font-weight: 800 !important;
 }
 
@@ -2617,7 +2615,10 @@
     --calendar-cell-hover: #222234;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 12px; --radius-lg: 8px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 12px;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 0 20px rgba(0, 240, 255, 0.2);
     --shadow-floating: 0 0 30px rgba(255, 0, 85, 0.3);
 }
@@ -2657,7 +2658,10 @@
     --calendar-cell-hover: #361A61;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 0 24px rgba(255, 42, 133, 0.25);
     --shadow-floating: 0 0 35px rgba(0, 210, 255, 0.3);
 }
@@ -2697,7 +2701,10 @@
     --calendar-cell-hover: #434C5E;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 12px; --radius-lg: 8px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 12px;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(0, 0, 0, 0.2);
     --shadow-floating: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
@@ -2737,7 +2744,10 @@
     --calendar-cell-hover: #313244;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(0, 0, 0, 0.25);
     --shadow-floating: 0 8px 28px rgba(0, 0, 0, 0.35);
 }
@@ -2777,7 +2787,10 @@
     --calendar-cell-hover: #44475A;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 12px; --radius-lg: 8px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 12px;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(0, 0, 0, 0.3);
     --shadow-floating: 0 8px 28px rgba(0, 0, 0, 0.4);
 }
@@ -2817,7 +2830,10 @@
     --calendar-cell-hover: #2E234B;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 16px; --radius-lg: 12px; --radius-md: 8px; --radius-sm: 6px;
+    --radius-xl: 16px;
+    --radius-lg: 12px;
+    --radius-md: 8px;
+    --radius-sm: 6px;
     --shadow-premium: 0 4px 20px rgba(139, 92, 246, 0.2);
     --shadow-floating: 0 10px 32px rgba(139, 92, 246, 0.3);
 }
@@ -2857,7 +2873,10 @@
     --calendar-cell-hover: #155E4B;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(16, 185, 129, 0.2);
     --shadow-floating: 0 8px 28px rgba(16, 185, 129, 0.3);
 }
@@ -2897,7 +2916,10 @@
     --calendar-cell-hover: #452D22;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(245, 158, 11, 0.2);
     --shadow-floating: 0 8px 28px rgba(245, 158, 11, 0.3);
 }
@@ -2937,7 +2959,10 @@
     --calendar-cell-hover: #FCE7F3;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 16px; --radius-lg: 12px; --radius-md: 8px; --radius-sm: 6px;
+    --radius-xl: 16px;
+    --radius-lg: 12px;
+    --radius-md: 8px;
+    --radius-sm: 6px;
     --shadow-premium: 0 4px 16px rgba(236, 72, 153, 0.1);
     --shadow-floating: 0 10px 30px rgba(236, 72, 153, 0.15);
 }
@@ -2977,7 +3002,10 @@
     --calendar-cell-hover: #0F3866;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(6, 182, 212, 0.2);
     --shadow-floating: 0 8px 28px rgba(6, 182, 212, 0.3);
 }
@@ -3017,7 +3045,10 @@
     --calendar-cell-hover: #44403C;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 16px; --radius-lg: 12px; --radius-md: 8px; --radius-sm: 6px;
+    --radius-xl: 16px;
+    --radius-lg: 12px;
+    --radius-md: 8px;
+    --radius-sm: 6px;
     --shadow-premium: 0 4px 16px rgba(251, 113, 133, 0.2);
     --shadow-floating: 0 10px 30px rgba(251, 113, 133, 0.3);
 }
@@ -3057,7 +3088,10 @@
     --calendar-cell-hover: #1B2F66;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(0, 255, 157, 0.2);
     --shadow-floating: 0 8px 28px rgba(0, 229, 255, 0.3);
 }
@@ -3097,7 +3131,10 @@
     --calendar-cell-hover: #4A474B;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 12px; --radius-lg: 8px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 12px;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(0, 0, 0, 0.25);
     --shadow-floating: 0 8px 28px rgba(0, 0, 0, 0.35);
 }
@@ -3137,7 +3174,10 @@
     --calendar-cell-hover: #EDE9FE;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 16px; --radius-lg: 12px; --radius-md: 8px; --radius-sm: 6px;
+    --radius-xl: 16px;
+    --radius-lg: 12px;
+    --radius-md: 8px;
+    --radius-sm: 6px;
     --shadow-premium: 0 4px 16px rgba(124, 58, 237, 0.08);
     --shadow-floating: 0 10px 30px rgba(124, 58, 237, 0.12);
 }
@@ -3177,7 +3217,10 @@
     --calendar-cell-hover: #F5D0FE;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 18px; --radius-lg: 14px; --radius-md: 10px; --radius-sm: 6px;
+    --radius-xl: 18px;
+    --radius-lg: 14px;
+    --radius-md: 10px;
+    --radius-sm: 6px;
     --shadow-premium: 0 4px 16px rgba(244, 114, 182, 0.1);
     --shadow-floating: 0 10px 30px rgba(244, 114, 182, 0.15);
 }
@@ -3217,7 +3260,10 @@
     --calendar-cell-hover: #262626;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 12px; --radius-lg: 8px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 12px;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(234, 179, 8, 0.2);
     --shadow-floating: 0 8px 28px rgba(234, 179, 8, 0.3);
 }
@@ -3257,7 +3303,10 @@
     --calendar-cell-hover: #2B4735;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(132, 204, 22, 0.2);
     --shadow-floating: 0 8px 28px rgba(132, 204, 22, 0.3);
 }
@@ -3297,7 +3346,10 @@
     --calendar-cell-hover: #3B1218;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 12px; --radius-lg: 8px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 12px;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(220, 38, 38, 0.25);
     --shadow-floating: 0 8px 28px rgba(220, 38, 38, 0.35);
 }
@@ -3337,7 +3389,10 @@
     --calendar-cell-hover: #3A2B54;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(255, 107, 53, 0.2);
     --shadow-floating: 0 8px 28px rgba(247, 37, 133, 0.3);
 }
@@ -3377,7 +3432,10 @@
     --calendar-cell-hover: #282828;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 10px; --radius-lg: 6px; --radius-md: 4px; --radius-sm: 2px;
+    --radius-xl: 10px;
+    --radius-lg: 6px;
+    --radius-md: 4px;
+    --radius-sm: 2px;
     --shadow-premium: 0 4px 16px rgba(255, 215, 0, 0.2);
     --shadow-floating: 0 8px 28px rgba(255, 215, 0, 0.3);
 }
@@ -3417,7 +3475,10 @@
     --calendar-cell-hover: #453325;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(16, 185, 129, 0.2);
     --shadow-floating: 0 8px 28px rgba(16, 185, 129, 0.3);
 }
@@ -3457,7 +3518,10 @@
     --calendar-cell-hover: #475569;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 12px; --radius-lg: 8px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 12px;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(0, 0, 0, 0.3);
     --shadow-floating: 0 8px 28px rgba(0, 0, 0, 0.4);
 }
@@ -3497,7 +3561,10 @@
     --calendar-cell-hover: #422F1E;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(217, 119, 6, 0.2);
     --shadow-floating: 0 8px 28px rgba(217, 119, 6, 0.3);
 }
@@ -3537,7 +3604,10 @@
     --calendar-cell-hover: #F3E8D0;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(180, 83, 9, 0.08);
     --shadow-floating: 0 10px 30px rgba(180, 83, 9, 0.12);
 }
@@ -3577,7 +3647,10 @@
     --calendar-cell-hover: #EFF6FF;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(30, 58, 138, 0.08);
     --shadow-floating: 0 10px 30px rgba(30, 58, 138, 0.12);
 }
@@ -3617,7 +3690,10 @@
     --calendar-cell-hover: #233152;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 14px; --radius-lg: 10px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 14px;
+    --radius-lg: 10px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(163, 230, 53, 0.2);
     --shadow-floating: 0 8px 28px rgba(163, 230, 53, 0.3);
 }
@@ -3657,7 +3733,10 @@
     --calendar-cell-hover: #21262D;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 12px; --radius-lg: 8px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 12px;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(57, 255, 20, 0.2);
     --shadow-floating: 0 8px 28px rgba(157, 0, 255, 0.3);
 }
@@ -3697,7 +3776,10 @@
     --calendar-cell-hover: #586E75;
     --font-stack: "Inter", system-ui, sans-serif;
     --font-mono: "JetBrains Mono", monospace;
-    --radius-xl: 12px; --radius-lg: 8px; --radius-md: 6px; --radius-sm: 4px;
+    --radius-xl: 12px;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
     --shadow-premium: 0 4px 16px rgba(0, 0, 0, 0.3);
     --shadow-floating: 0 8px 28px rgba(0, 0, 0, 0.4);
 }
@@ -11217,12 +11299,10 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     left: -50% !important;
     width: 200% !important;
     height: 200% !important;
-    background: linear-gradient(
-        60deg,
-        transparent 30%,
-        rgba(255, 255, 255, 0.55) 50%,
-        transparent 70%
-    ) !important;
+    background: linear-gradient(60deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.55) 50%,
+            transparent 70%) !important;
     transform: rotate(25deg) translateX(-150%) !important;
     animation: constantShimmerBeam 2.2s infinite linear !important;
     pointer-events: none !important;
@@ -11233,6 +11313,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     0% {
         transform: rotate(25deg) translateX(-150%);
     }
+
     100% {
         transform: rotate(25deg) translateX(150%);
     }
@@ -11307,10 +11388,12 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
         opacity: 0.6;
         transform: scale(0.75) rotate(0deg);
     }
+
     50% {
         opacity: 1;
         transform: scale(1.35) rotate(90deg);
     }
+
     100% {
         opacity: 0.8;
         transform: scale(0.9) rotate(180deg);
@@ -11322,10 +11405,12 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
         opacity: 0.5;
         transform: scale(0.65) rotate(180deg);
     }
+
     50% {
         opacity: 1;
         transform: scale(1.4) rotate(270deg);
     }
+
     100% {
         opacity: 0.75;
         transform: scale(0.85) rotate(360deg);
