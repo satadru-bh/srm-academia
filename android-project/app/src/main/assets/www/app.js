@@ -1278,7 +1278,7 @@ function switchTab(targetTab, forceRender = false) {
         else nav.classList.remove('active');
     });
 
-    if (targetTab === 'planner' || targetTab === 'developer' || targetTab === 'support') {
+    if (targetTab === 'planner' || targetTab === 'developer' || targetTab === 'support' || targetTab === 'courses') {
         updateMobileNavActive('more');
     } else {
         updateMobileNavActive(targetTab);
@@ -1313,6 +1313,7 @@ function switchTab(targetTab, forceRender = false) {
     if (targetTab === 'attendance') renderAttendancePane();
     if (targetTab === 'timetable') renderTimetablePane();
     if (targetTab === 'academics') renderAcademicsPane();
+    if (targetTab === 'courses') renderCoursesPane();
     if (targetTab === 'planner') renderPlannerPane();
     if (targetTab === 'developer') renderDeveloperPane();
     if (targetTab === 'support') renderSupportPane();
@@ -1457,12 +1458,8 @@ function setupMoreMenuEvents() {
             e.stopPropagation();
             const action = btn.dataset.moreAction;
             hideMobileMoreMenu();
-            if (action === 'planner') {
-                switchTab('planner');
-            } else if (action === 'developer') {
-                switchTab('developer');
-            } else if (action === 'support') {
-                switchTab('support');
+            if (action) {
+                switchTab(action);
             }
         });
     });
@@ -1552,6 +1549,9 @@ function updateHeaderTitles(tab) {
         case 'academics':
         case 'marks':
             headingText = "Internal Marks";
+            break;
+        case 'courses':
+            headingText = "Enrolled Courses";
             break;
         case 'planner':
             headingText = "Academic Calendar";
@@ -3173,11 +3173,31 @@ function renderAttendancePane(customDataset) {
         fabContainer.classList.remove('hidden');
     }
 
-    const dataset = customDataset || (state.predictionActive && state.predictedAttendance.length > 0 ? state.predictedAttendance : state.attendance);
+    let dataset = customDataset || (state.predictionActive && state.predictedAttendance.length > 0 ? state.predictedAttendance : state.attendance);
 
     if (!dataset || dataset.length === 0) {
-        listContainer.innerHTML = `<div class="text-center py-24 text-muted">No attendance metrics detected.</div>`;
-        return;
+        const timetableCourses = new Set();
+        [...(state.personalTimetable || []), ...(state.unifiedTimetable || [])].forEach(item => {
+            const title = item.subjectTitle || item.course;
+            const code = item.courseCode || item.code;
+            if (title || code) timetableCourses.add(JSON.stringify({ course: title || code, code: code || title, category: 'Theory', faculty: '0' }));
+        });
+
+        let mockCourses = Array.from(timetableCourses).map(s => JSON.parse(s));
+        if (mockCourses.length === 0) {
+            mockCourses = [
+                { course: 'Course 1', code: 'SUB001', category: 'Theory', faculty: '0' },
+                { course: 'Course 2', code: 'SUB002', category: 'Practical', faculty: '0' },
+                { course: 'Course 3', code: 'SUB003', category: 'Theory', faculty: '0' }
+            ];
+        }
+
+        dataset = mockCourses.map(c => ({
+            ...c,
+            conducted: 0,
+            present: 0,
+            attendance: 0
+        }));
     }
 
     // 1. Update Top Total Summary Counter Metrics
@@ -4285,41 +4305,20 @@ async function downloadTimetableImage() {
                     const csCard = window.getComputedStyle(origCard);
                     clonedCard.style.backgroundColor = csCard.backgroundColor || '#ffffff';
                     clonedCard.style.color = csCard.color || '#000000';
-                    clonedCard.style.border = csCard.border || '2px solid #000000';
-                    clonedCard.style.boxShadow = csCard.boxShadow || 'none';
                     clonedCard.style.borderRadius = csCard.borderRadius || '16px';
 
-                    const origElements = origCard.querySelectorAll('*');
-                    const clonedElements = clonedCard.querySelectorAll('*');
+                    const origCells = origCard.querySelectorAll('.matrix-td-cell, .matrix-th-slot, .matrix-th-time, .matrix-td-day, .grid-header-cell');
+                    const clonedCells = clonedCard.querySelectorAll('.matrix-td-cell, .matrix-th-slot, .matrix-th-time, .matrix-td-day, .grid-header-cell');
 
-                    origElements.forEach((origEl, i) => {
-                        const clonedEl = clonedElements[i];
-                        if (clonedEl) {
-                            const cs = window.getComputedStyle(origEl);
-                            clonedEl.style.backgroundColor = cs.backgroundColor;
-                            clonedEl.style.color = cs.color;
-                            clonedEl.style.borderColor = cs.borderColor;
-                            clonedEl.style.borderStyle = cs.borderStyle;
-                            clonedEl.style.borderWidth = cs.borderWidth;
-                            clonedEl.style.borderTopColor = cs.borderTopColor;
-                            clonedEl.style.borderTopWidth = cs.borderTopWidth;
-                            clonedEl.style.borderTopStyle = cs.borderTopStyle;
-                            clonedEl.style.borderRightColor = cs.borderRightColor;
-                            clonedEl.style.borderRightWidth = cs.borderRightWidth;
-                            clonedEl.style.borderRightStyle = cs.borderRightStyle;
-                            clonedEl.style.borderBottomColor = cs.borderBottomColor;
-                            clonedEl.style.borderBottomWidth = cs.borderBottomWidth;
-                            clonedEl.style.borderBottomStyle = cs.borderBottomStyle;
-                            clonedEl.style.borderLeftColor = cs.borderLeftColor;
-                            clonedEl.style.borderLeftWidth = cs.borderLeftWidth;
-                            clonedEl.style.borderLeftStyle = cs.borderLeftStyle;
-                            clonedEl.style.boxShadow = cs.boxShadow;
-                            clonedEl.style.borderRadius = cs.borderRadius;
-                            clonedEl.style.fontWeight = cs.fontWeight;
-                            clonedEl.style.fontSize = cs.fontSize;
-                            clonedEl.style.fontFamily = cs.fontFamily;
-                            clonedEl.style.textTransform = cs.textTransform;
-                            clonedEl.style.letterSpacing = cs.letterSpacing;
+                    origCells.forEach((origCell, i) => {
+                        const clonedCell = clonedCells[i];
+                        if (clonedCell) {
+                            const cs = window.getComputedStyle(origCell);
+                            clonedCell.style.backgroundColor = cs.backgroundColor;
+                            clonedCell.style.color = cs.color;
+                            clonedCell.style.borderTopColor = cs.borderTopColor;
+                            clonedCell.style.borderTopWidth = cs.borderTopWidth;
+                            clonedCell.style.borderTopStyle = cs.borderTopStyle;
                         }
                     });
                 }
@@ -4450,31 +4449,39 @@ function renderAcademicsPane() {
     const container = document.getElementById('marks-subject-container');
     if (!container) return;
 
-    if (!state.marks || state.marks.length === 0) {
-        container.innerHTML = `
-            <div class="text-center py-48" style="grid-column: 1 / -1;">
-                <div style="color: var(--text-muted); margin-bottom: 12px; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background-color: var(--bg-surface-elevated);">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                        <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
-                    </svg>
-                </div>
-                <h4 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">No Internal Marks Data</h4>
-                <p style="font-size: 13px; color: var(--text-secondary);">No assessment records published yet.</p>
-            </div>
-        `;
-        return;
+    let marksDataset = state.marks || [];
+    if (!marksDataset || marksDataset.length === 0) {
+        const timetableCourses = new Set();
+        [...(state.attendance || []), ...(state.personalTimetable || []), ...(state.unifiedTimetable || [])].forEach(item => {
+            const code = item.courseCode || item.code;
+            const title = item.course || item.subjectTitle;
+            if (code || title) timetableCourses.add(code || title);
+        });
+
+        let courseCodes = Array.from(timetableCourses);
+        if (courseCodes.length === 0) courseCodes = ['SUB001', 'SUB002', 'SUB003'];
+
+        marksDataset = courseCodes.map(code => ({
+            courseCode: code,
+            assessments: {
+                "Regular Assessment": { assessment: "Regular Assessment", obtainedMarks: 0, maxMarks: 0, status: "PASS" }
+            }
+        }));
     }
 
     let html = '';
-    state.marks.forEach(item => {
+    marksDataset.forEach(item => {
         let assessmentsHtml = '';
         const keys = Object.keys(item.assessments || {});
 
         if (keys.length === 0) {
             assessmentsHtml = `
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; text-align: center; background-color: var(--bg-surface-elevated); border-radius: var(--radius-md); border: 1px dashed var(--border-subtle);">
-                    <span style="font-size: 12px; font-weight: 600; color: var(--text-muted);">No evaluation components recorded yet</span>
+                <div class="assessment-item" style="display: flex; align-items: center; justify-content: space-between; background-color: var(--bg-surface-elevated); border-radius: var(--radius-md); padding: 12px 16px; border: 1px solid var(--border-subtle);">
+                    <span class="assessment-name" style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">Regular Assessment</span>
+                    <div class="assessment-scores">
+                        <span class="assessment-obtained" style="font-size: 14px; font-weight: 800; color: var(--text-primary);">0</span>
+                        <span class="assessment-total" style="font-size: 11px; color: var(--text-muted);">/ 0</span>
+                    </div>
                 </div>
             `;
         } else {
@@ -4509,6 +4516,231 @@ function renderAcademicsPane() {
                 <div class="card-body" style="padding: 20px;">
                     <div class="marks-list" style="display: flex; flex-direction: column; gap: 10px;">
                         ${assessmentsHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+/**
+ * Renders Enrolled Courses View Pane
+ */
+function renderCoursesPane() {
+    const container = document.getElementById('courses-list-container');
+    if (!container) return;
+
+    const courseMap = new Map();
+
+    const getOrInitCourse = (rawCode, rawTitle, category, faculty) => {
+        const code = (rawCode || '').trim().toUpperCase();
+        const title = (rawTitle || rawCode || 'Course').trim();
+        const key = code || title.toUpperCase();
+        if (!key) return null;
+
+        if (!courseMap.has(key)) {
+            courseMap.set(key, {
+                code: code || key,
+                title: title,
+                category: category || '',
+                faculty: faculty || '',
+                credits: 0,
+                conducted: 0,
+                present: 0,
+                attendance: null,
+                assessments: [],
+                slots: new Set(),
+                rooms: new Set()
+            });
+        }
+        const obj = courseMap.get(key);
+        if (title && (!obj.title || obj.title === obj.code)) obj.title = title;
+        if (category && !obj.category) obj.category = category;
+        if (faculty && !obj.faculty) obj.faculty = faculty;
+        return obj;
+    };
+
+    // 1. From state.attendance
+    (state.attendance || []).forEach(item => {
+        const obj = getOrInitCourse(item.code, item.course, item.category, item.faculty);
+        if (obj) {
+            obj.conducted = parseInt(item.conducted, 10) || 0;
+            obj.present = parseInt(item.present, 10) || 0;
+            obj.attendance = item.attendance !== null && item.attendance !== undefined ? parseFloat(item.attendance) : (obj.conducted > 0 ? ((obj.present / obj.conducted) * 100) : 0);
+            obj.credits = getCourseCredit(obj.title, obj.code);
+        }
+    });
+
+    // 2. From state.marks
+    (state.marks || []).forEach(item => {
+        const obj = getOrInitCourse(item.courseCode, item.courseCode, '', '');
+        if (obj) {
+            if (item.assessments && typeof item.assessments === 'object') {
+                Object.keys(item.assessments).forEach(k => {
+                    const test = item.assessments[k];
+                    obj.assessments.push(test);
+                });
+            }
+            if (!obj.credits) obj.credits = getCourseCredit(obj.title, obj.code);
+        }
+    });
+
+    // 3. From Timetables
+    const allTTItems = [...(state.personalTimetable || []), ...(state.unifiedTimetable || [])];
+    allTTItems.forEach(item => {
+        const code = item.courseCode || item.code || '';
+        const title = item.subjectTitle || item.course || '';
+        const obj = getOrInitCourse(code, title, '', '');
+        if (obj) {
+            if (item.slot) obj.slots.add(item.slot);
+            if (item.room) obj.rooms.add(item.room.replace(/^Room\s+/i, ''));
+            if (!obj.credits) obj.credits = getCourseCredit(obj.title, obj.code);
+        }
+    });
+
+    const coursesList = Array.from(courseMap.values());
+
+    const countEl = document.getElementById('courses-sum-count');
+    const creditsEl = document.getElementById('courses-sum-credits');
+    const splitEl = document.getElementById('courses-sum-split');
+    const attnEl = document.getElementById('courses-sum-attn');
+
+    const totalCourses = coursesList.length;
+    let totalCredits = 0;
+    let theoryCount = 0;
+    let labCount = 0;
+    let sumAttn = 0;
+    let attnCoursesCount = 0;
+
+    coursesList.forEach(c => {
+        totalCredits += c.credits || 0;
+        const catUpper = (c.category || '').toUpperCase();
+        if (catUpper.includes('PRACTICAL') || catUpper.includes('LAB') || c.code.endsWith('P')) {
+            labCount++;
+        } else {
+            theoryCount++;
+        }
+
+        if (c.attendance !== null && c.attendance !== undefined) {
+            sumAttn += c.attendance;
+            attnCoursesCount++;
+        }
+    });
+
+    const overallAvgAttn = attnCoursesCount > 0 ? (sumAttn / attnCoursesCount).toFixed(1) : '0';
+
+    if (countEl) countEl.textContent = `${totalCourses}`;
+    if (creditsEl) creditsEl.textContent = `${totalCredits}`;
+    if (splitEl) splitEl.textContent = `${theoryCount} Th / ${labCount} Lab`;
+    if (attnEl) attnEl.textContent = `${overallAvgAttn}%`;
+
+    if (coursesList.length === 0) {
+        container.innerHTML = `
+            <div class="card course-detail-card p-20" style="background: var(--bg-surface-elevated); border-radius: var(--radius-xl); border: 1px solid var(--border-subtle); grid-column: 1 / -1;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: var(--text-primary);">Course 0</h3>
+                    <span style="font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-secondary);">Theory</span>
+                </div>
+                <div style="margin-top: 12px; display: flex; gap: 12px; font-size: 12px; color: var(--text-secondary);">
+                    <span>Credits: 0</span>
+                    <span>•</span>
+                    <span>Faculty: 0</span>
+                </div>
+                <div style="border-top: 1px dashed var(--border-subtle); margin: 12px 0;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 800;">
+                    <span>Attendance: 0%</span>
+                    <span>Attended: 0 / 0 hrs</span>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    coursesList.forEach(item => {
+        const credits = item.credits || getCourseCredit(item.title, item.code);
+        const catUpper = (item.category || '').toUpperCase();
+        let catBadge = 'Theory';
+        if (catUpper.includes('PRACTICAL') || catUpper.includes('LAB')) catBadge = 'Practical';
+        else if (catUpper.includes('INTEGRATED')) catBadge = 'Integrated';
+
+        const slotStr = Array.from(item.slots).join(', ') || 'Slot 0';
+        const roomStr = Array.from(item.rooms).join(', ') || 'Room 0';
+
+        const conducted = item.conducted || 0;
+        const present = item.present || 0;
+        const pct = item.attendance !== null && item.attendance !== undefined ? item.attendance : (conducted > 0 ? (present / conducted * 100) : 0);
+
+        let statusColor = 'var(--accent-success)';
+        if (pct < 75) statusColor = 'var(--accent-danger)';
+        else if (pct < 80) statusColor = 'var(--accent-warning)';
+
+        let assessmentsHtml = '';
+        if (item.assessments.length > 0) {
+            item.assessments.forEach(t => {
+                assessmentsHtml += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 6px 10px; background: var(--bg-surface-solid); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                        <span style="font-weight: 700; color: var(--text-secondary);">${t.assessment}</span>
+                        <span style="font-weight: 800; color: var(--text-primary);">${t.status === 'ABSENT' ? 'ABSENT' : t.obtainedMarks} / ${t.maxMarks || 0}</span>
+                    </div>
+                `;
+            });
+        } else {
+            assessmentsHtml = `
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 6px 10px; background: var(--bg-surface-solid); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                    <span style="font-weight: 700; color: var(--text-secondary);">Regular Assessment</span>
+                    <span style="font-weight: 800; color: var(--text-primary);">0 / 0</span>
+                </div>
+            `;
+        }
+
+        html += `
+            <div class="card course-detail-card p-20" style="background: var(--bg-surface-elevated); border-radius: var(--radius-xl); border: 1px solid var(--border-subtle); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px;">
+                        <h3 style="margin: 0; font-size: 15px; font-weight: 800; color: var(--text-primary); line-height: 1.35;" title="${item.title}">${item.title}</h3>
+                        <span style="font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 12px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-secondary); flex-shrink: 0;">${catBadge}</span>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <span style="font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 10px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-secondary); font-family: var(--font-mono, monospace);">${item.code}</span>
+                        <span style="font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 10px; background: var(--accent-primary-subtle); border: 1px solid var(--border-subtle); color: var(--accent-primary); font-family: var(--font-mono, monospace);">${credits} Credit${credits === 1 ? '' : 's'}</span>
+                    </div>
+
+                    <div style="font-size: 12px; color: var(--text-secondary); font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>${item.faculty || 'Faculty Assigned'}</span>
+                    </div>
+
+                    <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 10px;">
+                        <span>Slot: ${slotStr}</span>
+                        <span>•</span>
+                        <span>Room: ${roomStr}</span>
+                    </div>
+
+                    <!-- Attendance Section -->
+                    <div style="border-top: 1px dashed var(--border-subtle); padding-top: 12px; margin-top: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Attendance</span>
+                            <span style="font-size: 14px; font-weight: 900; color: ${statusColor};">${pct.toFixed(1)}%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-secondary); font-weight: 700; margin-bottom: 8px;">
+                            <span>Conducted: ${conducted} hrs</span>
+                            <span>Attended: ${present} hrs</span>
+                        </div>
+                        <div class="attendance-progress-track-wrapper" style="height: 6px;">
+                            <div class="attendance-progress-fill" style="width: ${Math.min(100, Math.max(0, pct))}%; background-color: ${statusColor};"></div>
+                        </div>
+                    </div>
+
+                    <!-- Internal Marks Section -->
+                    <div style="border-top: 1px dashed var(--border-subtle); padding-top: 12px; margin-top: 12px;">
+                        <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 8px;">Internal Marks</span>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            ${assessmentsHtml}
+                        </div>
                     </div>
                 </div>
             </div>

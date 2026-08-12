@@ -11291,3 +11291,38 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
         transform: translateY(0);
     }
 }
+
+/* ACCENT USER AVATAR & NEO-BRUTALIST CIRCULAR GAUGE & DASHED DIVIDER FIXES */
+.header-avatar-btn,
+.user-avatar,
+.user-dropdown-avatar {
+    background-color: var(--accent-primary) !important;
+    background: var(--accent-primary) !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+}
+
+[data-theme="neo-brutalist"] .gpa-gauge-svg circle:first-child {
+    stroke: #000000 !important;
+    stroke-opacity: 0.25 !important;
+}
+
+[data-theme="neo-brutalist"] .gpa-gauge-svg circle#gpa-gauge-arc {
+    stroke: #ccff00 !important;
+}
+
+[data-theme="neo-brutalist"] [style*="border-top: 1px dashed"],
+[data-theme="neo-brutalist"] div[style*="border-top: 1px dashed"] {
+    border-top: 1.5px dashed #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .header-avatar-btn,
+[data-theme="neo-brutalist"] .user-avatar,
+[data-theme="neo-brutalist"] .user-dropdown-avatar {
+    background-color: #ccff00 !important;
+    background: #ccff00 !important;
+    color: #000000 !important;
+    border: 2.5px solid #000000 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
+    font-weight: 900 !important;
+}
