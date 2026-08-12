@@ -4596,6 +4596,23 @@ function renderAcademicsPane() {
 }
 
 /**
+ * Helper to detect course category: Theory, Practical, or Joint
+ */
+function detectCourseCategory(code = '', category = '', slots = new Set()) {
+    const codeUpper = String(code).trim().toUpperCase();
+    const catUpper = String(category).trim().toUpperCase();
+    const slotsStr = Array.from(slots || []).join(' ').toUpperCase();
+
+    if (codeUpper.endsWith('J') || catUpper.includes('JOINT') || catUpper.includes('EMBEDDED') || (slotsStr.includes('P') && /[ABCDEF]/.test(slotsStr))) {
+        return { label: 'Joint', style: 'background: rgba(99, 230, 190, 0.18); border: 1px solid rgba(135, 240, 208, 0.35); color: #63E6BE;' };
+    }
+    if (codeUpper.endsWith('P') || catUpper.includes('LAB') || catUpper.includes('PRACTICAL') || catUpper === 'P') {
+        return { label: 'Practical', style: 'background: rgba(74, 190, 255, 0.18); border: 1px solid rgba(111, 210, 255, 0.35); color: #7DE3FF;' };
+    }
+    return { label: 'Theory', style: 'background: rgba(164, 140, 255, 0.18); border: 1px solid rgba(188, 170, 255, 0.35); color: #A7BEFF;' };
+}
+
+/**
  * Renders Enrolled Courses View Pane
  */
 function renderCoursesPane() {
@@ -4670,7 +4687,12 @@ function renderCoursesPane() {
         }
     });
 
-    const coursesList = Array.from(courseMap.values());
+    // Filter out dummy/aggregated Course item
+    const coursesList = Array.from(courseMap.values()).filter(c => {
+        const code = (c.code || '').trim().toUpperCase();
+        const title = (c.title || '').trim().toUpperCase();
+        return code !== 'COURSE' && title !== 'COURSE' && code !== '0' && title !== '0';
+    });
 
     const countEl = document.getElementById('courses-sum-count');
     const creditsEl = document.getElementById('courses-sum-credits');
@@ -4681,17 +4703,16 @@ function renderCoursesPane() {
     let totalCredits = 0;
     let theoryCount = 0;
     let labCount = 0;
+    let jointCount = 0;
     let sumAttn = 0;
     let attnCoursesCount = 0;
 
     coursesList.forEach(c => {
         totalCredits += c.credits || 0;
-        const catUpper = (c.category || '').toUpperCase();
-        if (catUpper.includes('PRACTICAL') || catUpper.includes('LAB') || c.code.endsWith('P')) {
-            labCount++;
-        } else {
-            theoryCount++;
-        }
+        const catInfo = detectCourseCategory(c.code, c.category, c.slots);
+        if (catInfo.label === 'Joint') jointCount++;
+        else if (catInfo.label === 'Practical') labCount++;
+        else theoryCount++;
 
         if (c.attendance !== null && c.attendance !== undefined) {
             sumAttn += c.attendance;
@@ -4703,25 +4724,17 @@ function renderCoursesPane() {
 
     if (countEl) countEl.textContent = `${totalCourses}`;
     if (creditsEl) creditsEl.textContent = `${totalCredits}`;
-    if (splitEl) splitEl.textContent = `${theoryCount} Th / ${labCount} Lab`;
+    if (splitEl) {
+        splitEl.textContent = jointCount > 0 ? `${theoryCount} Th / ${labCount} Lab / ${jointCount} Joint` : `${theoryCount} Th / ${labCount} Lab`;
+    }
     if (attnEl) attnEl.textContent = `${overallAvgAttn}%`;
 
     if (coursesList.length === 0) {
         container.innerHTML = `
             <div class="card course-detail-card p-20" style="background: var(--bg-surface-elevated); border-radius: var(--radius-xl); border: 1px solid var(--border-subtle); grid-column: 1 / -1;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: var(--text-primary);">Course 0</h3>
+                    <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: var(--text-primary);">No Enrolled Courses Found</h3>
                     <span style="font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-secondary);">Theory</span>
-                </div>
-                <div style="margin-top: 12px; display: flex; gap: 12px; font-size: 12px; color: var(--text-secondary);">
-                    <span>Credits: 0</span>
-                    <span>•</span>
-                    <span>Faculty: 0</span>
-                </div>
-                <div style="border-top: 1px dashed var(--border-subtle); margin: 12px 0;"></div>
-                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 800;">
-                    <span>Attendance: 0%</span>
-                    <span>Attended: 0 / 0 hrs</span>
                 </div>
             </div>
         `;
@@ -4731,86 +4744,33 @@ function renderCoursesPane() {
     let html = '';
     coursesList.forEach(item => {
         const credits = item.credits || getCourseCredit(item.title, item.code);
-        const catUpper = (item.category || '').toUpperCase();
-        let catBadge = 'Theory';
-        if (catUpper.includes('PRACTICAL') || catUpper.includes('LAB')) catBadge = 'Practical';
-        else if (catUpper.includes('INTEGRATED')) catBadge = 'Integrated';
+        const catInfo = detectCourseCategory(item.code, item.category, item.slots);
 
-        const slotStr = Array.from(item.slots).join(', ') || 'Slot 0';
-        const roomStr = Array.from(item.rooms).join(', ') || 'Room 0';
-
-        const conducted = item.conducted || 0;
-        const present = item.present || 0;
-        const pct = item.attendance !== null && item.attendance !== undefined ? item.attendance : (conducted > 0 ? (present / conducted * 100) : 0);
-
-        let statusColor = 'var(--accent-success)';
-        if (pct < 75) statusColor = 'var(--accent-danger)';
-        else if (pct < 80) statusColor = 'var(--accent-warning)';
-
-        let assessmentsHtml = '';
-        if (item.assessments.length > 0) {
-            item.assessments.forEach(t => {
-                assessmentsHtml += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 6px 10px; background: var(--bg-surface-solid); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
-                        <span style="font-weight: 700; color: var(--text-secondary);">${t.assessment}</span>
-                        <span style="font-weight: 800; color: var(--text-primary);">${t.status === 'ABSENT' ? 'ABSENT' : t.obtainedMarks} / ${t.maxMarks || 0}</span>
-                    </div>
-                `;
-            });
-        } else {
-            assessmentsHtml = `
-                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 6px 10px; background: var(--bg-surface-solid); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
-                    <span style="font-weight: 700; color: var(--text-secondary);">Regular Assessment</span>
-                    <span style="font-weight: 800; color: var(--text-primary);">0 / 0</span>
-                </div>
-            `;
-        }
+        const slotStr = Array.from(item.slots).join(', ') || 'Slot TBA';
+        const roomStr = Array.from(item.rooms).join(', ') || 'Room TBA';
 
         html += `
             <div class="card course-detail-card p-20" style="background: var(--bg-surface-elevated); border-radius: var(--radius-xl); border: 1px solid var(--border-subtle); display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px;">
-                        <h3 style="margin: 0; font-size: 15px; font-weight: 800; color: var(--text-primary); line-height: 1.35;" title="${item.title}">${item.title}</h3>
-                        <span style="font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 12px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-secondary); flex-shrink: 0;">${catBadge}</span>
+                    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px;">
+                        <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: var(--text-primary); line-height: 1.35;" title="${item.title}">${item.title}</h3>
+                        <span style="font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 12px; ${catInfo.style} flex-shrink: 0;">${catInfo.label}</span>
                     </div>
 
-                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
-                        <span style="font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 10px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-secondary); font-family: var(--font-mono, monospace);">${item.code}</span>
-                        <span style="font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 10px; background: var(--accent-primary-subtle); border: 1px solid var(--border-subtle); color: var(--accent-primary); font-family: var(--font-mono, monospace);">${credits} Credit${credits === 1 ? '' : 's'}</span>
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
+                        <span style="font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 10px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-secondary); font-family: var(--font-mono, monospace);">${item.code}</span>
+                        <span style="font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 10px; background: var(--accent-primary-subtle); border: 1px solid var(--border-subtle); color: var(--accent-primary); font-family: var(--font-mono, monospace);">${credits} Credit${credits === 1 ? '' : 's'}</span>
                     </div>
 
-                    <div style="font-size: 12px; color: var(--text-secondary); font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <div style="font-size: 13px; color: var(--text-secondary); font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         <span>${item.faculty || 'Faculty Assigned'}</span>
                     </div>
 
-                    <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 10px;">
+                    <div style="font-size: 12px; color: var(--text-muted); font-weight: 600; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                         <span>Slot: ${slotStr}</span>
                         <span>•</span>
                         <span>Room: ${roomStr}</span>
-                    </div>
-
-                    <!-- Attendance Section -->
-                    <div style="border-top: 1px dashed var(--border-subtle); padding-top: 12px; margin-top: 8px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                            <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Attendance</span>
-                            <span style="font-size: 14px; font-weight: 900; color: ${statusColor};">${pct.toFixed(1)}%</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-secondary); font-weight: 700; margin-bottom: 8px;">
-                            <span>Conducted: ${conducted} hrs</span>
-                            <span>Attended: ${present} hrs</span>
-                        </div>
-                        <div class="attendance-progress-track-wrapper" style="height: 6px;">
-                            <div class="attendance-progress-fill" style="width: ${Math.min(100, Math.max(0, pct))}%; background-color: ${statusColor};"></div>
-                        </div>
-                    </div>
-
-                    <!-- Internal Marks Section -->
-                    <div style="border-top: 1px dashed var(--border-subtle); padding-top: 12px; margin-top: 12px;">
-                        <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 8px;">Internal Marks</span>
-                        <div style="display: flex; flex-direction: column; gap: 6px;">
-                            ${assessmentsHtml}
-                        </div>
                     </div>
                 </div>
             </div>
