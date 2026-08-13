@@ -12247,15 +12247,60 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     stroke: #475569 !important;
 }
 
+/* Active Nav Item High Contrast Indigo Glass Fill & Visible White Icon */
 [data-theme="glassmorphism-light"] .sidebar-nav .nav-item.active {
-    background: rgba(79, 70, 229, 0.12) !important;
-    border: 1px solid rgba(79, 70, 229, 0.25) !important;
-    color: #4F46E5 !important;
+    background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%) !important;
+    border: 1px solid #4338CA !important;
+    color: #FFFFFF !important;
     font-weight: 700 !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
 [data-theme="glassmorphism-light"] .sidebar-nav .nav-item.active svg {
-    stroke: #4F46E5 !important;
+    stroke: #FFFFFF !important;
+    color: #FFFFFF !important;
+    fill: none !important;
+}
+
+[data-theme="glassmorphism-light"] .sidebar-nav .nav-item.active span {
+    color: #FFFFFF !important;
+}
+
+/* Red Logout Button */
+[data-theme="glassmorphism-light"] .logout-btn,
+[data-theme="glassmorphism-light"] #logout-btn,
+[data-theme="glassmorphism-light"] #dropdown-logout-btn,
+[data-theme="glassmorphism-light"] .user-dropdown-item.danger {
+    background: rgba(220, 38, 38, 0.10) !important;
+    border: 1px solid rgba(220, 38, 38, 0.30) !important;
+    color: #DC2626 !important;
+    font-weight: 700 !important;
+}
+
+[data-theme="glassmorphism-light"] .logout-btn svg,
+[data-theme="glassmorphism-light"] #logout-btn svg,
+[data-theme="glassmorphism-light"] #dropdown-logout-btn svg,
+[data-theme="glassmorphism-light"] .user-dropdown-item.danger svg {
+    stroke: #DC2626 !important;
+    color: #DC2626 !important;
+}
+
+[data-theme="glassmorphism-light"] .logout-btn:hover,
+[data-theme="glassmorphism-light"] #logout-btn:hover,
+[data-theme="glassmorphism-light"] #dropdown-logout-btn:hover,
+[data-theme="glassmorphism-light"] .user-dropdown-item.danger:hover {
+    background: #DC2626 !important;
+    color: #FFFFFF !important;
+    border-color: #DC2626 !important;
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35) !important;
+}
+
+[data-theme="glassmorphism-light"] .logout-btn:hover svg,
+[data-theme="glassmorphism-light"] #logout-btn:hover svg,
+[data-theme="glassmorphism-light"] #dropdown-logout-btn:hover svg,
+[data-theme="glassmorphism-light"] .user-dropdown-item.danger:hover svg {
+    stroke: #FFFFFF !important;
+    color: #FFFFFF !important;
 }
 
 /* Page Header */
@@ -12280,9 +12325,79 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     -webkit-backdrop-filter: blur(12px) !important;
 }
 
-[data-theme="glassmorphism-light"] .btn-primary {
-    background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%) !important;
+/* Highlighted & Selected Buttons High Contrast Indigo Fill */
+[data-theme="glassmorphism-light"] .btn-primary,
+[data-theme="glassmorphism-light"] #overview-btn-today.active,
+[data-theme="glassmorphism-light"] #overview-btn-tomorrow.active,
+[data-theme="glassmorphism-light"] .tab-btn.active,
+[data-theme="glassmorphism-light"] .theme-option-card.active {
+    background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%) !important;
     color: #FFFFFF !important;
-    border: none !important;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+    border: 1px solid #4338CA !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    font-weight: 700 !important;
+}
+
+[data-theme="glassmorphism-light"] .btn-primary svg,
+[data-theme="glassmorphism-light"] .tab-btn.active svg {
+    stroke: #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+/* Light Glass Timetable Matrix Styling (Matching Dark Glass Architecture) */
+[data-theme="glassmorphism-light"] .timetable-slot-column-header,
+[data-theme="glassmorphism-light"] .period-pill {
+    background: rgba(255, 255, 255, 0.70) !important;
+    backdrop-filter: blur(12px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.90) !important;
+    border-radius: 10px !important;
+    color: #0F172A !important;
+    font-weight: 800 !important;
+    padding: 10px 6px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="glassmorphism-light"] .matrix-td-cell,
+[data-theme="glassmorphism-light"] .grid-class-cell,
+[data-theme="glassmorphism-light"] .vertical-timeline-card {
+    border-radius: 10px !important;
+}
+
+[data-theme="glassmorphism-light"] .matrix-td-cell.filled.theory,
+[data-theme="glassmorphism-light"] .grid-class-cell.filled.theory,
+[data-theme="glassmorphism-light"] .vertical-timeline-card.theory {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(99, 102, 241, 0.08)) !important;
+    color: #312E81 !important;
+    border: 1.5px solid rgba(79, 70, 229, 0.25) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+}
+
+[data-theme="glassmorphism-light"] .matrix-td-cell.filled.lab,
+[data-theme="glassmorphism-light"] .grid-class-cell.filled.lab,
+[data-theme="glassmorphism-light"] .vertical-timeline-card.lab {
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.15), rgba(14, 165, 233, 0.08)) !important;
+    color: #075985 !important;
+    border: 1.5px solid rgba(2, 132, 199, 0.25) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+}
+
+[data-theme="glassmorphism-light"] .matrix-td-cell.empty,
+[data-theme="glassmorphism-light"] .grid-class-cell.free {
+    background: rgba(255, 255, 255, 0.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.60) !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+}
+
+[data-theme="glassmorphism-light"] .grid-class-cell.slot-current,
+[data-theme="glassmorphism-light"] .matrix-td-cell.slot-current,
+[data-theme="glassmorphism-light"] .vertical-timeline-card.slot-current {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.22), rgba(99, 102, 241, 0.12)) !important;
+    border: 2px solid #4F46E5 !important;
+    box-shadow: 0 0 16px rgba(79, 70, 229, 0.25), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
 }
