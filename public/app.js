@@ -176,6 +176,7 @@ const periodTimings = [
 // Array of 32 Handcrafted Themes with color swatches in decreasing order of prominence:
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
+    { id: 'brutalist-editorial', name: 'Brutalist Editorial', tag: 'Swiss Grid & Editorial Typography', colors: ['#F4F4EE', '#FFFFFF', '#CCFF00', '#000000'] },
     { id: 'glassmorphism', name: 'Refractive Glassmorphism', tag: 'Translucent Glass & Ambient Depth', colors: ['#05070B', 'rgba(255,255,255,0.075)', '#8FA8FF', '#7DE3FF'] },
     { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
     { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
@@ -773,6 +774,7 @@ function setupSupportModal() {
 }
 
 const LIGHT_THEMES = new Set([
+    'brutalist-editorial',
     'claymorphism',
     'neo-brutalist',
     'retro-computing',
@@ -3009,7 +3011,7 @@ function renderPerformanceTrends() {
     const rawAccent = computedStyle.getPropertyValue('--accent-primary').trim() || '#6366f1';
     const activeTheme = document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
     const isLight = isThemeLight(activeTheme);
-    const sparklineColor = isLight ? (activeTheme === 'neo-brutalist' ? '#15803d' : rawAccent) : rawAccent;
+    const sparklineColor = isLight ? (activeTheme === 'brutalist-editorial' ? '#000000' : (activeTheme === 'neo-brutalist' ? '#15803d' : rawAccent)) : rawAccent;
 
     const validCourses = (state.attendance || []).filter(c => (parseInt(c.conducted, 10) || 0) > 0);
     
@@ -4561,7 +4563,7 @@ function renderAcademicsPane() {
                 <div class="assessment-item" style="display: flex; align-items: center; justify-content: space-between; background-color: var(--bg-surface-elevated); border-radius: var(--radius-md); padding: 12px 16px; border: 1px solid var(--border-subtle);">
                     <span class="assessment-name" style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">Regular Assessment</span>
                     <div class="assessment-scores">
-                        <span class="assessment-obtained" style="font-size: 14px; font-weight: 800; color: var(--text-primary);">0</span>
+                        <span class="assessment-obtained" style="font-size: 18px; font-weight: 900; line-height: 1.1; color: var(--text-primary);">0</span>
                         <span class="assessment-total" style="font-size: 11px; color: var(--text-muted);">/ 0</span>
                     </div>
                 </div>
@@ -4574,7 +4576,7 @@ function renderAcademicsPane() {
                     <div class="assessment-item" style="display: flex; align-items: center; justify-content: space-between; background-color: var(--bg-surface-elevated); border-radius: var(--radius-md); padding: 12px 16px; border: 1px solid var(--border-subtle);">
                         <span class="assessment-name" style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">${test.assessment}</span>
                         <div class="assessment-scores">
-                            <span class="assessment-obtained" style="font-size: 14px; font-weight: 800; color: ${test.status === "ABSENT" ? 'var(--accent-danger)' : 'var(--text-primary)'}">${obtainedText}</span>
+                            <span class="assessment-obtained" style="font-size: 18px; font-weight: 900; line-height: 1.1; color: ${test.status === "ABSENT" ? 'var(--accent-danger)' : 'var(--text-primary)'}">${obtainedText}</span>
                             <span class="assessment-total" style="font-size: 11px; color: var(--text-muted);">/ ${test.maxMarks || 0}</span>
                         </div>
                     </div>
