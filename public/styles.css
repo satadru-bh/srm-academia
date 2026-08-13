@@ -12112,7 +12112,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 }
 
 /* ======================================================================
-   36. BRUTALIST EDITORIAL THEME (EXACT MATCH TO EDITORIAL DASHBOARD MOCKUP)
+   36. BRUTALIST EDITORIAL THEME (EXACT MATCH TO EDITORIAL MOCKUP & SIDEBAR)
    ====================================================================== */
 
 [data-theme="brutalist-editorial"] {
@@ -12158,60 +12158,12 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     padding: 0 24px !important;
 }
 
-/* Sidebar Navigation Rail */
-[data-theme="brutalist-editorial"] .sidebar {
-    background: #000000 !important;
-    border-right: 2px solid #000000 !important;
-    color: #FFFFFF !important;
-}
-
-[data-theme="brutalist-editorial"] .sidebar-logo,
-[data-theme="brutalist-editorial"] .sidebar-title,
-[data-theme="brutalist-editorial"] .sidebar-brand {
-    color: #FFFFFF !important;
-}
-
-[data-theme="brutalist-editorial"] .sidebar-nav .nav-item {
-    background: transparent !important;
-    border: 1.5px solid transparent !important;
-    border-radius: 4px !important;
-    color: #FFFFFF !important;
-    margin: 4px 8px !important;
-    transition: background-color 0.1s ease !important;
-}
-
-[data-theme="brutalist-editorial"] .sidebar-nav .nav-item svg,
-[data-theme="brutalist-editorial"] .sidebar-nav .nav-item span {
-    color: #FFFFFF !important;
-    stroke: #FFFFFF !important;
-}
-
-[data-theme="brutalist-editorial"] .sidebar-nav .nav-item:hover:not(.active) {
-    background: #1F1F1F !important;
-    border-color: #333333 !important;
-}
-
-[data-theme="brutalist-editorial"] .sidebar-nav .nav-item.active {
-    background: #FFFFFF !important;
-    color: #000000 !important;
-    border: 1.5px solid #FFFFFF !important;
-    border-radius: 4px !important;
-}
-
-[data-theme="brutalist-editorial"] .sidebar-nav .nav-item.active svg,
-[data-theme="brutalist-editorial"] .sidebar-nav .nav-item.active span,
-[data-theme="brutalist-editorial"] .sidebar-nav .nav-item.active * {
-    color: #000000 !important;
-    stroke: #000000 !important;
-    fill: none !important;
-}
-
-/* Page Title (OVERVIEW DASHBOARD) */
+/* Header Page Title Box */
 [data-theme="brutalist-editorial"] .workspace-title,
 [data-theme="brutalist-editorial"] #workspace-title,
 [data-theme="brutalist-editorial"] .page-title,
 [data-theme="brutalist-editorial"] h1 {
-    font-size: 30px !important;
+    font-size: 28px !important;
     font-weight: 900 !important;
     line-height: 1.0 !important;
     letter-spacing: -0.02em !important;
@@ -12219,7 +12171,198 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     color: #000000 !important;
 }
 
-/* Section Headings (PERFORMANCE TRENDS, etc.) */
+/* Header Title Bar Border Box */
+[data-theme="brutalist-editorial"] .workspace-header-title-box,
+[data-theme="brutalist-editorial"] .page-header-box {
+    border: 2px solid #000000 !important;
+    background: #FFFFFF !important;
+    padding: 6px 14px !important;
+    border-radius: 0px !important;
+}
+
+/* ======================================================================
+   SIDEBAR EDITORIAL SPECIFICATION (EXACT MATCH TO USER SIDEBAR IMAGE)
+   ====================================================================== */
+
+/* Outer Sidebar Container */
+[data-theme="brutalist-editorial"] .sidebar {
+    background: #F4F4EE !important;
+    border-right: 2px solid #000000 !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Top Header Block (Black Header Box with White Logo) */
+[data-theme="brutalist-editorial"] .sidebar-header {
+    background: #000000 !important;
+    color: #FFFFFF !important;
+    border-bottom: 2px solid #000000 !important;
+    padding: 16px 10px !important;
+    margin-bottom: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+[data-theme="brutalist-editorial"] .sidebar-header .brand-name,
+[data-theme="brutalist-editorial"] .sidebar-header .brand-plus,
+[data-theme="brutalist-editorial"] .sidebar-header .brand-title {
+    color: #FFFFFF !important;
+    font-weight: 900 !important;
+}
+
+[data-theme="brutalist-editorial"] .sidebar-header svg {
+    stroke: #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="brutalist-editorial"] .sidebar-collapse-btn,
+[data-theme="brutalist-editorial"] .mobile-close-btn {
+    color: #FFFFFF !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+/* Navigation Container Column Box */
+[data-theme="brutalist-editorial"] .sidebar-nav {
+    background: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    margin: 0 10px !important;
+    padding: 0 !important;
+    border-radius: 0px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+}
+
+/* Individual Stacked Nav Items */
+[data-theme="brutalist-editorial"] .sidebar-nav .nav-item {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    border: none !important;
+    border-bottom: 1.5px solid #000000 !important;
+    border-radius: 0px !important;
+    margin: 0 !important;
+    padding: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: background-color 0.1s ease !important;
+}
+
+[data-theme="brutalist-editorial"] .sidebar-nav .nav-item:last-child {
+    border-bottom: none !important;
+}
+
+[data-theme="brutalist-editorial"] .sidebar-nav .nav-item svg {
+    color: #000000 !important;
+    stroke: #000000 !important;
+    stroke-width: 2.2 !important;
+}
+
+[data-theme="brutalist-editorial"] .sidebar-nav .nav-item span {
+    color: #000000 !important;
+    font-weight: 800 !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+}
+
+/* Inactive Nav Item Hover */
+[data-theme="brutalist-editorial"] .sidebar-nav .nav-item:hover:not(.active) {
+    background: #EBEBE3 !important;
+}
+
+/* Active Nav Item (Solid Black Fill with White Icon/Text) */
+[data-theme="brutalist-editorial"] .sidebar-nav .nav-item.active {
+    background: #000000 !important;
+    color: #FFFFFF !important;
+    border-radius: 0px !important;
+}
+
+[data-theme="brutalist-editorial"] .sidebar-nav .nav-item.active svg {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+    stroke-width: 2.2 !important;
+    fill: none !important;
+}
+
+[data-theme="brutalist-editorial"] .sidebar-nav .nav-item.active span {
+    color: #FFFFFF !important;
+}
+
+/* Horizontal Divider Line before Footer */
+[data-theme="brutalist-editorial"] .sidebar-footer {
+    margin-top: auto !important;
+    padding: 12px 10px !important;
+    border-top: 1.5px solid #000000 !important;
+    background: transparent !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+}
+
+/* Sidebar Footer Solid Black Utility Box */
+[data-theme="brutalist-editorial"] .user-quick-profile,
+[data-theme="brutalist-editorial"] .sidebar-footer-controls {
+    background: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    padding: 12px 8px !important;
+    border-radius: 0px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+}
+
+/* White Avatar Circle with Black Initial */
+[data-theme="brutalist-editorial"] .user-avatar,
+[data-theme="brutalist-editorial"] #profile-avatar-char {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1.5px solid #000000 !important;
+    font-weight: 900 !important;
+    font-size: 14px !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+[data-theme="brutalist-editorial"] .user-name,
+[data-theme="brutalist-editorial"] .user-subtext {
+    color: #FFFFFF !important;
+}
+
+[data-theme="brutalist-editorial"] .switch-accounts-btn,
+[data-theme="brutalist-editorial"] .logout-btn {
+    background: transparent !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+[data-theme="brutalist-editorial"] .switch-accounts-btn svg,
+[data-theme="brutalist-editorial"] .logout-btn svg {
+    stroke: #FFFFFF !important;
+    color: #FFFFFF !important;
+    stroke-width: 2 !important;
+}
+
+/* ======================================================================
+   BOLDER BORDERS & DASHBOARD CARDS (MATCHING IMAGE 2)
+   ====================================================================== */
+
+/* Section Headings */
 [data-theme="brutalist-editorial"] .section-heading,
 [data-theme="brutalist-editorial"] .card-header h2,
 [data-theme="brutalist-editorial"] h2 {
@@ -12251,7 +12394,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     color: #000000 !important;
 }
 
-/* Large Condensed Metrics (0/0, 0.00) */
+/* Large Metrics */
 [data-theme="brutalist-editorial"] #hero-internals-title,
 [data-theme="brutalist-editorial"] #hero-gpa-val,
 [data-theme="brutalist-editorial"] .hero-metric-val {
@@ -12280,7 +12423,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     color: #5A5A5A !important;
 }
 
-/* Main Cards & Hero Section */
+/* Main Cards & Structural Containers (Bold 2px solid #000000) */
 [data-theme="brutalist-editorial"] .card,
 [data-theme="brutalist-editorial"] .daily-focus-hero-card,
 [data-theme="brutalist-editorial"] .performance-trends-card,
@@ -12290,7 +12433,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="brutalist-editorial"] .academic-summary-hero-card,
 [data-theme="brutalist-editorial"] .attendance-summary-hero-card {
     background: #F4F4EE !important;
-    border: 1.5px solid #000000 !important;
+    border: 2px solid #000000 !important;
     border-radius: 2px !important;
     box-shadow: none !important;
     transform: none !important;
@@ -12315,25 +12458,25 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="brutalist-editorial"] .course-detail-card,
 [data-theme="brutalist-editorial"] .calc-simulation-result {
     background: #F4F4EE !important;
-    border: 1.5px solid #000000 !important;
+    border: 2px solid #000000 !important;
     border-radius: 2px !important;
     box-shadow: none !important;
     transform: none !important;
     padding: 16px !important;
 }
 
-/* Horizontal Dividers inside hero cards */
+/* Horizontal Dividers inside hero cards (Bolder 2px solid #000000) */
 [data-theme="brutalist-editorial"] .daily-focus-col div[style*="border-top"],
 [data-theme="brutalist-editorial"] [style*="border-top: 1px dashed"] {
-    border-top: 1.5px solid #000000 !important;
+    border-top: 2px solid #000000 !important;
     margin: 10px 0 !important;
 }
 
-/* Badges (DAY 3, 0% AVG, IN 568M, 0.0 GRADE) */
+/* Badges (DAY 3, DAY 4, 0% AVG, IN 568M, 0.0 GRADE) */
 [data-theme="brutalist-editorial"] #hero-academic-day-badge {
     background: #000000 !important;
     color: #FFFFFF !important;
-    border: 1.5px solid #000000 !important;
+    border: 2px solid #000000 !important;
     border-radius: 0px !important;
     padding: 5px 12px !important;
     font-size: 13px !important;
@@ -12350,7 +12493,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="brutalist-editorial"] .marks-course-code-badge {
     background: #000000 !important;
     color: #FFFFFF !important;
-    border: 1px solid #000000 !important;
+    border: 1.5px solid #000000 !important;
     border-radius: 0px !important;
     font-size: 9px !important;
     font-weight: 800 !important;
@@ -12377,7 +12520,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 /* Timetable Section Layout */
 [data-theme="brutalist-editorial"] .timetable-grid-section {
     background: #FFFFFF !important;
-    border: 1.5px solid #000000 !important;
+    border: 2px solid #000000 !important;
     border-radius: 2px !important;
     box-shadow: none !important;
     padding: 0 !important;
@@ -12443,7 +12586,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 
 [data-theme="brutalist-editorial"] .timetable-slot-column-header {
     background: #FFFFFF !important;
-    border-bottom: 1.5px solid #000000 !important;
+    border-bottom: 2px solid #000000 !important;
     padding: 10px 6px !important;
     text-align: center !important;
 }
@@ -12492,7 +12635,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 /* Attendance Specification */
 [data-theme="brutalist-editorial"] .attendance-grid-row {
     background: #FFFFFF !important;
-    border: 1.5px solid #000000 !important;
+    border: 2px solid #000000 !important;
     box-shadow: none !important;
     border-radius: 2px !important;
     padding: 14px 16px !important;
@@ -12508,7 +12651,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 
 [data-theme="brutalist-editorial"] .calendar-day-cell.today {
     background: #000000 !important;
-    border: 1.5px solid #000000 !important;
+    border: 2px solid #000000 !important;
     box-shadow: none !important;
     color: #FFFFFF !important;
     font-weight: 900 !important;
@@ -12546,7 +12689,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="brutalist-editorial"] #btn-modal-apply-prediction {
     background: #000000 !important;
     color: #FFFFFF !important;
-    border: 1.5px solid #000000 !important;
+    border: 2px solid #000000 !important;
     border-radius: 0px !important;
     box-shadow: none !important;
     font-weight: 900 !important;
