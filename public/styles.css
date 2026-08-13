@@ -12122,19 +12122,52 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     --shadow-floating: 0 20px 40px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 1.0);
 }
 
-[data-theme="glassmorphism-light"] html,
-[data-theme="glassmorphism-light"] body {
+[data-theme="glassmorphism-light"] html {
     background-color: #F1F5F9 !important;
-    background-image: url('glass_bg_light.png'), linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 50%, #e0e7ff 100%) !important;
-    background-size: cover !important;
-    background-position: center center !important;
-    background-attachment: fixed !important;
+}
+
+[data-theme="glassmorphism-light"] body {
+    background-color: transparent !important;
+    background: transparent !important;
     color: #0F172A !important;
+    font-family: var(--font-stack) !important;
+    position: relative;
+    min-height: 100vh;
 }
 
 [data-theme="glassmorphism-light"] body::before {
-    background: radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
-                radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.12) 0%, transparent 55%) !important;
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -3;
+    background-image: url("glass_bg_light.png"), linear-gradient(135deg, #E2E8F0 0%, #F1F5F9 50%, #E0E7FF 100%);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: translateZ(0) scale(1.02);
+    pointer-events: none;
+    opacity: 0.98;
+}
+
+[data-theme="glassmorphism-light"] body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    pointer-events: none;
 }
 
 /* Translucent Light Glass Cards */
