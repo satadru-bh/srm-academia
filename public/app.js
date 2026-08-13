@@ -176,7 +176,6 @@ const periodTimings = [
 // Array of 32 Handcrafted Themes with color swatches in decreasing order of prominence:
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
-    { id: 'brutalist-editorial', name: 'Brutalist Editorial', tag: 'Editorial Typography & Monochrome Grid', colors: ['#F4F4EE', '#FFFFFF', '#000000', '#171717'] },
     { id: 'glassmorphism', name: 'Refractive Glassmorphism', tag: 'Translucent Glass & Ambient Depth', colors: ['#05070B', 'rgba(255,255,255,0.075)', '#8FA8FF', '#7DE3FF'] },
     { id: 'glassmorphism-light', name: 'Refractive Glass (Light)', tag: 'Light Translucent Glass & Soft Frost', colors: ['#E2E8F0', 'rgba(255,255,255,0.65)', '#4F46E5', '#0F172A'] },
     { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
@@ -775,7 +774,6 @@ function setupSupportModal() {
 }
 
 const LIGHT_THEMES = new Set([
-    'brutalist-editorial',
     'glassmorphism-light',
     'claymorphism',
     'neo-brutalist',
@@ -3013,7 +3011,7 @@ function renderPerformanceTrends() {
     const rawAccent = computedStyle.getPropertyValue('--accent-primary').trim() || '#6366f1';
     const activeTheme = document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
     const isLight = isThemeLight(activeTheme);
-    const sparklineColor = isLight ? (activeTheme === 'brutalist-editorial' ? '#000000' : (activeTheme === 'neo-brutalist' ? '#15803d' : rawAccent)) : rawAccent;
+    const sparklineColor = isLight ? (activeTheme === 'neo-brutalist' ? '#15803d' : rawAccent) : rawAccent;
 
     const validCourses = (state.attendance || []).filter(c => (parseInt(c.conducted, 10) || 0) > 0);
     
