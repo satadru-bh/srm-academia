@@ -9228,6 +9228,7 @@ button.mobile-nav-item.active {
     width: 32px !important;
     max-height: 32px !important;
     object-fit: contain !important;
+    transform: translateX(4px) !important;
 }
 
 .sidebar.collapsed .brand-name {

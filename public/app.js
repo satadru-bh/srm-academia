@@ -572,7 +572,7 @@ function setupThemeSelector() {
 
     function renderThemeOptions() {
         const currentActiveTheme = localStorage.getItem('srm_theme') || 'pitch-black';
-        const html = AVAILABLE_THEMES.filter(theme => theme.id !== 'claymorphism').map(theme => {
+        const html = AVAILABLE_THEMES.map(theme => {
             const isActive = theme.id === currentActiveTheme || (currentActiveTheme === 'dark' && theme.id === 'pitch-black') || (currentActiveTheme === 'light' && theme.id === 'clean-light');
             const activeClass = isActive ? 'active' : '';
             const checkIcon = isActive ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>` : '';
@@ -4607,6 +4607,12 @@ function dataURItoBlob(dataURI) {
 async function downloadTimetableImage() {
     const btn = document.getElementById('download-timetable-btn');
     const mobileBtn = document.getElementById('download-timetable-mobile-btn');
+    const activeTheme = document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
+    if (['glassmorphism', 'glassmorphism-light', 'neo-brutalist'].includes(activeTheme)) {
+        showLoginNotificationToast('Timetable export is not supported in this theme. Please switch to another theme (such as Clean Light/Dark or Claymorphism) to export your timetable image.');
+        return;
+    }
+
     const card = document.getElementById('timetable-matrix-card') || document.querySelector('.timetable-matrix-card');
     const scrollWrapper = document.querySelector('.timetable-matrix-scroll-wrapper');
     const table = document.querySelector('.timetable-matrix-table');
