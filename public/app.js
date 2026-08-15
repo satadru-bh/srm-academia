@@ -1773,14 +1773,17 @@ function showAuthScreen() {
 
 /**
  * Demo / Testing Account Sample Payload
- * Allows instant login for app designing and offline UI testing
+ * Generates full sample attendance, detailed internal marks, credit weighted GPA (~9.42), timetable and planner data
  */
-function getDemoAccountPayload() {
+function getDemoAccountPayload(customEmail = 'satadru@srmist.edu.in') {
+    const rawUser = String(customEmail).split('@')[0];
+    const displayName = rawUser.charAt(0).toUpperCase() + rawUser.slice(1);
+
     return {
         success: true,
         isDemoAccount: true,
         studentInfo: {
-            name: "Satadru Bhattacharya (Demo Account)",
+            name: `${displayName} (Testing Account)`,
             registerNo: "RA2111003010999",
             regNo: "RA2111003010999",
             department: "Computer Science & Engineering",
@@ -1924,10 +1927,65 @@ function getDemoAccountPayload() {
             ]
         },
         marks: [
-            { code: "21CSC202J", course: "Operating Systems", ct1: "22/25", ct2: "24/25", assignment: "10/10", total: "56/60" },
-            { code: "21CSC203J", course: "Database Management Systems", ct1: "25/25", ct2: "23/25", assignment: "10/10", total: "58/60" },
-            { code: "21CSC204J", course: "Computer Networks", ct1: "18/25", ct2: "20/25", assignment: "9/10", total: "47/60" },
-            { code: "21CSC205J", course: "Software Engineering", ct1: "24/25", ct2: "25/25", assignment: "10/10", total: "59/60" }
+            {
+                courseCode: "21CSC202J",
+                courseTitle: "Operating Systems",
+                courseType: "THEORY",
+                assessments: {
+                    "Career Test 1": { assessment: "Career Test 1", obtainedMarks: 23.5, maxMarks: 25 },
+                    "Career Test 2": { assessment: "Career Test 2", obtainedMarks: 24.0, maxMarks: 25 },
+                    "Assignment 1": { assessment: "Assignment 1", obtainedMarks: 10.0, maxMarks: 10 }
+                }
+            },
+            {
+                courseCode: "21CSC203J",
+                courseTitle: "Database Management Systems",
+                courseType: "LAB & THEORY",
+                assessments: {
+                    "Career Test 1": { assessment: "Career Test 1", obtainedMarks: 25.0, maxMarks: 25 },
+                    "Career Test 2": { assessment: "Career Test 2", obtainedMarks: 23.0, maxMarks: 25 },
+                    "Lab Model Exam": { assessment: "Lab Model Exam", obtainedMarks: 10.0, maxMarks: 10 }
+                }
+            },
+            {
+                courseCode: "21CSC204J",
+                courseTitle: "Computer Networks",
+                courseType: "THEORY",
+                assessments: {
+                    "Career Test 1": { assessment: "Career Test 1", obtainedMarks: 18.0, maxMarks: 25 },
+                    "Career Test 2": { assessment: "Career Test 2", obtainedMarks: 20.0, maxMarks: 25 },
+                    "Assignment 1": { assessment: "Assignment 1", obtainedMarks: 9.0, maxMarks: 10 }
+                }
+            },
+            {
+                courseCode: "21CSC205J",
+                courseTitle: "Software Engineering",
+                courseType: "THEORY",
+                assessments: {
+                    "Career Test 1": { assessment: "Career Test 1", obtainedMarks: 24.0, maxMarks: 25 },
+                    "Career Test 2": { assessment: "Career Test 2", obtainedMarks: 25.0, maxMarks: 25 },
+                    "Project Demo": { assessment: "Project Demo", obtainedMarks: 10.0, maxMarks: 10 }
+                }
+            },
+            {
+                courseCode: "21CSE301T",
+                courseTitle: "Machine Learning Techniques",
+                courseType: "ELECTIVE",
+                assessments: {
+                    "Career Test 1": { assessment: "Career Test 1", obtainedMarks: 22.0, maxMarks: 25 },
+                    "Career Test 2": { assessment: "Career Test 2", obtainedMarks: 23.5, maxMarks: 25 },
+                    "Quiz": { assessment: "Quiz", obtainedMarks: 10.0, maxMarks: 10 }
+                }
+            },
+            {
+                courseCode: "21CSE302P",
+                courseTitle: "Full Stack Web Development",
+                courseType: "LAB",
+                assessments: {
+                    "Lab Model Exam": { assessment: "Lab Model Exam", obtainedMarks: 45.0, maxMarks: 50 },
+                    "Record & Viva": { assessment: "Record & Viva", obtainedMarks: 10.0, maxMarks: 10 }
+                }
+            }
         ],
         planner: [
             { date: "2026-08-01", type: "HOLIDAY", dayOrder: "HOLIDAY", event: "Enrolment Day Starts B.Tech" },
@@ -1938,22 +1996,6 @@ function getDemoAccountPayload() {
             { date: "2026-08-26", type: "HOLIDAY", dayOrder: "HOLIDAY", event: "Milad-un-Nabi - Holiday" }
         ]
     };
-}
-
-/**
- * Triggers instant login with demo testing account data
- */
-function triggerDemoAccountLogin() {
-    const emailInput = document.getElementById('email');
-    const passInput = document.getElementById('password');
-    if (emailInput) emailInput.value = 'test';
-    if (passInput) passInput.value = 'test';
-
-    const demoPayload = getDemoAccountPayload();
-    updateApplicationState(demoPayload);
-    showWorkspace();
-    updateStickySessionBanner(false);
-    createToast("Logged in with Demo Testing Account! Complete sample data loaded.", "success");
 }
 
 /**
@@ -1987,20 +2029,20 @@ async function handleLoginSubmission(e) {
         return;
     }
 
-    // CHECK FOR DEMO TESTING ACCOUNT (Username 'test' or 'demo')
-    const rawUser = email.split('@')[0];
-    if (rawUser === 'test' || rawUser === 'demo' || password.toLowerCase() === 'test' || password.toLowerCase() === 'demo') {
-        const demoPayload = getDemoAccountPayload();
-        updateApplicationState(demoPayload);
-        showWorkspace();
-        updateStickySessionBanner(false);
-        createToast("Logged in with Demo Testing Account! Complete sample data loaded.", "success");
-        return;
-    }
-
     // Automatically append domain if omitted by student
     if (!email.includes('@')) {
         email = `${email}@srmist.edu.in`;
+    }
+
+    // CHECK FOR EXPLICIT TEST CREDENTIALS ('test' or 'demo')
+    const rawUser = email.split('@')[0];
+    if (rawUser === 'test' || rawUser === 'demo' || password.toLowerCase() === 'test' || password.toLowerCase() === 'demo') {
+        const demoPayload = getDemoAccountPayload(email);
+        updateApplicationState(demoPayload);
+        showWorkspace();
+        updateStickySessionBanner(false);
+        createToast("Logged in with Testing Credentials! Complete sample data loaded.", "success");
+        return;
     }
 
     try {
@@ -2037,11 +2079,20 @@ async function handleLoginSubmission(e) {
             // Automatically trigger live data sync right after login everytime
             attemptAutomaticSync();
         } else {
-            showAuthError(data.error || "Unable to sign in. Please check your NetID and password.");
+            // IF LIVE LOGIN FAILS OR SERVER UNREACHABLE: Fallback to sample data for custom credentials!
+            const fallbackPayload = getDemoAccountPayload(email);
+            updateApplicationState(fallbackPayload);
+            showWorkspace();
+            updateStickySessionBanner(false);
+            createToast("Signed in with Custom Credentials (Testing Mode)! Complete sample data loaded.", "info");
         }
     } catch (err) {
-        showAuthError("Unable to connect to SRM server. Please check your network connection and try again.");
-        console.error(err);
+        // Network/Server Error Fallback: Allow custom credentials login with sample data
+        const fallbackPayload = getDemoAccountPayload(email);
+        updateApplicationState(fallbackPayload);
+        showWorkspace();
+        updateStickySessionBanner(false);
+        createToast("Signed in with Custom Credentials (Offline Testing Mode)! Sample data loaded.", "info");
     } finally {
         if (btn) btn.disabled = false;
         if (loader) loader.classList.add('hidden');
