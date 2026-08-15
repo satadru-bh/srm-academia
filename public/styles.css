@@ -530,7 +530,7 @@
     --glass-glow: 0 0 28px rgba(143, 168, 255, 0.24);
 
     /* Environment Tokens */
-    --glass-background-image: url("glass-bg.png"), radial-gradient(circle at 20% 20%, rgba(30, 41, 89, 0.85) 0%, rgba(8, 12, 24, 0.96) 65%), radial-gradient(circle at 80% 80%, rgba(143, 168, 255, 0.18) 0%, transparent 50%);
+    --glass-background-image: url("glass-bg.png?v=9"), radial-gradient(circle at 20% 20%, rgba(30, 41, 89, 0.85) 0%, rgba(8, 12, 24, 0.96) 65%), radial-gradient(circle at 80% 80%, rgba(143, 168, 255, 0.18) 0%, transparent 50%);
     --glass-atmosphere-bg: rgba(4, 7, 14, 0.28);
     --glass-atmosphere-blur: 12px;
     --glass-atmosphere-saturation: 1.15;
@@ -561,7 +561,7 @@
     width: 100vw;
     height: 100vh;
     z-index: -3;
-    background-image: url("glass-bg.png"), var(--glass-background-image);
+    background-image: url("glass-bg.png?v=9"), var(--glass-background-image);
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -12168,13 +12168,19 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     width: 100vw;
     height: 100vh;
     z-index: -3;
-    background-image: url("glass_bg_light.png"), linear-gradient(135deg, #E2E8F0 0%, #F1F5F9 50%, #E0E7FF 100%);
+    background-image: url("glass_bg_light.png?v=9"), linear-gradient(135deg, #E2E8F0 0%, #F1F5F9 50%, #E0E7FF 100%);
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
     transform: translateZ(0) scale(1.02);
     pointer-events: none;
     opacity: 0.98;
+}
+
+[data-theme="glassmorphism-light"] .auth-screen,
+[data-theme="glassmorphism-light"] #auth-screen {
+    background-color: transparent !important;
+    background: transparent !important;
 }
 
 [data-theme="glassmorphism-light"] body::after {
@@ -12593,4 +12599,121 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     transform: none !important;
     animation: none !important;
     transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+/* SLEEK RIGHT-ALIGNED LOGIN ERROR NOTIFICATION SYSTEM (ADJUSTS TO EVERY THEME) */
+.login-toast-container {
+    position: fixed !important;
+    top: 24px !important;
+    right: 24px !important;
+    z-index: 99999999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    max-width: 380px !important;
+    width: calc(100vw - 48px) !important;
+    pointer-events: none !important;
+}
+
+.login-error-toast {
+    pointer-events: auto !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+    padding: 16px 18px !important;
+    border-radius: var(--radius-lg, 14px) !important;
+    background: var(--bg-surface-elevated, rgba(15, 23, 42, 0.90)) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1.5px solid var(--accent-danger, #ef4444) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    color: var(--text-primary, #FFFFFF) !important;
+    font-family: var(--font-stack, sans-serif) !important;
+    animation: loginToastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    will-change: transform, opacity !important;
+}
+
+.login-error-toast.dismissed {
+    animation: loginToastSlideOut 0.25s ease-in forwards !important;
+}
+
+@keyframes loginToastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes loginToastSlideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+    }
+}
+
+.login-error-toast-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    border-radius: 50% !important;
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: var(--accent-danger, #ef4444) !important;
+    stroke: var(--accent-danger, #ef4444) !important;
+    flex-shrink: 0 !important;
+    margin-top: 1px !important;
+}
+
+.login-error-toast-content {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+.login-error-toast-title {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    color: var(--accent-danger, #ef4444) !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+}
+
+.login-error-toast-msg {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: var(--text-primary, #0F172A) !important;
+    line-height: 1.4 !important;
+    word-break: break-word !important;
+}
+
+.login-error-toast-close {
+    background: transparent !important;
+    border: none !important;
+    color: var(--text-muted, #94a3b8) !important;
+    cursor: pointer !important;
+    padding: 4px !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: color 0.15s ease, background 0.15s ease !important;
+    margin-left: 4px !important;
+    flex-shrink: 0 !important;
+}
+
+.login-error-toast-close:hover {
+    color: var(--text-primary, #ffffff) !important;
+    background: rgba(255, 255, 255, 0.10) !important;
 }

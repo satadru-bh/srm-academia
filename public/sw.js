@@ -1,11 +1,11 @@
-const CACHE_NAME = 'srm-academia-v8';
+const CACHE_NAME = 'srm-academia-v9';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './styles.css?v=8',
-  './app.js?v=8',
-  './glass-bg.png?v=8',
-  './glass_bg_light.png?v=8',
+  './styles.css?v=9',
+  './app.js?v=9',
+  './glass-bg.png?v=9',
+  './glass_bg_light.png?v=9',
   './favicon.png',
   './icon-192.png',
   './icon-512.png',
@@ -42,16 +42,18 @@ self.addEventListener('fetch', (event) => {
   // Never cache API requests
   if (url.pathname.startsWith('/api')) return;
 
-  // CORE ASSET NETWORK-FIRST STRATEGY (HTML, CSS, JS)
-  // Guarantees normal reloads always receive fresh, up-to-date layout & styles instantly!
-  const isCoreAsset = event.request.mode === 'navigate' ||
-                      url.pathname.endsWith('.html') ||
-                      url.pathname.endsWith('.css') ||
-                      url.pathname.endsWith('.js') ||
-                      url.pathname === '/' ||
-                      url.pathname === '';
+  // NETWORK-FIRST STRATEGY FOR ALL CORE ASSETS AND IMAGES
+  // Guarantees background images & layout changes reload fresh immediately!
+  const isNetworkFirst = event.request.mode === 'navigate' ||
+                         url.pathname.endsWith('.html') ||
+                         url.pathname.endsWith('.css') ||
+                         url.pathname.endsWith('.js') ||
+                         url.pathname.includes('glass-bg') ||
+                         url.pathname.includes('glass_bg_light') ||
+                         url.pathname === '/' ||
+                         url.pathname === '';
 
-  if (isCoreAsset) {
+  if (isNetworkFirst) {
     event.respondWith(
       fetch(event.request)
         .then((networkResponse) => {
@@ -73,7 +75,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Cache-First with Network fallback for static images/icons
+  // Cache-First fallback for static icons
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {

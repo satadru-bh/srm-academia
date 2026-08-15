@@ -1648,17 +1648,70 @@ async function attemptAutomaticSync() {
 
 function showAuthError(message) {
     const authError = document.getElementById('auth-error');
-    const authErrorText = document.getElementById('auth-error-text');
-    if (authError && authErrorText) {
-        authErrorText.textContent = message;
-        authError.classList.remove('hidden');
+    if (authError) {
+        authError.classList.add('hidden');
     }
+
+    if (!message || typeof message !== 'string') return;
+
+    let toastContainer = document.getElementById('login-toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'login-toast-container';
+        toastContainer.className = 'login-toast-container';
+        document.body.appendChild(toastContainer);
+    }
+
+    toastContainer.innerHTML = '';
+
+    const toast = document.createElement('div');
+    toast.className = 'login-error-toast';
+    toast.innerHTML = `
+        <div class="login-error-toast-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+        </div>
+        <div class="login-error-toast-content">
+            <span class="login-error-toast-title">Sign-In Error</span>
+            <span class="login-error-toast-msg">${message}</span>
+        </div>
+        <button type="button" class="login-error-toast-close" title="Dismiss notification">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    `;
+
+    const closeBtn = toast.querySelector('.login-error-toast-close');
+    if (closeBtn) {
+        closeBtn.onclick = () => {
+            toast.classList.add('dismissed');
+            setTimeout(() => toast.remove(), 250);
+        };
+    }
+
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.classList.add('dismissed');
+            setTimeout(() => toast.remove(), 250);
+        }
+    }, 6000);
 }
 
 function hideAuthError() {
     const authError = document.getElementById('auth-error');
     if (authError) {
         authError.classList.add('hidden');
+    }
+    const toastContainer = document.getElementById('login-toast-container');
+    if (toastContainer) {
+        toastContainer.innerHTML = '';
     }
 }
 
