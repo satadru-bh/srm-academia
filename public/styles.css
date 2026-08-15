@@ -12425,3 +12425,153 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     border: 2px solid #4F46E5 !important;
     box-shadow: 0 0 16px rgba(79, 70, 229, 0.25), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
 }
+
+/* Light Glass Calendar Day Cards & Event Badges */
+[data-theme="glassmorphism-light"] .calendar-day-cell,
+[data-theme="glassmorphism-light"] .planner-mobile-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.18) 100%) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.60) !important;
+    border-radius: 10px !important;
+    color: #0F172A !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70) !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell:hover,
+[data-theme="glassmorphism-light"] .planner-mobile-card:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.28) 100%) !important;
+    border-color: rgba(255, 255, 255, 0.85) !important;
+    transform: none !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.today {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.22) 0%, rgba(99, 102, 241, 0.12) 100%) !important;
+    border: 2px solid #4F46E5 !important;
+    box-shadow: 0 0 16px rgba(79, 70, 229, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.90) !important;
+    color: #312E81 !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.holiday,
+[data-theme="glassmorphism-light"] .planner-mobile-card.holiday {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(248, 113, 113, 0.08) 100%) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    border: 1.5px solid rgba(239, 68, 68, 0.35) !important;
+    color: #991B1B !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70) !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.holiday .day-number,
+[data-theme="glassmorphism-light"] .calendar-day-cell.holiday div[title],
+[data-theme="glassmorphism-light"] .calendar-day-cell.holiday span {
+    color: #991B1B !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.milestone,
+[data-theme="glassmorphism-light"] .planner-mobile-card.milestone {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(52, 211, 153, 0.08) 100%) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    border: 1.5px solid rgba(16, 185, 129, 0.35) !important;
+    color: #065F46 !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70) !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.milestone .day-number,
+[data-theme="glassmorphism-light"] .calendar-day-cell.milestone div[title],
+[data-theme="glassmorphism-light"] .calendar-day-cell.milestone span {
+    color: #065F46 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement,
+[data-theme="glassmorphism-light"] .planner-mobile-card.commencement {
+    background: linear-gradient(135deg, rgba(147, 51, 234, 0.18) 0%, rgba(192, 132, 252, 0.08) 100%) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    border: 1.5px solid rgba(147, 51, 234, 0.35) !important;
+    color: #581C87 !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70) !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement .day-number,
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement div[title],
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement span {
+    color: #581C87 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-cell-day-order,
+[data-theme="glassmorphism-light"] .calendar-day-cell.holiday .calendar-cell-day-order,
+[data-theme="glassmorphism-light"] .calendar-day-cell.milestone .calendar-cell-day-order,
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement .calendar-cell-day-order {
+    background: rgba(255, 255, 255, 0.60) !important;
+    border: 1px solid rgba(255, 255, 255, 0.80) !important;
+    color: #0F172A !important;
+    font-weight: 800 !important;
+}
+
+/* POPUP MENUS READABLE OPACITY & FROSTED GLASS FIX (BOTH GLASS THEMES) */
+[data-theme="glassmorphism"] .modal-card,
+[data-theme="glassmorphism"] .theme-dropdown-menu,
+[data-theme="glassmorphism"] .dev-drawer,
+[data-theme="glassmorphism"] .user-dropdown-menu,
+[data-theme="glassmorphism"] .quick-prediction-modal,
+[data-theme="glassmorphism"] #calendar-modal-card,
+[data-theme="glassmorphism"] .planner-event-popover,
+[data-theme="glassmorphism"] .calendar-day-popover,
+[data-theme="glassmorphism"] .popover,
+[data-theme="glassmorphism"] .dropdown-menu {
+    background: rgba(10, 15, 28, 0.92) !important;
+    backdrop-filter: blur(28px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="glassmorphism-light"] .modal-card,
+[data-theme="glassmorphism-light"] .theme-dropdown-menu,
+[data-theme="glassmorphism-light"] .dev-drawer,
+[data-theme="glassmorphism-light"] .user-dropdown-menu,
+[data-theme="glassmorphism-light"] .quick-prediction-modal,
+[data-theme="glassmorphism-light"] #calendar-modal-card,
+[data-theme="glassmorphism-light"] .planner-event-popover,
+[data-theme="glassmorphism-light"] .calendar-day-popover,
+[data-theme="glassmorphism-light"] .popover,
+[data-theme="glassmorphism-light"] .dropdown-menu {
+    background: rgba(255, 255, 255, 0.90) !important;
+    backdrop-filter: blur(28px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+    color: #0F172A !important;
+}
+
+/* REMOVE HOVER ANIMATIONS FROM PLANNER POPUPS & CALENDAR CARDS */
+#calendar-modal-card,
+#calendar-event-modal,
+.planner-event-popover,
+.calendar-day-popover,
+.popover,
+.calendar-day-cell,
+.planner-mobile-card {
+    transform: none !important;
+    animation: none !important;
+}
+
+.calendar-day-cell:hover,
+.planner-mobile-card:hover,
+.modal-card:hover,
+.planner-event-popover:hover,
+.calendar-day-popover:hover,
+.popover:hover {
+    transform: none !important;
+    animation: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
