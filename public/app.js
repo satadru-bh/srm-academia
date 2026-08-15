@@ -2239,7 +2239,7 @@ async function handleSyncRequest() {
 
             createToast("SRM session expired. Please sign in again.", "warning");
             updateStickySessionBanner(true);
-            showAuthModal();
+            showAuthScreen();
             return;
         }
 
@@ -2275,7 +2275,7 @@ async function handleSyncRequest() {
             }
             createToast("SRM session expired. Please sign in again.", "warning");
             updateStickySessionBanner(true);
-            showAuthModal();
+            showAuthScreen();
             return;
         }
 
@@ -4969,6 +4969,7 @@ function renderAcademicsPane() {
             `;
         } else {
             keys.forEach(k => {
+                const test = item.assessments[k] || {};
                 let obtainedText = test.status === "ABSENT" ? "ABSENT" : (test.obtainedMarks !== undefined && test.obtainedMarks !== null ? test.obtainedMarks : 0);
                 if (typeof obtainedText === 'string' && obtainedText.toUpperCase().includes('PENDING')) obtainedText = 0;
                 assessmentsHtml += `
