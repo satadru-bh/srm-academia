@@ -12760,3 +12760,111 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 .sidebar-toggle {
     display: none !important;
 }
+
+/* UNIVERSAL SYMMETRICAL MAIN CONTENT & TOP NAVBAR ALIGNMENT (ALL THEMES & PLATFORMS) */
+.main-viewport,
+[data-theme="neo-brutalist"] .main-viewport {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    padding-top: 20px !important;
+    padding-bottom: 48px !important;
+}
+
+.workspace-header,
+[data-theme="neo-brutalist"] .workspace-header {
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 24px !important;
+    box-sizing: border-box !important;
+}
+
+#content-views {
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+}
+
+.view-pane,
+.view-pane.active,
+[data-theme="neo-brutalist"] .view-pane,
+[data-theme="neo-brutalist"] .view-pane.active {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 991px) {
+    .main-viewport,
+    [data-theme="neo-brutalist"] .main-viewport {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    .workspace-header,
+    #content-views {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* NEO-BRUTALIST HIGH-CONTRAST TEXT & BADGES VISIBILITY FIX */
+[data-theme="neo-brutalist"] .type-pill {
+    color: #000000 !important;
+    font-weight: 900 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .type-pill.theory {
+    background-color: #DDD6FE !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .type-pill.practical {
+    background-color: #BAE6FD !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .type-pill.joint {
+    background-color: #A7F3D0 !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .marks-course-code-badge,
+[data-theme="neo-brutalist"] .marks-course-credit-badge,
+[data-theme="neo-brutalist"] .course-credit-tag {
+    color: #000000 !important;
+    font-weight: 900 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .marks-course-credit-badge,
+[data-theme="neo-brutalist"] .course-credit-tag {
+    background-color: #CCFF00 !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .marks-course-code-badge {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] #courses-sum-count,
+[data-theme="neo-brutalist"] #courses-sum-credits,
+[data-theme="neo-brutalist"] #courses-sum-split,
+[data-theme="neo-brutalist"] #courses-sum-attn,
+[data-theme="neo-brutalist"] .courses-sum-value {
+    color: #000000 !important;
+    font-weight: 900 !important;
+}

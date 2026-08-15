@@ -1819,7 +1819,9 @@ function getDemoAccountPayload(customEmail = 'satadru@srmist.edu.in') {
                 attendancePercentage: 87.5,
                 faculty: "Dr. A. Saravanan",
                 facultyName: "Dr. A. Saravanan",
-                margin: 4
+                margin: 4,
+                slot: "A1",
+                room: "TP-401"
             },
             {
                 code: "21CSC203J",
@@ -1843,7 +1845,9 @@ function getDemoAccountPayload(customEmail = 'satadru@srmist.edu.in') {
                 attendancePercentage: 95.0,
                 faculty: "Dr. R. Priya",
                 facultyName: "Dr. R. Priya",
-                margin: 8
+                margin: 8,
+                slot: "B1",
+                room: "TP-402"
             },
             {
                 code: "21CSC204J",
@@ -1867,7 +1871,9 @@ function getDemoAccountPayload(customEmail = 'satadru@srmist.edu.in') {
                 attendancePercentage: 77.78,
                 faculty: "Prof. K. Venkatesh",
                 facultyName: "Prof. K. Venkatesh",
-                margin: 1
+                margin: 1,
+                slot: "C1",
+                room: "TP-403"
             },
             {
                 code: "21CSC205J",
@@ -1891,7 +1897,9 @@ function getDemoAccountPayload(customEmail = 'satadru@srmist.edu.in') {
                 attendancePercentage: 93.75,
                 faculty: "Dr. M. Lakshmi",
                 facultyName: "Dr. M. Lakshmi",
-                margin: 6
+                margin: 6,
+                slot: "D1",
+                room: "TP-404"
             },
             {
                 code: "21CSE301T",
@@ -1915,7 +1923,9 @@ function getDemoAccountPayload(customEmail = 'satadru@srmist.edu.in') {
                 attendancePercentage: 91.67,
                 faculty: "Dr. S. Ramesh",
                 facultyName: "Dr. S. Ramesh",
-                margin: 4
+                margin: 4,
+                slot: "E1",
+                room: "TP-501"
             },
             {
                 code: "21CSE302P",
@@ -1939,7 +1949,9 @@ function getDemoAccountPayload(customEmail = 'satadru@srmist.edu.in') {
                 attendancePercentage: 90.0,
                 faculty: "Dr. N. Karthik",
                 facultyName: "Dr. N. Karthik",
-                margin: 3
+                margin: 3,
+                slot: "P1",
+                room: "LAB-2"
             },
             {
                 code: "21PD101",
@@ -1963,7 +1975,9 @@ function getDemoAccountPayload(customEmail = 'satadru@srmist.edu.in') {
                 attendancePercentage: 100.0,
                 faculty: "Mrs. G. Kavitha",
                 facultyName: "Mrs. G. Kavitha",
-                margin: 3
+                margin: 3,
+                slot: "F1",
+                room: "TP-301"
             }
         ],
         mergedTimetable: {
@@ -5064,6 +5078,8 @@ function renderCoursesPane() {
             obj.attendance = item.attendance !== null && item.attendance !== undefined ? parseFloat(item.attendance) : (obj.conducted > 0 ? ((obj.present / obj.conducted) * 100) : 0);
             obj.credits = getCourseCredit(obj.title, obj.code);
             if (facultyStr && !obj.faculty) obj.faculty = cleanFacultyName(facultyStr);
+            if (item.slot) obj.slots.add(item.slot);
+            if (item.room) obj.rooms.add(item.room.replace(/^Room\s+/i, ''));
         }
     });
 
