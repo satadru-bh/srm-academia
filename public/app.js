@@ -4932,24 +4932,15 @@ function renderAcademicsPane() {
     const container = document.getElementById('marks-subject-container');
     if (!container) return;
 
-    let marksDataset = state.marks || [];
+    const marksDataset = state.marks || [];
     if (!marksDataset || marksDataset.length === 0) {
-        const timetableCourses = new Set();
-        [...getSafeArray(state.attendance), ...getSafeArray(state.personalTimetable), ...getSafeArray(state.unifiedTimetable)].forEach(item => {
-            const code = item.courseCode || item.code;
-            const title = item.course || item.subjectTitle;
-            if (code || title) timetableCourses.add(code || title);
-        });
-
-        let courseCodes = Array.from(timetableCourses);
-        if (courseCodes.length === 0) courseCodes = ['SUB001', 'SUB002', 'SUB003'];
-
-        marksDataset = courseCodes.map(code => ({
-            courseCode: code,
-            assessments: {
-                "Regular Assessment": { assessment: "Regular Assessment", obtainedMarks: 0, maxMarks: 0, status: "PASS" }
-            }
-        }));
+        container.innerHTML = `
+            <div class="card p-24 text-center" style="grid-column: 1 / -1; background: var(--bg-surface-elevated); border-radius: var(--radius-xl); border: 1px solid var(--border-subtle);">
+                <h3 style="margin: 0 0 6px 0; font-size: 16px; font-weight: 800; color: var(--text-primary);">No Internal Marks Data Available</h3>
+                <p style="margin: 0; font-size: 13px; color: var(--text-secondary);">Sync your Academia account to view detailed assessment marks.</p>
+            </div>
+        `;
+        return;
     }
 
     let html = '';
@@ -4960,21 +4951,19 @@ function renderAcademicsPane() {
         if (keys.length === 0) {
             assessmentsHtml = `
                 <div class="assessment-item" style="display: flex; align-items: center; justify-content: space-between; background-color: var(--bg-surface-elevated); border-radius: var(--radius-md); padding: 12px 16px; border: 1px solid var(--border-subtle);">
-                    <span class="assessment-name" style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">Regular Assessment</span>
+                    <span class="assessment-name" style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">No Assessments Recorded</span>
                     <div class="assessment-scores">
-                        <span class="assessment-obtained" style="font-size: 18px; font-weight: 900; line-height: 1.1; color: var(--text-primary);">0</span>
-                        <span class="assessment-total" style="font-size: 11px; color: var(--text-muted);">/ 0</span>
+                        <span class="assessment-obtained" style="font-size: 16px; font-weight: 800; color: var(--text-muted);">0</span>
                     </div>
                 </div>
             `;
         } else {
             keys.forEach(k => {
                 const test = item.assessments[k] || {};
-                let obtainedText = test.status === "ABSENT" ? "ABSENT" : (test.obtainedMarks !== undefined && test.obtainedMarks !== null ? test.obtainedMarks : 0);
-                if (typeof obtainedText === 'string' && obtainedText.toUpperCase().includes('PENDING')) obtainedText = 0;
+                const obtainedText = test.status === "ABSENT" ? "ABSENT" : (test.obtainedMarks !== undefined && test.obtainedMarks !== null ? test.obtainedMarks : 0);
                 assessmentsHtml += `
                     <div class="assessment-item" style="display: flex; align-items: center; justify-content: space-between; background-color: var(--bg-surface-elevated); border-radius: var(--radius-md); padding: 12px 16px; border: 1px solid var(--border-subtle);">
-                        <span class="assessment-name" style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">${test.assessment}</span>
+                        <span class="assessment-name" style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">${test.assessment || k}</span>
                         <div class="assessment-scores">
                             <span class="assessment-obtained" style="font-size: 18px; font-weight: 900; line-height: 1.1; color: ${test.status === "ABSENT" ? 'var(--accent-danger)' : 'var(--text-primary)'}">${obtainedText}</span>
                             <span class="assessment-total" style="font-size: 11px; color: var(--text-muted);">/ ${test.maxMarks || 0}</span>
@@ -4985,7 +4974,7 @@ function renderAcademicsPane() {
         }
 
         const matchingAttn = (state.attendance || []).find(a => (a.code || '').toUpperCase().trim() === (item.courseCode || '').toUpperCase().trim());
-        const fullCourseName = matchingAttn ? (matchingAttn.course || item.courseCode) : item.courseCode;
+        const fullCourseName = matchingAttn ? (matchingAttn.course || item.courseCode) : (item.subject || item.courseCode);
         const credits = getCourseCredit(fullCourseName, item.courseCode);
 
         html += `
@@ -4993,8 +4982,8 @@ function renderAcademicsPane() {
                 <div class="card-header" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 8px; padding: 18px 20px; border-bottom: 1px solid var(--border-subtle); min-height: 104px; box-sizing: border-box;">
                     <h3 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 800; color: var(--text-primary); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; max-height: 2.7em;" title="${fullCourseName}">${fullCourseName}</h3>
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                        <span class="marks-course-code-badge" style="font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 12px; background: var(--bg-surface-elevated); color: var(--text-secondary); font-family: var(--font-mono, monospace); display: inline-block;">${item.courseCode}</span>
-                        <span class="marks-course-credit-badge" style="font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 12px; background: var(--accent-primary-subtle); color: var(--accent-primary); font-family: var(--font-mono, monospace); display: inline-block;">${credits} Credit${credits === 1 ? '' : 's'}</span>
+                        <span class="marks-course-code-badge">${item.courseCode}</span>
+                        <span class="marks-course-credit-badge">${credits} Credit${credits === 1 ? '' : 's'}</span>
                     </div>
                 </div>
                 <div class="card-body" style="padding: 20px;">
