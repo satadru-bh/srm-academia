@@ -13056,3 +13056,19 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     color: #FFB000 !important;
     background: rgba(255, 176, 0, 0.15) !important;
 }
+
+/* EXPLICIT BUTTON CHILD SPAN CLEANUP (NO DOUBLE CAPSULE PILL OVERLAP) */
+button span,
+.btn span,
+.btn-primary span,
+.btn-secondary span,
+#download-timetable-btn span,
+#download-timetable-mobile-btn span {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}

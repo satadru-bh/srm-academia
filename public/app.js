@@ -1651,7 +1651,7 @@ async function attemptAutomaticSync() {
     }
 }
 
-function showAuthError(message) {
+function showAuthError(message, title = 'Sign-In Error') {
     const authError = document.getElementById('auth-error');
     if (authError) {
         authError.classList.add('hidden');
@@ -1680,7 +1680,7 @@ function showAuthError(message) {
             </svg>
         </div>
         <div class="login-error-toast-content">
-            <span class="login-error-toast-title">Sign-In Error</span>
+            <span class="login-error-toast-title">${title}</span>
             <span class="login-error-toast-msg">${message}</span>
         </div>
         <button type="button" class="login-error-toast-close" title="Dismiss notification">
@@ -4609,7 +4609,7 @@ async function downloadTimetableImage() {
     const mobileBtn = document.getElementById('download-timetable-mobile-btn');
     const activeTheme = document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
     if (['glassmorphism', 'glassmorphism-light', 'neo-brutalist', 'claymorphism'].includes(activeTheme)) {
-        showLoginNotificationToast('Timetable export is not supported in this theme. Please switch to a supported theme before exporting.');
+        showAuthError('Timetable export is not supported in this theme. Please switch to a supported theme before exporting.', 'Export Not Supported');
         return;
     }
 
