@@ -12362,18 +12362,23 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.80) !important;
 }
 
-/* Translucent Buttons & Controls in Glass Themes — No Harsh Outline Borders around text/buttons */
-[data-theme="glassmorphism-light"] .nav-item,
-[data-theme="glassmorphism"] .nav-item,
-[data-theme="glassmorphism-light"] .switch-accounts-btn,
-[data-theme="glassmorphism"] .switch-accounts-btn,
-[data-theme="glassmorphism-light"] .theme-trigger-button,
-[data-theme="glassmorphism"] .theme-trigger-button,
-[data-theme="glassmorphism-light"] .more-menu-item,
-[data-theme="glassmorphism"] .more-menu-item {
+/* Remove Box/Border Outlines around Text Badges, Pills & Labels in Glass Themes */
+[data-theme="glassmorphism"] .type-pill,
+[data-theme="glassmorphism-light"] .type-pill,
+[data-theme="glassmorphism"] .marks-course-code-badge,
+[data-theme="glassmorphism-light"] .marks-course-code-badge,
+[data-theme="glassmorphism"] .marks-course-credit-badge,
+[data-theme="glassmorphism-light"] .marks-course-credit-badge,
+[data-theme="glassmorphism"] .attendance-section-count,
+[data-theme="glassmorphism-light"] .attendance-section-count,
+[data-theme="glassmorphism"] .attendance-code-tag,
+[data-theme="glassmorphism-light"] .attendance-code-tag,
+[data-theme="glassmorphism"] .attendance-room-tag,
+[data-theme="glassmorphism-light"] .attendance-room-tag {
+    background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    color: #0F172A !important;
+    padding: 0 4px !important;
 }
 
 /* Hover States — Never Turn Text Pure White on Light/Translucent Buttons */

@@ -4975,8 +4975,8 @@ function renderAcademicsPane() {
                 <div class="card-header" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 8px; padding: 18px 20px; border-bottom: 1px solid var(--border-subtle); min-height: 104px; box-sizing: border-box;">
                     <h3 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 800; color: var(--text-primary); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; max-height: 2.7em;" title="${fullCourseName}">${fullCourseName}</h3>
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                        <span class="marks-course-code-badge" style="font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 12px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); color: var(--text-secondary); font-family: var(--font-mono, monospace); display: inline-block;">${item.courseCode}</span>
-                        <span class="marks-course-credit-badge" style="font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 12px; background: var(--accent-primary-subtle); border: 1px solid var(--border-subtle); color: var(--accent-primary); font-family: var(--font-mono, monospace); display: inline-block;">${credits} Credit${credits === 1 ? '' : 's'}</span>
+                        <span class="marks-course-code-badge" style="font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 12px; background: var(--bg-surface-elevated); color: var(--text-secondary); font-family: var(--font-mono, monospace); display: inline-block;">${item.courseCode}</span>
+                        <span class="marks-course-credit-badge" style="font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 12px; background: var(--accent-primary-subtle); color: var(--accent-primary); font-family: var(--font-mono, monospace); display: inline-block;">${credits} Credit${credits === 1 ? '' : 's'}</span>
                     </div>
                 </div>
                 <div class="card-body" style="padding: 20px;">
@@ -5000,12 +5000,12 @@ function detectCourseCategory(code = '', category = '', slots = new Set()) {
     const slotsStr = Array.from(slots || []).join(' ').toUpperCase();
 
     if (codeUpper.endsWith('J') || catUpper.includes('JOINT') || catUpper.includes('EMBEDDED') || (slotsStr.includes('P') && /[ABCDEF]/.test(slotsStr))) {
-        return { label: 'Joint', style: 'background: rgba(99, 230, 190, 0.18); border: 1px solid rgba(135, 240, 208, 0.35); color: #63E6BE;' };
+        return { label: 'Joint', style: 'background: rgba(99, 230, 190, 0.18); color: #63E6BE;' };
     }
     if (codeUpper.endsWith('P') || catUpper.includes('LAB') || catUpper.includes('PRACTICAL') || catUpper === 'P') {
-        return { label: 'Practical', style: 'background: rgba(74, 190, 255, 0.18); border: 1px solid rgba(111, 210, 255, 0.35); color: #7DE3FF;' };
+        return { label: 'Practical', style: 'background: rgba(74, 190, 255, 0.18); color: #7DE3FF;' };
     }
-    return { label: 'Theory', style: 'background: rgba(164, 140, 255, 0.18); border: 1px solid rgba(188, 170, 255, 0.35); color: #A7BEFF;' };
+    return { label: 'Theory', style: 'background: rgba(164, 140, 255, 0.18); color: #A7BEFF;' };
 }
 
 /**
