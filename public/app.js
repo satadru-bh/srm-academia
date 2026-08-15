@@ -179,6 +179,7 @@ const AVAILABLE_THEMES = [
     { id: 'glassmorphism', name: 'Refractive Glassmorphism', tag: 'Translucent Glass & Ambient Depth', colors: ['#05070B', 'rgba(255,255,255,0.075)', '#8FA8FF', '#7DE3FF'] },
     { id: 'glassmorphism-light', name: 'Refractive Glass (Light)', tag: 'Light Translucent Glass & Soft Frost', colors: ['#E2E8F0', 'rgba(255,255,255,0.65)', '#4F46E5', '#0F172A'] },
     { id: 'neo-brutalist', name: 'Neo-Brutalist Light', tag: 'Electric Lime & High Contrast', colors: ['#FAF9F5', '#ffffff', '#ccff00', '#000000'] },
+    { id: 'claymorphism', name: 'Claymorphism 3D', tag: 'Soft 3D Tactile Pastel Depth', colors: ['#E0E7FF', '#FFFFFF', '#6366F1', '#4F46E5'] },
     { id: 'retro-computing', name: 'Retro Computing', tag: 'Classic Workstation & Embossed Bevels', colors: ['#ECE9E1', '#F7F5F0', '#2D5B4F', '#1E1E1E'] },
     { id: 'clean-light', name: 'Clean Light', tag: 'Polished Minimal Slate', colors: ['#F8FAFC', '#FFFFFF', '#0F172A', '#2563EB'] },
     { id: 'clean-dark', name: 'Clean Dark (OLED)', tag: 'Pure Black OLED & Indigo', colors: ['#000000', '#000000', '#FFFFFF', '#6366F1'] },

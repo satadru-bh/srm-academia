@@ -12879,6 +12879,33 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     flex-shrink: 0 !important;
 }
 
+/* Base Course Code & Credit Badges Layout (ALL THEMES) */
+.marks-course-code-badge,
+.marks-course-credit-badge,
+.course-code-badge,
+.course-credit-tag {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    padding: 3px 10px !important;
+    border-radius: 10px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: var(--font-mono, monospace) !important;
+    letter-spacing: -0.01em !important;
+    box-sizing: border-box !important;
+    background: var(--bg-surface-solid, rgba(255, 255, 255, 0.70)) !important;
+    border: 1px solid var(--border-subtle, rgba(203, 213, 225, 0.60)) !important;
+    color: var(--text-secondary, #475569) !important;
+}
+
+.marks-course-credit-badge,
+.course-credit-tag {
+    background: var(--accent-primary-subtle, rgba(99, 102, 241, 0.15)) !important;
+    border: 1px solid var(--accent-primary-subtle, rgba(99, 102, 241, 0.30)) !important;
+    color: var(--accent-primary, #4F46E5) !important;
+}
+
 /* 1. NEO-BRUTALIST (STRICT BOLD BLACK BORDERS & 3D SHADOWS) */
 [data-theme="neo-brutalist"] .type-pill {
     color: #000000 !important;
