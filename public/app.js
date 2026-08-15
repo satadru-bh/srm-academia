@@ -4969,8 +4969,8 @@ function renderAcademicsPane() {
             `;
         } else {
             keys.forEach(k => {
-                const test = item.assessments[k];
-                const obtainedText = test.status === "ABSENT" ? "ABSENT" : test.obtainedMarks;
+                let obtainedText = test.status === "ABSENT" ? "ABSENT" : (test.obtainedMarks !== undefined && test.obtainedMarks !== null ? test.obtainedMarks : 0);
+                if (typeof obtainedText === 'string' && obtainedText.toUpperCase().includes('PENDING')) obtainedText = 0;
                 assessmentsHtml += `
                     <div class="assessment-item" style="display: flex; align-items: center; justify-content: space-between; background-color: var(--bg-surface-elevated); border-radius: var(--radius-md); padding: 12px 16px; border: 1px solid var(--border-subtle);">
                         <span class="assessment-name" style="font-size: 13px; font-weight: 700; color: var(--text-secondary);">${test.assessment}</span>

@@ -9816,10 +9816,10 @@ body.sidebar-open #attendance-fab-container,
     }
 }
 
-/* Medium Tablet / Mobile Viewports (< 992px) */
-@media (max-width: 992px) {
+/* Medium Tablet / Mobile Viewports (< 1024px) — Guarantees at least one navbar is ALWAYS visible */
+@media (max-width: 1024px) {
 
-    /* Hide Desktop Sidebar */
+    /* Hide Desktop Sidebar on all tablets and mobile screens */
     .sidebar {
         display: none !important;
     }
@@ -9855,8 +9855,7 @@ body.sidebar-open #attendance-fab-container,
         box-sizing: border-box !important;
     }
 
-
-    /* Floating Mobile Bottom Nav Bar */
+    /* Floating Mobile Bottom Nav Bar — Always visible on all tablets and phones */
     .mobile-bottom-nav {
         display: flex !important;
         position: fixed !important;
@@ -13228,4 +13227,58 @@ h6,
 .workspace-title,
 .nav-item {
     font-family: "Plus Jakarta Sans", "Inter", "Space Grotesk", system-ui, -apple-system, sans-serif !important;
+}
+
+/* 5. ULTRA-NARROW MOBILE VIEWPORTS (FOLD COVER DISPLAYS & THIN PHONES < 360px) */
+@media (max-width: 360px) {
+    .mobile-bottom-nav {
+        width: calc(100% - 10px) !important;
+        padding: 2px 4px !important;
+        height: 54px !important;
+        bottom: max(6px, env(safe-area-inset-bottom, 6px)) !important;
+    }
+
+    .mobile-nav-item,
+    button.mobile-nav-item {
+        padding: 4px 5px !important;
+    }
+
+    .mobile-nav-item svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .mobile-nav-item span {
+        font-size: 9px !important;
+    }
+
+    .workspace-header {
+        padding: 10px 8px !important;
+    }
+
+    .workspace-header-actions {
+        gap: 4px !important;
+    }
+
+    .theme-trigger-label {
+        display: none !important; /* Compact icon-only theme trigger on thin fold cover screens */
+    }
+
+    .main-viewport {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+
+    .card,
+    .attendance-grid-row,
+    .marks-card {
+        padding: 12px 10px !important;
+        border-radius: 16px !important;
+    }
+
+    .attn-highlights-row {
+        width: 100% !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px !important;
+    }
 }
