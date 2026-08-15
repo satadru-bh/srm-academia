@@ -12363,8 +12363,8 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.80) !important;
 }
 
-/* Buttons & Inputs */
-[data-theme="glassmorphism-light"] button,
+/* Buttons & Inputs (Excluding Mobile Nav Item Buttons) */
+[data-theme="glassmorphism-light"] button:not(.mobile-nav-item),
 [data-theme="glassmorphism-light"] .btn,
 [data-theme="glassmorphism-light"] .btn-secondary,
 [data-theme="glassmorphism-light"] input,
@@ -12374,6 +12374,50 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     color: #0F172A !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Mobile Navigation Bar Buttons in Light Glass — Transparent Inactive Items, Seamless Dock */
+[data-theme="glassmorphism-light"] .mobile-nav-item,
+[data-theme="glassmorphism-light"] button.mobile-nav-item,
+[data-theme="glassmorphism"] .mobile-nav-item,
+[data-theme="glassmorphism"] button.mobile-nav-item {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+[data-theme="glassmorphism-light"] .mobile-nav-item.active,
+[data-theme="glassmorphism-light"] button.mobile-nav-item.active,
+[data-theme="glassmorphism"] .mobile-nav-item.active,
+[data-theme="glassmorphism"] button.mobile-nav-item.active {
+    background: rgba(255, 255, 255, 0.60) !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    border-radius: 20px !important;
+    color: #4F46E5 !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="glassmorphism-light"] .mobile-nav-item.active svg,
+[data-theme="glassmorphism-light"] .mobile-nav-item.active span {
+    color: #4F46E5 !important;
+    stroke: #4F46E5 !important;
+}
+
+/* Timetable Cards & Slot Grids in Light Glass Theme — Slightly Higher Opacity (0.48) */
+[data-theme="glassmorphism-light"] .timetable-grid-container,
+[data-theme="glassmorphism-light"] .timetable-grid-section,
+[data-theme="glassmorphism-light"] .grid-class-cell,
+[data-theme="glassmorphism-light"] .timeline-slot-row,
+[data-theme="glassmorphism-light"] .matrix-td-cell,
+[data-theme="glassmorphism-light"] .overview-timeline-slot {
+    background: rgba(255, 255, 255, 0.48) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.70) !important;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
 }
 
 /* Floating Attendance Predictor Trigger Button — Black Text & Icon in Light Glass */
