@@ -9290,15 +9290,16 @@ button.mobile-nav-item.active {
     text-align: right !important;
     flex-shrink: 0 !important;
     margin-left: auto !important;
-    min-width: 220px !important;
+    min-width: 280px !important;
 }
 
 .attn-highlights-row {
-    display: grid !important;
-    grid-template-columns: 80px 100px !important;
-    gap: 16px !important;
-    justify-items: end !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: flex-end !important;
+    gap: 48px !important;
     text-align: right !important;
+    width: 100% !important;
 }
 
 .attn-highlight-box {
@@ -9306,7 +9307,8 @@ button.mobile-nav-item.active {
     flex-direction: column !important;
     align-items: flex-end !important;
     text-align: right !important;
-    width: 100% !important;
+    min-width: 90px !important;
+    white-space: nowrap !important;
 }
 
 .attn-highlight-label {
@@ -12746,4 +12748,9 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     margin: 0 !important;
     width: 18px !important;
     height: 18px !important;
+}
+
+#sidebar-toggle,
+.sidebar-toggle {
+    display: none !important;
 }
