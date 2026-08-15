@@ -12677,11 +12677,11 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="glassmorphism"] .calendar-day-popover,
 [data-theme="glassmorphism"] .popover,
 [data-theme="glassmorphism"] .dropdown-menu {
-    background: rgba(10, 15, 28, 0.92) !important;
-    backdrop-filter: blur(28px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
+    background: rgba(8, 12, 22, 0.96) !important;
+    backdrop-filter: blur(36px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(36px) saturate(200%) !important;
+    border: 1px solid rgba(190, 205, 255, 0.28) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
     color: #FFFFFF !important;
 }
 
@@ -12695,11 +12695,11 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="glassmorphism-light"] .calendar-day-popover,
 [data-theme="glassmorphism-light"] .popover,
 [data-theme="glassmorphism-light"] .dropdown-menu {
-    background: rgba(255, 255, 255, 0.90) !important;
-    backdrop-filter: blur(28px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.95) !important;
-    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    backdrop-filter: blur(36px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(36px) saturate(200%) !important;
+    border: 1px solid rgba(203, 213, 225, 0.85) !important;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.20), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
     color: #0F172A !important;
 }
 
