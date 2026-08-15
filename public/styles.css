@@ -1103,7 +1103,7 @@
 [data-theme="glassmorphism"] .mobile-nav-item.active {
     background: rgba(143, 168, 255, 0.22) !important;
     border: 1px solid rgba(175, 195, 255, 0.30) !important;
-    border-radius: var(--radius-md) !important;
+    border-radius: 22px !important;
     color: #FFFFFF !important;
     box-shadow: 0 0 16px rgba(143, 168, 255, 0.25) !important;
 }
@@ -8716,7 +8716,7 @@ button.mobile-nav-item.active {
     background: var(--accent-primary-subtle, rgba(249, 115, 22, 0.18)) !important;
     border: none !important;
     box-shadow: none !important;
-    border-radius: 16px !important;
+    border-radius: 22px !important;
     font-weight: 800 !important;
     padding: 6px 12px !important;
 }
@@ -12334,13 +12334,19 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     color: #FFFFFF !important;
 }
 
-/* Page Header */
+/* Page Header & Full Navbar Blur Coverage */
 [data-theme="glassmorphism-light"] .workspace-header,
-[data-theme="glassmorphism-light"] .header-container {
-    background: rgba(255, 255, 255, 0.50) !important;
-    backdrop-filter: blur(20px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
+[data-theme="glassmorphism-light"] .header-container,
+[data-theme="glassmorphism-light"] .page-header,
+[data-theme="glassmorphism-light"] .top-nav,
+[data-theme="glassmorphism-light"] .mobile-bottom-nav,
+[data-theme="glassmorphism-light"] .mobile-nav-container,
+[data-theme="glassmorphism-light"] .sidebar-header {
+    background: rgba(255, 255, 255, 0.35) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.65) !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.80) !important;
 }
 
 /* Buttons & Inputs */

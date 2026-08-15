@@ -1,9 +1,11 @@
-const CACHE_NAME = 'srm-academia-v6';
+const CACHE_NAME = 'srm-academia-v8';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './styles.css?v=6',
-  './app.js?v=6',
+  './styles.css?v=8',
+  './app.js?v=8',
+  './glass-bg.png?v=8',
+  './glass_bg_light.png?v=8',
   './favicon.png',
   './icon-192.png',
   './icon-512.png',
