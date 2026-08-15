@@ -12290,23 +12290,30 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     color: #FFFFFF !important;
 }
 
-/* Red Logout Button */
+/* Bold Red Logout Button */
 [data-theme="glassmorphism-light"] .logout-btn,
 [data-theme="glassmorphism-light"] #logout-btn,
 [data-theme="glassmorphism-light"] #dropdown-logout-btn,
 [data-theme="glassmorphism-light"] .user-dropdown-item.danger {
-    background: rgba(220, 38, 38, 0.10) !important;
-    border: 1px solid rgba(220, 38, 38, 0.30) !important;
-    color: #DC2626 !important;
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%) !important;
+    border: 1px solid #DC2626 !important;
+    color: #FFFFFF !important;
     font-weight: 700 !important;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35) !important;
 }
 
 [data-theme="glassmorphism-light"] .logout-btn svg,
 [data-theme="glassmorphism-light"] #logout-btn svg,
 [data-theme="glassmorphism-light"] #dropdown-logout-btn svg,
 [data-theme="glassmorphism-light"] .user-dropdown-item.danger svg {
-    stroke: #DC2626 !important;
-    color: #DC2626 !important;
+    stroke: #FFFFFF !important;
+    color: #FFFFFF !important;
+    fill: none !important;
+}
+
+[data-theme="glassmorphism-light"] .logout-btn span,
+[data-theme="glassmorphism-light"] #logout-btn span {
+    color: #FFFFFF !important;
 }
 
 [data-theme="glassmorphism-light"] .logout-btn:hover,
@@ -12315,8 +12322,8 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="glassmorphism-light"] .user-dropdown-item.danger:hover {
     background: #DC2626 !important;
     color: #FFFFFF !important;
-    border-color: #DC2626 !important;
-    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35) !important;
+    border-color: #B91C1C !important;
+    box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45) !important;
 }
 
 [data-theme="glassmorphism-light"] .logout-btn:hover svg,
@@ -12349,23 +12356,29 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     -webkit-backdrop-filter: blur(12px) !important;
 }
 
-/* Highlighted & Selected Buttons High Contrast Indigo Fill */
-[data-theme="glassmorphism-light"] .btn-primary,
-[data-theme="glassmorphism-light"] #overview-btn-today.active,
-[data-theme="glassmorphism-light"] #overview-btn-tomorrow.active,
-[data-theme="glassmorphism-light"] .tab-btn.active,
-[data-theme="glassmorphism-light"] .theme-option-card.active {
-    background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%) !important;
-    color: #FFFFFF !important;
-    border: 1px solid #4338CA !important;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-    font-weight: 700 !important;
+/* Floating Attendance Predictor Trigger Button — Black Text & Icon in Light Glass */
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn,
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn *,
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn span {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.95) !important;
+    color: #0F172A !important;
+    stroke: #0F172A !important;
+    fill: none !important;
+    font-weight: 800 !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
 }
 
-[data-theme="glassmorphism-light"] .btn-primary svg,
-[data-theme="glassmorphism-light"] .tab-btn.active svg {
-    stroke: #FFFFFF !important;
-    color: #FFFFFF !important;
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn svg,
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn svg * {
+    stroke: #0F172A !important;
+    color: #0F172A !important;
+    fill: none !important;
+}
+
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn:hover {
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 14px 36px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
 }
 
 /* Light Glass Timetable Matrix Styling (Matching Dark Glass Architecture) */
