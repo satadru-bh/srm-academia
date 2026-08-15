@@ -9175,6 +9175,7 @@ button.mobile-nav-item.active {
     width: 100% !important;
 }
 
+.sidebar:not(.collapsed) .sidebar-header .sidebar-brand,
 .sidebar:not(.collapsed) .sidebar-header .logo-wrapper {
     display: flex !important;
     align-items: center !important;
@@ -9185,17 +9186,19 @@ button.mobile-nav-item.active {
     text-align: left !important;
 }
 
-.sidebar:not(.collapsed) .brand-logo-img {
+.sidebar:not(.collapsed) .brand-logo-img,
+.sidebar:not(.collapsed) .sidebar-logo-img {
     display: block !important;
     margin: 0 !important;
-    height: 28px !important;
-    width: 28px !important;
-    max-height: 28px !important;
+    height: 32px !important;
+    width: 32px !important;
+    max-height: 32px !important;
     object-fit: contain !important;
 }
 
 .sidebar:not(.collapsed) .brand-name {
-    display: inline-block !important;
+    display: inline-flex !important;
+    align-items: center !important;
     font-size: 18px !important;
     font-weight: 800 !important;
     color: var(--text-primary) !important;
@@ -9207,6 +9210,7 @@ button.mobile-nav-item.active {
     padding: 18px 0 !important;
 }
 
+.sidebar.collapsed .sidebar-header .sidebar-brand,
 .sidebar.collapsed .sidebar-header .logo-wrapper {
     display: flex !important;
     align-items: center !important;
@@ -9216,12 +9220,13 @@ button.mobile-nav-item.active {
     text-align: center !important;
 }
 
-.sidebar.collapsed .brand-logo-img {
+.sidebar.collapsed .brand-logo-img,
+.sidebar.collapsed .sidebar-logo-img {
     display: block !important;
     margin: 0 auto !important;
-    height: 28px !important;
-    width: 28px !important;
-    max-height: 28px !important;
+    height: 32px !important;
+    width: 32px !important;
+    max-height: 32px !important;
     object-fit: contain !important;
 }
 
@@ -9290,16 +9295,17 @@ button.mobile-nav-item.active {
     text-align: right !important;
     flex-shrink: 0 !important;
     margin-left: auto !important;
-    min-width: 280px !important;
+    min-width: 264px !important;
 }
 
 .attn-highlights-row {
-    display: flex !important;
-    align-items: flex-end !important;
-    justify-content: flex-end !important;
-    gap: 48px !important;
+    display: grid !important;
+    grid-template-columns: 100px 140px !important;
+    gap: 24px !important;
+    justify-content: end !important;
+    align-items: end !important;
     text-align: right !important;
-    width: 100% !important;
+    width: 264px !important;
 }
 
 .attn-highlight-box {
@@ -9307,7 +9313,7 @@ button.mobile-nav-item.active {
     flex-direction: column !important;
     align-items: flex-end !important;
     text-align: right !important;
-    min-width: 90px !important;
+    width: 100% !important;
     white-space: nowrap !important;
 }
 
@@ -12347,27 +12353,79 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="glassmorphism-light"] .header-container,
 [data-theme="glassmorphism-light"] .page-header,
 [data-theme="glassmorphism-light"] .top-nav,
-[data-theme="glassmorphism-light"] .mobile-bottom-nav,
 [data-theme="glassmorphism-light"] .mobile-nav-container,
 [data-theme="glassmorphism-light"] .sidebar-header {
     background: rgba(255, 255, 255, 0.35) !important;
     backdrop-filter: blur(24px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.65) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45) !important;
     box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.80) !important;
 }
 
-/* Buttons & Inputs */
-[data-theme="glassmorphism-light"] button,
-[data-theme="glassmorphism-light"] .btn,
-[data-theme="glassmorphism-light"] .btn-secondary,
-[data-theme="glassmorphism-light"] input,
-[data-theme="glassmorphism-light"] select {
-    background: rgba(255, 255, 255, 0.65) !important;
-    border: 1px solid rgba(203, 213, 225, 0.7) !important;
+/* Translucent Buttons & Controls in Glass Themes — No Harsh Outline Borders around text/buttons */
+[data-theme="glassmorphism-light"] .nav-item,
+[data-theme="glassmorphism"] .nav-item,
+[data-theme="glassmorphism-light"] .switch-accounts-btn,
+[data-theme="glassmorphism"] .switch-accounts-btn,
+[data-theme="glassmorphism-light"] .theme-trigger-button,
+[data-theme="glassmorphism"] .theme-trigger-button,
+[data-theme="glassmorphism-light"] .more-menu-item,
+[data-theme="glassmorphism"] .more-menu-item {
+    border: none !important;
+    box-shadow: none !important;
     color: #0F172A !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Hover States — Never Turn Text Pure White on Light/Translucent Buttons */
+[data-theme="glassmorphism-light"] .nav-item:hover,
+[data-theme="glassmorphism-light"] .nav-item:hover span,
+[data-theme="glassmorphism-light"] .switch-accounts-btn:hover,
+[data-theme="glassmorphism-light"] .switch-accounts-btn:hover span,
+[data-theme="glassmorphism-light"] .btn-secondary:hover,
+[data-theme="glassmorphism-light"] .btn-secondary:hover span,
+[data-theme="glassmorphism-light"] .more-menu-item:hover,
+[data-theme="glassmorphism-light"] .more-menu-item:hover span {
+    color: #0F172A !important;
+    background: rgba(255, 255, 255, 0.70) !important;
+}
+
+[data-theme="glassmorphism-light"] .nav-item:hover svg,
+[data-theme="glassmorphism-light"] .nav-item:hover svg *,
+[data-theme="glassmorphism-light"] .switch-accounts-btn:hover svg,
+[data-theme="glassmorphism-light"] .switch-accounts-btn:hover svg * {
+    stroke: #0F172A !important;
+}
+
+/* Mobile Bottom Navigation Glass Dock & Backdrop Blur */
+[data-theme="glassmorphism-light"] .mobile-bottom-nav,
+[data-theme="glassmorphism"] .mobile-bottom-nav {
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(28px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.70) !important;
+    box-shadow: 0 10px 36px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.90) !important;
+}
+
+/* Remove Opaque Blocky Backgrounds & Vertical Dividers from Mobile Nav Item Buttons */
+[data-theme="glassmorphism-light"] .mobile-nav-item,
+[data-theme="glassmorphism"] .mobile-nav-item {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #334155 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+[data-theme="glassmorphism-light"] .mobile-nav-item.active,
+[data-theme="glassmorphism"] .mobile-nav-item.active {
+    background: rgba(255, 255, 255, 0.65) !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    border-radius: 20px !important;
+    color: #0F172A !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
 }
 
 /* Floating Attendance Predictor Trigger Button — Black Text & Icon in Light Glass */
