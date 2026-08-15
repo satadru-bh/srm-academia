@@ -1017,6 +1017,11 @@ function setupCustomClassModal() {
         loginForm.addEventListener('submit', handleLoginSubmission);
     }
 
+    const demoLoginBtn = document.getElementById('demo-account-login-btn');
+    if (demoLoginBtn) {
+        demoLoginBtn.addEventListener('click', triggerDemoAccountLogin);
+    }
+
     const togglePassBtn = document.getElementById('toggle-password-btn');
     const passInput = document.getElementById('password');
     if (togglePassBtn && passInput) {
@@ -1767,6 +1772,191 @@ function showAuthScreen() {
 }
 
 /**
+ * Demo / Testing Account Sample Payload
+ * Allows instant login for app designing and offline UI testing
+ */
+function getDemoAccountPayload() {
+    return {
+        success: true,
+        isDemoAccount: true,
+        studentInfo: {
+            name: "Satadru Bhattacharya (Demo Account)",
+            registerNo: "RA2111003010999",
+            regNo: "RA2111003010999",
+            department: "Computer Science & Engineering",
+            program: "B.Tech. CSE",
+            semester: "Semester 6",
+            year: "III Year",
+            section: "A1",
+            advisor: "Dr. A. Saravanan",
+            advisorName: "Dr. A. Saravanan",
+            batch: "2023 - 2027",
+            status: "ACTIVE"
+        },
+        attendance: [
+            {
+                code: "21CSC202J",
+                course: "Operating Systems",
+                courseName: "Operating Systems",
+                category: "THEORY",
+                type: "theory",
+                conducted: 48,
+                attended: 42,
+                percentage: "87.50",
+                faculty: "Dr. A. Saravanan",
+                facultyName: "Dr. A. Saravanan",
+                margin: 4
+            },
+            {
+                code: "21CSC203J",
+                course: "Database Management Systems",
+                courseName: "Database Management Systems",
+                category: "LAB & THEORY",
+                type: "lab",
+                conducted: 40,
+                attended: 38,
+                percentage: "95.00",
+                faculty: "Dr. R. Priya",
+                facultyName: "Dr. R. Priya",
+                margin: 8
+            },
+            {
+                code: "21CSC204J",
+                course: "Computer Networks",
+                courseName: "Computer Networks",
+                category: "THEORY",
+                type: "theory",
+                conducted: 36,
+                attended: 28,
+                percentage: "77.78",
+                faculty: "Prof. K. Venkatesh",
+                facultyName: "Prof. K. Venkatesh",
+                margin: 1
+            },
+            {
+                code: "21CSC205J",
+                course: "Software Engineering",
+                courseName: "Software Engineering",
+                category: "THEORY",
+                type: "theory",
+                conducted: 32,
+                attended: 30,
+                percentage: "93.75",
+                faculty: "Dr. M. Lakshmi",
+                facultyName: "Dr. M. Lakshmi",
+                margin: 6
+            },
+            {
+                code: "21CSE301T",
+                course: "Machine Learning Techniques",
+                courseName: "Machine Learning Techniques",
+                category: "ELECTIVE",
+                type: "theory",
+                conducted: 24,
+                attended: 22,
+                percentage: "91.67",
+                faculty: "Dr. S. Ramesh",
+                facultyName: "Dr. S. Ramesh",
+                margin: 4
+            },
+            {
+                code: "21CSE302P",
+                course: "Full Stack Web Development",
+                courseName: "Full Stack Web Development",
+                category: "LAB",
+                type: "lab",
+                conducted: 20,
+                attended: 18,
+                percentage: "90.00",
+                faculty: "Dr. N. Karthik",
+                facultyName: "Dr. N. Karthik",
+                margin: 3
+            },
+            {
+                code: "21PD101",
+                course: "Aptitude & Reasoning Skills",
+                courseName: "Aptitude & Reasoning Skills",
+                category: "SOFT SKILLS",
+                type: "theory",
+                conducted: 14,
+                attended: 14,
+                percentage: "100.00",
+                faculty: "Mrs. G. Kavitha",
+                facultyName: "Mrs. G. Kavitha",
+                margin: 3
+            }
+        ],
+        mergedTimetable: {
+            "DAY 1": [
+                { period: 1, course: "Operating Systems", code: "21CSC202J", room: "TP-401", slot: "A1" },
+                { period: 2, course: "Database Management Systems", code: "21CSC203J", room: "TP-402", slot: "B1" },
+                { period: 3, course: "Computer Networks", code: "21CSC204J", room: "TP-403", slot: "C1" },
+                { period: 4, course: "Software Engineering", code: "21CSC205J", room: "TP-404", slot: "D1" },
+                { period: 6, course: "Full Stack Web Lab", code: "21CSE302P", room: "LAB-2", slot: "P1" },
+                { period: 7, course: "Full Stack Web Lab", code: "21CSE302P", room: "LAB-2", slot: "P1" }
+            ],
+            "DAY 2": [
+                { period: 1, course: "Machine Learning Techniques", code: "21CSE301T", room: "TP-501", slot: "E1" },
+                { period: 2, course: "Operating Systems", code: "21CSC202J", room: "TP-401", slot: "A2" },
+                { period: 3, course: "DBMS Lab", code: "21CSC203J", room: "LAB-1", slot: "P2" },
+                { period: 4, course: "DBMS Lab", code: "21CSC203J", room: "LAB-1", slot: "P2" },
+                { period: 5, course: "Aptitude & Reasoning Skills", code: "21PD101", room: "TP-301", slot: "F1" }
+            ],
+            "DAY 3": [
+                { period: 1, course: "Computer Networks", code: "21CSC204J", room: "TP-403", slot: "C2" },
+                { period: 2, course: "Software Engineering", code: "21CSC205J", room: "TP-404", slot: "D2" },
+                { period: 3, course: "Machine Learning Techniques", code: "21CSE301T", room: "TP-501", slot: "E2" },
+                { period: 4, course: "Operating Systems", code: "21CSC202J", room: "TP-401", slot: "A3" }
+            ],
+            "DAY 4": [
+                { period: 1, course: "Database Management Systems", code: "21CSC203J", room: "TP-402", slot: "B2" },
+                { period: 2, course: "Computer Networks", code: "21CSC204J", room: "TP-403", slot: "C3" },
+                { period: 3, course: "Full Stack Web Lab", code: "21CSE302P", room: "LAB-2", slot: "P3" },
+                { period: 4, course: "Full Stack Web Lab", code: "21CSE302P", room: "LAB-2", slot: "P3" },
+                { period: 5, course: "Aptitude & Reasoning Skills", code: "21PD101", room: "TP-301", slot: "F2" }
+            ],
+            "DAY 5": [
+                { period: 1, course: "Software Engineering", code: "21CSC205J", room: "TP-404", slot: "D3" },
+                { period: 2, course: "Machine Learning Techniques", code: "21CSE301T", room: "TP-501", slot: "E3" },
+                { period: 3, course: "Database Management Systems", code: "21CSC203J", room: "TP-402", slot: "B3" },
+                { period: 4, course: "OS Lab", code: "21CSC202J", room: "LAB-3", slot: "P4" },
+                { period: 5, course: "OS Lab", code: "21CSC202J", room: "LAB-3", slot: "P4" }
+            ]
+        },
+        marks: [
+            { code: "21CSC202J", course: "Operating Systems", ct1: "22/25", ct2: "24/25", assignment: "10/10", total: "56/60" },
+            { code: "21CSC203J", course: "Database Management Systems", ct1: "25/25", ct2: "23/25", assignment: "10/10", total: "58/60" },
+            { code: "21CSC204J", course: "Computer Networks", ct1: "18/25", ct2: "20/25", assignment: "9/10", total: "47/60" },
+            { code: "21CSC205J", course: "Software Engineering", ct1: "24/25", ct2: "25/25", assignment: "10/10", total: "59/60" }
+        ],
+        planner: [
+            { date: "2026-08-01", type: "HOLIDAY", dayOrder: "HOLIDAY", event: "Enrolment Day Starts B.Tech" },
+            { date: "2026-08-03", type: "ENROLMENT", dayOrder: "1", event: "Enrolment Day Starts B.Arch" },
+            { date: "2026-08-07", type: "MILESTONE", dayOrder: "4", event: "Enrolment Day Ends with Orientation" },
+            { date: "2026-08-15", type: "HOLIDAY", dayOrder: "HOLIDAY", event: "Independence Day - Holiday" },
+            { date: "2026-08-17", type: "COMMENCEMENT", dayOrder: "5", event: "Commencement of Classes (Odd Sem)" },
+            { date: "2026-08-26", type: "HOLIDAY", dayOrder: "HOLIDAY", event: "Milad-un-Nabi - Holiday" }
+        ]
+    };
+}
+
+/**
+ * Triggers instant login with demo testing account data
+ */
+function triggerDemoAccountLogin() {
+    const emailInput = document.getElementById('email');
+    const passInput = document.getElementById('password');
+    if (emailInput) emailInput.value = 'test';
+    if (passInput) passInput.value = 'test';
+
+    const demoPayload = getDemoAccountPayload();
+    updateApplicationState(demoPayload);
+    showWorkspace();
+    updateStickySessionBanner(false);
+    createToast("Logged in with Demo Testing Account! Complete sample data loaded.", "success");
+}
+
+/**
  * Sign In Form Submission Flow
  */
 async function handleLoginSubmission(e) {
@@ -1794,6 +1984,17 @@ async function handleLoginSubmission(e) {
     if (!password) {
         showAuthError("Please enter your account password.");
         passInput.focus();
+        return;
+    }
+
+    // CHECK FOR DEMO TESTING ACCOUNT (Username 'test' or 'demo')
+    const rawUser = email.split('@')[0];
+    if (rawUser === 'test' || rawUser === 'demo' || password.toLowerCase() === 'test' || password.toLowerCase() === 'demo') {
+        const demoPayload = getDemoAccountPayload();
+        updateApplicationState(demoPayload);
+        showWorkspace();
+        updateStickySessionBanner(false);
+        createToast("Logged in with Demo Testing Account! Complete sample data loaded.", "success");
         return;
     }
 

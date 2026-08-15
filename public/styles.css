@@ -12717,3 +12717,33 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     color: var(--text-primary, #ffffff) !important;
     background: rgba(255, 255, 255, 0.10) !important;
 }
+
+/* ICON-ONLY LOGIN THEME TOGGLE BUTTON (PC & MOBILE) */
+#auth-theme-selector-trigger,
+.auth-icon-only-theme-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+    background: var(--bg-surface-solid, rgba(255, 255, 255, 0.85)) !important;
+    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.90)) !important;
+}
+
+#auth-theme-selector-trigger span,
+#auth-theme-selector-trigger div,
+#auth-theme-active-name,
+#auth-theme-trigger-swatches {
+    display: none !important;
+}
+
+#auth-theme-selector-trigger svg {
+    margin: 0 !important;
+    width: 18px !important;
+    height: 18px !important;
+}
