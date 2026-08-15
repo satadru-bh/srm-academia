@@ -133,7 +133,7 @@
     background-color: var(--bg-surface-solid) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* Claymorphism Popup Modals & Dropdowns (No Exterior Blinding White Halos) */
@@ -13152,4 +13152,62 @@ button span,
     padding: 0 !important;
     margin: 0 !important;
     border-radius: 0 !important;
+}
+
+/* 1. REMOVE COLOR PREVIEWS FROM ACTUAL THEME TRIGGER BUTTON */
+.theme-trigger-swatches,
+#theme-trigger-swatches,
+.swatch-pip {
+    display: none !important;
+}
+
+/* 3. CLAYMORPHISM TACTILE 3D MOBILE NAVBAR & ACTIVE TAB */
+[data-theme="claymorphism"] .mobile-bottom-nav {
+    background-color: #FAF7F4 !important;
+    border: none !important;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.06), inset 0 2px 4px rgba(255, 255, 255, 0.9) !important;
+    border-radius: 30px !important;
+    padding: 6px !important;
+}
+
+[data-theme="claymorphism"] .mobile-nav-item {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #7C7570 !important;
+}
+
+[data-theme="claymorphism"] .mobile-nav-item.active,
+[data-theme="claymorphism"] button.mobile-nav-item.active {
+    background: linear-gradient(135deg, #8B70F6 0%, #7A5CF5 100%) !important;
+    color: #FFFFFF !important;
+    border-radius: 20px !important;
+    box-shadow: 6px 6px 14px rgba(139, 112, 246, 0.35), inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.6) !important;
+}
+
+[data-theme="claymorphism"] .mobile-nav-item.active svg,
+[data-theme="claymorphism"] .mobile-nav-item.active span {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+
+/* 4. GLOBAL NON-ARIAL MODERN TYPOGRAPHY SYSTEM */
+body,
+html,
+button,
+input,
+select,
+textarea,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.card,
+.workspace-title,
+.nav-item {
+    font-family: "Plus Jakarta Sans", "Inter", "Space Grotesk", system-ui, -apple-system, sans-serif !important;
 }

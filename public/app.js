@@ -632,11 +632,7 @@ function applyThemeGlobally(themeId) {
 
         document.querySelectorAll('.theme-trigger-swatches').forEach(swatches => {
             if (swatches) {
-                swatches.innerHTML = `
-                    <span class="swatch-pip" style="background-color: ${currentThemeObj.colors[0]}"></span>
-                    <span class="swatch-pip" style="background-color: ${currentThemeObj.colors[1]}"></span>
-                    <span class="swatch-pip" style="background-color: ${currentThemeObj.colors[2]}"></span>
-                `;
+                swatches.innerHTML = '';
             }
         });
     }
