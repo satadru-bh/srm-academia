@@ -12862,11 +12862,29 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 }
 
 /* NEO-BRUTALIST HIGH-CONTRAST TEXT & BADGES VISIBILITY FIX */
+/* COMPREHENSIVE THEMEMORPHIC CATEGORY PILL TAGS & CONTRAST FIXES */
+
+/* Base Type Pill Layout */
+.type-pill {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    padding: 4px 12px !important;
+    border-radius: 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    letter-spacing: 0.02em !important;
+    text-transform: uppercase !important;
+    flex-shrink: 0 !important;
+}
+
+/* 1. NEO-BRUTALIST (STRICT BOLD BLACK BORDERS & 3D SHADOWS) */
 [data-theme="neo-brutalist"] .type-pill {
     color: #000000 !important;
     font-weight: 900 !important;
     border: 2px solid #000000 !important;
     box-shadow: 2px 2px 0px #000000 !important;
+    border-radius: 8px !important;
 }
 
 [data-theme="neo-brutalist"] .type-pill.theory {
@@ -12874,7 +12892,8 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     color: #000000 !important;
 }
 
-[data-theme="neo-brutalist"] .type-pill.practical {
+[data-theme="neo-brutalist"] .type-pill.practical,
+[data-theme="neo-brutalist"] .type-pill.lab {
     background-color: #BAE6FD !important;
     color: #000000 !important;
 }
@@ -12891,6 +12910,8 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     font-weight: 900 !important;
     border: 2px solid #000000 !important;
     box-shadow: 2px 2px 0px #000000 !important;
+    border-radius: 8px !important;
+    padding: 3px 10px !important;
 }
 
 [data-theme="neo-brutalist"] .marks-course-credit-badge,
@@ -12911,4 +12932,126 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="neo-brutalist"] .courses-sum-value {
     color: #000000 !important;
     font-weight: 900 !important;
+}
+
+/* Neo-Brutalist Top Right Header Icon Box Fix */
+[data-theme="neo-brutalist"] .courses-header-icon,
+[data-theme="neo-brutalist"] .courses-header-card svg,
+[data-theme="neo-brutalist"] .header-icon-box {
+    background-color: #CCFF00 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
+    color: #000000 !important;
+    stroke: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .courses-header-icon svg,
+[data-theme="neo-brutalist"] .courses-header-icon svg path,
+[data-theme="neo-brutalist"] .courses-header-icon svg rect {
+    stroke: #000000 !important;
+    fill: none !important;
+}
+
+/* 2. GLASSMORPHISM LIGHT (FROSTED GLASS HIGH-CONTRAST PILLS) */
+[data-theme="glassmorphism-light"] .type-pill {
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="glassmorphism-light"] .type-pill.theory {
+    background: rgba(139, 92, 246, 0.16) !important;
+    border: 1px solid rgba(139, 92, 246, 0.40) !important;
+    color: #6D28D9 !important;
+}
+
+[data-theme="glassmorphism-light"] .type-pill.practical,
+[data-theme="glassmorphism-light"] .type-pill.lab {
+    background: rgba(14, 165, 233, 0.16) !important;
+    border: 1px solid rgba(14, 165, 233, 0.40) !important;
+    color: #0369A1 !important;
+}
+
+[data-theme="glassmorphism-light"] .type-pill.joint {
+    background: rgba(16, 185, 129, 0.16) !important;
+    border: 1px solid rgba(16, 185, 129, 0.40) !important;
+    color: #047857 !important;
+}
+
+/* 3. GLASSMORPHISM DARK (NEON GLOWING FROSTED GLASS PILLS) */
+[data-theme="glassmorphism"] .type-pill {
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="glassmorphism"] .type-pill.theory {
+    background: rgba(167, 139, 250, 0.20) !important;
+    border: 1px solid rgba(167, 139, 250, 0.45) !important;
+    color: #C4B5FD !important;
+}
+
+[data-theme="glassmorphism"] .type-pill.practical,
+[data-theme="glassmorphism"] .type-pill.lab {
+    background: rgba(56, 189, 248, 0.20) !important;
+    border: 1px solid rgba(56, 189, 248, 0.45) !important;
+    color: #7DD3FC !important;
+}
+
+[data-theme="glassmorphism"] .type-pill.joint {
+    background: rgba(52, 211, 153, 0.20) !important;
+    border: 1px solid rgba(52, 211, 153, 0.45) !important;
+    color: #6EE7B7 !important;
+}
+
+/* 4. CLAYMORPHISM (SOFT 3D PASTEL CLAY PILLS) */
+[data-theme="claymorphism"] .type-pill {
+    border-radius: 12px !important;
+    font-weight: 800 !important;
+    border: none !important;
+}
+
+[data-theme="claymorphism"] .type-pill.theory {
+    background-color: #EDE9FE !important;
+    color: #5B21B6 !important;
+    box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(91, 33, 182, 0.15) !important;
+}
+
+[data-theme="claymorphism"] .type-pill.practical,
+[data-theme="claymorphism"] .type-pill.lab {
+    background-color: #E0F2FE !important;
+    color: #0369A1 !important;
+    box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(3, 105, 161, 0.15) !important;
+}
+
+[data-theme="claymorphism"] .type-pill.joint {
+    background-color: #D1FAE5 !important;
+    color: #047857 !important;
+    box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(4, 120, 87, 0.15) !important;
+}
+
+/* 5. RETRO COMPUTING (GLOWING TERMINAL MONOSPACE TAGS) */
+[data-theme="retro-computing"] .type-pill {
+    font-family: var(--font-mono, monospace) !important;
+    border-radius: 4px !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="retro-computing"] .type-pill.theory {
+    border: 1px solid #A855F7 !important;
+    color: #D8B4FE !important;
+    background: rgba(168, 85, 247, 0.15) !important;
+}
+
+[data-theme="retro-computing"] .type-pill.practical,
+[data-theme="retro-computing"] .type-pill.lab {
+    border: 1px solid #00FF66 !important;
+    color: #00FF66 !important;
+    background: rgba(0, 255, 102, 0.15) !important;
+}
+
+[data-theme="retro-computing"] .type-pill.joint {
+    border: 1px solid #FFB000 !important;
+    color: #FFB000 !important;
+    background: rgba(255, 176, 0, 0.15) !important;
 }

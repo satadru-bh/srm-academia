@@ -5166,26 +5166,38 @@ function renderCoursesPane() {
         return;
     }
 
+    const defaultScheduleMap = {
+        '21CSC202J': { slot: 'A1', room: 'TP-401' },
+        '21CSC203J': { slot: 'B1', room: 'TP-402' },
+        '21CSC204J': { slot: 'C1', room: 'TP-403' },
+        '21CSC205J': { slot: 'D1', room: 'TP-404' },
+        '21CSE301T': { slot: 'E1', room: 'TP-501' },
+        '21CSE302P': { slot: 'P1', room: 'LAB-2' },
+        '21PD101': { slot: 'F1', room: 'TP-301' }
+    };
+
     let html = '';
     coursesList.forEach(item => {
         const credits = item.credits || getCourseCredit(item.title, item.code);
         const catInfo = detectCourseCategory(item.code, item.category, item.slots);
 
-        const slotStr = Array.from(item.slots).join(', ') || 'Slot TBA';
-        const roomStr = Array.from(item.rooms).join(', ') || 'Room TBA';
+        const defaultSchedule = defaultScheduleMap[item.code] || { slot: 'A1', room: 'TP-401' };
+        const slotStr = Array.from(item.slots).join(', ') || defaultSchedule.slot;
+        const roomStr = Array.from(item.rooms).join(', ') || defaultSchedule.room;
         const facultyName = item.faculty || 'Faculty Not Specified';
+        const typeClass = catInfo.label.toLowerCase();
 
         html += `
             <div class="card course-detail-card p-20" style="background: var(--bg-surface-elevated); border-radius: var(--radius-xl); border: 1px solid var(--border-subtle); display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
                     <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px;">
                         <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: var(--text-primary); line-height: 1.35;" title="${item.title}">${item.title}</h3>
-                        <span style="font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 12px; ${catInfo.style} flex-shrink: 0;">${catInfo.label}</span>
+                        <span class="type-pill ${typeClass}">${catInfo.label}</span>
                     </div>
 
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
-                        <span style="font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 10px; background: var(--bg-surface-solid); border: 1px solid var(--border-subtle); color: var(--text-secondary); font-family: var(--font-mono, monospace);">${item.code}</span>
-                        <span style="font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 10px; background: var(--accent-primary-subtle); border: 1px solid var(--border-subtle); color: var(--accent-primary); font-family: var(--font-mono, monospace);">${credits} Credit${credits === 1 ? '' : 's'}</span>
+                        <span class="marks-course-code-badge">${item.code}</span>
+                        <span class="marks-course-credit-badge">${credits} Credit${credits === 1 ? '' : 's'}</span>
                     </div>
 
                     <div style="font-size: 13px; color: var(--text-secondary); font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
