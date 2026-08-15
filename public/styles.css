@@ -922,11 +922,8 @@
 
 /* Floating Glass User Avatar — PURE WHITE AVATAR & INITIALS */
 [data-theme="glassmorphism"] .header-avatar-btn,
-[data-theme="glassmorphism"] .header-avatar-btn *,
 [data-theme="glassmorphism"] .user-avatar,
-[data-theme="glassmorphism"] .user-avatar *,
-[data-theme="glassmorphism"] .user-dropdown-avatar,
-[data-theme="glassmorphism"] .user-dropdown-avatar * {
+[data-theme="glassmorphism"] .user-dropdown-avatar {
     background: linear-gradient(135deg, rgba(143, 168, 255, 0.45), rgba(143, 168, 255, 0.22)) !important;
     border: 1px solid rgba(190, 205, 255, 0.35) !important;
     color: #FFFFFF !important;
@@ -1144,22 +1141,43 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
 }
 
-/* Glass Mobile Bottom Dock Navigation */
+/* Refractive Glassmorphism (Glass Dark) Mobile Bottom Dock Navigation */
 [data-theme="glassmorphism"] .mobile-bottom-nav,
 [data-theme="glassmorphism"] .mobile-nav-container {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 100%), rgba(6, 9, 16, 0.75) !important;
+    background: rgba(13, 17, 23, 0.85) !important;
     backdrop-filter: blur(28px) saturate(140%) !important;
     -webkit-backdrop-filter: blur(28px) saturate(140%) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.16) !important;
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
 }
 
-[data-theme="glassmorphism"] .mobile-nav-item.active {
-    background: rgba(143, 168, 255, 0.22) !important;
-    border: 1px solid rgba(175, 195, 255, 0.30) !important;
-    border-radius: 22px !important;
+[data-theme="glassmorphism"] .mobile-nav-item,
+[data-theme="glassmorphism"] button.mobile-nav-item {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+[data-theme="glassmorphism"] .mobile-nav-item svg,
+[data-theme="glassmorphism"] .mobile-nav-item span {
+    color: rgba(255, 255, 255, 0.65) !important;
+    stroke: rgba(255, 255, 255, 0.65) !important;
+}
+
+[data-theme="glassmorphism"] .mobile-nav-item.active,
+[data-theme="glassmorphism"] button.mobile-nav-item.active {
+    background: linear-gradient(135deg, rgba(143, 168, 255, 0.38), rgba(143, 168, 255, 0.18)) !important;
+    border: 1px solid rgba(190, 205, 255, 0.40) !important;
+    border-radius: 20px !important;
     color: #FFFFFF !important;
-    box-shadow: 0 0 16px rgba(143, 168, 255, 0.25) !important;
+    box-shadow: 0 4px 20px rgba(143, 168, 255, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
+}
+
+[data-theme="glassmorphism"] .mobile-nav-item.active svg,
+[data-theme="glassmorphism"] .mobile-nav-item.active span {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
 }
 
 /* Destructive Actions — Red Glass */
