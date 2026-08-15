@@ -12353,84 +12353,27 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="glassmorphism-light"] .header-container,
 [data-theme="glassmorphism-light"] .page-header,
 [data-theme="glassmorphism-light"] .top-nav,
+[data-theme="glassmorphism-light"] .mobile-bottom-nav,
 [data-theme="glassmorphism-light"] .mobile-nav-container,
 [data-theme="glassmorphism-light"] .sidebar-header {
     background: rgba(255, 255, 255, 0.35) !important;
     backdrop-filter: blur(24px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.45) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.65) !important;
     box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.80) !important;
 }
 
-/* Remove Box/Border Outlines around Text Badges, Pills & Labels in Glass Themes */
-[data-theme="glassmorphism"] .type-pill,
-[data-theme="glassmorphism-light"] .type-pill,
-[data-theme="glassmorphism"] .marks-course-code-badge,
-[data-theme="glassmorphism-light"] .marks-course-code-badge,
-[data-theme="glassmorphism"] .marks-course-credit-badge,
-[data-theme="glassmorphism-light"] .marks-course-credit-badge,
-[data-theme="glassmorphism"] .attendance-section-count,
-[data-theme="glassmorphism-light"] .attendance-section-count,
-[data-theme="glassmorphism"] .attendance-code-tag,
-[data-theme="glassmorphism-light"] .attendance-code-tag,
-[data-theme="glassmorphism"] .attendance-room-tag,
-[data-theme="glassmorphism-light"] .attendance-room-tag {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 4px !important;
-}
-
-/* Hover States — Never Turn Text Pure White on Light/Translucent Buttons */
-[data-theme="glassmorphism-light"] .nav-item:hover,
-[data-theme="glassmorphism-light"] .nav-item:hover span,
-[data-theme="glassmorphism-light"] .switch-accounts-btn:hover,
-[data-theme="glassmorphism-light"] .switch-accounts-btn:hover span,
-[data-theme="glassmorphism-light"] .btn-secondary:hover,
-[data-theme="glassmorphism-light"] .btn-secondary:hover span,
-[data-theme="glassmorphism-light"] .more-menu-item:hover,
-[data-theme="glassmorphism-light"] .more-menu-item:hover span {
-    color: #0F172A !important;
-    background: rgba(255, 255, 255, 0.70) !important;
-}
-
-[data-theme="glassmorphism-light"] .nav-item:hover svg,
-[data-theme="glassmorphism-light"] .nav-item:hover svg *,
-[data-theme="glassmorphism-light"] .switch-accounts-btn:hover svg,
-[data-theme="glassmorphism-light"] .switch-accounts-btn:hover svg * {
-    stroke: #0F172A !important;
-}
-
-/* Mobile Bottom Navigation Glass Dock & Backdrop Blur */
-[data-theme="glassmorphism-light"] .mobile-bottom-nav,
-[data-theme="glassmorphism"] .mobile-bottom-nav {
-    background: rgba(255, 255, 255, 0.45) !important;
-    backdrop-filter: blur(28px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.70) !important;
-    box-shadow: 0 10px 36px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.90) !important;
-}
-
-/* Remove Opaque Blocky Backgrounds & Vertical Dividers from Mobile Nav Item Buttons */
-[data-theme="glassmorphism-light"] .mobile-nav-item,
-[data-theme="glassmorphism"] .mobile-nav-item {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    color: #334155 !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-}
-
-[data-theme="glassmorphism-light"] .mobile-nav-item.active,
-[data-theme="glassmorphism"] .mobile-nav-item.active {
+/* Buttons & Inputs */
+[data-theme="glassmorphism-light"] button,
+[data-theme="glassmorphism-light"] .btn,
+[data-theme="glassmorphism-light"] .btn-secondary,
+[data-theme="glassmorphism-light"] input,
+[data-theme="glassmorphism-light"] select {
     background: rgba(255, 255, 255, 0.65) !important;
-    border: 1px solid rgba(255, 255, 255, 0.85) !important;
-    border-radius: 20px !important;
+    border: 1px solid rgba(203, 213, 225, 0.7) !important;
     color: #0F172A !important;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
 }
 
 /* Floating Attendance Predictor Trigger Button — Black Text & Icon in Light Glass */
