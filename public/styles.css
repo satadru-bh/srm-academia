@@ -7651,14 +7651,37 @@ html.instant-workspace-active #app-workspace {
     display: none !important;
 }
 
+.sidebar.collapsed .sidebar-nav {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 12px 0 !important;
+    gap: 8px !important;
+}
+
 .sidebar.collapsed .nav-item {
-    justify-content: center;
-    padding: 12px 0;
-    margin: 0 12px;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    padding: 0 !important;
+    margin: 4px auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 0 !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
 }
 
 .sidebar.collapsed .nav-item svg {
-    margin: 0 auto;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: block !important;
+    flex-shrink: 0 !important;
 }
 
 .sidebar.collapsed .nav-item.active {
@@ -12065,12 +12088,12 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="glassmorphism-light"] {
     --theme-name: "glassmorphism-light";
 
-    /* Light Base */
+    /* Light Base & Ultra Translucent Glass Surfaces */
     --bg-base: #F1F5F9;
-    --bg-surface: rgba(255, 255, 255, 0.65);
-    --bg-surface-elevated: rgba(255, 255, 255, 0.80);
-    --bg-surface-solid: #FFFFFF;
-    --bg-surface-hover: rgba(255, 255, 255, 0.85);
+    --bg-surface: rgba(255, 255, 255, 0.28);
+    --bg-surface-elevated: rgba(255, 255, 255, 0.35);
+    --bg-surface-solid: rgba(255, 255, 255, 0.45);
+    --bg-surface-hover: rgba(255, 255, 255, 0.50);
 
     /* Typography */
     --text-primary: #0F172A;
@@ -12079,9 +12102,9 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     --text-inverse: #FFFFFF;
 
     /* Glass Edges */
-    --border-subtle: rgba(255, 255, 255, 0.70);
-    --border-card: rgba(255, 255, 255, 0.85);
-    --border-strong: rgba(203, 213, 225, 0.80);
+    --border-subtle: rgba(255, 255, 255, 0.50);
+    --border-card: rgba(255, 255, 255, 0.65);
+    --border-strong: rgba(203, 213, 225, 0.70);
     --border-focus: rgba(79, 70, 229, 0.40);
 
     /* Accents */
@@ -12095,20 +12118,20 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     --accent-danger: #DC2626;
 
     /* Academic Surfaces */
-    --theory-bg: rgba(79, 70, 229, 0.08);
-    --theory-border: rgba(79, 70, 229, 0.20);
+    --theory-bg: rgba(79, 70, 229, 0.12);
+    --theory-border: rgba(79, 70, 229, 0.25);
     --theory-text: #3730A3;
 
-    --lab-bg: rgba(2, 132, 199, 0.08);
-    --lab-border: rgba(2, 132, 199, 0.20);
+    --lab-bg: rgba(2, 132, 199, 0.12);
+    --lab-border: rgba(2, 132, 199, 0.25);
     --lab-text: #075985;
 
-    --cell-empty-bg: rgba(255, 255, 255, 0.40);
-    --cell-empty-border: rgba(203, 213, 225, 0.50);
+    --cell-empty-bg: rgba(255, 255, 255, 0.25);
+    --cell-empty-border: rgba(255, 255, 255, 0.50);
 
-    --calendar-cell-bg: rgba(255, 255, 255, 0.65);
-    --calendar-cell-border: rgba(255, 255, 255, 0.80);
-    --calendar-cell-hover: rgba(255, 255, 255, 0.90);
+    --calendar-cell-bg: rgba(255, 255, 255, 0.30);
+    --calendar-cell-border: rgba(255, 255, 255, 0.55);
+    --calendar-cell-hover: rgba(255, 255, 255, 0.45);
 
     --font-stack: "Inter", "Plus Jakarta Sans", system-ui, sans-serif;
     --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -12118,8 +12141,8 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     --radius-md: 10px;
     --radius-sm: 8px;
 
-    --shadow-premium: 0 10px 30px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    --shadow-floating: 0 20px 40px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 1.0);
+    --shadow-premium: 0 10px 30px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    --shadow-floating: 0 20px 40px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 [data-theme="glassmorphism-light"] html {
@@ -12164,9 +12187,9 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     width: 100vw;
     height: 100vh;
     z-index: -2;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px) saturate(140%);
-    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px) saturate(130%);
+    -webkit-backdrop-filter: blur(8px) saturate(130%);
     pointer-events: none;
 }
 
@@ -12184,11 +12207,11 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="glassmorphism-light"] .academic-summary-hero-card,
 [data-theme="glassmorphism-light"] .attendance-summary-hero-card,
 [data-theme="glassmorphism-light"] .calc-simulation-result {
-    background: rgba(255, 255, 255, 0.65) !important;
+    background: rgba(255, 255, 255, 0.28) !important;
     backdrop-filter: blur(20px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.85) !important;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.55) !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
     border-radius: 18px !important;
     color: #0F172A !important;
 }
@@ -12199,20 +12222,21 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="glassmorphism-light"] .attendance-grid-row:hover,
 [data-theme="glassmorphism-light"] .marks-card:hover,
 [data-theme="glassmorphism-light"] .course-detail-card:hover {
-    background: rgba(255, 255, 255, 0.78) !important;
-    border-color: rgba(255, 255, 255, 0.95) !important;
-    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+    background: rgba(255, 255, 255, 0.42) !important;
+    border-color: rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
 }
 
-/* Light Glass Sub-Cards */
+/* Light Glass Sub-Cards & Summary Boxes */
 [data-theme="glassmorphism-light"] .daily-focus-col,
 [data-theme="glassmorphism-light"] .trend-spark-box,
-[data-theme="glassmorphism-light"] .attendance-grid-row {
-    background: rgba(255, 255, 255, 0.55) !important;
+[data-theme="glassmorphism-light"] .attendance-grid-row,
+[data-theme="glassmorphism-light"] .courses-sum-box {
+    background: rgba(255, 255, 255, 0.30) !important;
     backdrop-filter: blur(14px) saturate(160%) !important;
     -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.75) !important;
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.50) !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
     border-radius: 14px !important;
     color: #0F172A !important;
 }
@@ -12223,20 +12247,20 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="glassmorphism-light"] .dev-drawer,
 [data-theme="glassmorphism-light"] .user-dropdown-menu,
 [data-theme="glassmorphism-light"] .quick-prediction-modal {
-    background: rgba(255, 255, 255, 0.82) !important;
+    background: rgba(255, 255, 255, 0.60) !important;
     backdrop-filter: blur(24px) saturate(200%) !important;
     -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.9) !important;
-    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
     color: #0F172A !important;
 }
 
 /* Sidebar */
 [data-theme="glassmorphism-light"] .sidebar {
-    background: rgba(255, 255, 255, 0.50) !important;
+    background: rgba(255, 255, 255, 0.25) !important;
     backdrop-filter: blur(24px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.7) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.55) !important;
 }
 
 [data-theme="glassmorphism-light"] .sidebar-nav .nav-item {

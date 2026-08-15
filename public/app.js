@@ -4635,18 +4635,27 @@ function renderCoursesPane() {
 
     const courseMap = new Map();
 
+    const cleanFacultyName = (raw) => {
+        if (!raw || typeof raw !== 'string') return '';
+        const trimmed = raw.trim();
+        if (['0', 'NULL', 'UNDEFINED', 'FACULTY ASSIGNED', 'TBA'].includes(trimmed.toUpperCase())) return '';
+        return trimmed;
+    };
+
     const getOrInitCourse = (rawCode, rawTitle, category, faculty) => {
         const code = (rawCode || '').trim().toUpperCase();
         const title = (rawTitle || rawCode || 'Course').trim();
         const key = code || title.toUpperCase();
         if (!key) return null;
 
+        const facultyClean = cleanFacultyName(faculty);
+
         if (!courseMap.has(key)) {
             courseMap.set(key, {
                 code: code || key,
                 title: title,
                 category: category || '',
-                faculty: faculty || '',
+                faculty: facultyClean,
                 credits: 0,
                 conducted: 0,
                 present: 0,
@@ -4659,18 +4668,20 @@ function renderCoursesPane() {
         const obj = courseMap.get(key);
         if (title && (!obj.title || obj.title === obj.code)) obj.title = title;
         if (category && !obj.category) obj.category = category;
-        if (faculty && !obj.faculty) obj.faculty = faculty;
+        if (facultyClean && (!obj.faculty || obj.faculty === 'Faculty Assigned')) obj.faculty = facultyClean;
         return obj;
     };
 
     // 1. From state.attendance
     (state.attendance || []).forEach(item => {
-        const obj = getOrInitCourse(item.code, item.course, item.category, item.faculty);
+        const facultyStr = item.faculty || item.facultyName || item.staffName || item.employeeName || '';
+        const obj = getOrInitCourse(item.code, item.course, item.category, facultyStr);
         if (obj) {
             obj.conducted = parseInt(item.conducted, 10) || 0;
             obj.present = parseInt(item.present, 10) || 0;
             obj.attendance = item.attendance !== null && item.attendance !== undefined ? parseFloat(item.attendance) : (obj.conducted > 0 ? ((obj.present / obj.conducted) * 100) : 0);
             obj.credits = getCourseCredit(obj.title, obj.code);
+            if (facultyStr && !obj.faculty) obj.faculty = cleanFacultyName(facultyStr);
         }
     });
 
@@ -4693,11 +4704,13 @@ function renderCoursesPane() {
     allTTItems.forEach(item => {
         const code = item.courseCode || item.code || '';
         const title = item.subjectTitle || item.course || '';
-        const obj = getOrInitCourse(code, title, '', '');
+        const facultyStr = item.faculty || item.facultyName || item.staffName || item.employeeName || '';
+        const obj = getOrInitCourse(code, title, '', facultyStr);
         if (obj) {
             if (item.slot) obj.slots.add(item.slot);
             if (item.room) obj.rooms.add(item.room.replace(/^Room\s+/i, ''));
             if (!obj.credits) obj.credits = getCourseCredit(obj.title, obj.code);
+            if (facultyStr && !obj.faculty) obj.faculty = cleanFacultyName(facultyStr);
         }
     });
 
@@ -4762,6 +4775,7 @@ function renderCoursesPane() {
 
         const slotStr = Array.from(item.slots).join(', ') || 'Slot TBA';
         const roomStr = Array.from(item.rooms).join(', ') || 'Room TBA';
+        const facultyName = item.faculty || 'Faculty Not Specified';
 
         html += `
             <div class="card course-detail-card p-20" style="background: var(--bg-surface-elevated); border-radius: var(--radius-xl); border: 1px solid var(--border-subtle); display: flex; flex-direction: column; justify-content: space-between;">
@@ -4778,7 +4792,7 @@ function renderCoursesPane() {
 
                     <div style="font-size: 13px; color: var(--text-secondary); font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span>${item.faculty || 'Faculty Assigned'}</span>
+                        <span>${facultyName}</span>
                     </div>
 
                     <div style="font-size: 12px; color: var(--text-muted); font-weight: 600; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
