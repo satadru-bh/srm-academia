@@ -240,23 +240,65 @@
 
 /* Ceramic Clay Calendar Tiles */
 [data-theme="claymorphism"] .calendar-day-cell {
-    border-radius: 24px !important;
+    border-radius: 20px !important;
     border: none !important;
-    box-shadow: var(--clay-shadow-subcard) !important;
-    background-color: var(--bg-surface-elevated) !important;
+    background-color: #F8FAFC !important;
+    box-shadow: inset -3px -3px 6px rgba(0, 0, 0, 0.05), inset 3px 3px 6px rgba(255, 255, 255, 0.9), 6px 6px 16px rgba(0, 0, 0, 0.04) !important;
     transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    color: #0F172A !important;
 }
 
 [data-theme="claymorphism"] .calendar-day-cell:hover {
     transform: translateY(-3px) scale(1.02) !important;
-    box-shadow: 12px 12px 28px #E4DDD4, -12px -12px 28px #FFFFFF, inset 2px 2px 3px #FFFFFF !important;
+    box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 1), 10px 10px 24px rgba(0, 0, 0, 0.08) !important;
 }
 
 [data-theme="claymorphism"] .calendar-day-cell.today {
-    background-color: var(--accent-primary) !important;
-    color: var(--text-inverse) !important;
-    box-shadow: 8px 8px 20px rgba(139, 112, 246, 0.4), inset 2px 2px 3px rgba(255, 255, 255, 0.6) !important;
+    background: linear-gradient(135deg, #6366F1, #4F46E5) !important;
+    color: #FFFFFF !important;
+    box-shadow: inset -3px -3px 6px rgba(0, 0, 0, 0.2), inset 3px 3px 6px rgba(255, 255, 255, 0.5), 8px 8px 20px rgba(99, 102, 241, 0.35) !important;
     transform: translateY(-2px) !important;
+}
+
+/* Claymorphism Event Days — Soft 3D Clay Pills with Black/High-Contrast Text */
+[data-theme="claymorphism"] .calendar-day-cell.holiday {
+    background-color: #FFE4E6 !important;
+    box-shadow: inset -3px -3px 6px rgba(225, 29, 72, 0.12), inset 3px 3px 6px rgba(255, 255, 255, 0.9), 6px 6px 16px rgba(225, 29, 72, 0.08) !important;
+    color: #000000 !important;
+}
+
+[data-theme="claymorphism"] .calendar-day-cell.milestone {
+    background-color: #D1FAE5 !important;
+    box-shadow: inset -3px -3px 6px rgba(16, 185, 129, 0.12), inset 3px 3px 6px rgba(255, 255, 255, 0.9), 6px 6px 16px rgba(16, 185, 129, 0.08) !important;
+    color: #000000 !important;
+}
+
+[data-theme="claymorphism"] .calendar-day-cell.commencement {
+    background-color: #EDE9FE !important;
+    box-shadow: inset -3px -3px 6px rgba(139, 92, 246, 0.12), inset 3px 3px 6px rgba(255, 255, 255, 0.9), 6px 6px 16px rgba(139, 92, 246, 0.08) !important;
+    color: #000000 !important;
+}
+
+[data-theme="claymorphism"] .calendar-day-cell.holiday .day-number,
+[data-theme="claymorphism"] .calendar-day-cell.milestone .day-number,
+[data-theme="claymorphism"] .calendar-day-cell.commencement .day-number,
+[data-theme="claymorphism"] .calendar-day-cell.holiday div[title],
+[data-theme="claymorphism"] .calendar-day-cell.milestone div[title],
+[data-theme="claymorphism"] .calendar-day-cell.commencement div[title],
+[data-theme="claymorphism"] .calendar-day-cell.holiday span,
+[data-theme="claymorphism"] .calendar-day-cell.milestone span,
+[data-theme="claymorphism"] .calendar-day-cell.commencement span {
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="claymorphism"] .calendar-day-cell .calendar-cell-day-order {
+    background: #FFFFFF !important;
+    border: none !important;
+    box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.08), inset 1px 1px 2px rgba(255, 255, 255, 0.9), 2px 2px 6px rgba(0, 0, 0, 0.06) !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+    border-radius: 8px !important;
 }
 
 /* Claymorphism Sidebar Navigation */
@@ -299,12 +341,24 @@
     box-shadow: 8px 8px 18px #E4DDD4, -8px -8px 18px #FFFFFF, inset 2px 2px 3px rgba(255, 255, 255, 0.8) !important;
 }
 
-/* Claymorphism Timetable Slots (Weekly Matrix & Overview Pane Timeline) */
+/* Claymorphism Timetable Slots — High-Contrast Solid Black Text */
+[data-theme="claymorphism"] .matrix-td-cell,
+[data-theme="claymorphism"] .matrix-td-cell *,
+[data-theme="claymorphism"] .matrix-td-cell span,
+[data-theme="claymorphism"] .matrix-td-cell div,
+[data-theme="claymorphism"] .grid-class-cell,
+[data-theme="claymorphism"] .grid-class-cell *,
+[data-theme="claymorphism"] .grid-class-cell span,
+[data-theme="claymorphism"] .grid-class-cell div {
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
 [data-theme="claymorphism"] .matrix-td-cell.filled.theory,
 [data-theme="claymorphism"] .grid-class-cell.filled.theory {
     background-color: #F3E8FF !important;
     border: none !important;
-    color: #7C5CF6 !important;
+    color: #000000 !important;
     border-radius: 18px !important;
     box-shadow: 4px 4px 10px #E4DDD4, -2px -2px 8px #FFFFFF, inset 1.5px 1.5px 2px #FFFFFF !important;
     font-weight: 800 !important;
@@ -314,7 +368,7 @@
 [data-theme="claymorphism"] .grid-class-cell.filled.lab {
     background-color: #E0F2FE !important;
     border: none !important;
-    color: #0284C7 !important;
+    color: #000000 !important;
     border-radius: 18px !important;
     box-shadow: 4px 4px 10px #E4DDD4, -2px -2px 8px #FFFFFF, inset 1.5px 1.5px 2px #FFFFFF !important;
     font-weight: 800 !important;
