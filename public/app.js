@@ -4608,8 +4608,8 @@ async function downloadTimetableImage() {
     const btn = document.getElementById('download-timetable-btn');
     const mobileBtn = document.getElementById('download-timetable-mobile-btn');
     const activeTheme = document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
-    if (['glassmorphism', 'glassmorphism-light', 'neo-brutalist'].includes(activeTheme)) {
-        showLoginNotificationToast('Timetable export is not supported in this theme. Please switch to another theme (such as Clean Light/Dark or Claymorphism) to export your timetable image.');
+    if (['glassmorphism', 'glassmorphism-light', 'neo-brutalist', 'claymorphism'].includes(activeTheme)) {
+        showLoginNotificationToast('Timetable export is not supported in this theme. Please switch to a supported theme before exporting.');
         return;
     }
 
