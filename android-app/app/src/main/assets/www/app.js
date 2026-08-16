@@ -3077,7 +3077,7 @@ function renderPerformanceTrends() {
         createMicroSparkline('sparkline-internal-marks', {
             labels: marksList.map(m => m.label),
             data: markScores,
-            borderColor: isLight ? '#059669' : '#10b981',
+            borderColor: sparklineColor,
             unit: ' Marks'
         });
     } else {
@@ -3090,7 +3090,7 @@ function renderPerformanceTrends() {
         createMicroSparkline('sparkline-internal-marks', {
             labels: defaultLabels,
             data: defaultData,
-            borderColor: isLight ? '#059669' : '#10b981',
+            borderColor: sparklineColor,
             unit: ' Marks'
         });
     }
@@ -3186,15 +3186,14 @@ function createMicroSparkline(canvasId, config) {
                     grid: {
                         color: 'rgba(128, 128, 128, 0.15)',
                         drawBorder: false,
+                        drawTicks: false,
                         borderDash: [3, 3]
                     },
+                    border: {
+                        display: false
+                    },
                     ticks: {
-                        font: { size: 10, weight: '700' },
-                        color: 'var(--text-muted)',
-                        stepSize: 50,
-                        callback: function(value) {
-                            return value;
-                        }
+                        display: false
                     },
                     min: 0,
                     max: 100,
