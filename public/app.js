@@ -3427,34 +3427,67 @@ function renderPerformanceTrends() {
         unit: '%'
     });
 
-    // Trend 2: Internal Marks Trend (or Graceful Empty Message if missing)
+    // Trend 2: Internal Marks Trend
     const marksVal = document.getElementById('trend-val-internal-marks');
     const marksSub = document.getElementById('trend-sub-marks');
     const canvasWrapper = document.getElementById('sparkline-marks-wrapper');
-    const emptyMsgEl = document.getElementById('marks-empty-state-msg');
+    if (canvasWrapper) canvasWrapper.style.display = 'block';
 
-    const marksData = (state.marks || []).filter(m => m && (m.score !== undefined || m.marks !== undefined || m.totalMarks !== undefined));
+    const marksList = (state.marks || []).map(m => {
+        if (!m) return null;
+        let score = null;
+        if (typeof m.score === 'number' && !isNaN(m.score)) score = m.score;
+        else if (typeof m.marks === 'number' && !isNaN(m.marks)) score = m.marks;
+        else if (typeof m.totalMarks === 'number' && !isNaN(m.totalMarks)) score = m.totalMarks;
+        else if (m.assessments && typeof m.assessments === 'object') {
+            let obt = 0, max = 0;
+            Object.keys(m.assessments).forEach(k => {
+                const t = m.assessments[k];
+                if (t && t.status !== 'ABSENT') {
+                    const o = parseFloat(t.obtainedMarks);
+                    const mx = parseFloat(t.maxMarks);
+                    if (!isNaN(o) && !isNaN(mx) && mx > 0) {
+                        obt += o;
+                        max += mx;
+                    }
+                }
+            });
+            if (max > 0) score = Math.round((obt / max) * 100 * 10) / 10;
+        }
+        if (score !== null) {
+            return {
+                label: m.courseCode || m.code || m.subject || m.courseName || 'Course',
+                score: score
+            };
+        }
+        return null;
+    }).filter(Boolean);
 
-    if (marksData.length > 0) {
-        if (canvasWrapper) canvasWrapper.style.display = 'block';
-        if (emptyMsgEl) emptyMsgEl.classList.add('hidden');
-
-        const markScores = marksData.map(m => parseFloat(m.score || m.marks || m.totalMarks || 0));
+    if (marksList.length > 0) {
+        const markScores = marksList.map(m => m.score);
         const avgScore = Math.round(markScores.reduce((a, b) => a + b, 0) / markScores.length * 10) / 10;
         if (marksVal) marksVal.textContent = `${avgScore} Avg`;
-        if (marksSub) marksSub.textContent = `${marksData.length} Evaluated Courses`;
+        if (marksSub) marksSub.textContent = `${marksList.length} Evaluated Courses`;
 
         createMicroSparkline('sparkline-internal-marks', {
-            labels: marksData.map(m => m.subject || m.code || 'Sub'),
+            labels: marksList.map(m => m.label),
             data: markScores,
             borderColor: isLight ? '#059669' : '#10b981',
             unit: ' Marks'
         });
     } else {
-        if (canvasWrapper) canvasWrapper.style.display = 'none';
-        if (emptyMsgEl) emptyMsgEl.classList.remove('hidden');
         if (marksVal) marksVal.textContent = '0';
         if (marksSub) marksSub.textContent = '0 Evaluated Courses';
+
+        const defaultLabels = validCourses.length > 0 ? validCourses.map(c => c.code || 'Course') : ['Course 1', 'Course 2', 'Course 3', 'Course 4'];
+        const defaultData = validCourses.length > 0 ? validCourses.map(() => 0) : [0, 0, 0, 0];
+
+        createMicroSparkline('sparkline-internal-marks', {
+            labels: defaultLabels,
+            data: defaultData,
+            borderColor: isLight ? '#059669' : '#10b981',
+            unit: ' Marks'
+        });
     }
 }
 

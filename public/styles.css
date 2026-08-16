@@ -7701,7 +7701,7 @@ html.instant-workspace-active #app-workspace {
     max-width: 32px !important;
     max-height: 32px !important;
     object-fit: contain !important;
-    transform: none !important;
+    transform: translateX(14px) !important;
 }
 
 /* LOGIN SCREEN REDUCED BRAND LOGO SIZE */
@@ -9300,7 +9300,7 @@ button.mobile-nav-item.active {
     width: 32px !important;
     max-height: 32px !important;
     object-fit: contain !important;
-    transform: translateX(10px) !important;
+    transform: translateX(14px) !important;
 }
 
 .sidebar.collapsed .brand-name {
