@@ -173,6 +173,8 @@ const periodTimings = [
     { start: "17:30", end: "18:10", display: "05:30 - 06:10" }  // 12
 ];
 
+const DEFAULT_THEME = 'clean-light';
+
 // Array of 32 Handcrafted Themes with color swatches in decreasing order of prominence:
 // [0] Base Background, [1] Card Surface, [2] Primary Accent, [3] Secondary Accent
 const AVAILABLE_THEMES = [
@@ -545,7 +547,7 @@ function setupThemeSelector() {
         }
     });
 
-    const savedThemeId = localStorage.getItem('srm_theme') || 'pitch-black';
+    const savedThemeId = localStorage.getItem('srm_theme') || DEFAULT_THEME;
     applyTheme(savedThemeId);
 
     triggerBtns.forEach((triggerBtn, idx) => {
@@ -570,9 +572,9 @@ function setupThemeSelector() {
     renderThemeOptions();
 
     function renderThemeOptions() {
-        const currentActiveTheme = localStorage.getItem('srm_theme') || 'pitch-black';
+        const currentActiveTheme = localStorage.getItem('srm_theme') || DEFAULT_THEME;
         const html = AVAILABLE_THEMES.filter(theme => theme.id !== 'claymorphism').map(theme => {
-            const isActive = theme.id === currentActiveTheme || (currentActiveTheme === 'dark' && theme.id === 'pitch-black') || (currentActiveTheme === 'light' && theme.id === 'clean-light');
+            const isActive = theme.id === currentActiveTheme || (currentActiveTheme === 'dark' && theme.id === 'clean-dark') || (currentActiveTheme === 'light' && theme.id === 'clean-light');
             const activeClass = isActive ? 'active' : '';
             const checkIcon = isActive ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>` : '';
 
@@ -618,28 +620,31 @@ function setupThemeSelector() {
  * Global Theme Application Helper
  */
 function applyThemeGlobally(themeId) {
-    document.documentElement.setAttribute('data-theme', themeId);
-    localStorage.setItem('srm_theme', themeId);
+    const validThemeObj = (typeof AVAILABLE_THEMES !== 'undefined')
+        ? (AVAILABLE_THEMES.find(t => t.id === themeId) || AVAILABLE_THEMES.find(t => t.id === DEFAULT_THEME) || AVAILABLE_THEMES[0])
+        : null;
+    const resolvedThemeId = validThemeObj ? validThemeObj.id : (themeId || DEFAULT_THEME);
 
-    const currentThemeObj = (typeof AVAILABLE_THEMES !== 'undefined' ? AVAILABLE_THEMES.find(t => t.id === themeId) : null) || (typeof AVAILABLE_THEMES !== 'undefined' ? AVAILABLE_THEMES[0] : null);
-    
-    if (currentThemeObj) {
+    document.documentElement.setAttribute('data-theme', resolvedThemeId);
+    localStorage.setItem('srm_theme', resolvedThemeId);
+
+    if (validThemeObj) {
         document.querySelectorAll('.theme-trigger-label').forEach(lbl => {
-            if (lbl) lbl.textContent = currentThemeObj.name;
+            if (lbl) lbl.textContent = validThemeObj.name;
         });
 
         document.querySelectorAll('.theme-trigger-swatches').forEach(swatches => {
             if (swatches) {
                 swatches.innerHTML = `
-                    <span class="swatch-pip" style="background-color: ${currentThemeObj.colors[0]}"></span>
-                    <span class="swatch-pip" style="background-color: ${currentThemeObj.colors[1]}"></span>
-                    <span class="swatch-pip" style="background-color: ${currentThemeObj.colors[2]}"></span>
+                    <span class="swatch-pip" style="background-color: ${validThemeObj.colors[0]}"></span>
+                    <span class="swatch-pip" style="background-color: ${validThemeObj.colors[1]}"></span>
+                    <span class="swatch-pip" style="background-color: ${validThemeObj.colors[2]}"></span>
                 `;
             }
         });
     }
 
-    updateLogoForTheme(themeId);
+    updateLogoForTheme(resolvedThemeId);
 
     setTimeout(() => {
         if (typeof renderOverviewPane === 'function') renderOverviewPane();
@@ -797,7 +802,7 @@ function isThemeLight(themeId) {
  * Dynamically switches brand logos: logo_dark.png in light themes and logo_light.png in dark themes.
  */
 function updateLogoForTheme(themeId) {
-    const activeTheme = themeId || document.documentElement.getAttribute('data-theme') || 'neo-brutalist';
+    const activeTheme = themeId || document.documentElement.getAttribute('data-theme') || DEFAULT_THEME;
     const isLight = isThemeLight(activeTheme);
     const targetLogoSrc = isLight ? 'logo_dark.png' : 'logo_light.png';
     const fallbackLogoSrc = isLight ? 'logo_light.png' : 'logo_dark.png';
@@ -2088,7 +2093,7 @@ function syncDataToAndroidWidgets() {
             const timetableJson = JSON.stringify(state.mergedTimetable || {});
             const marksJson = JSON.stringify(state.marks || []);
             const plannerJson = JSON.stringify(state.planner || []);
-            const activeTheme = localStorage.getItem('srm_theme') || 'pitch-black';
+            const activeTheme = localStorage.getItem('srm_theme') || DEFAULT_THEME;
             
             const todayDayOrder = getTodayDayOrder() || 'DAY 1';
             
@@ -5386,7 +5391,7 @@ function renderDeveloperPane() {
     }
 
     const payloadSize = Math.round((JSON.stringify(state).length / 1024) * 10) / 10;
-    const activeTheme = (localStorage.getItem('srm_theme') || 'pitch-black').toUpperCase();
+    const activeTheme = (localStorage.getItem('srm_theme') || DEFAULT_THEME).toUpperCase();
 
     container.innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 24px;">
