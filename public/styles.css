@@ -5171,15 +5171,9 @@ html.instant-workspace-active #app-workspace {
 }
 
 .sync-button:hover {
-    background-color: var(--accent-primary);
-    color: var(--text-inverse);
     border-color: var(--accent-primary);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px var(--accent-primary-glow);
-}
-
-.sync-button:hover svg {
-    stroke: var(--text-inverse);
+    box-shadow: 0 4px 16px var(--accent-primary-glow, rgba(0, 0, 0, 0.15));
 }
 
 .sync-icon.loading {
@@ -13620,17 +13614,12 @@ button#download-timetable-mobile-btn:hover {
     box-shadow: 4px 4px 0px #000000 !important;
 }
 
-/* 3. REFRESH BUTTON HOVER STATES (DARK THEMES DEFAULT: PURE WHITE) */
+/* 3. REFRESH BUTTON HOVER STATES (DARK THEMES DEFAULT: WHITE ICONS & LABELS ONLY) */
 .sync-button:hover,
 #sync-button:hover,
 button.sync-button:hover,
 button#sync-button:hover {
-    background-color: #FFFFFF !important;
-    background: #FFFFFF !important;
-    color: #000000 !important;
-    border-color: #FFFFFF !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.22) !important;
+    color: #FFFFFF !important;
 }
 
 .sync-button:hover svg,
@@ -13641,15 +13630,17 @@ button#sync-button:hover {
 #sync-button:hover svg polyline,
 .sync-button:hover svg line,
 #sync-button:hover svg line,
+.sync-button:hover .sync-icon,
+#sync-button:hover .sync-icon,
 .sync-button:hover span,
 #sync-button:hover span,
 .sync-button:hover .sync-btn-label,
 #sync-button:hover .sync-btn-label {
-    color: #000000 !important;
-    stroke: #000000 !important;
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
 }
 
-/* 4. REFRESH BUTTON HOVER STATES (LIGHT THEMES: DEEP BLACK) */
+/* 4. REFRESH BUTTON HOVER STATES (LIGHT THEMES: BLACK ICONS & LABELS ONLY) */
 [data-theme="glassmorphism-light"] .sync-button:hover,
 [data-theme="glassmorphism-light"] #sync-button:hover,
 [data-theme="claymorphism"] .sync-button:hover,
@@ -13692,110 +13683,144 @@ button#sync-button:hover {
 [data-theme="solarized-light"] #sync-button:hover,
 [data-theme="lavender-bliss"] .sync-button:hover,
 [data-theme="lavender-bliss"] #sync-button:hover {
-    background-color: #0F172A !important;
-    background: #0F172A !important;
-    color: #FFFFFF !important;
-    border-color: #0F172A !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25) !important;
+    color: #000000 !important;
 }
 
 [data-theme="glassmorphism-light"] .sync-button:hover svg,
 [data-theme="glassmorphism-light"] #sync-button:hover svg,
+[data-theme="glassmorphism-light"] .sync-button:hover svg path,
+[data-theme="glassmorphism-light"] #sync-button:hover svg path,
+[data-theme="glassmorphism-light"] .sync-button:hover svg polyline,
+[data-theme="glassmorphism-light"] #sync-button:hover svg polyline,
+[data-theme="glassmorphism-light"] .sync-button:hover svg line,
+[data-theme="glassmorphism-light"] #sync-button:hover svg line,
+[data-theme="glassmorphism-light"] .sync-button:hover .sync-icon,
+[data-theme="glassmorphism-light"] #sync-button:hover .sync-icon,
 [data-theme="glassmorphism-light"] .sync-button:hover span,
 [data-theme="glassmorphism-light"] #sync-button:hover span,
 [data-theme="glassmorphism-light"] .sync-button:hover .sync-btn-label,
 [data-theme="glassmorphism-light"] #sync-button:hover .sync-btn-label,
 [data-theme="claymorphism"] .sync-button:hover svg,
 [data-theme="claymorphism"] #sync-button:hover svg,
+[data-theme="claymorphism"] .sync-button:hover .sync-icon,
+[data-theme="claymorphism"] #sync-button:hover .sync-icon,
 [data-theme="claymorphism"] .sync-button:hover span,
 [data-theme="claymorphism"] #sync-button:hover span,
 [data-theme="neo-brutalist"] .sync-button:hover svg,
 [data-theme="neo-brutalist"] #sync-button:hover svg,
+[data-theme="neo-brutalist"] .sync-button:hover .sync-icon,
+[data-theme="neo-brutalist"] #sync-button:hover .sync-icon,
 [data-theme="neo-brutalist"] .sync-button:hover span,
 [data-theme="neo-brutalist"] #sync-button:hover span,
 [data-theme="retro-computing"] .sync-button:hover svg,
 [data-theme="retro-computing"] #sync-button:hover svg,
+[data-theme="retro-computing"] .sync-button:hover .sync-icon,
+[data-theme="retro-computing"] #sync-button:hover .sync-icon,
 [data-theme="retro-computing"] .sync-button:hover span,
 [data-theme="retro-computing"] #sync-button:hover span,
 [data-theme="clean-light"] .sync-button:hover svg,
 [data-theme="clean-light"] #sync-button:hover svg,
+[data-theme="clean-light"] .sync-button:hover .sync-icon,
+[data-theme="clean-light"] #sync-button:hover .sync-icon,
 [data-theme="clean-light"] .sync-button:hover span,
 [data-theme="clean-light"] #sync-button:hover span,
 [data-theme="cherry-blossom"] .sync-button:hover svg,
 [data-theme="cherry-blossom"] #sync-button:hover svg,
+[data-theme="cherry-blossom"] .sync-button:hover .sync-icon,
+[data-theme="cherry-blossom"] #sync-button:hover .sync-icon,
 [data-theme="cherry-blossom"] .sync-button:hover span,
 [data-theme="cherry-blossom"] #sync-button:hover span,
 [data-theme="lavender-mist"] .sync-button:hover svg,
 [data-theme="lavender-mist"] #sync-button:hover svg,
+[data-theme="lavender-mist"] .sync-button:hover .sync-icon,
+[data-theme="lavender-mist"] #sync-button:hover .sync-icon,
 [data-theme="lavender-mist"] .sync-button:hover span,
 [data-theme="lavender-mist"] #sync-button:hover span,
 [data-theme="pastel-candy"] .sync-button:hover svg,
 [data-theme="pastel-candy"] #sync-button:hover svg,
+[data-theme="pastel-candy"] .sync-button:hover .sync-icon,
+[data-theme="pastel-candy"] #sync-button:hover .sync-icon,
 [data-theme="pastel-candy"] .sync-button:hover span,
 [data-theme="pastel-candy"] #sync-button:hover span,
 [data-theme="sandstone-desert"] .sync-button:hover svg,
 [data-theme="sandstone-desert"] #sync-button:hover svg,
+[data-theme="sandstone-desert"] .sync-button:hover .sync-icon,
+[data-theme="sandstone-desert"] #sync-button:hover .sync-icon,
 [data-theme="sandstone-desert"] .sync-button:hover span,
 [data-theme="sandstone-desert"] #sync-button:hover span,
 [data-theme="oxford-navy"] .sync-button:hover svg,
 [data-theme="oxford-navy"] #sync-button:hover svg,
+[data-theme="oxford-navy"] .sync-button:hover .sync-icon,
+[data-theme="oxford-navy"] #sync-button:hover .sync-icon,
 [data-theme="oxford-navy"] .sync-button:hover span,
 [data-theme="oxford-navy"] #sync-button:hover span,
 [data-theme="neutral-gray"] .sync-button:hover svg,
 [data-theme="neutral-gray"] #sync-button:hover svg,
+[data-theme="neutral-gray"] .sync-button:hover .sync-icon,
+[data-theme="neutral-gray"] #sync-button:hover .sync-icon,
 [data-theme="neutral-gray"] .sync-button:hover span,
 [data-theme="neutral-gray"] #sync-button:hover span,
 [data-theme="monochrome-light"] .sync-button:hover svg,
 [data-theme="monochrome-light"] #sync-button:hover svg,
+[data-theme="monochrome-light"] .sync-button:hover .sync-icon,
+[data-theme="monochrome-light"] #sync-button:hover .sync-icon,
 [data-theme="monochrome-light"] .sync-button:hover span,
 [data-theme="monochrome-light"] #sync-button:hover span,
 [data-theme="taupe-natural"] .sync-button:hover svg,
 [data-theme="taupe-natural"] #sync-button:hover svg,
+[data-theme="taupe-natural"] .sync-button:hover .sync-icon,
+[data-theme="taupe-natural"] #sync-button:hover .sync-icon,
 [data-theme="taupe-natural"] .sync-button:hover span,
 [data-theme="taupe-natural"] #sync-button:hover span,
 [data-theme="executive-light"] .sync-button:hover svg,
 [data-theme="executive-light"] #sync-button:hover svg,
+[data-theme="executive-light"] .sync-button:hover .sync-icon,
+[data-theme="executive-light"] #sync-button:hover .sync-icon,
 [data-theme="executive-light"] .sync-button:hover span,
 [data-theme="executive-light"] #sync-button:hover span,
 [data-theme="sakura-rose"] .sync-button:hover svg,
 [data-theme="sakura-rose"] #sync-button:hover svg,
+[data-theme="sakura-rose"] .sync-button:hover .sync-icon,
+[data-theme="sakura-rose"] #sync-button:hover .sync-icon,
 [data-theme="sakura-rose"] .sync-button:hover span,
 [data-theme="sakura-rose"] #sync-button:hover span,
 [data-theme="cream-latte"] .sync-button:hover svg,
 [data-theme="cream-latte"] #sync-button:hover svg,
+[data-theme="cream-latte"] .sync-button:hover .sync-icon,
+[data-theme="cream-latte"] #sync-button:hover .sync-icon,
 [data-theme="cream-latte"] .sync-button:hover span,
 [data-theme="cream-latte"] #sync-button:hover span,
 [data-theme="paper-minimal"] .sync-button:hover svg,
 [data-theme="paper-minimal"] #sync-button:hover svg,
+[data-theme="paper-minimal"] .sync-button:hover .sync-icon,
+[data-theme="paper-minimal"] #sync-button:hover .sync-icon,
 [data-theme="paper-minimal"] .sync-button:hover span,
 [data-theme="paper-minimal"] #sync-button:hover span,
 [data-theme="mint-chocolat"] .sync-button:hover svg,
 [data-theme="mint-chocolat"] #sync-button:hover svg,
+[data-theme="mint-chocolat"] .sync-button:hover .sync-icon,
+[data-theme="mint-chocolat"] #sync-button:hover .sync-icon,
 [data-theme="mint-chocolat"] .sync-button:hover span,
 [data-theme="mint-chocolat"] #sync-button:hover span,
 [data-theme="nord-light"] .sync-button:hover svg,
 [data-theme="nord-light"] #sync-button:hover svg,
+[data-theme="nord-light"] .sync-button:hover .sync-icon,
+[data-theme="nord-light"] #sync-button:hover .sync-icon,
 [data-theme="nord-light"] .sync-button:hover span,
 [data-theme="nord-light"] #sync-button:hover span,
 [data-theme="solarized-light"] .sync-button:hover svg,
 [data-theme="solarized-light"] #sync-button:hover svg,
+[data-theme="solarized-light"] .sync-button:hover .sync-icon,
+[data-theme="solarized-light"] #sync-button:hover .sync-icon,
 [data-theme="solarized-light"] .sync-button:hover span,
 [data-theme="solarized-light"] #sync-button:hover span,
 [data-theme="lavender-bliss"] .sync-button:hover svg,
 [data-theme="lavender-bliss"] #sync-button:hover svg,
+[data-theme="lavender-bliss"] .sync-button:hover .sync-icon,
+[data-theme="lavender-bliss"] #sync-button:hover .sync-icon,
 [data-theme="lavender-bliss"] .sync-button:hover span,
 [data-theme="lavender-bliss"] #sync-button:hover span {
-    color: #FFFFFF !important;
-    stroke: #FFFFFF !important;
-}
-
-[data-theme="neo-brutalist"] .sync-button:hover,
-[data-theme="neo-brutalist"] #sync-button:hover {
-    background: #000000 !important;
-    background-color: #000000 !important;
-    color: #FFFFFF !important;
-    border: 2px solid #000000 !important;
-    box-shadow: 3.5px 3.5px 0px #000000 !important;
+    color: #000000 !important;
+    stroke: #000000 !important;
 }
 
