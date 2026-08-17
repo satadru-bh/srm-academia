@@ -780,10 +780,16 @@ const LIGHT_THEMES = new Set([
     'claymorphism',
     'neo-brutalist',
     'retro-computing',
+    'clean-light',
+    'cherry-blossom',
+    'lavender-mist',
+    'pastel-candy',
+    'sandstone-desert',
+    'oxford-navy',
+    'neutral-gray',
     'monochrome-light',
     'taupe-natural',
     'executive-light',
-    'clean-light',
     'sakura-rose',
     'cream-latte',
     'paper-minimal',
@@ -3001,11 +3007,9 @@ function renderDailyFocusHero() {
     }
 
     // Col 3: Estimated GPA (SRM 10-Point System based on Internals & Credits)
-    const gpaBadge = document.getElementById('hero-gpa-badge');
     const gpaVal = document.getElementById('hero-gpa-val');
     const gpaSub = document.getElementById('hero-gpa-sub');
     const gpaGaugeArc = document.getElementById('gpa-gauge-arc');
-    const gpaGaugeText = document.getElementById('gpa-gauge-text');
 
     let totalWeightedPoints = 0;
     let totalCredits = 0;
@@ -3037,13 +3041,13 @@ function renderDailyFocusHero() {
             
             // SRM 10-Point Scale Grade Point Conversion
             let gp = 0;
-            if (coursePct >= 90) gp = 10;      // O Grade
-            else if (coursePct >= 80) gp = 9;  // A+ Grade
-            else if (coursePct >= 70) gp = 8;  // A Grade
-            else if (coursePct >= 60) gp = 7;  // B+ Grade
-            else if (coursePct >= 50) gp = 6;  // B Grade
-            else if (coursePct >= 40) gp = 5;  // C Grade
-            else gp = 0;                        // F Grade
+            if (coursePct >= 90) gp = 10;      // 90-100% -> 10 GP
+            else if (coursePct >= 80) gp = 9;  // 80-89% -> 9 GP
+            else if (coursePct >= 70) gp = 8;  // 70-79% -> 8 GP
+            else if (coursePct >= 60) gp = 7;  // 60-69% -> 7 GP
+            else if (coursePct >= 50) gp = 6;  // 50-59% -> 6 GP
+            else if (coursePct >= 40) gp = 5;  // 40-49% -> 5 GP
+            else gp = 0;                        // < 40% -> 0 GP
 
             totalWeightedPoints += (gp * courseCredit);
             totalCredits += courseCredit;
@@ -3054,19 +3058,9 @@ function renderDailyFocusHero() {
     if (totalCredits > 0) {
         const estGPA = (totalWeightedPoints / totalCredits).toFixed(2);
         const estGPANum = parseFloat(estGPA);
-        
-        let gradeLetter = 'O';
-        if (estGPANum < 5.0) gradeLetter = 'F';
-        else if (estGPANum < 6.0) gradeLetter = 'B';
-        else if (estGPANum < 7.0) gradeLetter = 'B+';
-        else if (estGPANum < 8.0) gradeLetter = 'A';
-        else if (estGPANum < 9.0) gradeLetter = 'A+';
-        else gradeLetter = 'O';
 
         if (gpaVal) gpaVal.textContent = `${estGPA}`;
-        if (gpaSub) gpaSub.textContent = `Projected ${gradeLetter} Grade (${evaluatedCourseCount} course${evaluatedCourseCount === 1 ? '' : 's'}, ${totalCredits} credits)`;
-        if (gpaBadge) gpaBadge.textContent = `${gradeLetter} GRADE`;
-        if (gpaGaugeText) gpaGaugeText.textContent = `${estGPA}`;
+        if (gpaSub) gpaSub.textContent = `${evaluatedCourseCount} evaluated course${evaluatedCourseCount === 1 ? '' : 's'}, ${totalCredits} credits`;
 
         // Animate stroke-dasharray (percentage of 10-point scale)
         const pctOfTen = Math.min(100, Math.max(0, (estGPANum / 10) * 100));
@@ -3076,8 +3070,6 @@ function renderDailyFocusHero() {
     } else {
         if (gpaVal) gpaVal.textContent = '0.00';
         if (gpaSub) gpaSub.textContent = '0 evaluated courses, 0 credits';
-        if (gpaBadge) gpaBadge.textContent = '0.0 GRADE';
-        if (gpaGaugeText) gpaGaugeText.textContent = '0';
         if (gpaGaugeArc) gpaGaugeArc.setAttribute('stroke-dasharray', '0 100');
     }
 }

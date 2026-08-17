@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap');
 
 [data-theme="neo-brutalist"] {
     --theme-name: "neo-brutalist";
@@ -133,7 +133,7 @@
     background-color: var(--bg-surface-solid) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* Claymorphism Popup Modals & Dropdowns (No Exterior Blinding White Halos) */
@@ -240,23 +240,65 @@
 
 /* Ceramic Clay Calendar Tiles */
 [data-theme="claymorphism"] .calendar-day-cell {
-    border-radius: 24px !important;
+    border-radius: 20px !important;
     border: none !important;
-    box-shadow: var(--clay-shadow-subcard) !important;
-    background-color: var(--bg-surface-elevated) !important;
+    background-color: #F8FAFC !important;
+    box-shadow: inset -3px -3px 6px rgba(0, 0, 0, 0.05), inset 3px 3px 6px rgba(255, 255, 255, 0.9), 6px 6px 16px rgba(0, 0, 0, 0.04) !important;
     transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    color: #0F172A !important;
 }
 
 [data-theme="claymorphism"] .calendar-day-cell:hover {
     transform: translateY(-3px) scale(1.02) !important;
-    box-shadow: 12px 12px 28px #E4DDD4, -12px -12px 28px #FFFFFF, inset 2px 2px 3px #FFFFFF !important;
+    box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 1), 10px 10px 24px rgba(0, 0, 0, 0.08) !important;
 }
 
 [data-theme="claymorphism"] .calendar-day-cell.today {
-    background-color: var(--accent-primary) !important;
-    color: var(--text-inverse) !important;
-    box-shadow: 8px 8px 20px rgba(139, 112, 246, 0.4), inset 2px 2px 3px rgba(255, 255, 255, 0.6) !important;
+    background: linear-gradient(135deg, #6366F1, #4F46E5) !important;
+    color: #FFFFFF !important;
+    box-shadow: inset -3px -3px 6px rgba(0, 0, 0, 0.2), inset 3px 3px 6px rgba(255, 255, 255, 0.5), 8px 8px 20px rgba(99, 102, 241, 0.35) !important;
     transform: translateY(-2px) !important;
+}
+
+/* Claymorphism Event Days — Soft 3D Clay Pills with Black/High-Contrast Text */
+[data-theme="claymorphism"] .calendar-day-cell.holiday {
+    background-color: #FFE4E6 !important;
+    box-shadow: inset -3px -3px 6px rgba(225, 29, 72, 0.12), inset 3px 3px 6px rgba(255, 255, 255, 0.9), 6px 6px 16px rgba(225, 29, 72, 0.08) !important;
+    color: #000000 !important;
+}
+
+[data-theme="claymorphism"] .calendar-day-cell.milestone {
+    background-color: #D1FAE5 !important;
+    box-shadow: inset -3px -3px 6px rgba(16, 185, 129, 0.12), inset 3px 3px 6px rgba(255, 255, 255, 0.9), 6px 6px 16px rgba(16, 185, 129, 0.08) !important;
+    color: #000000 !important;
+}
+
+[data-theme="claymorphism"] .calendar-day-cell.commencement {
+    background-color: #EDE9FE !important;
+    box-shadow: inset -3px -3px 6px rgba(139, 92, 246, 0.12), inset 3px 3px 6px rgba(255, 255, 255, 0.9), 6px 6px 16px rgba(139, 92, 246, 0.08) !important;
+    color: #000000 !important;
+}
+
+[data-theme="claymorphism"] .calendar-day-cell.holiday .day-number,
+[data-theme="claymorphism"] .calendar-day-cell.milestone .day-number,
+[data-theme="claymorphism"] .calendar-day-cell.commencement .day-number,
+[data-theme="claymorphism"] .calendar-day-cell.holiday div[title],
+[data-theme="claymorphism"] .calendar-day-cell.milestone div[title],
+[data-theme="claymorphism"] .calendar-day-cell.commencement div[title],
+[data-theme="claymorphism"] .calendar-day-cell.holiday span,
+[data-theme="claymorphism"] .calendar-day-cell.milestone span,
+[data-theme="claymorphism"] .calendar-day-cell.commencement span {
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="claymorphism"] .calendar-day-cell .calendar-cell-day-order {
+    background: #FFFFFF !important;
+    border: none !important;
+    box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.08), inset 1px 1px 2px rgba(255, 255, 255, 0.9), 2px 2px 6px rgba(0, 0, 0, 0.06) !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+    border-radius: 8px !important;
 }
 
 /* Claymorphism Sidebar Navigation */
@@ -299,12 +341,24 @@
     box-shadow: 8px 8px 18px #E4DDD4, -8px -8px 18px #FFFFFF, inset 2px 2px 3px rgba(255, 255, 255, 0.8) !important;
 }
 
-/* Claymorphism Timetable Slots (Weekly Matrix & Overview Pane Timeline) */
+/* Claymorphism Timetable Slots — High-Contrast Solid Black Text */
+[data-theme="claymorphism"] .matrix-td-cell,
+[data-theme="claymorphism"] .matrix-td-cell *,
+[data-theme="claymorphism"] .matrix-td-cell span,
+[data-theme="claymorphism"] .matrix-td-cell div,
+[data-theme="claymorphism"] .grid-class-cell,
+[data-theme="claymorphism"] .grid-class-cell *,
+[data-theme="claymorphism"] .grid-class-cell span,
+[data-theme="claymorphism"] .grid-class-cell div {
+    color: #000000 !important;
+    font-weight: 800 !important;
+}
+
 [data-theme="claymorphism"] .matrix-td-cell.filled.theory,
 [data-theme="claymorphism"] .grid-class-cell.filled.theory {
     background-color: #F3E8FF !important;
     border: none !important;
-    color: #7C5CF6 !important;
+    color: #000000 !important;
     border-radius: 18px !important;
     box-shadow: 4px 4px 10px #E4DDD4, -2px -2px 8px #FFFFFF, inset 1.5px 1.5px 2px #FFFFFF !important;
     font-weight: 800 !important;
@@ -314,7 +368,7 @@
 [data-theme="claymorphism"] .grid-class-cell.filled.lab {
     background-color: #E0F2FE !important;
     border: none !important;
-    color: #0284C7 !important;
+    color: #000000 !important;
     border-radius: 18px !important;
     box-shadow: 4px 4px 10px #E4DDD4, -2px -2px 8px #FFFFFF, inset 1.5px 1.5px 2px #FFFFFF !important;
     font-weight: 800 !important;
@@ -530,7 +584,7 @@
     --glass-glow: 0 0 28px rgba(143, 168, 255, 0.24);
 
     /* Environment Tokens */
-    --glass-background-image: url("glass-bg.png"), radial-gradient(circle at 20% 20%, rgba(30, 41, 89, 0.85) 0%, rgba(8, 12, 24, 0.96) 65%), radial-gradient(circle at 80% 80%, rgba(143, 168, 255, 0.18) 0%, transparent 50%);
+    --glass-background-image: url("glass-bg.png?v=9"), radial-gradient(circle at 20% 20%, rgba(30, 41, 89, 0.85) 0%, rgba(8, 12, 24, 0.96) 65%), radial-gradient(circle at 80% 80%, rgba(143, 168, 255, 0.18) 0%, transparent 50%);
     --glass-atmosphere-bg: rgba(4, 7, 14, 0.28);
     --glass-atmosphere-blur: 12px;
     --glass-atmosphere-saturation: 1.15;
@@ -561,14 +615,13 @@
     width: 100vw;
     height: 100vh;
     z-index: -3;
-    background-image: url("glass-bg.png"), var(--glass-background-image);
+    background-image: url("glass-bg.png?v=9"), var(--glass-background-image);
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
     transform: translateZ(0) scale(1.02);
     pointer-events: none;
     opacity: 0.95;
-    will-change: transform;
 }
 
 [data-theme="glassmorphism"] body::after {
@@ -589,37 +642,47 @@
     pointer-events: none;
 }
 
-/* Layer 2 — Primary Glass Components (Lag-Optimized: No redundant nested backdrop-filters) */
+/* Layer 2 — Unified Harmonized Glass Components (Lag-Optimized: Single Screen Blur) */
 [data-theme="glassmorphism"] .card,
 [data-theme="glassmorphism"] .overview-card,
+[data-theme="glassmorphism"] .daily-focus-hero-card,
+[data-theme="glassmorphism"] .performance-trends-card,
 [data-theme="glassmorphism"] .calendar-rebuilt-card,
 [data-theme="glassmorphism"] .timetable-grid-container,
-[data-theme="glassmorphism"] .attendance-grid-row,
 [data-theme="glassmorphism"] .marks-card,
 [data-theme="glassmorphism"] .course-detail-card,
-[data-theme="glassmorphism"] .daily-focus-col,
-[data-theme="glassmorphism"] .trend-spark-box,
+[data-theme="glassmorphism"] .courses-header-card,
+[data-theme="glassmorphism"] .academic-summary-hero-card,
+[data-theme="glassmorphism"] .attendance-summary-hero-card,
 [data-theme="glassmorphism"] .calc-simulation-result {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 45%, rgba(255, 255, 255, 0.06) 100%), rgba(255, 255, 255, 0.035) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(16, 22, 38, 0.65) !important;
     border: 1px solid var(--glass-border) !important;
     border-radius: var(--radius-xl) !important;
-    box-shadow: inset 0 1px 0 var(--glass-highlight), inset 0 -1px 0 rgba(0, 0, 0, 0.12), var(--glass-shadow) !important;
+    box-shadow: inset 0 1px 0 var(--glass-highlight), inset 0 -1px 0 rgba(0, 0, 0, 0.2), var(--glass-shadow) !important;
     transition: var(--transition-smooth) !important;
 }
 
 [data-theme="glassmorphism"] .card:hover,
+[data-theme="glassmorphism"] .daily-focus-hero-card:hover,
+[data-theme="glassmorphism"] .performance-trends-card:hover,
 [data-theme="glassmorphism"] .attendance-grid-row:hover,
 [data-theme="glassmorphism"] .marks-card:hover,
 [data-theme="glassmorphism"] .course-detail-card:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.05) 45%, rgba(255, 255, 255, 0.09) 100%), rgba(255, 255, 255, 0.06) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%), rgba(20, 28, 48, 0.75) !important;
     border-color: var(--glass-border-bright) !important;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), var(--glass-shadow-floating) !important;
     transform: translateY(-2px) !important;
 }
 
-/* Layer 2 — Strong Glass Components (Hero, Header, Modals, Drawers) - Lag Free 60FPS (Single Screen Blur) */
-[data-theme="glassmorphism"] .daily-focus-hero-card,
-[data-theme="glassmorphism"] .performance-trends-card,
+[data-theme="glassmorphism"] .daily-focus-col,
+[data-theme="glassmorphism"] .trend-spark-box,
+[data-theme="glassmorphism"] .attendance-grid-row {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: var(--radius-lg) !important;
+}
+
+/* Layer 2 — Floating Glass Overlay Components (Modals, Dropdowns, Drawers) */
 [data-theme="glassmorphism"] .modal-card,
 [data-theme="glassmorphism"] .theme-dropdown-menu,
 [data-theme="glassmorphism"] .dev-drawer,
@@ -633,7 +696,9 @@
 
 /* Layer 2 — Sidebar (Primary Refractive Floating Pane) */
 [data-theme="glassmorphism"] .sidebar {
-    background: linear-gradient(180deg, rgba(20, 26, 42, 0.88) 0%, rgba(8, 12, 22, 0.94) 100%) !important;
+    background: linear-gradient(180deg, rgba(20, 26, 42, 0.55) 0%, rgba(8, 12, 22, 0.65) 100%) !important;
+    backdrop-filter: blur(20px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.16) !important;
     box-shadow: 20px 0 60px rgba(0, 0, 0, 0.45), inset 1px 0 0 rgba(255, 255, 255, 0.12) !important;
 }
@@ -857,11 +922,8 @@
 
 /* Floating Glass User Avatar — PURE WHITE AVATAR & INITIALS */
 [data-theme="glassmorphism"] .header-avatar-btn,
-[data-theme="glassmorphism"] .header-avatar-btn *,
 [data-theme="glassmorphism"] .user-avatar,
-[data-theme="glassmorphism"] .user-avatar *,
-[data-theme="glassmorphism"] .user-dropdown-avatar,
-[data-theme="glassmorphism"] .user-dropdown-avatar * {
+[data-theme="glassmorphism"] .user-dropdown-avatar {
     background: linear-gradient(135deg, rgba(143, 168, 255, 0.45), rgba(143, 168, 255, 0.22)) !important;
     border: 1px solid rgba(190, 205, 255, 0.35) !important;
     color: #FFFFFF !important;
@@ -1079,22 +1141,43 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
 }
 
-/* Glass Mobile Bottom Dock Navigation */
+/* Refractive Glassmorphism (Glass Dark) Mobile Bottom Dock Navigation */
 [data-theme="glassmorphism"] .mobile-bottom-nav,
 [data-theme="glassmorphism"] .mobile-nav-container {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 100%), rgba(6, 9, 16, 0.75) !important;
+    background: rgba(13, 17, 23, 0.85) !important;
     backdrop-filter: blur(28px) saturate(140%) !important;
     -webkit-backdrop-filter: blur(28px) saturate(140%) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.16) !important;
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.60), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
 }
 
-[data-theme="glassmorphism"] .mobile-nav-item.active {
-    background: rgba(143, 168, 255, 0.22) !important;
-    border: 1px solid rgba(175, 195, 255, 0.30) !important;
-    border-radius: var(--radius-md) !important;
+[data-theme="glassmorphism"] .mobile-nav-item,
+[data-theme="glassmorphism"] button.mobile-nav-item {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+[data-theme="glassmorphism"] .mobile-nav-item svg,
+[data-theme="glassmorphism"] .mobile-nav-item span {
+    color: rgba(255, 255, 255, 0.65) !important;
+    stroke: rgba(255, 255, 255, 0.65) !important;
+}
+
+[data-theme="glassmorphism"] .mobile-nav-item.active,
+[data-theme="glassmorphism"] button.mobile-nav-item.active {
+    background: linear-gradient(135deg, rgba(143, 168, 255, 0.38), rgba(143, 168, 255, 0.18)) !important;
+    border: 1px solid rgba(190, 205, 255, 0.40) !important;
+    border-radius: 20px !important;
     color: #FFFFFF !important;
-    box-shadow: 0 0 16px rgba(143, 168, 255, 0.25) !important;
+    box-shadow: 0 4px 20px rgba(143, 168, 255, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
+}
+
+[data-theme="glassmorphism"] .mobile-nav-item.active svg,
+[data-theme="glassmorphism"] .mobile-nav-item.active span {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
 }
 
 /* Destructive Actions — Red Glass */
@@ -1141,7 +1224,6 @@
     -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
     border: 1px solid rgba(255, 255, 255, 0.18) !important;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
-    will-change: transform, opacity;
 }
 
 [data-theme="glassmorphism"] .theme-option-item,
@@ -5580,20 +5662,45 @@ html.instant-workspace-active #app-workspace {
 }
 
 .daily-focus-col-val {
-    font-size: 18px;
-    font-weight: 800;
+    font-size: 20px;
+    font-weight: 900;
     color: var(--text-primary);
-    line-height: 1.3;
+    line-height: 1.1;
     margin: 4px 0 6px 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+#hero-internals-title,
+#hero-gpa-val {
+    font-size: clamp(28px, 4.5vw, 36px) !important;
+    font-weight: 900 !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.02em !important;
+}
+
 .daily-focus-col-sub {
     font-size: 11px;
     font-weight: 700;
     color: var(--text-secondary);
+}
+
+.gpa-graphic-wrapper {
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    min-height: 58px;
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gpa-gauge-svg {
+    width: 58px;
+    height: 58px;
 }
 
 /* Performance Trends Micro Charts Section */
@@ -6292,8 +6399,9 @@ html.instant-workspace-active #app-workspace {
 }
 
 .assessment-obtained {
-    font-size: 14px;
-    font-weight: 800;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    line-height: 1.1 !important;
 }
 
 .assessment-total {
@@ -7610,7 +7718,7 @@ html.instant-workspace-active #app-workspace {
     max-width: 32px !important;
     max-height: 32px !important;
     object-fit: contain !important;
-    transform: none !important;
+    transform: translateX(14px) !important;
 }
 
 /* LOGIN SCREEN REDUCED BRAND LOGO SIZE */
@@ -7632,14 +7740,37 @@ html.instant-workspace-active #app-workspace {
     display: none !important;
 }
 
+.sidebar.collapsed .sidebar-nav {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 12px 0 !important;
+    gap: 8px !important;
+}
+
 .sidebar.collapsed .nav-item {
-    justify-content: center;
-    padding: 12px 0;
-    margin: 0 12px;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    padding: 0 !important;
+    margin: 4px auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 0 !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
 }
 
 .sidebar.collapsed .nav-item svg {
-    margin: 0 auto;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: block !important;
+    flex-shrink: 0 !important;
 }
 
 .sidebar.collapsed .nav-item.active {
@@ -8674,7 +8805,7 @@ button.mobile-nav-item.active {
     background: var(--accent-primary-subtle, rgba(249, 115, 22, 0.18)) !important;
     border: none !important;
     box-shadow: none !important;
-    border-radius: 16px !important;
+    border-radius: 22px !important;
     font-weight: 800 !important;
     padding: 6px 12px !important;
 }
@@ -8856,181 +8987,46 @@ button.mobile-nav-item.active {
     opacity: 1 !important;
 }
 
-/* EXACT MATCH VERTICAL PROGRESS BAR WITH CHECKPOINTS & SOLID/DASHED SEGMENTS */
+/* REMOVE TIMETABLE PROGRESS BAR ON MOBILE ENTIRELY & FULL HORIZONTAL EXPANSION */
 @media (max-width: 992px) {
     .vertical-timeline-list {
         position: relative !important;
-        padding: 4px 12px 12px 28px !important;
+        padding: 4px 0 12px 0 !important;
         box-sizing: border-box !important;
         overflow: visible !important;
+        width: 100% !important;
     }
 
-    /* Base Continuous Dashed Axis Line (Runs from Center of Dot 1 to Center of Last Dot) */
+    /* Remove vertical line completely */
     .vertical-timeline-list::before {
-        content: '' !important;
-        position: absolute !important;
-        left: 10px !important;
-        top: var(--line-top, 38px) !important;
-        bottom: var(--line-bottom, 22px) !important;
-        width: 2px !important;
-        border-left: 2px dashed #9CA3AF !important;
-        z-index: 1 !important;
-        pointer-events: none !important;
-        display: block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
     }
 
     .vertical-timeline-card {
         position: relative !important;
         overflow: visible !important;
-    }
-
-    /* Past / Completed Solid Line Overlay */
-    .timeline-line-segment {
-        display: none !important;
-    }
-
-    .timeline-line-segment.solid {
-        display: block !important;
-        position: absolute !important;
-        left: -18px !important;
-        top: calc(-50% - 4px) !important;
-        height: calc(100% + 8px) !important;
-        width: 2px !important;
-        background-color: #15803D !important;
-        z-index: 2 !important;
-        pointer-events: none !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
-
-    /* Checkpoint Nodes (Center X = 11.0px for ALL dots) */
-    .timeline-checkpoint-node {
-        position: absolute !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        z-index: 3 !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
         box-sizing: border-box !important;
-        background: var(--bg-surface-solid) !important;
-        opacity: 1 !important;
-        visibility: visible !important;
     }
 
-    /* 1. Completed Slot Checkpoint Node (16px circle) -> left: -27.5px compensates for class card left border */
-    .timeline-checkpoint-node.completed {
-        width: 16px !important;
-        height: 16px !important;
-        left: -27.5px !important;
-        border-radius: 50% !important;
-        background: #15803D !important;
-        border: 2px solid #15803D !important;
-        color: #FFFFFF !important;
-    }
-
-    .timeline-checkpoint-node.completed svg {
-        display: block !important;
-    }
-
-    /* 2. Current Active Slot Checkpoint Node (20px circle) -> left: -29.5px compensates for class card left border */
-    .timeline-checkpoint-node.current {
-        width: 20px !important;
-        height: 20px !important;
-        left: -29.5px !important;
-        border-radius: 50% !important;
-        background: #FFFFFF !important;
-        border: 2px solid #E5E7EB !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
-    }
-
-    .timeline-checkpoint-node.current .current-inner-dot {
-        width: 10px !important;
-        height: 10px !important;
-        border-radius: 50% !important;
-        background: #15803D !important;
-    }
-
-    /* 3. Upcoming Scheduled Class Checkpoint Node (14px circle) -> left: -26.5px compensates for class card left border */
-    .timeline-checkpoint-node.upcoming {
-        width: 14px !important;
-        height: 14px !important;
-        left: -26.5px !important;
-        border-radius: 50% !important;
-        background: var(--bg-surface-solid) !important;
-        border: 2px solid #15803D !important;
-    }
-
-    .timeline-checkpoint-node.upcoming.lab {
-        border: 2px solid #0284c7 !important;
-    }
-
-    /* 4. Free Period Checkpoint Node (14px circle) -> left: -24px (100% Dead Center) */
-    .timeline-checkpoint-node.free {
-        width: 14px !important;
-        height: 14px !important;
-        left: -24px !important;
-        border-radius: 50% !important;
-        background: var(--bg-surface-solid) !important;
-        border: 2px solid #9CA3AF !important;
-    }
-
-    /* Theme Overrides for Neo-Brutalist & Retro */
-    [data-theme="neo-brutalist"] .vertical-timeline-list::before {
-        width: 2.5px !important;
-        border-left: 2.5px dashed #000000 !important;
-    }
-
-    [data-theme="neo-brutalist"] .timeline-line-segment.solid {
-        background-color: #000000 !important;
-        width: 2.5px !important;
-    }
-
-    [data-theme="neo-brutalist"] .timeline-checkpoint-node {
-        border: 2.5px solid #000000 !important;
-    }
-
-    [data-theme="neo-brutalist"] .timeline-checkpoint-node.completed {
-        background: #000000 !important;
-        border: 2.5px solid #000000 !important;
-        color: #CCFF00 !important;
-    }
-
-    [data-theme="neo-brutalist"] .timeline-checkpoint-node.completed svg {
-        stroke: #CCFF00 !important;
-    }
-
-    [data-theme="neo-brutalist"] .timeline-checkpoint-node.current {
-        background: #CCFF00 !important;
-        border: 2.5px solid #000000 !important;
-        box-shadow: 2px 2px 0px #000000 !important;
-    }
-
-    [data-theme="neo-brutalist"] .timeline-checkpoint-node.current .current-inner-dot {
-        background: #000000 !important;
-    }
-
-    [data-theme="neo-brutalist"] .timeline-checkpoint-node.upcoming {
-        background: #FFFFFF !important;
-        border: 2.5px solid #000000 !important;
-    }
-
-    [data-theme="neo-brutalist"] .timeline-checkpoint-node.free {
-        background: #FFFDF5 !important;
-        border: 2.5px solid #000000 !important;
-    }
-
-    [data-theme="retro-computing"] .timeline-checkpoint-node.completed {
-        background: #2D5B4F !important;
-        border: 2px solid #2D5B4F !important;
-    }
-
-    [data-theme="retro-computing"] .timeline-checkpoint-node.current .current-inner-dot {
-        background: #2D5B4F !important;
+    /* Past / Completed Solid Line Overlay & Checkpoint Nodes Completely Removed */
+    .timeline-line-segment,
+    .timeline-checkpoint-node {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
     }
 }
+
+
 
 .vertical-timeline-card {
     display: flex;
@@ -9268,6 +9264,7 @@ button.mobile-nav-item.active {
     width: 100% !important;
 }
 
+.sidebar:not(.collapsed) .sidebar-header .sidebar-brand,
 .sidebar:not(.collapsed) .sidebar-header .logo-wrapper {
     display: flex !important;
     align-items: center !important;
@@ -9278,17 +9275,19 @@ button.mobile-nav-item.active {
     text-align: left !important;
 }
 
-.sidebar:not(.collapsed) .brand-logo-img {
+.sidebar:not(.collapsed) .brand-logo-img,
+.sidebar:not(.collapsed) .sidebar-logo-img {
     display: block !important;
     margin: 0 !important;
-    height: 28px !important;
-    width: 28px !important;
-    max-height: 28px !important;
+    height: 32px !important;
+    width: 32px !important;
+    max-height: 32px !important;
     object-fit: contain !important;
 }
 
 .sidebar:not(.collapsed) .brand-name {
-    display: inline-block !important;
+    display: inline-flex !important;
+    align-items: center !important;
     font-size: 18px !important;
     font-weight: 800 !important;
     color: var(--text-primary) !important;
@@ -9300,6 +9299,7 @@ button.mobile-nav-item.active {
     padding: 18px 0 !important;
 }
 
+.sidebar.collapsed .sidebar-header .sidebar-brand,
 .sidebar.collapsed .sidebar-header .logo-wrapper {
     display: flex !important;
     align-items: center !important;
@@ -9309,13 +9309,15 @@ button.mobile-nav-item.active {
     text-align: center !important;
 }
 
-.sidebar.collapsed .brand-logo-img {
+.sidebar.collapsed .brand-logo-img,
+.sidebar.collapsed .sidebar-logo-img {
     display: block !important;
     margin: 0 auto !important;
-    height: 28px !important;
-    width: 28px !important;
-    max-height: 28px !important;
+    height: 32px !important;
+    width: 32px !important;
+    max-height: 32px !important;
     object-fit: contain !important;
+    transform: translateX(14px) !important;
 }
 
 .sidebar.collapsed .brand-name {
@@ -9383,15 +9385,17 @@ button.mobile-nav-item.active {
     text-align: right !important;
     flex-shrink: 0 !important;
     margin-left: auto !important;
-    min-width: 220px !important;
+    min-width: 264px !important;
 }
 
 .attn-highlights-row {
     display: grid !important;
-    grid-template-columns: 80px 100px !important;
-    gap: 16px !important;
-    justify-items: end !important;
+    grid-template-columns: 100px 140px !important;
+    gap: 24px !important;
+    justify-content: end !important;
+    align-items: end !important;
     text-align: right !important;
+    width: 264px !important;
 }
 
 .attn-highlight-box {
@@ -9400,6 +9404,7 @@ button.mobile-nav-item.active {
     align-items: flex-end !important;
     text-align: right !important;
     width: 100% !important;
+    white-space: nowrap !important;
 }
 
 .attn-highlight-label {
@@ -9828,10 +9833,10 @@ body.sidebar-open #attendance-fab-container,
     }
 }
 
-/* Medium Tablet / Mobile Viewports (< 992px) */
-@media (max-width: 992px) {
+/* Medium Tablet / Mobile Viewports (< 1024px) — Guarantees at least one navbar is ALWAYS visible */
+@media (max-width: 1024px) {
 
-    /* Hide Desktop Sidebar */
+    /* Hide Desktop Sidebar on all tablets and mobile screens */
     .sidebar {
         display: none !important;
     }
@@ -9867,8 +9872,7 @@ body.sidebar-open #attendance-fab-container,
         box-sizing: border-box !important;
     }
 
-
-    /* Floating Mobile Bottom Nav Bar */
+    /* Floating Mobile Bottom Nav Bar — Always visible on all tablets and phones */
     .mobile-bottom-nav {
         display: flex !important;
         position: fixed !important;
@@ -10735,18 +10739,20 @@ body.sidebar-open #attendance-fab-container,
         font-size: 11px !important;
     }
 
-    .daily-focus-col-val {
-        font-size: 17px !important;
-    }
-
+    #hero-internals-title,
     #hero-gpa-val {
-        font-size: 20px !important;
+        font-size: clamp(26px, 5vw, 32px) !important;
+        font-weight: 900 !important;
+        line-height: 1.05 !important;
+        letter-spacing: -0.02em !important;
     }
 
     .gpa-graphic-wrapper,
     .gpa-gauge-svg {
-        width: 40px !important;
-        height: 40px !important;
+        width: 50px !important;
+        height: 50px !important;
+        min-width: 50px !important;
+        min-height: 50px !important;
     }
 
     .mobile-bottom-nav {
@@ -12163,6 +12169,7 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 }
 
 [data-theme="neo-brutalist"] .header-avatar-btn,
+[data-theme="neo-brutalist"] .header-avatar-btn,
 [data-theme="neo-brutalist"] .user-avatar,
 [data-theme="neo-brutalist"] .user-dropdown-avatar {
     background-color: #ccff00 !important;
@@ -12172,3 +12179,1623 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     box-shadow: 2px 2px 0px #000000 !important;
     font-weight: 900 !important;
 }
+
+/* ==========================================================================
+   37. REFRACTIVE GLASSMORPHISM LIGHT DESIGN SYSTEM [data-theme="glassmorphism-light"]
+   ========================================================================== */
+
+[data-theme="glassmorphism-light"] {
+    --theme-name: "glassmorphism-light";
+
+    /* Light Base & Ultra Translucent Glass Surfaces */
+    --bg-base: #F1F5F9;
+    --bg-surface: rgba(255, 255, 255, 0.28);
+    --bg-surface-elevated: rgba(255, 255, 255, 0.35);
+    --bg-surface-solid: rgba(255, 255, 255, 0.45);
+    --bg-surface-hover: rgba(255, 255, 255, 0.50);
+
+    /* Typography */
+    --text-primary: #0F172A;
+    --text-secondary: #334155;
+    --text-muted: #64748B;
+    --text-inverse: #FFFFFF;
+
+    /* Glass Edges */
+    --border-subtle: rgba(255, 255, 255, 0.50);
+    --border-card: rgba(255, 255, 255, 0.65);
+    --border-strong: rgba(203, 213, 225, 0.70);
+    --border-focus: rgba(79, 70, 229, 0.40);
+
+    /* Accents */
+    --accent-primary: #4F46E5;
+    --accent-primary-hover: #4338CA;
+    --accent-primary-subtle: rgba(79, 70, 229, 0.12);
+    --accent-primary-glow: rgba(79, 70, 229, 0.25);
+    --accent-secondary: #0284C7;
+    --accent-success: #059669;
+    --accent-warning: #D97706;
+    --accent-danger: #DC2626;
+
+    /* Academic Surfaces */
+    --theory-bg: rgba(79, 70, 229, 0.12);
+    --theory-border: rgba(79, 70, 229, 0.25);
+    --theory-text: #3730A3;
+
+    --lab-bg: rgba(2, 132, 199, 0.12);
+    --lab-border: rgba(2, 132, 199, 0.25);
+    --lab-text: #075985;
+
+    --cell-empty-bg: rgba(255, 255, 255, 0.25);
+    --cell-empty-border: rgba(255, 255, 255, 0.50);
+
+    --calendar-cell-bg: rgba(255, 255, 255, 0.30);
+    --calendar-cell-border: rgba(255, 255, 255, 0.55);
+    --calendar-cell-hover: rgba(255, 255, 255, 0.45);
+
+    --font-stack: "Inter", "Plus Jakarta Sans", system-ui, sans-serif;
+    --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+    --radius-xl: 18px;
+    --radius-lg: 14px;
+    --radius-md: 10px;
+    --radius-sm: 8px;
+
+    --shadow-premium: 0 10px 30px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    --shadow-floating: 0 20px 40px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="glassmorphism-light"] html {
+    background-color: #F1F5F9 !important;
+}
+
+[data-theme="glassmorphism-light"] body {
+    background-color: transparent !important;
+    background: transparent !important;
+    color: #0F172A !important;
+    font-family: var(--font-stack) !important;
+    position: relative;
+    min-height: 100vh;
+}
+
+[data-theme="glassmorphism-light"] body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -3;
+    background-image: url("glass_bg_light.png?v=9"), linear-gradient(135deg, #E2E8F0 0%, #F1F5F9 50%, #E0E7FF 100%);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: translateZ(0) scale(1.02);
+    pointer-events: none;
+    opacity: 0.98;
+}
+
+[data-theme="glassmorphism-light"] .auth-screen,
+[data-theme="glassmorphism-light"] #auth-screen {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+[data-theme="glassmorphism-light"] body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px) saturate(130%);
+    -webkit-backdrop-filter: blur(8px) saturate(130%);
+    pointer-events: none;
+}
+
+/* Translucent Light Glass Cards */
+[data-theme="glassmorphism-light"] .card,
+[data-theme="glassmorphism-light"] .overview-card,
+[data-theme="glassmorphism-light"] .daily-focus-hero-card,
+[data-theme="glassmorphism-light"] .performance-trends-card,
+[data-theme="glassmorphism-light"] .calendar-rebuilt-card,
+[data-theme="glassmorphism-light"] .timetable-grid-container,
+[data-theme="glassmorphism-light"] .timetable-grid-section,
+[data-theme="glassmorphism-light"] .marks-card,
+[data-theme="glassmorphism-light"] .course-detail-card,
+[data-theme="glassmorphism-light"] .courses-header-card,
+[data-theme="glassmorphism-light"] .academic-summary-hero-card,
+[data-theme="glassmorphism-light"] .attendance-summary-hero-card,
+[data-theme="glassmorphism-light"] .calc-simulation-result {
+    background: rgba(255, 255, 255, 0.28) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.55) !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+    border-radius: 18px !important;
+    color: #0F172A !important;
+}
+
+[data-theme="glassmorphism-light"] .card:hover,
+[data-theme="glassmorphism-light"] .daily-focus-hero-card:hover,
+[data-theme="glassmorphism-light"] .performance-trends-card:hover,
+[data-theme="glassmorphism-light"] .attendance-grid-row:hover,
+[data-theme="glassmorphism-light"] .marks-card:hover,
+[data-theme="glassmorphism-light"] .course-detail-card:hover {
+    background: rgba(255, 255, 255, 0.42) !important;
+    border-color: rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Light Glass Sub-Cards & Summary Boxes */
+[data-theme="glassmorphism-light"] .daily-focus-col,
+[data-theme="glassmorphism-light"] .trend-spark-box,
+[data-theme="glassmorphism-light"] .attendance-grid-row,
+[data-theme="glassmorphism-light"] .courses-sum-box {
+    background: rgba(255, 255, 255, 0.30) !important;
+    backdrop-filter: blur(14px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.50) !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+    border-radius: 14px !important;
+    color: #0F172A !important;
+}
+
+/* Modals & Popovers */
+[data-theme="glassmorphism-light"] .modal-card,
+[data-theme="glassmorphism-light"] .theme-dropdown-menu,
+[data-theme="glassmorphism-light"] .dev-drawer,
+[data-theme="glassmorphism-light"] .user-dropdown-menu,
+[data-theme="glassmorphism-light"] .quick-prediction-modal {
+    background: rgba(255, 255, 255, 0.60) !important;
+    backdrop-filter: blur(24px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    color: #0F172A !important;
+}
+
+/* Sidebar */
+[data-theme="glassmorphism-light"] .sidebar {
+    background: rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.55) !important;
+}
+
+[data-theme="glassmorphism-light"] .sidebar-nav .nav-item {
+    color: #334155 !important;
+}
+
+[data-theme="glassmorphism-light"] .sidebar-nav .nav-item svg {
+    stroke: #475569 !important;
+}
+
+/* Active Nav Item High Contrast Indigo Glass Fill & Visible White Icon */
+[data-theme="glassmorphism-light"] .sidebar-nav .nav-item.active {
+    background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%) !important;
+    border: 1px solid #4338CA !important;
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+[data-theme="glassmorphism-light"] .sidebar-nav .nav-item.active svg {
+    stroke: #FFFFFF !important;
+    color: #FFFFFF !important;
+    fill: none !important;
+}
+
+[data-theme="glassmorphism-light"] .sidebar-nav .nav-item.active span {
+    color: #FFFFFF !important;
+}
+
+/* Bold Red Logout Button */
+[data-theme="glassmorphism-light"] .logout-btn,
+[data-theme="glassmorphism-light"] #logout-btn,
+[data-theme="glassmorphism-light"] #dropdown-logout-btn,
+[data-theme="glassmorphism-light"] .user-dropdown-item.danger {
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%) !important;
+    border: 1px solid #DC2626 !important;
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35) !important;
+}
+
+[data-theme="glassmorphism-light"] .logout-btn svg,
+[data-theme="glassmorphism-light"] #logout-btn svg,
+[data-theme="glassmorphism-light"] #dropdown-logout-btn svg,
+[data-theme="glassmorphism-light"] .user-dropdown-item.danger svg {
+    stroke: #FFFFFF !important;
+    color: #FFFFFF !important;
+    fill: none !important;
+}
+
+[data-theme="glassmorphism-light"] .logout-btn span,
+[data-theme="glassmorphism-light"] #logout-btn span {
+    color: #FFFFFF !important;
+}
+
+[data-theme="glassmorphism-light"] .logout-btn:hover,
+[data-theme="glassmorphism-light"] #logout-btn:hover,
+[data-theme="glassmorphism-light"] #dropdown-logout-btn:hover,
+[data-theme="glassmorphism-light"] .user-dropdown-item.danger:hover {
+    background: #DC2626 !important;
+    color: #FFFFFF !important;
+    border-color: #B91C1C !important;
+    box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45) !important;
+}
+
+[data-theme="glassmorphism-light"] .logout-btn:hover svg,
+[data-theme="glassmorphism-light"] #logout-btn:hover svg,
+[data-theme="glassmorphism-light"] #dropdown-logout-btn:hover svg,
+[data-theme="glassmorphism-light"] .user-dropdown-item.danger:hover svg {
+    stroke: #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+/* Page Header & Full Navbar Blur Coverage */
+[data-theme="glassmorphism-light"] .workspace-header,
+[data-theme="glassmorphism-light"] .header-container,
+[data-theme="glassmorphism-light"] .page-header,
+[data-theme="glassmorphism-light"] .top-nav,
+[data-theme="glassmorphism-light"] .mobile-bottom-nav,
+[data-theme="glassmorphism-light"] .mobile-nav-container,
+[data-theme="glassmorphism-light"] .sidebar-header {
+    background: rgba(255, 255, 255, 0.35) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.65) !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.80) !important;
+}
+
+/* Buttons & Inputs (Excluding Mobile Nav Item Buttons) */
+[data-theme="glassmorphism-light"] button:not(.mobile-nav-item),
+[data-theme="glassmorphism-light"] .btn,
+[data-theme="glassmorphism-light"] .btn-secondary,
+[data-theme="glassmorphism-light"] input,
+[data-theme="glassmorphism-light"] select {
+    background: rgba(255, 255, 255, 0.65) !important;
+    border: 1px solid rgba(203, 213, 225, 0.7) !important;
+    color: #0F172A !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Mobile Navigation Bar Buttons in Light Glass — Transparent Inactive Items, Seamless Dock */
+[data-theme="glassmorphism-light"] .mobile-nav-item,
+[data-theme="glassmorphism-light"] button.mobile-nav-item,
+[data-theme="glassmorphism"] .mobile-nav-item,
+[data-theme="glassmorphism"] button.mobile-nav-item {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+[data-theme="glassmorphism-light"] .mobile-nav-item.active,
+[data-theme="glassmorphism-light"] button.mobile-nav-item.active,
+[data-theme="glassmorphism"] .mobile-nav-item.active,
+[data-theme="glassmorphism"] button.mobile-nav-item.active {
+    background: rgba(255, 255, 255, 0.60) !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    border-radius: 20px !important;
+    color: #4F46E5 !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="glassmorphism-light"] .mobile-nav-item.active svg,
+[data-theme="glassmorphism-light"] .mobile-nav-item.active span {
+    color: #4F46E5 !important;
+    stroke: #4F46E5 !important;
+}
+
+/* Timetable Cards & Slot Grids in Light Glass Theme — Slightly Higher Opacity (0.48) */
+[data-theme="glassmorphism-light"] .timetable-grid-container,
+[data-theme="glassmorphism-light"] .timetable-grid-section,
+[data-theme="glassmorphism-light"] .grid-class-cell,
+[data-theme="glassmorphism-light"] .timeline-slot-row,
+[data-theme="glassmorphism-light"] .matrix-td-cell,
+[data-theme="glassmorphism-light"] .overview-timeline-slot {
+    background: rgba(255, 255, 255, 0.48) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.70) !important;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Floating Attendance Predictor Trigger Button — Black Text & Icon in Light Glass */
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn,
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn *,
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn span {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.95) !important;
+    color: #0F172A !important;
+    stroke: #0F172A !important;
+    fill: none !important;
+    font-weight: 800 !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn svg,
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn svg * {
+    stroke: #0F172A !important;
+    color: #0F172A !important;
+    fill: none !important;
+}
+
+[data-theme="glassmorphism-light"] #open-prediction-modal-btn:hover {
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 14px 36px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+/* Light Glass Timetable Matrix Styling (Matching Dark Glass Architecture) */
+[data-theme="glassmorphism-light"] .timetable-slot-column-header,
+[data-theme="glassmorphism-light"] .period-pill {
+    background: rgba(255, 255, 255, 0.70) !important;
+    backdrop-filter: blur(12px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.90) !important;
+    border-radius: 10px !important;
+    color: #0F172A !important;
+    font-weight: 800 !important;
+    padding: 10px 6px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="glassmorphism-light"] .matrix-td-cell,
+[data-theme="glassmorphism-light"] .grid-class-cell,
+[data-theme="glassmorphism-light"] .vertical-timeline-card {
+    border-radius: 10px !important;
+}
+
+[data-theme="glassmorphism-light"] .matrix-td-cell.filled.theory,
+[data-theme="glassmorphism-light"] .grid-class-cell.filled.theory,
+[data-theme="glassmorphism-light"] .vertical-timeline-card.theory {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(99, 102, 241, 0.08)) !important;
+    color: #312E81 !important;
+    border: 1.5px solid rgba(79, 70, 229, 0.25) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+}
+
+[data-theme="glassmorphism-light"] .matrix-td-cell.filled.lab,
+[data-theme="glassmorphism-light"] .grid-class-cell.filled.lab,
+[data-theme="glassmorphism-light"] .vertical-timeline-card.lab {
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.15), rgba(14, 165, 233, 0.08)) !important;
+    color: #075985 !important;
+    border: 1.5px solid rgba(2, 132, 199, 0.25) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+}
+
+[data-theme="glassmorphism-light"] .matrix-td-cell.empty,
+[data-theme="glassmorphism-light"] .grid-class-cell.free {
+    background: rgba(255, 255, 255, 0.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.60) !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+}
+
+[data-theme="glassmorphism-light"] .grid-class-cell.slot-current,
+[data-theme="glassmorphism-light"] .matrix-td-cell.slot-current,
+[data-theme="glassmorphism-light"] .vertical-timeline-card.slot-current {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.22), rgba(99, 102, 241, 0.12)) !important;
+    border: 2px solid #4F46E5 !important;
+    box-shadow: 0 0 16px rgba(79, 70, 229, 0.25), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+/* Light Glass Calendar Day Cards & Event Badges */
+[data-theme="glassmorphism-light"] .calendar-day-cell,
+[data-theme="glassmorphism-light"] .planner-mobile-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.18) 100%) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.60) !important;
+    border-radius: 10px !important;
+    color: #0F172A !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70) !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell:hover,
+[data-theme="glassmorphism-light"] .planner-mobile-card:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.28) 100%) !important;
+    border-color: rgba(255, 255, 255, 0.85) !important;
+    transform: none !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.today {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.22) 0%, rgba(99, 102, 241, 0.12) 100%) !important;
+    border: 2px solid #4F46E5 !important;
+    box-shadow: 0 0 16px rgba(79, 70, 229, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.90) !important;
+    color: #312E81 !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.holiday,
+[data-theme="glassmorphism-light"] .planner-mobile-card.holiday {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.18) 0%, rgba(248, 113, 113, 0.08) 100%) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    border: 1.5px solid rgba(239, 68, 68, 0.35) !important;
+    color: #991B1B !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70) !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.holiday .day-number,
+[data-theme="glassmorphism-light"] .calendar-day-cell.holiday div[title],
+[data-theme="glassmorphism-light"] .calendar-day-cell.holiday span {
+    color: #991B1B !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.milestone,
+[data-theme="glassmorphism-light"] .planner-mobile-card.milestone {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(52, 211, 153, 0.08) 100%) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    border: 1.5px solid rgba(16, 185, 129, 0.35) !important;
+    color: #065F46 !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70) !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.milestone .day-number,
+[data-theme="glassmorphism-light"] .calendar-day-cell.milestone div[title],
+[data-theme="glassmorphism-light"] .calendar-day-cell.milestone span {
+    color: #065F46 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement,
+[data-theme="glassmorphism-light"] .planner-mobile-card.commencement {
+    background: linear-gradient(135deg, rgba(147, 51, 234, 0.18) 0%, rgba(192, 132, 252, 0.08) 100%) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    border: 1.5px solid rgba(147, 51, 234, 0.35) !important;
+    color: #581C87 !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70) !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement .day-number,
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement div[title],
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement span {
+    color: #581C87 !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="glassmorphism-light"] .calendar-cell-day-order,
+[data-theme="glassmorphism-light"] .calendar-day-cell.holiday .calendar-cell-day-order,
+[data-theme="glassmorphism-light"] .calendar-day-cell.milestone .calendar-cell-day-order,
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement .calendar-cell-day-order {
+    background: rgba(255, 255, 255, 0.60) !important;
+    border: 1px solid rgba(255, 255, 255, 0.80) !important;
+    color: #0F172A !important;
+    font-weight: 800 !important;
+}
+
+/* POPUP MENUS READABLE OPACITY & FROSTED GLASS FIX (BOTH GLASS THEMES) */
+[data-theme="glassmorphism"] .modal-card,
+[data-theme="glassmorphism"] .theme-dropdown-menu,
+[data-theme="glassmorphism"] .dev-drawer,
+[data-theme="glassmorphism"] .user-dropdown-menu,
+[data-theme="glassmorphism"] .quick-prediction-modal,
+[data-theme="glassmorphism"] #calendar-modal-card,
+[data-theme="glassmorphism"] .planner-event-popover,
+[data-theme="glassmorphism"] .calendar-day-popover,
+[data-theme="glassmorphism"] .popover,
+[data-theme="glassmorphism"] .dropdown-menu {
+    background: rgba(8, 12, 22, 0.96) !important;
+    backdrop-filter: blur(36px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(36px) saturate(200%) !important;
+    border: 1px solid rgba(190, 205, 255, 0.28) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="glassmorphism-light"] .modal-card,
+[data-theme="glassmorphism-light"] .theme-dropdown-menu,
+[data-theme="glassmorphism-light"] .dev-drawer,
+[data-theme="glassmorphism-light"] .user-dropdown-menu,
+[data-theme="glassmorphism-light"] .quick-prediction-modal,
+[data-theme="glassmorphism-light"] #calendar-modal-card,
+[data-theme="glassmorphism-light"] .planner-event-popover,
+[data-theme="glassmorphism-light"] .calendar-day-popover,
+[data-theme="glassmorphism-light"] .popover,
+[data-theme="glassmorphism-light"] .dropdown-menu {
+    background: rgba(255, 255, 255, 0.96) !important;
+    backdrop-filter: blur(36px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(36px) saturate(200%) !important;
+    border: 1px solid rgba(203, 213, 225, 0.85) !important;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.20), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+    color: #0F172A !important;
+}
+
+/* REMOVE HOVER ANIMATIONS FROM PLANNER POPUPS & CALENDAR CARDS */
+#calendar-modal-card,
+#calendar-event-modal,
+.planner-event-popover,
+.calendar-day-popover,
+.popover,
+.calendar-day-cell,
+.planner-mobile-card {
+    transform: none !important;
+    animation: none !important;
+}
+
+.calendar-day-cell:hover,
+.planner-mobile-card:hover,
+.modal-card:hover,
+.planner-event-popover:hover,
+.calendar-day-popover:hover,
+.popover:hover {
+    transform: none !important;
+    animation: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+/* SLEEK RIGHT-ALIGNED LOGIN ERROR NOTIFICATION SYSTEM (ADJUSTS TO EVERY THEME) */
+.login-toast-container {
+    position: fixed !important;
+    top: 24px !important;
+    right: 24px !important;
+    z-index: 99999999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    max-width: 380px !important;
+    width: calc(100vw - 48px) !important;
+    pointer-events: none !important;
+}
+
+.login-error-toast {
+    pointer-events: auto !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+    padding: 16px 18px !important;
+    border-radius: var(--radius-lg, 14px) !important;
+    background: var(--bg-surface-elevated, rgba(15, 23, 42, 0.90)) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1.5px solid var(--accent-danger, #ef4444) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    color: var(--text-primary, #FFFFFF) !important;
+    font-family: var(--font-stack, sans-serif) !important;
+    animation: loginToastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    will-change: transform, opacity !important;
+}
+
+.login-error-toast.dismissed {
+    animation: loginToastSlideOut 0.25s ease-in forwards !important;
+}
+
+@keyframes loginToastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes loginToastSlideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+    }
+}
+
+.login-error-toast-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    border-radius: 50% !important;
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: var(--accent-danger, #ef4444) !important;
+    stroke: var(--accent-danger, #ef4444) !important;
+    flex-shrink: 0 !important;
+    margin-top: 1px !important;
+}
+
+.login-error-toast-content {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+.login-error-toast-title {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    color: var(--accent-danger, #ef4444) !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+}
+
+.login-error-toast-msg {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: var(--text-primary, #0F172A) !important;
+    line-height: 1.4 !important;
+    word-break: break-word !important;
+}
+
+.login-error-toast-close {
+    background: transparent !important;
+    border: none !important;
+    color: var(--text-muted, #94a3b8) !important;
+    cursor: pointer !important;
+    padding: 4px !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: color 0.15s ease, background 0.15s ease !important;
+    margin-left: 4px !important;
+    flex-shrink: 0 !important;
+}
+
+.login-error-toast-close:hover {
+    color: var(--text-primary, #ffffff) !important;
+    background: rgba(255, 255, 255, 0.10) !important;
+}
+
+/* ICON-ONLY LOGIN THEME TOGGLE BUTTON (PC & MOBILE) */
+#auth-theme-selector-trigger,
+.auth-icon-only-theme-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+    background: var(--bg-surface-solid, rgba(255, 255, 255, 0.85)) !important;
+    border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.90)) !important;
+}
+
+#auth-theme-selector-trigger span,
+#auth-theme-selector-trigger div,
+#auth-theme-active-name,
+#auth-theme-trigger-swatches {
+    display: none !important;
+}
+
+#auth-theme-selector-trigger svg {
+    margin: 0 !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+#sidebar-toggle,
+.sidebar-toggle {
+    display: none !important;
+}
+
+/* UNIVERSAL SYMMETRICAL MAIN CONTENT & TOP NAVBAR ALIGNMENT (ALL THEMES & PLATFORMS) */
+.main-viewport,
+[data-theme="neo-brutalist"] .main-viewport {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    padding-top: 20px !important;
+    padding-bottom: 48px !important;
+}
+
+.workspace-header,
+[data-theme="neo-brutalist"] .workspace-header {
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 24px !important;
+    box-sizing: border-box !important;
+}
+
+#content-views {
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+}
+
+.view-pane,
+.view-pane.active,
+[data-theme="neo-brutalist"] .view-pane,
+[data-theme="neo-brutalist"] .view-pane.active {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 991px) {
+    .main-viewport,
+    [data-theme="neo-brutalist"] .main-viewport {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    .workspace-header,
+    #content-views {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* NEO-BRUTALIST HIGH-CONTRAST TEXT & BADGES VISIBILITY FIX */
+/* COMPREHENSIVE THEMEMORPHIC CATEGORY PILL TAGS & CONTRAST FIXES */
+
+/* Base Type Pill Layout */
+.type-pill {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    padding: 4px 12px !important;
+    border-radius: 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    letter-spacing: 0.02em !important;
+    text-transform: uppercase !important;
+    flex-shrink: 0 !important;
+}
+
+/* Base Course Code & Credit Badges Layout (ALL THEMES) */
+.marks-course-code-badge,
+.marks-course-credit-badge,
+.course-code-badge,
+.course-credit-tag {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    padding: 3px 10px !important;
+    border-radius: 10px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-family: var(--font-mono, monospace) !important;
+    letter-spacing: -0.01em !important;
+    box-sizing: border-box !important;
+    background: var(--bg-surface-solid, rgba(255, 255, 255, 0.70)) !important;
+    border: 1px solid var(--border-subtle, rgba(203, 213, 225, 0.60)) !important;
+    color: var(--text-secondary, #475569) !important;
+}
+
+.marks-course-credit-badge,
+.course-credit-tag {
+    background: var(--accent-primary-subtle, rgba(99, 102, 241, 0.15)) !important;
+    border: 1px solid var(--accent-primary-subtle, rgba(99, 102, 241, 0.30)) !important;
+    color: var(--accent-primary, #4F46E5) !important;
+}
+
+/* 1. NEO-BRUTALIST (STRICT BOLD BLACK BORDERS & 3D SHADOWS) */
+[data-theme="neo-brutalist"] .type-pill {
+    color: #000000 !important;
+    font-weight: 900 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
+    border-radius: 8px !important;
+}
+
+[data-theme="neo-brutalist"] .type-pill.theory {
+    background-color: #DDD6FE !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .type-pill.practical,
+[data-theme="neo-brutalist"] .type-pill.lab {
+    background-color: #BAE6FD !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .type-pill.joint {
+    background-color: #A7F3D0 !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .marks-course-code-badge,
+[data-theme="neo-brutalist"] .marks-course-credit-badge,
+[data-theme="neo-brutalist"] .course-credit-tag {
+    color: #000000 !important;
+    font-weight: 900 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
+    border-radius: 8px !important;
+    padding: 3px 10px !important;
+}
+
+[data-theme="neo-brutalist"] .marks-course-credit-badge,
+[data-theme="neo-brutalist"] .course-credit-tag {
+    background-color: #CCFF00 !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .marks-course-code-badge {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] #courses-sum-count,
+[data-theme="neo-brutalist"] #courses-sum-credits,
+[data-theme="neo-brutalist"] #courses-sum-split,
+[data-theme="neo-brutalist"] #courses-sum-attn,
+[data-theme="neo-brutalist"] .courses-sum-value {
+    color: #000000 !important;
+    font-weight: 900 !important;
+}
+
+/* Neo-Brutalist Top Right Header Icon Box Fix */
+[data-theme="neo-brutalist"] .courses-header-icon,
+[data-theme="neo-brutalist"] .courses-header-card svg,
+[data-theme="neo-brutalist"] .header-icon-box {
+    background-color: #CCFF00 !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 2px 2px 0px #000000 !important;
+    color: #000000 !important;
+    stroke: #000000 !important;
+}
+
+[data-theme="neo-brutalist"] .courses-header-icon svg,
+[data-theme="neo-brutalist"] .courses-header-icon svg path,
+[data-theme="neo-brutalist"] .courses-header-icon svg rect {
+    stroke: #000000 !important;
+    fill: none !important;
+}
+
+/* 2. GLASSMORPHISM LIGHT (FROSTED GLASS HIGH-CONTRAST PILLS) */
+[data-theme="glassmorphism-light"] .type-pill {
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="glassmorphism-light"] .type-pill.theory {
+    background: rgba(139, 92, 246, 0.16) !important;
+    border: 1px solid rgba(139, 92, 246, 0.40) !important;
+    color: #6D28D9 !important;
+}
+
+[data-theme="glassmorphism-light"] .type-pill.practical,
+[data-theme="glassmorphism-light"] .type-pill.lab {
+    background: rgba(14, 165, 233, 0.16) !important;
+    border: 1px solid rgba(14, 165, 233, 0.40) !important;
+    color: #0369A1 !important;
+}
+
+[data-theme="glassmorphism-light"] .type-pill.joint {
+    background: rgba(16, 185, 129, 0.16) !important;
+    border: 1px solid rgba(16, 185, 129, 0.40) !important;
+    color: #047857 !important;
+}
+
+/* 3. GLASSMORPHISM DARK (NEON GLOWING FROSTED GLASS PILLS) */
+[data-theme="glassmorphism"] .type-pill {
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="glassmorphism"] .type-pill.theory {
+    background: rgba(167, 139, 250, 0.20) !important;
+    border: 1px solid rgba(167, 139, 250, 0.45) !important;
+    color: #C4B5FD !important;
+}
+
+[data-theme="glassmorphism"] .type-pill.practical,
+[data-theme="glassmorphism"] .type-pill.lab {
+    background: rgba(56, 189, 248, 0.20) !important;
+    border: 1px solid rgba(56, 189, 248, 0.45) !important;
+    color: #7DD3FC !important;
+}
+
+[data-theme="glassmorphism"] .type-pill.joint {
+    background: rgba(52, 211, 153, 0.20) !important;
+    border: 1px solid rgba(52, 211, 153, 0.45) !important;
+    color: #6EE7B7 !important;
+}
+
+/* 4. CLAYMORPHISM (SOFT 3D PASTEL CLAY PILLS) */
+[data-theme="claymorphism"] .type-pill {
+    border-radius: 12px !important;
+    font-weight: 800 !important;
+    border: none !important;
+}
+
+[data-theme="claymorphism"] .type-pill.theory {
+    background-color: #EDE9FE !important;
+    color: #5B21B6 !important;
+    box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(91, 33, 182, 0.15) !important;
+}
+
+[data-theme="claymorphism"] .type-pill.practical,
+[data-theme="claymorphism"] .type-pill.lab {
+    background-color: #E0F2FE !important;
+    color: #0369A1 !important;
+    box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(3, 105, 161, 0.15) !important;
+}
+
+[data-theme="claymorphism"] .type-pill.joint {
+    background-color: #D1FAE5 !important;
+    color: #047857 !important;
+    box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.8), inset 2px 2px 4px rgba(4, 120, 87, 0.15) !important;
+}
+
+/* 5. RETRO COMPUTING (GLOWING TERMINAL MONOSPACE TAGS) */
+[data-theme="retro-computing"] .type-pill {
+    font-family: var(--font-mono, monospace) !important;
+    border-radius: 4px !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="retro-computing"] .type-pill.theory {
+    border: 1px solid #A855F7 !important;
+    color: #D8B4FE !important;
+    background: rgba(168, 85, 247, 0.15) !important;
+}
+
+[data-theme="retro-computing"] .type-pill.practical,
+[data-theme="retro-computing"] .type-pill.lab {
+    border: 1px solid #00FF66 !important;
+    color: #00FF66 !important;
+    background: rgba(0, 255, 102, 0.15) !important;
+}
+
+[data-theme="retro-computing"] .type-pill.joint {
+    border: 1px solid #FFB000 !important;
+    color: #FFB000 !important;
+    background: rgba(255, 176, 0, 0.15) !important;
+}
+
+/* EXPLICIT BUTTON CHILD SPAN CLEANUP (NO DOUBLE CAPSULE PILL OVERLAP) */
+button span,
+.btn span,
+.btn-primary span,
+.btn-secondary span,
+#download-timetable-btn span,
+#download-timetable-mobile-btn span {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* 1. REMOVE COLOR PREVIEWS FROM ACTUAL THEME TRIGGER BUTTON */
+.theme-trigger-swatches,
+#theme-trigger-swatches,
+.swatch-pip {
+    display: none !important;
+}
+
+/* 3. CLAYMORPHISM TACTILE 3D MOBILE NAVBAR & ACTIVE TAB */
+[data-theme="claymorphism"] .mobile-bottom-nav {
+    background-color: #FAF7F4 !important;
+    border: none !important;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.06), inset 0 2px 4px rgba(255, 255, 255, 0.9) !important;
+    border-radius: 30px !important;
+    padding: 6px !important;
+}
+
+[data-theme="claymorphism"] .mobile-nav-item {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #7C7570 !important;
+}
+
+[data-theme="claymorphism"] .mobile-nav-item.active,
+[data-theme="claymorphism"] button.mobile-nav-item.active {
+    background: linear-gradient(135deg, #8B70F6 0%, #7A5CF5 100%) !important;
+    color: #FFFFFF !important;
+    border-radius: 20px !important;
+    box-shadow: 6px 6px 14px rgba(139, 112, 246, 0.35), inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.6) !important;
+}
+
+[data-theme="claymorphism"] .mobile-nav-item.active svg,
+[data-theme="claymorphism"] .mobile-nav-item.active span {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+
+/* 4. GLOBAL NON-ARIAL MODERN TYPOGRAPHY SYSTEM */
+body,
+html,
+button,
+input,
+select,
+textarea,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.card,
+.workspace-title,
+.nav-item {
+    font-family: "Plus Jakarta Sans", "Inter", "Space Grotesk", system-ui, -apple-system, sans-serif !important;
+}
+
+/* 5. ULTRA-NARROW MOBILE VIEWPORTS (FOLD COVER DISPLAYS & THIN PHONES < 360px) */
+@media (max-width: 360px) {
+    .mobile-bottom-nav {
+        width: calc(100% - 10px) !important;
+        padding: 2px 4px !important;
+        height: 54px !important;
+        bottom: max(6px, env(safe-area-inset-bottom, 6px)) !important;
+    }
+
+    .mobile-nav-item,
+    button.mobile-nav-item {
+        padding: 4px 5px !important;
+    }
+
+    .mobile-nav-item svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .mobile-nav-item span {
+        font-size: 9px !important;
+    }
+
+    .workspace-header {
+        padding: 10px 8px !important;
+    }
+
+    .workspace-header-actions {
+        gap: 4px !important;
+    }
+
+    .theme-trigger-label {
+        display: none !important; /* Compact icon-only theme trigger on thin fold cover screens */
+    }
+
+    .main-viewport {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+
+    .card,
+    .attendance-grid-row,
+    .marks-card {
+        padding: 12px 10px !important;
+        border-radius: 16px !important;
+    }
+
+    .attn-highlights-row {
+        width: 100% !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px !important;
+    }
+}
+
+/* ==========================================================================
+   HIGH-CONTRAST TIMETABLE DOWNLOAD BUTTONS & REFRESH BUTTON HOVER STATES
+   - Dark Themes: Pure White (#FFFFFF) background with Black (#000000) text/icons
+   - Light Themes: Deep Black (#0F172A / #000000) background with White (#FFFFFF) text/icons
+   ========================================================================== */
+
+/* 1. TIMETABLE DOWNLOAD / EXPORT BUTTONS (DARK THEMES - PURE WHITE) */
+#download-timetable-btn,
+#download-timetable-mobile-btn,
+button#download-timetable-btn,
+button#download-timetable-mobile-btn {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.22) !important;
+}
+
+#download-timetable-btn svg,
+#download-timetable-btn svg path,
+#download-timetable-btn svg line,
+#download-timetable-btn svg polyline,
+#download-timetable-btn span,
+#download-timetable-mobile-btn svg,
+#download-timetable-mobile-btn svg path,
+#download-timetable-mobile-btn svg line,
+#download-timetable-mobile-btn svg polyline,
+#download-timetable-mobile-btn span {
+    color: #000000 !important;
+    stroke: #000000 !important;
+}
+
+#download-timetable-btn:hover,
+#download-timetable-mobile-btn:hover,
+button#download-timetable-btn:hover,
+button#download-timetable-mobile-btn:hover {
+    background-color: #E2E8F0 !important;
+    background: #E2E8F0 !important;
+    color: #000000 !important;
+    border-color: #E2E8F0 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.35) !important;
+}
+
+#download-timetable-btn:hover svg,
+#download-timetable-btn:hover svg path,
+#download-timetable-btn:hover svg line,
+#download-timetable-btn:hover svg polyline,
+#download-timetable-btn:hover span,
+#download-timetable-mobile-btn:hover svg,
+#download-timetable-mobile-btn:hover svg path,
+#download-timetable-mobile-btn:hover svg line,
+#download-timetable-mobile-btn:hover svg polyline,
+#download-timetable-mobile-btn:hover span {
+    color: #000000 !important;
+    stroke: #000000 !important;
+}
+
+/* 2. TIMETABLE DOWNLOAD / EXPORT BUTTONS (LIGHT THEMES - DEEP BLACK) */
+[data-theme="glassmorphism-light"] #download-timetable-btn,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn,
+[data-theme="claymorphism"] #download-timetable-btn,
+[data-theme="claymorphism"] #download-timetable-mobile-btn,
+[data-theme="neo-brutalist"] #download-timetable-btn,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn,
+[data-theme="retro-computing"] #download-timetable-btn,
+[data-theme="retro-computing"] #download-timetable-mobile-btn,
+[data-theme="clean-light"] #download-timetable-btn,
+[data-theme="clean-light"] #download-timetable-mobile-btn,
+[data-theme="cherry-blossom"] #download-timetable-btn,
+[data-theme="cherry-blossom"] #download-timetable-mobile-btn,
+[data-theme="lavender-mist"] #download-timetable-btn,
+[data-theme="lavender-mist"] #download-timetable-mobile-btn,
+[data-theme="pastel-candy"] #download-timetable-btn,
+[data-theme="pastel-candy"] #download-timetable-mobile-btn,
+[data-theme="sandstone-desert"] #download-timetable-btn,
+[data-theme="sandstone-desert"] #download-timetable-mobile-btn,
+[data-theme="oxford-navy"] #download-timetable-btn,
+[data-theme="oxford-navy"] #download-timetable-mobile-btn,
+[data-theme="neutral-gray"] #download-timetable-btn,
+[data-theme="neutral-gray"] #download-timetable-mobile-btn,
+[data-theme="monochrome-light"] #download-timetable-btn,
+[data-theme="monochrome-light"] #download-timetable-mobile-btn,
+[data-theme="taupe-natural"] #download-timetable-btn,
+[data-theme="taupe-natural"] #download-timetable-mobile-btn,
+[data-theme="executive-light"] #download-timetable-btn,
+[data-theme="executive-light"] #download-timetable-mobile-btn,
+[data-theme="sakura-rose"] #download-timetable-btn,
+[data-theme="sakura-rose"] #download-timetable-mobile-btn,
+[data-theme="cream-latte"] #download-timetable-btn,
+[data-theme="cream-latte"] #download-timetable-mobile-btn,
+[data-theme="paper-minimal"] #download-timetable-btn,
+[data-theme="paper-minimal"] #download-timetable-mobile-btn,
+[data-theme="mint-chocolat"] #download-timetable-btn,
+[data-theme="mint-chocolat"] #download-timetable-mobile-btn,
+[data-theme="nord-light"] #download-timetable-btn,
+[data-theme="nord-light"] #download-timetable-mobile-btn,
+[data-theme="solarized-light"] #download-timetable-btn,
+[data-theme="solarized-light"] #download-timetable-mobile-btn,
+[data-theme="lavender-bliss"] #download-timetable-btn,
+[data-theme="lavender-bliss"] #download-timetable-mobile-btn {
+    background-color: #0F172A !important;
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    border: 1px solid #0F172A !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25) !important;
+}
+
+[data-theme="glassmorphism-light"] #download-timetable-btn svg,
+[data-theme="glassmorphism-light"] #download-timetable-btn svg path,
+[data-theme="glassmorphism-light"] #download-timetable-btn svg line,
+[data-theme="glassmorphism-light"] #download-timetable-btn svg polyline,
+[data-theme="glassmorphism-light"] #download-timetable-btn span,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn svg,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn svg path,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn svg line,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn svg polyline,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn span,
+[data-theme="claymorphism"] #download-timetable-btn svg,
+[data-theme="claymorphism"] #download-timetable-btn span,
+[data-theme="claymorphism"] #download-timetable-mobile-btn svg,
+[data-theme="neo-brutalist"] #download-timetable-btn svg,
+[data-theme="neo-brutalist"] #download-timetable-btn span,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn svg,
+[data-theme="retro-computing"] #download-timetable-btn svg,
+[data-theme="retro-computing"] #download-timetable-btn span,
+[data-theme="retro-computing"] #download-timetable-mobile-btn svg,
+[data-theme="clean-light"] #download-timetable-btn svg,
+[data-theme="clean-light"] #download-timetable-btn span,
+[data-theme="clean-light"] #download-timetable-mobile-btn svg,
+[data-theme="cherry-blossom"] #download-timetable-btn svg,
+[data-theme="cherry-blossom"] #download-timetable-btn span,
+[data-theme="cherry-blossom"] #download-timetable-mobile-btn svg,
+[data-theme="lavender-mist"] #download-timetable-btn svg,
+[data-theme="lavender-mist"] #download-timetable-btn span,
+[data-theme="lavender-mist"] #download-timetable-mobile-btn svg,
+[data-theme="pastel-candy"] #download-timetable-btn svg,
+[data-theme="pastel-candy"] #download-timetable-btn span,
+[data-theme="pastel-candy"] #download-timetable-mobile-btn svg,
+[data-theme="sandstone-desert"] #download-timetable-btn svg,
+[data-theme="sandstone-desert"] #download-timetable-btn span,
+[data-theme="sandstone-desert"] #download-timetable-mobile-btn svg,
+[data-theme="oxford-navy"] #download-timetable-btn svg,
+[data-theme="oxford-navy"] #download-timetable-btn span,
+[data-theme="oxford-navy"] #download-timetable-mobile-btn svg,
+[data-theme="neutral-gray"] #download-timetable-btn svg,
+[data-theme="neutral-gray"] #download-timetable-btn span,
+[data-theme="neutral-gray"] #download-timetable-mobile-btn svg,
+[data-theme="monochrome-light"] #download-timetable-btn svg,
+[data-theme="monochrome-light"] #download-timetable-btn span,
+[data-theme="monochrome-light"] #download-timetable-mobile-btn svg,
+[data-theme="taupe-natural"] #download-timetable-btn svg,
+[data-theme="taupe-natural"] #download-timetable-btn span,
+[data-theme="taupe-natural"] #download-timetable-mobile-btn svg,
+[data-theme="executive-light"] #download-timetable-btn svg,
+[data-theme="executive-light"] #download-timetable-btn span,
+[data-theme="executive-light"] #download-timetable-mobile-btn svg,
+[data-theme="sakura-rose"] #download-timetable-btn svg,
+[data-theme="sakura-rose"] #download-timetable-btn span,
+[data-theme="sakura-rose"] #download-timetable-mobile-btn svg,
+[data-theme="cream-latte"] #download-timetable-btn svg,
+[data-theme="cream-latte"] #download-timetable-btn span,
+[data-theme="cream-latte"] #download-timetable-mobile-btn svg,
+[data-theme="paper-minimal"] #download-timetable-btn svg,
+[data-theme="paper-minimal"] #download-timetable-btn span,
+[data-theme="paper-minimal"] #download-timetable-mobile-btn svg,
+[data-theme="mint-chocolat"] #download-timetable-btn svg,
+[data-theme="mint-chocolat"] #download-timetable-btn span,
+[data-theme="mint-chocolat"] #download-timetable-mobile-btn svg,
+[data-theme="nord-light"] #download-timetable-btn svg,
+[data-theme="nord-light"] #download-timetable-btn span,
+[data-theme="nord-light"] #download-timetable-mobile-btn svg,
+[data-theme="solarized-light"] #download-timetable-btn svg,
+[data-theme="solarized-light"] #download-timetable-btn span,
+[data-theme="solarized-light"] #download-timetable-mobile-btn svg,
+[data-theme="lavender-bliss"] #download-timetable-btn svg,
+[data-theme="lavender-bliss"] #download-timetable-btn span,
+[data-theme="lavender-bliss"] #download-timetable-mobile-btn svg {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+
+[data-theme="glassmorphism-light"] #download-timetable-btn:hover,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn:hover,
+[data-theme="claymorphism"] #download-timetable-btn:hover,
+[data-theme="claymorphism"] #download-timetable-mobile-btn:hover,
+[data-theme="neo-brutalist"] #download-timetable-btn:hover,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn:hover,
+[data-theme="retro-computing"] #download-timetable-btn:hover,
+[data-theme="retro-computing"] #download-timetable-mobile-btn:hover,
+[data-theme="clean-light"] #download-timetable-btn:hover,
+[data-theme="clean-light"] #download-timetable-mobile-btn:hover,
+[data-theme="cherry-blossom"] #download-timetable-btn:hover,
+[data-theme="cherry-blossom"] #download-timetable-mobile-btn:hover,
+[data-theme="lavender-mist"] #download-timetable-btn:hover,
+[data-theme="lavender-mist"] #download-timetable-mobile-btn:hover,
+[data-theme="pastel-candy"] #download-timetable-btn:hover,
+[data-theme="pastel-candy"] #download-timetable-mobile-btn:hover,
+[data-theme="sandstone-desert"] #download-timetable-btn:hover,
+[data-theme="sandstone-desert"] #download-timetable-mobile-btn:hover,
+[data-theme="oxford-navy"] #download-timetable-btn:hover,
+[data-theme="oxford-navy"] #download-timetable-mobile-btn:hover,
+[data-theme="neutral-gray"] #download-timetable-btn:hover,
+[data-theme="neutral-gray"] #download-timetable-mobile-btn:hover,
+[data-theme="monochrome-light"] #download-timetable-btn:hover,
+[data-theme="monochrome-light"] #download-timetable-mobile-btn:hover,
+[data-theme="taupe-natural"] #download-timetable-btn:hover,
+[data-theme="taupe-natural"] #download-timetable-mobile-btn:hover,
+[data-theme="executive-light"] #download-timetable-btn:hover,
+[data-theme="executive-light"] #download-timetable-mobile-btn:hover,
+[data-theme="sakura-rose"] #download-timetable-btn:hover,
+[data-theme="sakura-rose"] #download-timetable-mobile-btn:hover,
+[data-theme="cream-latte"] #download-timetable-btn:hover,
+[data-theme="cream-latte"] #download-timetable-mobile-btn:hover,
+[data-theme="paper-minimal"] #download-timetable-btn:hover,
+[data-theme="paper-minimal"] #download-timetable-mobile-btn:hover,
+[data-theme="mint-chocolat"] #download-timetable-btn:hover,
+[data-theme="mint-chocolat"] #download-timetable-mobile-btn:hover,
+[data-theme="nord-light"] #download-timetable-btn:hover,
+[data-theme="nord-light"] #download-timetable-mobile-btn:hover,
+[data-theme="solarized-light"] #download-timetable-btn:hover,
+[data-theme="solarized-light"] #download-timetable-mobile-btn:hover,
+[data-theme="lavender-bliss"] #download-timetable-btn:hover,
+[data-theme="lavender-bliss"] #download-timetable-mobile-btn:hover {
+    background-color: #1E293B !important;
+    background: #1E293B !important;
+    color: #FFFFFF !important;
+    border-color: #1E293B !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.35) !important;
+}
+
+[data-theme="glassmorphism-light"] #download-timetable-btn:hover svg,
+[data-theme="glassmorphism-light"] #download-timetable-btn:hover span,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="claymorphism"] #download-timetable-btn:hover svg,
+[data-theme="claymorphism"] #download-timetable-btn:hover span,
+[data-theme="claymorphism"] #download-timetable-mobile-btn:hover svg,
+[data-theme="neo-brutalist"] #download-timetable-btn:hover svg,
+[data-theme="neo-brutalist"] #download-timetable-btn:hover span,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn:hover svg,
+[data-theme="retro-computing"] #download-timetable-btn:hover svg,
+[data-theme="retro-computing"] #download-timetable-btn:hover span,
+[data-theme="retro-computing"] #download-timetable-mobile-btn:hover svg,
+[data-theme="clean-light"] #download-timetable-btn:hover svg,
+[data-theme="clean-light"] #download-timetable-btn:hover span,
+[data-theme="clean-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="cherry-blossom"] #download-timetable-btn:hover svg,
+[data-theme="cherry-blossom"] #download-timetable-btn:hover span,
+[data-theme="cherry-blossom"] #download-timetable-mobile-btn:hover svg,
+[data-theme="lavender-mist"] #download-timetable-btn:hover svg,
+[data-theme="lavender-mist"] #download-timetable-btn:hover span,
+[data-theme="lavender-mist"] #download-timetable-mobile-btn:hover svg,
+[data-theme="pastel-candy"] #download-timetable-btn:hover svg,
+[data-theme="pastel-candy"] #download-timetable-btn:hover span,
+[data-theme="pastel-candy"] #download-timetable-mobile-btn:hover svg,
+[data-theme="sandstone-desert"] #download-timetable-btn:hover svg,
+[data-theme="sandstone-desert"] #download-timetable-btn:hover span,
+[data-theme="sandstone-desert"] #download-timetable-mobile-btn:hover svg,
+[data-theme="oxford-navy"] #download-timetable-btn:hover svg,
+[data-theme="oxford-navy"] #download-timetable-btn:hover span,
+[data-theme="oxford-navy"] #download-timetable-mobile-btn:hover svg,
+[data-theme="neutral-gray"] #download-timetable-btn:hover svg,
+[data-theme="neutral-gray"] #download-timetable-btn:hover span,
+[data-theme="neutral-gray"] #download-timetable-mobile-btn:hover svg,
+[data-theme="monochrome-light"] #download-timetable-btn:hover svg,
+[data-theme="monochrome-light"] #download-timetable-btn:hover span,
+[data-theme="monochrome-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="taupe-natural"] #download-timetable-btn:hover svg,
+[data-theme="taupe-natural"] #download-timetable-btn:hover span,
+[data-theme="taupe-natural"] #download-timetable-mobile-btn:hover svg,
+[data-theme="executive-light"] #download-timetable-btn:hover svg,
+[data-theme="executive-light"] #download-timetable-btn:hover span,
+[data-theme="executive-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="sakura-rose"] #download-timetable-btn:hover svg,
+[data-theme="sakura-rose"] #download-timetable-btn:hover span,
+[data-theme="sakura-rose"] #download-timetable-mobile-btn:hover svg,
+[data-theme="cream-latte"] #download-timetable-btn:hover svg,
+[data-theme="cream-latte"] #download-timetable-btn:hover span,
+[data-theme="cream-latte"] #download-timetable-mobile-btn:hover svg,
+[data-theme="paper-minimal"] #download-timetable-btn:hover svg,
+[data-theme="paper-minimal"] #download-timetable-btn:hover span,
+[data-theme="paper-minimal"] #download-timetable-mobile-btn:hover svg,
+[data-theme="mint-chocolat"] #download-timetable-btn:hover svg,
+[data-theme="mint-chocolat"] #download-timetable-btn:hover span,
+[data-theme="mint-chocolat"] #download-timetable-mobile-btn:hover svg,
+[data-theme="nord-light"] #download-timetable-btn:hover svg,
+[data-theme="nord-light"] #download-timetable-btn:hover span,
+[data-theme="nord-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="solarized-light"] #download-timetable-btn:hover svg,
+[data-theme="solarized-light"] #download-timetable-btn:hover span,
+[data-theme="solarized-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="lavender-bliss"] #download-timetable-btn:hover svg,
+[data-theme="lavender-bliss"] #download-timetable-btn:hover span,
+[data-theme="lavender-bliss"] #download-timetable-mobile-btn:hover svg {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+
+/* Neo-Brutalist Light Special Border/Shadow Touch */
+[data-theme="neo-brutalist"] #download-timetable-btn,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+}
+
+[data-theme="neo-brutalist"] #download-timetable-btn:hover,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn:hover {
+    background: #262626 !important;
+    background-color: #262626 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+}
+
+/* 3. REFRESH BUTTON HOVER STATES (DARK THEMES DEFAULT: PURE WHITE) */
+.sync-button:hover,
+#sync-button:hover,
+button.sync-button:hover,
+button#sync-button:hover {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.22) !important;
+}
+
+.sync-button:hover svg,
+#sync-button:hover svg,
+.sync-button:hover svg path,
+#sync-button:hover svg path,
+.sync-button:hover svg polyline,
+#sync-button:hover svg polyline,
+.sync-button:hover svg line,
+#sync-button:hover svg line,
+.sync-button:hover span,
+#sync-button:hover span,
+.sync-button:hover .sync-btn-label,
+#sync-button:hover .sync-btn-label {
+    color: #000000 !important;
+    stroke: #000000 !important;
+}
+
+/* 4. REFRESH BUTTON HOVER STATES (LIGHT THEMES: DEEP BLACK) */
+[data-theme="glassmorphism-light"] .sync-button:hover,
+[data-theme="glassmorphism-light"] #sync-button:hover,
+[data-theme="claymorphism"] .sync-button:hover,
+[data-theme="claymorphism"] #sync-button:hover,
+[data-theme="neo-brutalist"] .sync-button:hover,
+[data-theme="neo-brutalist"] #sync-button:hover,
+[data-theme="retro-computing"] .sync-button:hover,
+[data-theme="retro-computing"] #sync-button:hover,
+[data-theme="clean-light"] .sync-button:hover,
+[data-theme="clean-light"] #sync-button:hover,
+[data-theme="cherry-blossom"] .sync-button:hover,
+[data-theme="cherry-blossom"] #sync-button:hover,
+[data-theme="lavender-mist"] .sync-button:hover,
+[data-theme="lavender-mist"] #sync-button:hover,
+[data-theme="pastel-candy"] .sync-button:hover,
+[data-theme="pastel-candy"] #sync-button:hover,
+[data-theme="sandstone-desert"] .sync-button:hover,
+[data-theme="sandstone-desert"] #sync-button:hover,
+[data-theme="oxford-navy"] .sync-button:hover,
+[data-theme="oxford-navy"] #sync-button:hover,
+[data-theme="neutral-gray"] .sync-button:hover,
+[data-theme="neutral-gray"] #sync-button:hover,
+[data-theme="monochrome-light"] .sync-button:hover,
+[data-theme="monochrome-light"] #sync-button:hover,
+[data-theme="taupe-natural"] .sync-button:hover,
+[data-theme="taupe-natural"] #sync-button:hover,
+[data-theme="executive-light"] .sync-button:hover,
+[data-theme="executive-light"] #sync-button:hover,
+[data-theme="sakura-rose"] .sync-button:hover,
+[data-theme="sakura-rose"] #sync-button:hover,
+[data-theme="cream-latte"] .sync-button:hover,
+[data-theme="cream-latte"] #sync-button:hover,
+[data-theme="paper-minimal"] .sync-button:hover,
+[data-theme="paper-minimal"] #sync-button:hover,
+[data-theme="mint-chocolat"] .sync-button:hover,
+[data-theme="mint-chocolat"] #sync-button:hover,
+[data-theme="nord-light"] .sync-button:hover,
+[data-theme="nord-light"] #sync-button:hover,
+[data-theme="solarized-light"] .sync-button:hover,
+[data-theme="solarized-light"] #sync-button:hover,
+[data-theme="lavender-bliss"] .sync-button:hover,
+[data-theme="lavender-bliss"] #sync-button:hover {
+    background-color: #0F172A !important;
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    border-color: #0F172A !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25) !important;
+}
+
+[data-theme="glassmorphism-light"] .sync-button:hover svg,
+[data-theme="glassmorphism-light"] #sync-button:hover svg,
+[data-theme="glassmorphism-light"] .sync-button:hover span,
+[data-theme="glassmorphism-light"] #sync-button:hover span,
+[data-theme="glassmorphism-light"] .sync-button:hover .sync-btn-label,
+[data-theme="glassmorphism-light"] #sync-button:hover .sync-btn-label,
+[data-theme="claymorphism"] .sync-button:hover svg,
+[data-theme="claymorphism"] #sync-button:hover svg,
+[data-theme="claymorphism"] .sync-button:hover span,
+[data-theme="claymorphism"] #sync-button:hover span,
+[data-theme="neo-brutalist"] .sync-button:hover svg,
+[data-theme="neo-brutalist"] #sync-button:hover svg,
+[data-theme="neo-brutalist"] .sync-button:hover span,
+[data-theme="neo-brutalist"] #sync-button:hover span,
+[data-theme="retro-computing"] .sync-button:hover svg,
+[data-theme="retro-computing"] #sync-button:hover svg,
+[data-theme="retro-computing"] .sync-button:hover span,
+[data-theme="retro-computing"] #sync-button:hover span,
+[data-theme="clean-light"] .sync-button:hover svg,
+[data-theme="clean-light"] #sync-button:hover svg,
+[data-theme="clean-light"] .sync-button:hover span,
+[data-theme="clean-light"] #sync-button:hover span,
+[data-theme="cherry-blossom"] .sync-button:hover svg,
+[data-theme="cherry-blossom"] #sync-button:hover svg,
+[data-theme="cherry-blossom"] .sync-button:hover span,
+[data-theme="cherry-blossom"] #sync-button:hover span,
+[data-theme="lavender-mist"] .sync-button:hover svg,
+[data-theme="lavender-mist"] #sync-button:hover svg,
+[data-theme="lavender-mist"] .sync-button:hover span,
+[data-theme="lavender-mist"] #sync-button:hover span,
+[data-theme="pastel-candy"] .sync-button:hover svg,
+[data-theme="pastel-candy"] #sync-button:hover svg,
+[data-theme="pastel-candy"] .sync-button:hover span,
+[data-theme="pastel-candy"] #sync-button:hover span,
+[data-theme="sandstone-desert"] .sync-button:hover svg,
+[data-theme="sandstone-desert"] #sync-button:hover svg,
+[data-theme="sandstone-desert"] .sync-button:hover span,
+[data-theme="sandstone-desert"] #sync-button:hover span,
+[data-theme="oxford-navy"] .sync-button:hover svg,
+[data-theme="oxford-navy"] #sync-button:hover svg,
+[data-theme="oxford-navy"] .sync-button:hover span,
+[data-theme="oxford-navy"] #sync-button:hover span,
+[data-theme="neutral-gray"] .sync-button:hover svg,
+[data-theme="neutral-gray"] #sync-button:hover svg,
+[data-theme="neutral-gray"] .sync-button:hover span,
+[data-theme="neutral-gray"] #sync-button:hover span,
+[data-theme="monochrome-light"] .sync-button:hover svg,
+[data-theme="monochrome-light"] #sync-button:hover svg,
+[data-theme="monochrome-light"] .sync-button:hover span,
+[data-theme="monochrome-light"] #sync-button:hover span,
+[data-theme="taupe-natural"] .sync-button:hover svg,
+[data-theme="taupe-natural"] #sync-button:hover svg,
+[data-theme="taupe-natural"] .sync-button:hover span,
+[data-theme="taupe-natural"] #sync-button:hover span,
+[data-theme="executive-light"] .sync-button:hover svg,
+[data-theme="executive-light"] #sync-button:hover svg,
+[data-theme="executive-light"] .sync-button:hover span,
+[data-theme="executive-light"] #sync-button:hover span,
+[data-theme="sakura-rose"] .sync-button:hover svg,
+[data-theme="sakura-rose"] #sync-button:hover svg,
+[data-theme="sakura-rose"] .sync-button:hover span,
+[data-theme="sakura-rose"] #sync-button:hover span,
+[data-theme="cream-latte"] .sync-button:hover svg,
+[data-theme="cream-latte"] #sync-button:hover svg,
+[data-theme="cream-latte"] .sync-button:hover span,
+[data-theme="cream-latte"] #sync-button:hover span,
+[data-theme="paper-minimal"] .sync-button:hover svg,
+[data-theme="paper-minimal"] #sync-button:hover svg,
+[data-theme="paper-minimal"] .sync-button:hover span,
+[data-theme="paper-minimal"] #sync-button:hover span,
+[data-theme="mint-chocolat"] .sync-button:hover svg,
+[data-theme="mint-chocolat"] #sync-button:hover svg,
+[data-theme="mint-chocolat"] .sync-button:hover span,
+[data-theme="mint-chocolat"] #sync-button:hover span,
+[data-theme="nord-light"] .sync-button:hover svg,
+[data-theme="nord-light"] #sync-button:hover svg,
+[data-theme="nord-light"] .sync-button:hover span,
+[data-theme="nord-light"] #sync-button:hover span,
+[data-theme="solarized-light"] .sync-button:hover svg,
+[data-theme="solarized-light"] #sync-button:hover svg,
+[data-theme="solarized-light"] .sync-button:hover span,
+[data-theme="solarized-light"] #sync-button:hover span,
+[data-theme="lavender-bliss"] .sync-button:hover svg,
+[data-theme="lavender-bliss"] #sync-button:hover svg,
+[data-theme="lavender-bliss"] .sync-button:hover span,
+[data-theme="lavender-bliss"] #sync-button:hover span {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+
+[data-theme="neo-brutalist"] .sync-button:hover,
+[data-theme="neo-brutalist"] #sync-button:hover {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 3.5px 3.5px 0px #000000 !important;
+}
+

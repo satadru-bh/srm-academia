@@ -5686,6 +5686,23 @@ html.instant-workspace-active #app-workspace {
     color: var(--text-secondary);
 }
 
+.gpa-graphic-wrapper {
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    min-height: 58px;
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gpa-gauge-svg {
+    width: 58px;
+    height: 58px;
+}
+
 /* Performance Trends Micro Charts Section */
 .performance-trends-card {
     background: var(--bg-surface-solid);
@@ -10732,8 +10749,10 @@ body.sidebar-open #attendance-fab-container,
 
     .gpa-graphic-wrapper,
     .gpa-gauge-svg {
-        width: 40px !important;
-        height: 40px !important;
+        width: 50px !important;
+        height: 50px !important;
+        min-width: 50px !important;
+        min-height: 50px !important;
     }
 
     .mobile-bottom-nav {
@@ -13282,3 +13301,501 @@ h6,
         gap: 6px !important;
     }
 }
+
+/* ==========================================================================
+   HIGH-CONTRAST TIMETABLE DOWNLOAD BUTTONS & REFRESH BUTTON HOVER STATES
+   - Dark Themes: Pure White (#FFFFFF) background with Black (#000000) text/icons
+   - Light Themes: Deep Black (#0F172A / #000000) background with White (#FFFFFF) text/icons
+   ========================================================================== */
+
+/* 1. TIMETABLE DOWNLOAD / EXPORT BUTTONS (DARK THEMES - PURE WHITE) */
+#download-timetable-btn,
+#download-timetable-mobile-btn,
+button#download-timetable-btn,
+button#download-timetable-mobile-btn {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1px solid #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.22) !important;
+}
+
+#download-timetable-btn svg,
+#download-timetable-btn svg path,
+#download-timetable-btn svg line,
+#download-timetable-btn svg polyline,
+#download-timetable-btn span,
+#download-timetable-mobile-btn svg,
+#download-timetable-mobile-btn svg path,
+#download-timetable-mobile-btn svg line,
+#download-timetable-mobile-btn svg polyline,
+#download-timetable-mobile-btn span {
+    color: #000000 !important;
+    stroke: #000000 !important;
+}
+
+#download-timetable-btn:hover,
+#download-timetable-mobile-btn:hover,
+button#download-timetable-btn:hover,
+button#download-timetable-mobile-btn:hover {
+    background-color: #E2E8F0 !important;
+    background: #E2E8F0 !important;
+    color: #000000 !important;
+    border-color: #E2E8F0 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.35) !important;
+}
+
+#download-timetable-btn:hover svg,
+#download-timetable-btn:hover svg path,
+#download-timetable-btn:hover svg line,
+#download-timetable-btn:hover svg polyline,
+#download-timetable-btn:hover span,
+#download-timetable-mobile-btn:hover svg,
+#download-timetable-mobile-btn:hover svg path,
+#download-timetable-mobile-btn:hover svg line,
+#download-timetable-mobile-btn:hover svg polyline,
+#download-timetable-mobile-btn:hover span {
+    color: #000000 !important;
+    stroke: #000000 !important;
+}
+
+/* 2. TIMETABLE DOWNLOAD / EXPORT BUTTONS (LIGHT THEMES - DEEP BLACK) */
+[data-theme="glassmorphism-light"] #download-timetable-btn,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn,
+[data-theme="claymorphism"] #download-timetable-btn,
+[data-theme="claymorphism"] #download-timetable-mobile-btn,
+[data-theme="neo-brutalist"] #download-timetable-btn,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn,
+[data-theme="retro-computing"] #download-timetable-btn,
+[data-theme="retro-computing"] #download-timetable-mobile-btn,
+[data-theme="clean-light"] #download-timetable-btn,
+[data-theme="clean-light"] #download-timetable-mobile-btn,
+[data-theme="cherry-blossom"] #download-timetable-btn,
+[data-theme="cherry-blossom"] #download-timetable-mobile-btn,
+[data-theme="lavender-mist"] #download-timetable-btn,
+[data-theme="lavender-mist"] #download-timetable-mobile-btn,
+[data-theme="pastel-candy"] #download-timetable-btn,
+[data-theme="pastel-candy"] #download-timetable-mobile-btn,
+[data-theme="sandstone-desert"] #download-timetable-btn,
+[data-theme="sandstone-desert"] #download-timetable-mobile-btn,
+[data-theme="oxford-navy"] #download-timetable-btn,
+[data-theme="oxford-navy"] #download-timetable-mobile-btn,
+[data-theme="neutral-gray"] #download-timetable-btn,
+[data-theme="neutral-gray"] #download-timetable-mobile-btn,
+[data-theme="monochrome-light"] #download-timetable-btn,
+[data-theme="monochrome-light"] #download-timetable-mobile-btn,
+[data-theme="taupe-natural"] #download-timetable-btn,
+[data-theme="taupe-natural"] #download-timetable-mobile-btn,
+[data-theme="executive-light"] #download-timetable-btn,
+[data-theme="executive-light"] #download-timetable-mobile-btn,
+[data-theme="sakura-rose"] #download-timetable-btn,
+[data-theme="sakura-rose"] #download-timetable-mobile-btn,
+[data-theme="cream-latte"] #download-timetable-btn,
+[data-theme="cream-latte"] #download-timetable-mobile-btn,
+[data-theme="paper-minimal"] #download-timetable-btn,
+[data-theme="paper-minimal"] #download-timetable-mobile-btn,
+[data-theme="mint-chocolat"] #download-timetable-btn,
+[data-theme="mint-chocolat"] #download-timetable-mobile-btn,
+[data-theme="nord-light"] #download-timetable-btn,
+[data-theme="nord-light"] #download-timetable-mobile-btn,
+[data-theme="solarized-light"] #download-timetable-btn,
+[data-theme="solarized-light"] #download-timetable-mobile-btn,
+[data-theme="lavender-bliss"] #download-timetable-btn,
+[data-theme="lavender-bliss"] #download-timetable-mobile-btn {
+    background-color: #0F172A !important;
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    border: 1px solid #0F172A !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25) !important;
+}
+
+[data-theme="glassmorphism-light"] #download-timetable-btn svg,
+[data-theme="glassmorphism-light"] #download-timetable-btn svg path,
+[data-theme="glassmorphism-light"] #download-timetable-btn svg line,
+[data-theme="glassmorphism-light"] #download-timetable-btn svg polyline,
+[data-theme="glassmorphism-light"] #download-timetable-btn span,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn svg,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn svg path,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn svg line,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn svg polyline,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn span,
+[data-theme="claymorphism"] #download-timetable-btn svg,
+[data-theme="claymorphism"] #download-timetable-btn span,
+[data-theme="claymorphism"] #download-timetable-mobile-btn svg,
+[data-theme="neo-brutalist"] #download-timetable-btn svg,
+[data-theme="neo-brutalist"] #download-timetable-btn span,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn svg,
+[data-theme="retro-computing"] #download-timetable-btn svg,
+[data-theme="retro-computing"] #download-timetable-btn span,
+[data-theme="retro-computing"] #download-timetable-mobile-btn svg,
+[data-theme="clean-light"] #download-timetable-btn svg,
+[data-theme="clean-light"] #download-timetable-btn span,
+[data-theme="clean-light"] #download-timetable-mobile-btn svg,
+[data-theme="cherry-blossom"] #download-timetable-btn svg,
+[data-theme="cherry-blossom"] #download-timetable-btn span,
+[data-theme="cherry-blossom"] #download-timetable-mobile-btn svg,
+[data-theme="lavender-mist"] #download-timetable-btn svg,
+[data-theme="lavender-mist"] #download-timetable-btn span,
+[data-theme="lavender-mist"] #download-timetable-mobile-btn svg,
+[data-theme="pastel-candy"] #download-timetable-btn svg,
+[data-theme="pastel-candy"] #download-timetable-btn span,
+[data-theme="pastel-candy"] #download-timetable-mobile-btn svg,
+[data-theme="sandstone-desert"] #download-timetable-btn svg,
+[data-theme="sandstone-desert"] #download-timetable-btn span,
+[data-theme="sandstone-desert"] #download-timetable-mobile-btn svg,
+[data-theme="oxford-navy"] #download-timetable-btn svg,
+[data-theme="oxford-navy"] #download-timetable-btn span,
+[data-theme="oxford-navy"] #download-timetable-mobile-btn svg,
+[data-theme="neutral-gray"] #download-timetable-btn svg,
+[data-theme="neutral-gray"] #download-timetable-btn span,
+[data-theme="neutral-gray"] #download-timetable-mobile-btn svg,
+[data-theme="monochrome-light"] #download-timetable-btn svg,
+[data-theme="monochrome-light"] #download-timetable-btn span,
+[data-theme="monochrome-light"] #download-timetable-mobile-btn svg,
+[data-theme="taupe-natural"] #download-timetable-btn svg,
+[data-theme="taupe-natural"] #download-timetable-btn span,
+[data-theme="taupe-natural"] #download-timetable-mobile-btn svg,
+[data-theme="executive-light"] #download-timetable-btn svg,
+[data-theme="executive-light"] #download-timetable-btn span,
+[data-theme="executive-light"] #download-timetable-mobile-btn svg,
+[data-theme="sakura-rose"] #download-timetable-btn svg,
+[data-theme="sakura-rose"] #download-timetable-btn span,
+[data-theme="sakura-rose"] #download-timetable-mobile-btn svg,
+[data-theme="cream-latte"] #download-timetable-btn svg,
+[data-theme="cream-latte"] #download-timetable-btn span,
+[data-theme="cream-latte"] #download-timetable-mobile-btn svg,
+[data-theme="paper-minimal"] #download-timetable-btn svg,
+[data-theme="paper-minimal"] #download-timetable-btn span,
+[data-theme="paper-minimal"] #download-timetable-mobile-btn svg,
+[data-theme="mint-chocolat"] #download-timetable-btn svg,
+[data-theme="mint-chocolat"] #download-timetable-btn span,
+[data-theme="mint-chocolat"] #download-timetable-mobile-btn svg,
+[data-theme="nord-light"] #download-timetable-btn svg,
+[data-theme="nord-light"] #download-timetable-btn span,
+[data-theme="nord-light"] #download-timetable-mobile-btn svg,
+[data-theme="solarized-light"] #download-timetable-btn svg,
+[data-theme="solarized-light"] #download-timetable-btn span,
+[data-theme="solarized-light"] #download-timetable-mobile-btn svg,
+[data-theme="lavender-bliss"] #download-timetable-btn svg,
+[data-theme="lavender-bliss"] #download-timetable-btn span,
+[data-theme="lavender-bliss"] #download-timetable-mobile-btn svg {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+
+[data-theme="glassmorphism-light"] #download-timetable-btn:hover,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn:hover,
+[data-theme="claymorphism"] #download-timetable-btn:hover,
+[data-theme="claymorphism"] #download-timetable-mobile-btn:hover,
+[data-theme="neo-brutalist"] #download-timetable-btn:hover,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn:hover,
+[data-theme="retro-computing"] #download-timetable-btn:hover,
+[data-theme="retro-computing"] #download-timetable-mobile-btn:hover,
+[data-theme="clean-light"] #download-timetable-btn:hover,
+[data-theme="clean-light"] #download-timetable-mobile-btn:hover,
+[data-theme="cherry-blossom"] #download-timetable-btn:hover,
+[data-theme="cherry-blossom"] #download-timetable-mobile-btn:hover,
+[data-theme="lavender-mist"] #download-timetable-btn:hover,
+[data-theme="lavender-mist"] #download-timetable-mobile-btn:hover,
+[data-theme="pastel-candy"] #download-timetable-btn:hover,
+[data-theme="pastel-candy"] #download-timetable-mobile-btn:hover,
+[data-theme="sandstone-desert"] #download-timetable-btn:hover,
+[data-theme="sandstone-desert"] #download-timetable-mobile-btn:hover,
+[data-theme="oxford-navy"] #download-timetable-btn:hover,
+[data-theme="oxford-navy"] #download-timetable-mobile-btn:hover,
+[data-theme="neutral-gray"] #download-timetable-btn:hover,
+[data-theme="neutral-gray"] #download-timetable-mobile-btn:hover,
+[data-theme="monochrome-light"] #download-timetable-btn:hover,
+[data-theme="monochrome-light"] #download-timetable-mobile-btn:hover,
+[data-theme="taupe-natural"] #download-timetable-btn:hover,
+[data-theme="taupe-natural"] #download-timetable-mobile-btn:hover,
+[data-theme="executive-light"] #download-timetable-btn:hover,
+[data-theme="executive-light"] #download-timetable-mobile-btn:hover,
+[data-theme="sakura-rose"] #download-timetable-btn:hover,
+[data-theme="sakura-rose"] #download-timetable-mobile-btn:hover,
+[data-theme="cream-latte"] #download-timetable-btn:hover,
+[data-theme="cream-latte"] #download-timetable-mobile-btn:hover,
+[data-theme="paper-minimal"] #download-timetable-btn:hover,
+[data-theme="paper-minimal"] #download-timetable-mobile-btn:hover,
+[data-theme="mint-chocolat"] #download-timetable-btn:hover,
+[data-theme="mint-chocolat"] #download-timetable-mobile-btn:hover,
+[data-theme="nord-light"] #download-timetable-btn:hover,
+[data-theme="nord-light"] #download-timetable-mobile-btn:hover,
+[data-theme="solarized-light"] #download-timetable-btn:hover,
+[data-theme="solarized-light"] #download-timetable-mobile-btn:hover,
+[data-theme="lavender-bliss"] #download-timetable-btn:hover,
+[data-theme="lavender-bliss"] #download-timetable-mobile-btn:hover {
+    background-color: #1E293B !important;
+    background: #1E293B !important;
+    color: #FFFFFF !important;
+    border-color: #1E293B !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.35) !important;
+}
+
+[data-theme="glassmorphism-light"] #download-timetable-btn:hover svg,
+[data-theme="glassmorphism-light"] #download-timetable-btn:hover span,
+[data-theme="glassmorphism-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="claymorphism"] #download-timetable-btn:hover svg,
+[data-theme="claymorphism"] #download-timetable-btn:hover span,
+[data-theme="claymorphism"] #download-timetable-mobile-btn:hover svg,
+[data-theme="neo-brutalist"] #download-timetable-btn:hover svg,
+[data-theme="neo-brutalist"] #download-timetable-btn:hover span,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn:hover svg,
+[data-theme="retro-computing"] #download-timetable-btn:hover svg,
+[data-theme="retro-computing"] #download-timetable-btn:hover span,
+[data-theme="retro-computing"] #download-timetable-mobile-btn:hover svg,
+[data-theme="clean-light"] #download-timetable-btn:hover svg,
+[data-theme="clean-light"] #download-timetable-btn:hover span,
+[data-theme="clean-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="cherry-blossom"] #download-timetable-btn:hover svg,
+[data-theme="cherry-blossom"] #download-timetable-btn:hover span,
+[data-theme="cherry-blossom"] #download-timetable-mobile-btn:hover svg,
+[data-theme="lavender-mist"] #download-timetable-btn:hover svg,
+[data-theme="lavender-mist"] #download-timetable-btn:hover span,
+[data-theme="lavender-mist"] #download-timetable-mobile-btn:hover svg,
+[data-theme="pastel-candy"] #download-timetable-btn:hover svg,
+[data-theme="pastel-candy"] #download-timetable-btn:hover span,
+[data-theme="pastel-candy"] #download-timetable-mobile-btn:hover svg,
+[data-theme="sandstone-desert"] #download-timetable-btn:hover svg,
+[data-theme="sandstone-desert"] #download-timetable-btn:hover span,
+[data-theme="sandstone-desert"] #download-timetable-mobile-btn:hover svg,
+[data-theme="oxford-navy"] #download-timetable-btn:hover svg,
+[data-theme="oxford-navy"] #download-timetable-btn:hover span,
+[data-theme="oxford-navy"] #download-timetable-mobile-btn:hover svg,
+[data-theme="neutral-gray"] #download-timetable-btn:hover svg,
+[data-theme="neutral-gray"] #download-timetable-btn:hover span,
+[data-theme="neutral-gray"] #download-timetable-mobile-btn:hover svg,
+[data-theme="monochrome-light"] #download-timetable-btn:hover svg,
+[data-theme="monochrome-light"] #download-timetable-btn:hover span,
+[data-theme="monochrome-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="taupe-natural"] #download-timetable-btn:hover svg,
+[data-theme="taupe-natural"] #download-timetable-btn:hover span,
+[data-theme="taupe-natural"] #download-timetable-mobile-btn:hover svg,
+[data-theme="executive-light"] #download-timetable-btn:hover svg,
+[data-theme="executive-light"] #download-timetable-btn:hover span,
+[data-theme="executive-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="sakura-rose"] #download-timetable-btn:hover svg,
+[data-theme="sakura-rose"] #download-timetable-btn:hover span,
+[data-theme="sakura-rose"] #download-timetable-mobile-btn:hover svg,
+[data-theme="cream-latte"] #download-timetable-btn:hover svg,
+[data-theme="cream-latte"] #download-timetable-btn:hover span,
+[data-theme="cream-latte"] #download-timetable-mobile-btn:hover svg,
+[data-theme="paper-minimal"] #download-timetable-btn:hover svg,
+[data-theme="paper-minimal"] #download-timetable-btn:hover span,
+[data-theme="paper-minimal"] #download-timetable-mobile-btn:hover svg,
+[data-theme="mint-chocolat"] #download-timetable-btn:hover svg,
+[data-theme="mint-chocolat"] #download-timetable-btn:hover span,
+[data-theme="mint-chocolat"] #download-timetable-mobile-btn:hover svg,
+[data-theme="nord-light"] #download-timetable-btn:hover svg,
+[data-theme="nord-light"] #download-timetable-btn:hover span,
+[data-theme="nord-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="solarized-light"] #download-timetable-btn:hover svg,
+[data-theme="solarized-light"] #download-timetable-btn:hover span,
+[data-theme="solarized-light"] #download-timetable-mobile-btn:hover svg,
+[data-theme="lavender-bliss"] #download-timetable-btn:hover svg,
+[data-theme="lavender-bliss"] #download-timetable-btn:hover span,
+[data-theme="lavender-bliss"] #download-timetable-mobile-btn:hover svg {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+
+/* Neo-Brutalist Light Special Border/Shadow Touch */
+[data-theme="neo-brutalist"] #download-timetable-btn,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 3px 3px 0px #000000 !important;
+}
+
+[data-theme="neo-brutalist"] #download-timetable-btn:hover,
+[data-theme="neo-brutalist"] #download-timetable-mobile-btn:hover {
+    background: #262626 !important;
+    background-color: #262626 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+}
+
+/* 3. REFRESH BUTTON HOVER STATES (DARK THEMES DEFAULT: PURE WHITE) */
+.sync-button:hover,
+#sync-button:hover,
+button.sync-button:hover,
+button#sync-button:hover {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    border-color: #FFFFFF !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.22) !important;
+}
+
+.sync-button:hover svg,
+#sync-button:hover svg,
+.sync-button:hover svg path,
+#sync-button:hover svg path,
+.sync-button:hover svg polyline,
+#sync-button:hover svg polyline,
+.sync-button:hover svg line,
+#sync-button:hover svg line,
+.sync-button:hover span,
+#sync-button:hover span,
+.sync-button:hover .sync-btn-label,
+#sync-button:hover .sync-btn-label {
+    color: #000000 !important;
+    stroke: #000000 !important;
+}
+
+/* 4. REFRESH BUTTON HOVER STATES (LIGHT THEMES: DEEP BLACK) */
+[data-theme="glassmorphism-light"] .sync-button:hover,
+[data-theme="glassmorphism-light"] #sync-button:hover,
+[data-theme="claymorphism"] .sync-button:hover,
+[data-theme="claymorphism"] #sync-button:hover,
+[data-theme="neo-brutalist"] .sync-button:hover,
+[data-theme="neo-brutalist"] #sync-button:hover,
+[data-theme="retro-computing"] .sync-button:hover,
+[data-theme="retro-computing"] #sync-button:hover,
+[data-theme="clean-light"] .sync-button:hover,
+[data-theme="clean-light"] #sync-button:hover,
+[data-theme="cherry-blossom"] .sync-button:hover,
+[data-theme="cherry-blossom"] #sync-button:hover,
+[data-theme="lavender-mist"] .sync-button:hover,
+[data-theme="lavender-mist"] #sync-button:hover,
+[data-theme="pastel-candy"] .sync-button:hover,
+[data-theme="pastel-candy"] #sync-button:hover,
+[data-theme="sandstone-desert"] .sync-button:hover,
+[data-theme="sandstone-desert"] #sync-button:hover,
+[data-theme="oxford-navy"] .sync-button:hover,
+[data-theme="oxford-navy"] #sync-button:hover,
+[data-theme="neutral-gray"] .sync-button:hover,
+[data-theme="neutral-gray"] #sync-button:hover,
+[data-theme="monochrome-light"] .sync-button:hover,
+[data-theme="monochrome-light"] #sync-button:hover,
+[data-theme="taupe-natural"] .sync-button:hover,
+[data-theme="taupe-natural"] #sync-button:hover,
+[data-theme="executive-light"] .sync-button:hover,
+[data-theme="executive-light"] #sync-button:hover,
+[data-theme="sakura-rose"] .sync-button:hover,
+[data-theme="sakura-rose"] #sync-button:hover,
+[data-theme="cream-latte"] .sync-button:hover,
+[data-theme="cream-latte"] #sync-button:hover,
+[data-theme="paper-minimal"] .sync-button:hover,
+[data-theme="paper-minimal"] #sync-button:hover,
+[data-theme="mint-chocolat"] .sync-button:hover,
+[data-theme="mint-chocolat"] #sync-button:hover,
+[data-theme="nord-light"] .sync-button:hover,
+[data-theme="nord-light"] #sync-button:hover,
+[data-theme="solarized-light"] .sync-button:hover,
+[data-theme="solarized-light"] #sync-button:hover,
+[data-theme="lavender-bliss"] .sync-button:hover,
+[data-theme="lavender-bliss"] #sync-button:hover {
+    background-color: #0F172A !important;
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    border-color: #0F172A !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25) !important;
+}
+
+[data-theme="glassmorphism-light"] .sync-button:hover svg,
+[data-theme="glassmorphism-light"] #sync-button:hover svg,
+[data-theme="glassmorphism-light"] .sync-button:hover span,
+[data-theme="glassmorphism-light"] #sync-button:hover span,
+[data-theme="glassmorphism-light"] .sync-button:hover .sync-btn-label,
+[data-theme="glassmorphism-light"] #sync-button:hover .sync-btn-label,
+[data-theme="claymorphism"] .sync-button:hover svg,
+[data-theme="claymorphism"] #sync-button:hover svg,
+[data-theme="claymorphism"] .sync-button:hover span,
+[data-theme="claymorphism"] #sync-button:hover span,
+[data-theme="neo-brutalist"] .sync-button:hover svg,
+[data-theme="neo-brutalist"] #sync-button:hover svg,
+[data-theme="neo-brutalist"] .sync-button:hover span,
+[data-theme="neo-brutalist"] #sync-button:hover span,
+[data-theme="retro-computing"] .sync-button:hover svg,
+[data-theme="retro-computing"] #sync-button:hover svg,
+[data-theme="retro-computing"] .sync-button:hover span,
+[data-theme="retro-computing"] #sync-button:hover span,
+[data-theme="clean-light"] .sync-button:hover svg,
+[data-theme="clean-light"] #sync-button:hover svg,
+[data-theme="clean-light"] .sync-button:hover span,
+[data-theme="clean-light"] #sync-button:hover span,
+[data-theme="cherry-blossom"] .sync-button:hover svg,
+[data-theme="cherry-blossom"] #sync-button:hover svg,
+[data-theme="cherry-blossom"] .sync-button:hover span,
+[data-theme="cherry-blossom"] #sync-button:hover span,
+[data-theme="lavender-mist"] .sync-button:hover svg,
+[data-theme="lavender-mist"] #sync-button:hover svg,
+[data-theme="lavender-mist"] .sync-button:hover span,
+[data-theme="lavender-mist"] #sync-button:hover span,
+[data-theme="pastel-candy"] .sync-button:hover svg,
+[data-theme="pastel-candy"] #sync-button:hover svg,
+[data-theme="pastel-candy"] .sync-button:hover span,
+[data-theme="pastel-candy"] #sync-button:hover span,
+[data-theme="sandstone-desert"] .sync-button:hover svg,
+[data-theme="sandstone-desert"] #sync-button:hover svg,
+[data-theme="sandstone-desert"] .sync-button:hover span,
+[data-theme="sandstone-desert"] #sync-button:hover span,
+[data-theme="oxford-navy"] .sync-button:hover svg,
+[data-theme="oxford-navy"] #sync-button:hover svg,
+[data-theme="oxford-navy"] .sync-button:hover span,
+[data-theme="oxford-navy"] #sync-button:hover span,
+[data-theme="neutral-gray"] .sync-button:hover svg,
+[data-theme="neutral-gray"] #sync-button:hover svg,
+[data-theme="neutral-gray"] .sync-button:hover span,
+[data-theme="neutral-gray"] #sync-button:hover span,
+[data-theme="monochrome-light"] .sync-button:hover svg,
+[data-theme="monochrome-light"] #sync-button:hover svg,
+[data-theme="monochrome-light"] .sync-button:hover span,
+[data-theme="monochrome-light"] #sync-button:hover span,
+[data-theme="taupe-natural"] .sync-button:hover svg,
+[data-theme="taupe-natural"] #sync-button:hover svg,
+[data-theme="taupe-natural"] .sync-button:hover span,
+[data-theme="taupe-natural"] #sync-button:hover span,
+[data-theme="executive-light"] .sync-button:hover svg,
+[data-theme="executive-light"] #sync-button:hover svg,
+[data-theme="executive-light"] .sync-button:hover span,
+[data-theme="executive-light"] #sync-button:hover span,
+[data-theme="sakura-rose"] .sync-button:hover svg,
+[data-theme="sakura-rose"] #sync-button:hover svg,
+[data-theme="sakura-rose"] .sync-button:hover span,
+[data-theme="sakura-rose"] #sync-button:hover span,
+[data-theme="cream-latte"] .sync-button:hover svg,
+[data-theme="cream-latte"] #sync-button:hover svg,
+[data-theme="cream-latte"] .sync-button:hover span,
+[data-theme="cream-latte"] #sync-button:hover span,
+[data-theme="paper-minimal"] .sync-button:hover svg,
+[data-theme="paper-minimal"] #sync-button:hover svg,
+[data-theme="paper-minimal"] .sync-button:hover span,
+[data-theme="paper-minimal"] #sync-button:hover span,
+[data-theme="mint-chocolat"] .sync-button:hover svg,
+[data-theme="mint-chocolat"] #sync-button:hover svg,
+[data-theme="mint-chocolat"] .sync-button:hover span,
+[data-theme="mint-chocolat"] #sync-button:hover span,
+[data-theme="nord-light"] .sync-button:hover svg,
+[data-theme="nord-light"] #sync-button:hover svg,
+[data-theme="nord-light"] .sync-button:hover span,
+[data-theme="nord-light"] #sync-button:hover span,
+[data-theme="solarized-light"] .sync-button:hover svg,
+[data-theme="solarized-light"] #sync-button:hover svg,
+[data-theme="solarized-light"] .sync-button:hover span,
+[data-theme="solarized-light"] #sync-button:hover span,
+[data-theme="lavender-bliss"] .sync-button:hover svg,
+[data-theme="lavender-bliss"] #sync-button:hover svg,
+[data-theme="lavender-bliss"] .sync-button:hover span,
+[data-theme="lavender-bliss"] #sync-button:hover span {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+
+[data-theme="neo-brutalist"] .sync-button:hover,
+[data-theme="neo-brutalist"] #sync-button:hover {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 3.5px 3.5px 0px #000000 !important;
+}
+
