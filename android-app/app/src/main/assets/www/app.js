@@ -4265,11 +4265,13 @@ function deleteCustomClass(classId) {
  */
 function renderTimetablePane() {
     const isMobile = window.innerWidth < 992;
+    const mobileSection = document.getElementById('timetable-mobile-section');
     const mobileControls = document.getElementById('timetable-mobile-day-controls');
     const mobileWrapper = document.getElementById('timetable-mobile-timeline-wrapper');
     const matrixCard = document.getElementById('timetable-matrix-card');
 
     if (isMobile) {
+        if (mobileSection) mobileSection.classList.remove('hidden');
         if (mobileControls) mobileControls.classList.remove('hidden');
         if (mobileWrapper) mobileWrapper.classList.remove('hidden');
         if (matrixCard) matrixCard.classList.add('hidden');
@@ -4282,6 +4284,7 @@ function renderTimetablePane() {
         renderMobileTimetableDay(currentDay);
         bindMobileTimetableDayHandlers();
     } else {
+        if (mobileSection) mobileSection.classList.add('hidden');
         if (mobileControls) mobileControls.classList.add('hidden');
         if (mobileWrapper) mobileWrapper.classList.add('hidden');
         if (matrixCard) matrixCard.classList.remove('hidden');
@@ -4309,10 +4312,6 @@ function renderMobileTimetableDay(dayOrder) {
         return;
     }
 
-    const now = getCurrentDateTime();
-    const currentMinuteVal = now.getHours() * 60 + now.getMinutes();
-    const isTodaySelected = (dayOrder === getTodayDayOrder());
-
     const validClassSlots = slots.filter(s => (s.course || s.subjectTitle) && (s.course || s.subjectTitle).trim() !== '');
     const maxClassPeriod = validClassSlots.length > 0 ? Math.max(...validClassSlots.map(s => parseInt(s.period, 10) || 1)) : 0;
 
@@ -4327,7 +4326,6 @@ function renderMobileTimetableDay(dayOrder) {
     }
 
     let html = '<div class="vertical-timeline-list flex-col gap-8">';
-    let isNextFound = false;
 
     for (let p = 1; p <= maxClassPeriod; p++) {
         const slot = slots.find(s => parseInt(s.period, 10) === p);
@@ -4339,48 +4337,8 @@ function renderMobileTimetableDay(dayOrder) {
             const typeClass = isLab ? 'lab' : 'theory';
             const tlLetter = isLab ? 'L' : 'T';
 
-            let stateClass = '';
-            let isNext = false;
-            if (isTodaySelected) {
-                const [sH, sM] = pt.start.split(':').map(Number);
-                const [eH, eM] = pt.end.split(':').map(Number);
-                const startMins = sH * 60 + sM;
-                const endMins = eH * 60 + eM;
-                if (currentMinuteVal >= startMins && currentMinuteVal <= endMins) {
-                    stateClass = 'slot-current';
-                }
-                if (!isNextFound && currentMinuteVal < endMins) {
-                    isNext = true;
-                    isNextFound = true;
-                }
-            }
-
-            let nodeState = 'upcoming';
-            let segmentClass = 'dashed';
-            if (stateClass === 'slot-current') {
-                nodeState = 'current active';
-                segmentClass = 'solid';
-            } else if (isTodaySelected) {
-                const [eH, eM] = pt.end.split(':').map(Number);
-                const endMins = eH * 60 + eM;
-                if (currentMinuteVal > endMins) {
-                    nodeState = 'completed';
-                    segmentClass = 'solid';
-                }
-            }
-
-            let nodeHtml = '';
-            if (nodeState.includes('completed')) {
-                nodeHtml = `<div class="timeline-checkpoint-node completed"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>`;
-            } else if (nodeState.includes('current')) {
-                nodeHtml = `<div class="timeline-checkpoint-node current"><div class="current-inner-dot"></div></div>`;
-            } else {
-                nodeHtml = `<div class="timeline-checkpoint-node upcoming ${typeClass}"></div>`;
-            }
-
             html += `
-                <div class="vertical-timeline-card ${typeClass} ${stateClass}" style="position: relative;">
-                    ${isNext ? '<span class="badge-next-slot">NEXT</span>' : ''}
+                <div class="vertical-timeline-card ${typeClass}" style="position: relative;">
                     <div class="vertical-timeline-badge-col">
                         <span class="period-pill">P${slot.period}</span>
                         <span class="time-range-label">${timingStr}</span>
@@ -4389,7 +4347,7 @@ function renderMobileTimetableDay(dayOrder) {
                         <div class="vertical-timeline-header-row">
                             <span class="course-code-tag">${slot.slot || slot.code || ''}</span>
                         </div>
-                        <h4 class="vertical-timeline-title">${slot.course || 'Class Session'}</h4>
+                        <h4 class="vertical-timeline-title">${slot.course || slot.subjectTitle || 'Class Session'}</h4>
                         ${slot.faculty ? `<div class="attendance-faculty">${slot.faculty}</div>` : ''}
                         <div class="vertical-timeline-footer-row">
                             ${slot.room ? `<span class="room-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> ${slot.room.replace(/^Room\s+/i, '')}</span>` : ''}
@@ -5308,6 +5266,8 @@ function renderMobilePlannerList(year, month) {
         const p = item.planner;
         const isPlannerHoliday = p && (p.type === 'HOLIDAY' || p.dayOrder === 'HOLIDAY' || p.dayOrder === '-' || p.dayOrder === 'OFF');
         const isHoliday = item.isWeekend || isPlannerHoliday;
+        const isMilestone = !isHoliday && p && (p.type === 'ENROLMENT' || p.type === 'MILESTONE' || (p.event && (p.event.toLowerCase().includes('enrolment') || p.event.toLowerCase().includes('milestone'))));
+        const isCommencement = !isHoliday && !isMilestone && p && (p.type === 'COMMENCEMENT' || (p.event && p.event.toLowerCase().includes('commencement')));
 
         let dayOrderTag = '';
         let eventTag = '';
@@ -5315,11 +5275,17 @@ function renderMobilePlannerList(year, month) {
 
         if (item.isToday) cardClass += ' today';
         if (isHoliday) cardClass += ' holiday';
+        else if (isMilestone) cardClass += ' milestone';
+        else if (isCommencement) cardClass += ' commencement';
 
         if (p && p.dayOrder && p.dayOrder !== '-' && p.dayOrder !== 'HOLIDAY' && !item.isWeekend) {
             dayOrderTag = `<span class="planner-dayorder-pill">DAY ${p.dayOrder}</span>`;
         } else if (isHoliday) {
             dayOrderTag = `<span class="planner-dayorder-pill holiday">HOLIDAY</span>`;
+        } else if (isMilestone) {
+            dayOrderTag = `<span class="planner-dayorder-pill milestone">MILESTONE</span>`;
+        } else if (isCommencement) {
+            dayOrderTag = `<span class="planner-dayorder-pill commencement">COMMENCEMENT</span>`;
         }
 
         if (p && p.event && p.event.trim() !== '') {

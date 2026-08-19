@@ -238,8 +238,9 @@
     font-weight: 700 !important;
 }
 
-/* Ceramic Clay Calendar Tiles */
-[data-theme="claymorphism"] .calendar-day-cell {
+/* Ceramic Clay Calendar & Planner Tiles */
+[data-theme="claymorphism"] .calendar-day-cell,
+[data-theme="claymorphism"] .planner-mobile-card {
     border-radius: 20px !important;
     border: none !important;
     background-color: #F8FAFC !important;
@@ -248,12 +249,14 @@
     color: #0F172A !important;
 }
 
-[data-theme="claymorphism"] .calendar-day-cell:hover {
+[data-theme="claymorphism"] .calendar-day-cell:hover,
+[data-theme="claymorphism"] .planner-mobile-card:hover {
     transform: translateY(-3px) scale(1.02) !important;
     box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 1), 10px 10px 24px rgba(0, 0, 0, 0.08) !important;
 }
 
-[data-theme="claymorphism"] .calendar-day-cell.today {
+[data-theme="claymorphism"] .calendar-day-cell.today,
+[data-theme="claymorphism"] .planner-mobile-card.today {
     background: linear-gradient(135deg, #6366F1, #4F46E5) !important;
     color: #FFFFFF !important;
     box-shadow: inset -3px -3px 6px rgba(0, 0, 0, 0.2), inset 3px 3px 6px rgba(255, 255, 255, 0.5), 8px 8px 20px rgba(99, 102, 241, 0.35) !important;
@@ -261,19 +264,22 @@
 }
 
 /* Claymorphism Event Days — Soft 3D Clay Pills with Black/High-Contrast Text */
-[data-theme="claymorphism"] .calendar-day-cell.holiday {
+[data-theme="claymorphism"] .calendar-day-cell.holiday,
+[data-theme="claymorphism"] .planner-mobile-card.holiday {
     background-color: #FFE4E6 !important;
     box-shadow: inset -3px -3px 6px rgba(225, 29, 72, 0.12), inset 3px 3px 6px rgba(255, 255, 255, 0.9), 6px 6px 16px rgba(225, 29, 72, 0.08) !important;
     color: #000000 !important;
 }
 
-[data-theme="claymorphism"] .calendar-day-cell.milestone {
+[data-theme="claymorphism"] .calendar-day-cell.milestone,
+[data-theme="claymorphism"] .planner-mobile-card.milestone {
     background-color: #D1FAE5 !important;
     box-shadow: inset -3px -3px 6px rgba(16, 185, 129, 0.12), inset 3px 3px 6px rgba(255, 255, 255, 0.9), 6px 6px 16px rgba(16, 185, 129, 0.08) !important;
     color: #000000 !important;
 }
 
-[data-theme="claymorphism"] .calendar-day-cell.commencement {
+[data-theme="claymorphism"] .calendar-day-cell.commencement,
+[data-theme="claymorphism"] .planner-mobile-card.commencement {
     background-color: #EDE9FE !important;
     box-shadow: inset -3px -3px 6px rgba(139, 92, 246, 0.12), inset 3px 3px 6px rgba(255, 255, 255, 0.9), 6px 6px 16px rgba(139, 92, 246, 0.08) !important;
     color: #000000 !important;
@@ -287,12 +293,25 @@
 [data-theme="claymorphism"] .calendar-day-cell.commencement div[title],
 [data-theme="claymorphism"] .calendar-day-cell.holiday span,
 [data-theme="claymorphism"] .calendar-day-cell.milestone span,
-[data-theme="claymorphism"] .calendar-day-cell.commencement span {
+[data-theme="claymorphism"] .calendar-day-cell.commencement span,
+[data-theme="claymorphism"] .planner-mobile-card.holiday .planner-date-num,
+[data-theme="claymorphism"] .planner-mobile-card.holiday .planner-date-day,
+[data-theme="claymorphism"] .planner-mobile-card.holiday span,
+[data-theme="claymorphism"] .planner-mobile-card.milestone .planner-date-num,
+[data-theme="claymorphism"] .planner-mobile-card.milestone .planner-date-day,
+[data-theme="claymorphism"] .planner-mobile-card.milestone span,
+[data-theme="claymorphism"] .planner-mobile-card.commencement .planner-date-num,
+[data-theme="claymorphism"] .planner-mobile-card.commencement .planner-date-day,
+[data-theme="claymorphism"] .planner-mobile-card.commencement span {
     color: #000000 !important;
     font-weight: 800 !important;
 }
 
-[data-theme="claymorphism"] .calendar-day-cell .calendar-cell-day-order {
+[data-theme="claymorphism"] .calendar-day-cell .calendar-cell-day-order,
+[data-theme="claymorphism"] .planner-mobile-card .planner-dayorder-pill,
+[data-theme="claymorphism"] .planner-mobile-card.holiday .planner-dayorder-pill,
+[data-theme="claymorphism"] .planner-mobile-card.milestone .planner-dayorder-pill,
+[data-theme="claymorphism"] .planner-mobile-card.commencement .planner-dayorder-pill {
     background: #FFFFFF !important;
     border: none !important;
     box-shadow: inset -1px -1px 2px rgba(0, 0, 0, 0.08), inset 1px 1px 2px rgba(255, 255, 255, 0.9), 2px 2px 6px rgba(0, 0, 0, 0.06) !important;
@@ -1049,7 +1068,8 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
 }
 
-[data-theme="glassmorphism"] .calendar-day-cell {
+[data-theme="glassmorphism"] .calendar-day-cell,
+[data-theme="glassmorphism"] .planner-mobile-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
     border: 1px solid rgba(255, 255, 255, 0.12) !important;
     border-radius: 10px !important;
@@ -1058,13 +1078,15 @@
     transition: var(--transition-smooth) !important;
 }
 
-[data-theme="glassmorphism"] .calendar-day-cell:hover {
+[data-theme="glassmorphism"] .calendar-day-cell:hover,
+[data-theme="glassmorphism"] .planner-mobile-card:hover {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.05) 100%) !important;
     border-color: rgba(255, 255, 255, 0.24) !important;
     transform: translateY(-2px) !important;
 }
 
-[data-theme="glassmorphism"] .calendar-day-cell.today {
+[data-theme="glassmorphism"] .calendar-day-cell.today,
+[data-theme="glassmorphism"] .planner-mobile-card.today {
     background: linear-gradient(135deg, rgba(143, 168, 255, 0.35) 0%, rgba(143, 168, 255, 0.16) 100%) !important;
     border: 1.5px solid rgba(190, 210, 255, 0.50) !important;
     box-shadow: 0 0 24px rgba(143, 168, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
@@ -1083,7 +1105,10 @@
 
 [data-theme="glassmorphism"] .calendar-day-cell.holiday .day-number,
 [data-theme="glassmorphism"] .calendar-day-cell.holiday div[title],
-[data-theme="glassmorphism"] .calendar-day-cell.holiday span {
+[data-theme="glassmorphism"] .calendar-day-cell.holiday span,
+[data-theme="glassmorphism"] .planner-mobile-card.holiday .planner-date-num,
+[data-theme="glassmorphism"] .planner-mobile-card.holiday .planner-date-day,
+[data-theme="glassmorphism"] .planner-mobile-card.holiday span {
     color: #FFEBF0 !important;
     font-weight: 800 !important;
 }
@@ -1100,7 +1125,10 @@
 
 [data-theme="glassmorphism"] .calendar-day-cell.milestone .day-number,
 [data-theme="glassmorphism"] .calendar-day-cell.milestone div[title],
-[data-theme="glassmorphism"] .calendar-day-cell.milestone span {
+[data-theme="glassmorphism"] .calendar-day-cell.milestone span,
+[data-theme="glassmorphism"] .planner-mobile-card.milestone .planner-date-num,
+[data-theme="glassmorphism"] .planner-mobile-card.milestone .planner-date-day,
+[data-theme="glassmorphism"] .planner-mobile-card.milestone span {
     color: #E6FFF7 !important;
     font-weight: 800 !important;
 }
@@ -1117,7 +1145,10 @@
 
 [data-theme="glassmorphism"] .calendar-day-cell.commencement .day-number,
 [data-theme="glassmorphism"] .calendar-day-cell.commencement div[title],
-[data-theme="glassmorphism"] .calendar-day-cell.commencement span {
+[data-theme="glassmorphism"] .calendar-day-cell.commencement span,
+[data-theme="glassmorphism"] .planner-mobile-card.commencement .planner-date-num,
+[data-theme="glassmorphism"] .planner-mobile-card.commencement .planner-date-day,
+[data-theme="glassmorphism"] .planner-mobile-card.commencement span {
     color: #F8F0FF !important;
     font-weight: 800 !important;
 }
@@ -1548,7 +1579,8 @@
     background-color: #ffffff !important;
 }
 
-[data-theme="neo-brutalist"] .calendar-day-cell {
+[data-theme="neo-brutalist"] .calendar-day-cell,
+[data-theme="neo-brutalist"] .planner-mobile-card {
     border: 2px solid #000000 !important;
     border-radius: 10px !important;
     box-shadow: 2.5px 2.5px 0px #000000 !important;
@@ -1561,33 +1593,40 @@
 /* Strict Removal of Hover Movement & Jittering for Calendar Day Cells */
 [data-theme="neo-brutalist"] .calendar-day-cell:hover,
 [data-theme="neo-brutalist"] .calendar-day-cell:focus,
-[data-theme="neo-brutalist"] .calendar-day-cell:active {
+[data-theme="neo-brutalist"] .calendar-day-cell:active,
+[data-theme="neo-brutalist"] .planner-mobile-card:hover,
+[data-theme="neo-brutalist"] .planner-mobile-card:focus,
+[data-theme="neo-brutalist"] .planner-mobile-card:active {
     background-color: #f4ffb3 !important;
     transform: none !important;
     box-shadow: 2.5px 2.5px 0px #000000 !important;
     border: 2px solid #000000 !important;
 }
 
-[data-theme="neo-brutalist"] .calendar-day-cell.today {
+[data-theme="neo-brutalist"] .calendar-day-cell.today,
+[data-theme="neo-brutalist"] .planner-mobile-card.today {
     background-color: #ccff00 !important;
     border: 2.5px solid #000000 !important;
     box-shadow: 3.5px 3.5px 0px #000000 !important;
 }
 
 /* Color Fills for Holiday (Red), Milestone (Teal/Emerald), and Commencement (Purple) */
-[data-theme="neo-brutalist"] .calendar-day-cell.holiday {
+[data-theme="neo-brutalist"] .calendar-day-cell.holiday,
+[data-theme="neo-brutalist"] .planner-mobile-card.holiday {
     background-color: #ff3333 !important;
     border: 2.5px solid #000000 !important;
     box-shadow: 4px 4px 0px #000000 !important;
 }
 
-[data-theme="neo-brutalist"] .calendar-day-cell.milestone {
+[data-theme="neo-brutalist"] .calendar-day-cell.milestone,
+[data-theme="neo-brutalist"] .planner-mobile-card.milestone {
     background-color: #00e676 !important;
     border: 2.5px solid #000000 !important;
     box-shadow: 4px 4px 0px #000000 !important;
 }
 
-[data-theme="neo-brutalist"] .calendar-day-cell.commencement {
+[data-theme="neo-brutalist"] .calendar-day-cell.commencement,
+[data-theme="neo-brutalist"] .planner-mobile-card.commencement {
     background-color: #d500f9 !important;
     border: 2.5px solid #000000 !important;
     box-shadow: 4px 4px 0px #000000 !important;
@@ -1595,7 +1634,16 @@
 
 [data-theme="neo-brutalist"] .calendar-day-cell.holiday .day-number,
 [data-theme="neo-brutalist"] .calendar-day-cell.milestone .day-number,
-[data-theme="neo-brutalist"] .calendar-day-cell.commencement .day-number {
+[data-theme="neo-brutalist"] .calendar-day-cell.commencement .day-number,
+[data-theme="neo-brutalist"] .planner-mobile-card.holiday .planner-date-num,
+[data-theme="neo-brutalist"] .planner-mobile-card.holiday .planner-date-day,
+[data-theme="neo-brutalist"] .planner-mobile-card.holiday span,
+[data-theme="neo-brutalist"] .planner-mobile-card.milestone .planner-date-num,
+[data-theme="neo-brutalist"] .planner-mobile-card.milestone .planner-date-day,
+[data-theme="neo-brutalist"] .planner-mobile-card.milestone span,
+[data-theme="neo-brutalist"] .planner-mobile-card.commencement .planner-date-num,
+[data-theme="neo-brutalist"] .planner-mobile-card.commencement .planner-date-day,
+[data-theme="neo-brutalist"] .planner-mobile-card.commencement span {
     color: #000000 !important;
     font-weight: 900 !important;
 }
@@ -1609,7 +1657,11 @@
 
 [data-theme="neo-brutalist"] .calendar-day-cell.holiday .calendar-cell-day-order,
 [data-theme="neo-brutalist"] .calendar-day-cell.milestone .calendar-cell-day-order,
-[data-theme="neo-brutalist"] .calendar-day-cell.commencement .calendar-cell-day-order {
+[data-theme="neo-brutalist"] .calendar-day-cell.commencement .calendar-cell-day-order,
+[data-theme="neo-brutalist"] .planner-mobile-card .planner-dayorder-pill,
+[data-theme="neo-brutalist"] .planner-mobile-card.holiday .planner-dayorder-pill,
+[data-theme="neo-brutalist"] .planner-mobile-card.milestone .planner-dayorder-pill,
+[data-theme="neo-brutalist"] .planner-mobile-card.commencement .planner-dayorder-pill {
     background-color: #ffffff !important;
     color: #000000 !important;
     border: 1.5px solid #000000 !important;
@@ -2026,29 +2078,47 @@
     padding: 3px 8px !important;
 }
 
-/* RETRO-COMPUTING CALENDAR OVERRIDES */
-[data-theme="retro-computing"] .calendar-day-cell.holiday {
+/* RETRO-COMPUTING CALENDAR & PLANNER OVERRIDES */
+[data-theme="retro-computing"] .calendar-day-cell,
+[data-theme="retro-computing"] .planner-mobile-card {
+    background-color: #F7F5F0 !important;
+    border: 1px solid #8A8A84 !important;
+    border-top: 1.5px solid #FAF9F5 !important;
+    border-left: 1.5px solid #FAF9F5 !important;
+    border-bottom: 1.5px solid #8A8A84 !important;
+    border-right: 1.5px solid #8A8A84 !important;
+    box-shadow: inset 1px 1px 0px #FAF9F5, inset -1px -1px 0px #D8D4CC !important;
+    border-radius: 4px !important;
+}
+
+[data-theme="retro-computing"] .calendar-day-cell.holiday,
+[data-theme="retro-computing"] .planner-mobile-card.holiday {
     background-color: #AA4A44 !important;
     border-top: 2px solid #D66D67 !important;
     border-left: 2px solid #D66D67 !important;
     border-right: 2px solid #5C2723 !important;
     border-bottom: 2px solid #5C2723 !important;
+    color: #FFFFFF !important;
 }
 
-[data-theme="retro-computing"] .calendar-day-cell.milestone {
+[data-theme="retro-computing"] .calendar-day-cell.milestone,
+[data-theme="retro-computing"] .planner-mobile-card.milestone {
     background-color: #4A7C59 !important;
     border-top: 2px solid #6E9E7D !important;
     border-left: 2px solid #6E9E7D !important;
     border-right: 2px solid #284731 !important;
     border-bottom: 2px solid #284731 !important;
+    color: #FFFFFF !important;
 }
 
-[data-theme="retro-computing"] .calendar-day-cell.commencement {
+[data-theme="retro-computing"] .calendar-day-cell.commencement,
+[data-theme="retro-computing"] .planner-mobile-card.commencement {
     background-color: #7A6F8F !important;
     border-top: 2px solid #9C92B0 !important;
     border-left: 2px solid #9C92B0 !important;
     border-right: 2px solid #453F54 !important;
     border-bottom: 2px solid #453F54 !important;
+    color: #FFFFFF !important;
 }
 
 [data-theme="retro-computing"] .calendar-day-cell.holiday .day-number,
@@ -2056,14 +2126,27 @@
 [data-theme="retro-computing"] .calendar-day-cell.commencement .day-number,
 [data-theme="retro-computing"] .calendar-day-cell.holiday div[title],
 [data-theme="retro-computing"] .calendar-day-cell.milestone div[title],
-[data-theme="retro-computing"] .calendar-day-cell.commencement div[title] {
+[data-theme="retro-computing"] .calendar-day-cell.commencement div[title],
+[data-theme="retro-computing"] .planner-mobile-card.holiday .planner-date-num,
+[data-theme="retro-computing"] .planner-mobile-card.holiday .planner-date-day,
+[data-theme="retro-computing"] .planner-mobile-card.holiday span,
+[data-theme="retro-computing"] .planner-mobile-card.milestone .planner-date-num,
+[data-theme="retro-computing"] .planner-mobile-card.milestone .planner-date-day,
+[data-theme="retro-computing"] .planner-mobile-card.milestone span,
+[data-theme="retro-computing"] .planner-mobile-card.commencement .planner-date-num,
+[data-theme="retro-computing"] .planner-mobile-card.commencement .planner-date-day,
+[data-theme="retro-computing"] .planner-mobile-card.commencement span {
     color: #FFFFFF !important;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5) !important;
 }
 
 [data-theme="retro-computing"] .calendar-day-cell.holiday .calendar-cell-day-order,
 [data-theme="retro-computing"] .calendar-day-cell.milestone .calendar-cell-day-order,
-[data-theme="retro-computing"] .calendar-day-cell.commencement .calendar-cell-day-order {
+[data-theme="retro-computing"] .calendar-day-cell.commencement .calendar-cell-day-order,
+[data-theme="retro-computing"] .planner-mobile-card .planner-dayorder-pill,
+[data-theme="retro-computing"] .planner-mobile-card.holiday .planner-dayorder-pill,
+[data-theme="retro-computing"] .planner-mobile-card.milestone .planner-dayorder-pill,
+[data-theme="retro-computing"] .planner-mobile-card.commencement .planner-dayorder-pill {
     background-color: #ECE9E1 !important;
     color: #1E1E1E !important;
     border-top: 1px solid #FFFFFF !important;
@@ -2085,13 +2168,15 @@
 }
 
 /* Calendar & Attendance Rows */
-[data-theme="retro-computing"] .calendar-day-cell.today {
+[data-theme="retro-computing"] .calendar-day-cell.today,
+[data-theme="retro-computing"] .planner-mobile-card.today {
     background-color: #2D5B4F !important;
     color: #FAF9F5 !important;
     border: 1px solid #1E1E1E !important;
 }
 
-[data-theme="retro-computing"] .calendar-day-cell.today * {
+[data-theme="retro-computing"] .calendar-day-cell.today *,
+[data-theme="retro-computing"] .planner-mobile-card.today * {
     color: #FAF9F5 !important;
 }
 
@@ -2222,7 +2307,8 @@
     border-radius: 2px !important;
 }
 
-[data-theme="retro-computing"] .calendar-day-cell.holiday {
+[data-theme="retro-computing"] .calendar-day-cell.holiday,
+[data-theme="retro-computing"] .planner-mobile-card.holiday {
     background-color: #AA4A44 !important;
     border-top: 2px solid #D66D67 !important;
     border-left: 2px solid #D66D67 !important;
@@ -2234,13 +2320,17 @@
 [data-theme="retro-computing"] .calendar-day-cell.holiday .day-number,
 [data-theme="retro-computing"] .calendar-day-cell.holiday .calendar-cell-day-num,
 [data-theme="retro-computing"] .calendar-day-cell.holiday div[title],
-[data-theme="retro-computing"] .calendar-day-cell.holiday span {
+[data-theme="retro-computing"] .calendar-day-cell.holiday span,
+[data-theme="retro-computing"] .planner-mobile-card.holiday .planner-date-num,
+[data-theme="retro-computing"] .planner-mobile-card.holiday .planner-date-day,
+[data-theme="retro-computing"] .planner-mobile-card.holiday span {
     color: #FFFFFF !important;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.6) !important;
     font-weight: 800 !important;
 }
 
-[data-theme="retro-computing"] .calendar-day-cell.holiday .calendar-cell-day-order {
+[data-theme="retro-computing"] .calendar-day-cell.holiday .calendar-cell-day-order,
+[data-theme="retro-computing"] .planner-mobile-card.holiday .planner-dayorder-pill {
     background-color: #ECE9E1 !important;
     color: #7A3D4A !important;
     border-top: 1px solid #FFFFFF !important;
@@ -2535,46 +2625,68 @@
     padding: 3px 8px !important;
 }
 
-[data-theme="clean-light"] .calendar-day-cell.today {
+[data-theme="clean-light"] .calendar-day-cell.today,
+[data-theme="clean-light"] .planner-mobile-card.today {
     background-color: #2563EB !important;
     color: #FFFFFF !important;
     border: 1px solid #1D4ED8 !important;
 }
 
-[data-theme="clean-light"] .calendar-day-cell.today * {
+[data-theme="clean-light"] .calendar-day-cell.today *,
+[data-theme="clean-light"] .planner-mobile-card.today * {
     color: #FFFFFF !important;
 }
 
-[data-theme="clean-light"] .calendar-day-cell.holiday {
+[data-theme="clean-light"] .calendar-day-cell.holiday,
+[data-theme="clean-light"] .planner-mobile-card.holiday {
     background-color: #FEF2F2 !important;
     border: 1px solid #FCA5A5 !important;
 }
 
 [data-theme="clean-light"] .calendar-day-cell.holiday .day-number,
-[data-theme="clean-light"] .calendar-day-cell.holiday .calendar-cell-day-num {
+[data-theme="clean-light"] .calendar-day-cell.holiday .calendar-cell-day-num,
+[data-theme="clean-light"] .planner-mobile-card.holiday .planner-date-num,
+[data-theme="clean-light"] .planner-mobile-card.holiday .planner-date-day,
+[data-theme="clean-light"] .planner-mobile-card.holiday span {
     color: #DC2626 !important;
     font-weight: 800 !important;
 }
 
-[data-theme="clean-light"] .calendar-day-cell.milestone {
+[data-theme="clean-light"] .calendar-day-cell.milestone,
+[data-theme="clean-light"] .planner-mobile-card.milestone {
     background-color: #ECFDF5 !important;
     border: 1px solid #A7F3D0 !important;
 }
 
 [data-theme="clean-light"] .calendar-day-cell.milestone .day-number,
-[data-theme="clean-light"] .calendar-day-cell.milestone .calendar-cell-day-num {
+[data-theme="clean-light"] .calendar-day-cell.milestone .calendar-cell-day-num,
+[data-theme="clean-light"] .planner-mobile-card.milestone .planner-date-num,
+[data-theme="clean-light"] .planner-mobile-card.milestone .planner-date-day,
+[data-theme="clean-light"] .planner-mobile-card.milestone span {
     color: #059669 !important;
     font-weight: 800 !important;
 }
 
-[data-theme="clean-light"] .calendar-day-cell.commencement {
+[data-theme="clean-light"] .calendar-day-cell.commencement,
+[data-theme="clean-light"] .planner-mobile-card.commencement {
     background-color: #F5F3FF !important;
     border: 1px solid #DDD6FE !important;
 }
 
 [data-theme="clean-light"] .calendar-day-cell.commencement .day-number,
-[data-theme="clean-light"] .calendar-day-cell.commencement .calendar-cell-day-num {
+[data-theme="clean-light"] .calendar-day-cell.commencement .calendar-cell-day-num,
+[data-theme="clean-light"] .planner-mobile-card.commencement .planner-date-num,
+[data-theme="clean-light"] .planner-mobile-card.commencement .planner-date-day,
+[data-theme="clean-light"] .planner-mobile-card.commencement span {
     color: #7C3AED !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="clean-light"] .planner-mobile-card .planner-dayorder-pill,
+[data-theme="clean-light"] .planner-mobile-card.holiday .planner-dayorder-pill,
+[data-theme="clean-light"] .planner-mobile-card.milestone .planner-dayorder-pill,
+[data-theme="clean-light"] .planner-mobile-card.commencement .planner-dayorder-pill {
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
     font-weight: 800 !important;
 }
 
@@ -2837,46 +2949,68 @@
     padding: 3px 8px !important;
 }
 
-[data-theme="clean-dark"] .calendar-day-cell.today {
+[data-theme="clean-dark"] .calendar-day-cell.today,
+[data-theme="clean-dark"] .planner-mobile-card.today {
     background-color: #6366F1 !important;
     color: #FFFFFF !important;
     border: 1px solid #4F46E5 !important;
 }
 
-[data-theme="clean-dark"] .calendar-day-cell.today * {
+[data-theme="clean-dark"] .calendar-day-cell.today *,
+[data-theme="clean-dark"] .planner-mobile-card.today * {
     color: #FFFFFF !important;
 }
 
-[data-theme="clean-dark"] .calendar-day-cell.holiday {
+[data-theme="clean-dark"] .calendar-day-cell.holiday,
+[data-theme="clean-dark"] .planner-mobile-card.holiday {
     background-color: rgba(239, 68, 68, 0.18) !important;
     border: 1px solid rgba(239, 68, 68, 0.35) !important;
 }
 
 [data-theme="clean-dark"] .calendar-day-cell.holiday .day-number,
-[data-theme="clean-dark"] .calendar-day-cell.holiday .calendar-cell-day-num {
+[data-theme="clean-dark"] .calendar-day-cell.holiday .calendar-cell-day-num,
+[data-theme="clean-dark"] .planner-mobile-card.holiday .planner-date-num,
+[data-theme="clean-dark"] .planner-mobile-card.holiday .planner-date-day,
+[data-theme="clean-dark"] .planner-mobile-card.holiday span {
     color: #F87171 !important;
     font-weight: 800 !important;
 }
 
-[data-theme="clean-dark"] .calendar-day-cell.milestone {
+[data-theme="clean-dark"] .calendar-day-cell.milestone,
+[data-theme="clean-dark"] .planner-mobile-card.milestone {
     background-color: rgba(16, 185, 129, 0.18) !important;
     border: 1px solid rgba(16, 185, 129, 0.35) !important;
 }
 
 [data-theme="clean-dark"] .calendar-day-cell.milestone .day-number,
-[data-theme="clean-dark"] .calendar-day-cell.milestone .calendar-cell-day-num {
+[data-theme="clean-dark"] .calendar-day-cell.milestone .calendar-cell-day-num,
+[data-theme="clean-dark"] .planner-mobile-card.milestone .planner-date-num,
+[data-theme="clean-dark"] .planner-mobile-card.milestone .planner-date-day,
+[data-theme="clean-dark"] .planner-mobile-card.milestone span {
     color: #34D399 !important;
     font-weight: 800 !important;
 }
 
-[data-theme="clean-dark"] .calendar-day-cell.commencement {
+[data-theme="clean-dark"] .calendar-day-cell.commencement,
+[data-theme="clean-dark"] .planner-mobile-card.commencement {
     background-color: rgba(168, 85, 247, 0.18) !important;
     border: 1px solid rgba(168, 85, 247, 0.35) !important;
 }
 
 [data-theme="clean-dark"] .calendar-day-cell.commencement .day-number,
-[data-theme="clean-dark"] .calendar-day-cell.commencement .calendar-cell-day-num {
+[data-theme="clean-dark"] .calendar-day-cell.commencement .calendar-cell-day-num,
+[data-theme="clean-dark"] .planner-mobile-card.commencement .planner-date-num,
+[data-theme="clean-dark"] .planner-mobile-card.commencement .planner-date-day,
+[data-theme="clean-dark"] .planner-mobile-card.commencement span {
     color: #C084FC !important;
+    font-weight: 800 !important;
+}
+
+[data-theme="clean-dark"] .planner-mobile-card .planner-dayorder-pill,
+[data-theme="clean-dark"] .planner-mobile-card.holiday .planner-dayorder-pill,
+[data-theme="clean-dark"] .planner-mobile-card.milestone .planner-dayorder-pill,
+[data-theme="clean-dark"] .planner-mobile-card.commencement .planner-dayorder-pill {
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     font-weight: 800 !important;
 }
 
@@ -5379,8 +5513,17 @@ html.instant-workspace-active #app-workspace {
     width: 100%;
 }
 
-.timetable-grid-section {
+.timetable-grid-section,
+.timetable-mobile-section {
     margin-bottom: 32px !important;
+}
+
+#timetable-mobile-day-controls {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 16px 20px !important;
 }
 
 .timetable-grid-wrapper,
@@ -6440,17 +6583,20 @@ html.instant-workspace-active #app-workspace {
     background-color: var(--bg-surface-solid);
 }
 
+.btn-icon svg {
+    stroke: currentColor;
+    transition: transform 0.2s ease;
+}
+
 .btn-icon:hover {
-    background-color: var(--accent-primary);
-    color: var(--text-inverse) !important;
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px var(--accent-primary-glow);
+    box-shadow: var(--shadow-premium, 0 4px 10px rgba(0, 0, 0, 0.08));
 }
 
 .btn-icon:hover svg,
 .btn-icon:hover svg * {
-    stroke: var(--text-inverse) !important;
-    color: var(--text-inverse) !important;
+    stroke: currentColor !important;
+    color: inherit !important;
 }
 
 .calendar-weekday-grid {
@@ -7576,6 +7722,7 @@ html.instant-workspace-active #app-workspace {
 
 /* NEO-BRUTALIST HOLIDAY CARD & CALENDAR DAY CELL HIGH CONTRAST READABILITY */
 [data-theme="neo-brutalist"] .calendar-day-cell.holiday,
+[data-theme="neo-brutalist"] .planner-mobile-card.holiday,
 [data-theme="neo-brutalist"] .mobile-planner-card.holiday {
     background-color: #ff4d4d !important;
     border: 2.5px solid #000000 !important;
@@ -7584,6 +7731,7 @@ html.instant-workspace-active #app-workspace {
 }
 
 [data-theme="neo-brutalist"] .calendar-day-cell.holiday *,
+[data-theme="neo-brutalist"] .planner-mobile-card.holiday *,
 [data-theme="neo-brutalist"] .mobile-planner-card.holiday * {
     color: #000000 !important;
     font-weight: 800 !important;
@@ -7593,6 +7741,7 @@ html.instant-workspace-active #app-workspace {
 [data-theme="neo-brutalist"] .calendar-day-cell.holiday .holiday-title,
 [data-theme="neo-brutalist"] .calendar-day-cell.holiday .calendar-cell-event,
 [data-theme="neo-brutalist"] .calendar-day-cell.holiday .holiday-name,
+[data-theme="neo-brutalist"] .planner-mobile-card.holiday .planner-mobile-event-desc,
 [data-theme="neo-brutalist"] .mobile-planner-card.holiday .holiday-name,
 [data-theme="neo-brutalist"] .mobile-planner-card.holiday .mobile-card-subtitle,
 [data-theme="neo-brutalist"] .mobile-planner-card.holiday .mobile-card-title {
@@ -7603,6 +7752,7 @@ html.instant-workspace-active #app-workspace {
 
 [data-theme="neo-brutalist"] .calendar-day-cell.holiday .off-tag,
 [data-theme="neo-brutalist"] .calendar-day-cell.holiday .holiday-tag,
+[data-theme="neo-brutalist"] .planner-mobile-card.holiday .planner-dayorder-pill,
 [data-theme="neo-brutalist"] .mobile-planner-card.holiday .holiday-badge {
     background-color: #000000 !important;
     color: #ffffff !important;
@@ -9686,6 +9836,7 @@ body.sidebar-open #attendance-fab-container,
 
 .planner-mobile-card.holiday .planner-date-num,
 .planner-mobile-card.holiday .planner-date-day,
+.planner-mobile-card.holiday span,
 .calendar-day-cell.holiday .day-number,
 .calendar-day-cell.holiday div[title],
 .calendar-day-cell.holiday span {
@@ -9713,6 +9864,7 @@ body.sidebar-open #attendance-fab-container,
 
 .planner-mobile-card.milestone .planner-date-num,
 .planner-mobile-card.milestone .planner-date-day,
+.planner-mobile-card.milestone span,
 .calendar-day-cell.milestone .day-number,
 .calendar-day-cell.milestone div[title],
 .calendar-day-cell.milestone span {
@@ -9740,6 +9892,7 @@ body.sidebar-open #attendance-fab-container,
 
 .planner-mobile-card.commencement .planner-date-num,
 .planner-mobile-card.commencement .planner-date-day,
+.planner-mobile-card.commencement span,
 .calendar-day-cell.commencement .day-number,
 .calendar-day-cell.commencement div[title],
 .calendar-day-cell.commencement span {
@@ -12607,7 +12760,8 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
     transform: none !important;
 }
 
-[data-theme="glassmorphism-light"] .calendar-day-cell.today {
+[data-theme="glassmorphism-light"] .calendar-day-cell.today,
+[data-theme="glassmorphism-light"] .planner-mobile-card.today {
     background: linear-gradient(135deg, rgba(79, 70, 229, 0.22) 0%, rgba(99, 102, 241, 0.12) 100%) !important;
     border: 2px solid #4F46E5 !important;
     box-shadow: 0 0 16px rgba(79, 70, 229, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.90) !important;
@@ -12627,7 +12781,10 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 
 [data-theme="glassmorphism-light"] .calendar-day-cell.holiday .day-number,
 [data-theme="glassmorphism-light"] .calendar-day-cell.holiday div[title],
-[data-theme="glassmorphism-light"] .calendar-day-cell.holiday span {
+[data-theme="glassmorphism-light"] .calendar-day-cell.holiday span,
+[data-theme="glassmorphism-light"] .planner-mobile-card.holiday .planner-date-num,
+[data-theme="glassmorphism-light"] .planner-mobile-card.holiday .planner-date-day,
+[data-theme="glassmorphism-light"] .planner-mobile-card.holiday span {
     color: #991B1B !important;
     font-weight: 800 !important;
 }
@@ -12645,7 +12802,10 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 
 [data-theme="glassmorphism-light"] .calendar-day-cell.milestone .day-number,
 [data-theme="glassmorphism-light"] .calendar-day-cell.milestone div[title],
-[data-theme="glassmorphism-light"] .calendar-day-cell.milestone span {
+[data-theme="glassmorphism-light"] .calendar-day-cell.milestone span,
+[data-theme="glassmorphism-light"] .planner-mobile-card.milestone .planner-date-num,
+[data-theme="glassmorphism-light"] .planner-mobile-card.milestone .planner-date-day,
+[data-theme="glassmorphism-light"] .planner-mobile-card.milestone span {
     color: #065F46 !important;
     font-weight: 800 !important;
 }
@@ -12663,7 +12823,10 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 
 [data-theme="glassmorphism-light"] .calendar-day-cell.commencement .day-number,
 [data-theme="glassmorphism-light"] .calendar-day-cell.commencement div[title],
-[data-theme="glassmorphism-light"] .calendar-day-cell.commencement span {
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement span,
+[data-theme="glassmorphism-light"] .planner-mobile-card.commencement .planner-date-num,
+[data-theme="glassmorphism-light"] .planner-mobile-card.commencement .planner-date-day,
+[data-theme="glassmorphism-light"] .planner-mobile-card.commencement span {
     color: #581C87 !important;
     font-weight: 800 !important;
 }
@@ -12671,7 +12834,11 @@ html:not(.instant-workspace-active) .mobile-bottom-nav {
 [data-theme="glassmorphism-light"] .calendar-cell-day-order,
 [data-theme="glassmorphism-light"] .calendar-day-cell.holiday .calendar-cell-day-order,
 [data-theme="glassmorphism-light"] .calendar-day-cell.milestone .calendar-cell-day-order,
-[data-theme="glassmorphism-light"] .calendar-day-cell.commencement .calendar-cell-day-order {
+[data-theme="glassmorphism-light"] .calendar-day-cell.commencement .calendar-cell-day-order,
+[data-theme="glassmorphism-light"] .planner-mobile-card .planner-dayorder-pill,
+[data-theme="glassmorphism-light"] .planner-mobile-card.holiday .planner-dayorder-pill,
+[data-theme="glassmorphism-light"] .planner-mobile-card.milestone .planner-dayorder-pill,
+[data-theme="glassmorphism-light"] .planner-mobile-card.commencement .planner-dayorder-pill {
     background: rgba(255, 255, 255, 0.60) !important;
     border: 1px solid rgba(255, 255, 255, 0.80) !important;
     color: #0F172A !important;

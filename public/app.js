@@ -5266,6 +5266,8 @@ function renderMobilePlannerList(year, month) {
         const p = item.planner;
         const isPlannerHoliday = p && (p.type === 'HOLIDAY' || p.dayOrder === 'HOLIDAY' || p.dayOrder === '-' || p.dayOrder === 'OFF');
         const isHoliday = item.isWeekend || isPlannerHoliday;
+        const isMilestone = !isHoliday && p && (p.type === 'ENROLMENT' || p.type === 'MILESTONE' || (p.event && (p.event.toLowerCase().includes('enrolment') || p.event.toLowerCase().includes('milestone'))));
+        const isCommencement = !isHoliday && !isMilestone && p && (p.type === 'COMMENCEMENT' || (p.event && p.event.toLowerCase().includes('commencement')));
 
         let dayOrderTag = '';
         let eventTag = '';
@@ -5273,11 +5275,17 @@ function renderMobilePlannerList(year, month) {
 
         if (item.isToday) cardClass += ' today';
         if (isHoliday) cardClass += ' holiday';
+        else if (isMilestone) cardClass += ' milestone';
+        else if (isCommencement) cardClass += ' commencement';
 
         if (p && p.dayOrder && p.dayOrder !== '-' && p.dayOrder !== 'HOLIDAY' && !item.isWeekend) {
             dayOrderTag = `<span class="planner-dayorder-pill">DAY ${p.dayOrder}</span>`;
         } else if (isHoliday) {
             dayOrderTag = `<span class="planner-dayorder-pill holiday">HOLIDAY</span>`;
+        } else if (isMilestone) {
+            dayOrderTag = `<span class="planner-dayorder-pill milestone">MILESTONE</span>`;
+        } else if (isCommencement) {
+            dayOrderTag = `<span class="planner-dayorder-pill commencement">COMMENCEMENT</span>`;
         }
 
         if (p && p.event && p.event.trim() !== '') {
